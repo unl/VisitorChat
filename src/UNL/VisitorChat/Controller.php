@@ -20,6 +20,8 @@ class Controller extends \Epoch\Controller
     
     public static $URLService = false;
     
+    public static $registryService = "http://www1.unl.edu/wdn/registry/";
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.

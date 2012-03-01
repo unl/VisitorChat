@@ -19,7 +19,7 @@ class Members extends \LimitIterator implements \Countable
         $options['array'] = \UNL\VisitorChat\Controller::$defaultOperators;
         
         //Get Site Details
-        $data = @file_get_contents("http://ucommfairchild.unl.edu/UNL_WDN/www/registry/?u=" . urlencode($site) . "&output=php&memberType=" . $type);
+        $data = @file_get_contents(\UNL\VisitorChat\Controller::$registryService . "?u=" . urlencode($site) . "&output=php&memberType=" . $type);
         if ($data) {
             $data = unserialize($data);
         }
