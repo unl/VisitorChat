@@ -1,2 +1,5 @@
-./config.inc.php
 www/.htaccess
+/config.inc.php
+/.buildpath
+/.project
+/.settings/org.eclipse.php.core.prefs
