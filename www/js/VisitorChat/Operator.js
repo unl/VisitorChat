@@ -268,15 +268,18 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   updateOperatorStatus: function(newStatus) {
-    if (newStatus == 'BUSY') {
+	  var formatStatus = 'Busy';
+	  
+	if (newStatus == 'BUSY') {
       $("#toggleOperatorStatus").addClass("closed");
       $("#toggleOperatorStatus").removeClass("open");
     } else {
-    	$("#toggleOperatorStatus").addClass("open");
-        $("#toggleOperatorStatus").removeClass("closed");
+      $("#toggleOperatorStatus").addClass("open");
+      $("#toggleOperatorStatus").removeClass("closed");
+      formatStatus = 'Available';
     }
     
-    $("#currentOperatorStatus").html(newStatus);
+    $("#currentOperatorStatus").html(formatStatus);
     
     this.operatorStatus = newStatus;
   }
