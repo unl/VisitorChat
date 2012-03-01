@@ -21,7 +21,7 @@ set_include_path(
 //Session life in seconds.
 ini_set("session.gc_maxlifetime", 7200); 
 
-ini_set('display_errors', true);
+ini_set('display_errors', false);
 
 error_reporting(E_ALL);
 
@@ -29,11 +29,6 @@ error_reporting(E_ALL);
 
 //Change this to the full base url of this instance.
 \Epoch\Controller::$url = 'http://ucommfairchild.unl.edu/visitorchat/www/';
-
-\Epoch\Controller::$applicationDir = dirname(__FILE__);
-
-//Change this if you want to use a custom base namespace.
-\Epoch\Controller::$customNamespace = "UNL\VisitorChat";
 
 //Refresh rate of the chat in miliseconds.
 \UNL\VisitorChat\Controller::$refreshRate = 1000;

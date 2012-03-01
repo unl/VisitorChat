@@ -22,6 +22,11 @@ class Controller extends \Epoch\Controller
     
     function __construct($options = array())
     {
+        //Set the application dir for Epoch.
+        self::$applicationDir = dirname(dirname(dirname(dirname(__FILE__))));
+        
+        self::$customNamespace = "UNL\VisitorChat";
+        
         //1. Send CORS.
         $this->sendCORS();
         
@@ -34,6 +39,7 @@ class Controller extends \Epoch\Controller
         //reject all old requests.
         \UNL\VisitorChat\Assignment\Service::rejectAllExpiredRequests();
         
+        //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);
         
         //4. Move along...
