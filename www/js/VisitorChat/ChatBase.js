@@ -484,7 +484,7 @@ var VisitorChat_ChatBase = Class.extend({
         break;
     }
     
-    notification = window.webkitNotifications.createNotification('something.png', 'UNL VisitorChat Alert', message);
+    notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
     notification.show();
     this.notifications.push(notification);
   },
