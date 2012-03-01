@@ -35,6 +35,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   initWatchers: function() {
+    this._super();
+    
     //Remove old event handlers
     $('#visitorChat_launchButton, #visitorChat_close').unbind();
     
@@ -81,8 +83,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Validator
     $('#visitorchat_clientLogin').validation();
-    
-    this._super();
     
     //This will slide down the Name and Email fields, plus the Ask button
     $("#visitorChat_messageBox").keyup(function(){
