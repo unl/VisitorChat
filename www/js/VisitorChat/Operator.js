@@ -6,7 +6,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   unreadMessages    : new Array(), //The total number of messages for all open conversations
   requestExpireDate : new Array(),
   
-  initWindow: function(){
+  initWindow: function() {
     $("#toggleOperatorStatus").click(function(){
         VisitorChat.toggleOperatorStatus();
         return false;
@@ -38,6 +38,21 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.loadStyles();
     this.initWindow();
     this.initWatchers();
+    
+    
+    if (window.webkitNotifications && window.webkitNotifications.checkPermission()) {
+      $('notificationOptions').show();
+    }
+    
+    //Request permission for notifications.
+    $('#requestNotifications').click(function() {
+      if (!window.webkitNotifications) {
+        return false;
+      }
+      
+      window.webkitNotifications.requestPermission();
+      return false
+    });
   },
   
   run: function() {

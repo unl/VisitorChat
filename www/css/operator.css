@@ -12,6 +12,10 @@
 	
 }
 
+#notificationOptions {
+    display: none;
+}
+
 #visitorChat_header {
 	display: inline;
 	font-family: Helvetica,Arial,sans-serif;

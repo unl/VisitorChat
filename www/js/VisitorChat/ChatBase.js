@@ -54,6 +54,8 @@ var VisitorChat_ChatBase = Class.extend({
   
   operatorsAvailable: false,
   
+  notifications: new Array(),
+  
   /**
    * Constructor function.
    */
@@ -454,10 +456,37 @@ var VisitorChat_ChatBase = Class.extend({
     //Play a sound only on first alert.
     if (!VisitorChat.alertID) {
       this.playSound(alertType);
+      this.showNotification(alertType);
     }
     
     //3. flash the document title.
     VisitorChat.alertID = setTimeout('VisitorChat.alert()', 2000);
+  },
+  
+  showNotification: function(alertType) {
+    //are notifications supported?
+    if (!window.webkitNotifications) {
+      return false;
+    }
+    
+    // do we have permission?
+    if (window.webkitNotifications.checkPermission()) {
+      return false;
+    }
+    
+    var message = "You recieved a new Alert";
+    switch (alertType) {
+      case 'newMessage':
+        message = "You have new messages!";
+        break;
+      case 'assignment':
+        message = "You have a new pending assignment!";
+        break;
+    }
+    
+    notification = window.webkitNotifications.createNotification('something.png', 'UNL VisitorChat Alert', message);
+    notification.show();
+    this.notifications.push(notification);
   },
   
   clearAlert: function()
@@ -467,6 +496,10 @@ var VisitorChat_ChatBase = Class.extend({
     }
     //Set the alertID to false so that we no there are no current alerts.
     VisitorChat.alertID = false;
+    
+    for (id in this.notifications) {
+      this.notifications[id].cancel();
+    }
   },
   
   playSound: function(alertType) {
