@@ -222,15 +222,26 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   onConversationStatus_Closed: function(data) {
-    //Disable the input message input.
-    $("visitorChat_messageBox").attr("disabled", "disabled");
-    
-    //Display a closed message.
-    var html = "<div class='chat_notify' id='visitorChat_closed'>The conversation has been closed.</div>";
-    html = $(html).append($("#visterChat_conversation").html());
-    
-    this.updateChatContainerWithHTML("#clientChat", html);
-  },
+	    //Disable the input message input.
+	    $("visitorChat_messageBox").attr("disabled", "disabled");
+	    
+	    //Display a closed message.
+	    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
+	    html = $("#visterChat_conversation").prepend(html);
+	    this.updateChatContainerWithHTML("#clientChat", html);
+	    
+	    //Fade out everything BUT closed message
+
+			//loop through all the children in #items		 
+				//set the opacity of all siblings
+				$('#visitorChat_closed').siblings().css({'opacity': '0.1'})
+				//set the opacity of current item to full, and add the effect class
+				$('#visitorChat_closed').css({'opacity': '1.0'});   
+			 
+				//reset all the opacity to full and remove effect class
+				//$(this).removeClass('effect');
+				//$(this).siblings().fadeTo('fast', '1.0')  
+	  },
   
   updateConversationList: function() {
     //Update the Client List
