@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.1" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>SimpleCAS</name>
+ <channel>simplecas.googlecode.com/svn</channel>
+ <summary>A PHP5 library for CAS Authentication.</summary>
+ <description>This package is a PHP5 only library for identifying users
+in a JA-SIG CAS secured environment.</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>brett.bieber@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <helper>
+  <name>John Thiltges</name>
+  <user>jthiltges</user>
+  <email>jthiltges@gmail.com</email>
+  <active>yes</active>
+ </helper>
+ <helper>
+  <name>Kevin Abel</name>
+  <user>kevin.abel.0</user>
+  <email>kevin.abel.0@gmail.com</email>
+  <active>yes</active>
+ </helper>
+ <helper>
+  <name>Eric Rasmussen</name>
+  <user>ericrasmussen1</user>
+  <email>ericrasmussen1@gmail.com</email>
+  <active>yes</active>
+ </helper>
+ <date>2010-02-02</date>
+ <time>09:08:42</time>
+ <version>
+  <release>0.5.0</release>
+  <api>0.5.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+ <notes>
+* Allow service url to be customized with SimpleCAS::setURL($url); [ericrasmussen1]
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="/" md5sum="ad9c06f186ce8fa739d6e716f6c9b48d" name="SimpleCAS/SingleSignOut.php" role="php"/>
+   <file baseinstalldir="/" md5sum="7a49aa1c67563ed628202c3e9244dcdc" name="SimpleCAS/ProxyGranting/Storage/File.php" role="php"/>
+   <file baseinstalldir="/" md5sum="26b6d753c3f9098be6493c818aabd959" name="SimpleCAS/ProxyGranting/Storage.php" role="php"/>
+   <file baseinstalldir="/" md5sum="e96b4c13218c39664fdeb8dc8d4e7541" name="SimpleCAS/ProxyGranting.php" role="php"/>
+   <file baseinstalldir="/" md5sum="46feaaf938c6eb0f7f260125a646b3fb" name="SimpleCAS/Protocol/Version2/ValidationResponse.php" role="php"/>
+   <file baseinstalldir="/" md5sum="f4ed06c8ae5918cfb9790ca72c6256d0" name="SimpleCAS/Protocol/Version2.php" role="php"/>
+   <file baseinstalldir="/" md5sum="80862315b001dcfa1fde9348341ff432" name="SimpleCAS/Protocol/Version1.php" role="php"/>
+   <file baseinstalldir="/" md5sum="daf05e7a073e2ac47ddb0c7ea6a83e33" name="SimpleCAS/Protocol.php" role="php"/>
+   <file baseinstalldir="/" md5sum="d93480efa786598948935145b06352a6" name="SimpleCAS/Autoload.php" role="php"/>
+   <file baseinstalldir="/" md5sum="a9d96c7d2032b5432306ffba5438d0f1" name="SimpleCAS.php" role="php"/>
+   <file baseinstalldir="/" md5sum="9d686c3553b6c8be0af988ddfb363f0c" name="docs/examples/Zend_Auth_Adapter_SimpleCAS.php" role="doc"/>
+   <file baseinstalldir="/" md5sum="2254593f10efc23cd0eadab309506e15" name="docs/examples/simple.php" role="doc"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.5</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.4</min>
+   </pearinstaller>
+   <package>
+    <name>HTTP_Request2</name>
+    <channel>pear.php.net</channel>
+    <min>0.1.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>0.1.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-12-08</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+First Release.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.1</release>
+     <api>0.1.1</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-12-08</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Fix Notice: Trying to get property of non-object in SimpleCAS/Server/Version2/ValidationResponse.php on line 23
+* Change PHP dependency to 5.2.5
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.2</release>
+     <api>0.1.1</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-02-05</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Update PEAR dependency to 1.5.4
+* Match case for variables (jthiltges)
+* In CAS v2 validateTicket, typecast successful return value to string (jthiltges)
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.0</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-02-11</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Allow setting HTTP_Request2 object so configuration can be set.
+  $server-&gt;getRequest()-&gt;setConfig('ssl_verify_peer', false);
+* Add $server-&gt;getRequest(), $server-&gt;setRequest(HTTP_Request2 $http_request)
+Change interface for server to abstract class.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.1</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-02-12</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Explicitly call __toString() for PHP 5.1 compatibility. [jthiltges]
+* Add Zend_Auth_Adapter_SimpleCAS to the examples. [jthiltges]
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.0</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-03-03</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Issue 1: Rename SimpleCAS_Server to SimpleCAS_Protocol [saltybeagle]
+* Issue 2: Switch to arrays for the protocol constructors. [saltybeagle]
+* Exit immediately after re-direct.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.1</release>
+     <api>0.3.1</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-04-06</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Prefix session variables with __SIMPLECAS [saltybeagle]
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.0</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2010-01-08</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Allow request adapter to be customized. [Kevin]
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.5.0</release>
+     <api>0.5.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2010-01-27</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Allow service url to be customized with SimpleCAS::setURL($url); [ericrasmussen1]
+   </notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

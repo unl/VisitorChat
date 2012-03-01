@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.7.2" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Net_URL2</name>
+ <channel>pear.php.net</channel>
+ <summary>Class for parsing and handling URL.</summary>
+ <description>Provides parsing of URLs into their constituent parts (scheme, host, path etc.), URL generation, and resolving of relative URLs.</description>
+ <lead>
+  <name>David Coallier</name>
+  <user>davidc</user>
+  <email>davidc@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Christian Schmidt</name>
+  <user>schmidt</user>
+  <email>schmidt@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-02-02</date>
+ <time>09:08:35</time>
+ <version>
+  <release>0.3.1</release>
+  <api>0.3.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD</license>
+ <notes>* Fixed Bug #16854: Invalid package.xml making it impossible to install with Pyrus</notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="Net" md5sum="f0a637e921da7a47373e2b065107c7a0" name="URL2.php" role="php"/>
+   <file baseinstalldir="Net" md5sum="587a224d39fbffa47cacb9fb67b51da1" name="docs/example.php" role="doc"/>
+   <file baseinstalldir="Net" md5sum="ea8b73061588566519fd0e55a230f2a6" name="docs/6470.php" role="doc"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <version>
+     <release>0.3.0</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2009-09-05</date>
+    <license>BSD</license>
+    <notes>* Fixed #14399 (Errors in URL parsing (items #1 and #3))
+* Fixed #14735 (Encode query string values)
+* Fixed #15546 (Add adding __toString())
+* Fixed #15367 (Use RFC 3986-compliant version of rawurlencode() in PHP &lt; 5.2)
+* Fixed #14289 (Add __get() and __set())</notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.0</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2008-06-18</date>
+    <license>BSD</license>
+    <notes>Major rewrite to comply with RFC3986 (bug 11574).
+   Much better support for resolving relative URLs.
+   WARNING: Method and property names has changed to reflect the terminology used in the RFC - THIS RELEASE IS NOT BACKWARDS COMPATIBLE WITH VERSION 0.1.0.</notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>0.1.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2007-05-08</date>
+    <license>BSD</license>
+    <notes>Convert to PHP5 only. PHP4 users should continue with version 1.0.15</notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

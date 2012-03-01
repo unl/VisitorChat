@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>UNL_LDAP</name>
+ <channel>pear.unl.edu</channel>
+ <summary>LDAP directory services for UNL</summary>
+ <description>This package simplifies connecting to UNL's LDAP directory for searching for data.</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>brett.bieber@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-03-02</date>
+ <time>13:41:41</time>
+ <version>
+  <release>0.4.1</release>
+  <api>0.4.0</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+ <notes>
+Bugfix Release:
+* Switch to protected attributes instead of private for easier serialization.
+ </notes>
+ <contents>
+  <dir name="/">
+   <file name="UNL/LDAP/Result.php" role="php" md5sum="cc15d2a9d257a36149952622fff05128"/>
+   <file name="UNL/LDAP/People.php" role="php" md5sum="89f2d218e91e3fd2413c79df8758e455"/>
+   <file name="UNL/LDAP/Exception.php" role="php" md5sum="3c3d370c93d9c8fa86039a7650872a2a"/>
+   <file name="UNL/LDAP/Entry/Attribute.php" role="php" md5sum="2404a079906825cc9e4f6340d581390b"/>
+   <file name="UNL/LDAP/Entry.php" role="php" md5sum="979f04fe5f23645548240887035df768"/>
+   <file name="UNL/LDAP.php" role="php" md5sum="f1e2f35b1ef291d4409f305b77467487"/>
+   <file name="tests/UNL_LDAPTest.php" role="test" md5sum="1fa66e7b752de71d29bc1b34d891e139"/>
+   <file name="docs/examples/twodirectories.php" role="doc" md5sum="4ec63a962bbddbfd1d9b12eafe8148b1"/>
+   <file name="docs/examples/simpleSearch.php" role="doc" md5sum="5441d377d1ef16e90281adef37c8ba7e"/>
+   <file name="config.sample.php" role="data" md5sum="0218ccc36b1ac31b6a241c43d06bb775"/>
+   <file name="build.xml" role="data" md5sum="70050811287cb990cdd6e409049e2b5e"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.6</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.4</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>0.1.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-02-01</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+    <notes>
+First release.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.0</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-03-26</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+    <notes>
+API change feature release
+* Remove singleton - multiple connections and multiple directories can now be used.
+* Add setOptions(), connect(), disconnect(), &amp;getLink() methods.
+* Implement destructor which disconnects from the server.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.0</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2008-11-10</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+    <notes>
+Feature release:
+Issue #8: Throw exception on connection errors.
+Bump stability to beta.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.0</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2009-05-11</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+    <notes>
+Feature release:
+Add backup LDAP server.
+Increase PHP dependency to 5.1.6
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.1</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>beta</api>
+    </stability>
+    <date>2010-04-23</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD</license>
+    <notes>
+Bugfix Release:
+* Switch to protected attributes instead of private for easier serialization.
+   </notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

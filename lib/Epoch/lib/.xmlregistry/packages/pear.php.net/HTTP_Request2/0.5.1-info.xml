@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>HTTP_Request2</name>
+ <channel>pear.php.net</channel>
+ <extends>HTTP_Request</extends>
+ <summary>Provides an easy way to perform HTTP requests.</summary>
+ <description>PHP5 rewrite of HTTP_Request package. Provides cleaner API and pluggable
+Adapters. Currently available are:
+  * Socket adapter, based on old HTTP_Request code,
+  * Curl adapter, wraps around PHP's cURL extension,
+  * Mock adapter, to use for testing packages dependent on HTTP_Request2.
+Supports POST requests with data and file uploads, basic and digest 
+authentication, cookies, proxies, gzip and deflate encodings, redirects,
+monitoring the request progress with Observers...</description>
+ <lead>
+  <name>Alexey Borzov</name>
+  <user>avb</user>
+  <email>avb@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-02-02</date>
+ <time>09:08:42</time>
+ <version>
+  <release>0.5.1</release>
+  <api>0.5.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+ <notes>
+* Content-Type request header is no longer removed for POST and PUT requests
+  with empty request body (request #16799).
+* CURLOPT_NOBODY option is now set when doing HEAD requests with Curl adapter.
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="HTTP" md5sum="1fb55dfe18831f8fe6280280e72ad216" name="tests/_files/response_headers" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="722328bfe89a9c9f7de5a020ed2c4589" name="tests/_files/response_gzip_broken" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="c36530c79c044fde1745b244c38d381f" name="tests/_files/response_gzip" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="12d80db889f528922a31b5c03f693647" name="tests/_files/response_deflate" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="d1d2beb78782f56e8611100a009fb1f6" name="tests/_files/response_cookies" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="120ea8a25e5d487bf68b5f7096440019" name="tests/_files/plaintext.txt" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="fc94fb0c3ed8a8f909dbc7630a0987ff" name="tests/_files/empty.gif" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="22d7f11b85dd00bd8919a4226a5a0388" name="tests/_files/bug_15305" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="96e929eb014758b7b5712be5c45110b9" name="tests/Request2Test.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="7ae3f0ef61d832d166671b044191efbf" name="tests/Request2/ResponseTest.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="ec1c8a2a8ab448183ed831ebd1c20518" name="tests/Request2/MultipartBodyTest.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="3f9867c9347815f15eac65c87b5c55e3" name="tests/Request2/AllTests.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="fb8e45c13ca3fb1c8594e22df9ab90d2" name="tests/Request2/Adapter/MockTest.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="d389619e0dad1f891a8b18117177496f" name="tests/Request2/Adapter/AllTests.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="f8691b81e639395523bc828b569fa716" name="tests/ObserverTest.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="f24af905aa262adefa4f692e2fe2a167" name="tests/AllTests.php" role="test"/>
+   <file baseinstalldir="HTTP" md5sum="07bfa5cff153994f244ceee9bd77de2a" name="Request2/Response.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="10b4d5d88f298a4e2fe7df08e5a218bb" name="Request2/Observer/Log.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="20b26f829852793a0e545c5df648a9b6" name="Request2/MultipartBody.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="a0b53a6710a47bc718dabc0edef36555" name="Request2/Exception.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="496dda12e9ca16561d9237651b1065e3" name="Request2/Adapter/Socket.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="ee8a541eb43be5cd04fd392770f90548" name="Request2/Adapter/Mock.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="90c77d4b4425b4bb63cf6ee921e5e3d1" name="Request2/Adapter/Curl.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="043e3d6edeeec91f7d21bf825090c2dd" name="Request2/Adapter.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="588ec605871ca474a8bcc3bf8f8035fc" name="Request2.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info"/>
+   </file>
+   <file baseinstalldir="HTTP" md5sum="7e6017dfdf042dbd443ce6c8c024f40d" name="docs/examples/upload-rapidshare.php" role="doc"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1.4</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.4</min>
+   </pearinstaller>
+   <package>
+    <name>Net_URL2</name>
+    <channel>pear.php.net</channel>
+    <min>0.2.0</min>
+   </package>
+  </required>
+  <optional>
+   <extension>
+    <name>curl</name>
+   </extension>
+   <extension>
+    <name>fileinfo</name>
+   </extension>
+   <extension>
+    <name>zlib</name>
+   </extension>
+   <extension>
+    <name>openssl</name>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <version>
+     <release>0.5.0</release>
+     <api>0.5.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-11-18</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+* Redirect support added, new configuration parameters 'follow_redirects',
+  'max_redirects' and 'strict_redirects' available
+
+* Implemented workaround for PHP bug #47204, Curl Adapter can now handle
+  Digest authentication and redirects when doing POST requests, unfortunately
+  this requires loading the entire request body into memory.
+* Config parameter 'use_brackets' is propagated to created instances of Net_URL2
+* Prevent memory leaks due to circular references (request #16646)
+* Fixed a misleading error message when timing out due to default_socket_timeout
+* HTTP_Request2::setBody() can now accept an instance of HTTP_Request2_MultipartBody
+  without trying to convert it to string
+* Calling HTTP_Request2::setBody() now clears post parameters and uploads
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.1</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-09-14</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+* Decoding of gzipped responses failed if mbstring.func_overload was enabled
+  (bug #16555)
+* Changed boundary generation in multipart bodies to work correctly with
+  rapidshare.com, added first usage example: file uploading to rapidshare.com
+* Added forgotten optional dependency on OpenSSL PHP extension
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.0</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-05-03</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+* Added 'store_body' config parameter, if set to false it will prevent storing
+  the response body in Response object (request #15881)
+* HTTP_Request2::setHeader() method now works as documented, setHeader('name') 
+  will remove the 'name' header, while setHeader('name', '') will set 'name'
+  header to empty value (bug #15937)
+* Custom 'Host' header will not be overwritten by generated one (bug #16146)
+* When trying to reuse the connected socket in Socket adapter, make sure that
+  it is still connected (bug #16149)
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.0</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-01-28</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+API changes:
+ * Removed HTTP_Request2::getConfigValue() method
+
+Feature additions:
+ * Added digest authentication (RFC 2617) support to Socket adapter. Thanks
+   to Tom Snyder (tomsn at inetoffice dot com) who sent me a prototype
+   implementation for HTTP_Request a couple of years ago.
+ * Added HTTPS proxy support to Socket adapter, this works through CONNECT
+   request described in RFC 2817.
+ * Mock adapter can now throw an Exception instead of returning a response
+   if Exception object is added via its addResponse() method (request #15629)
+
+Other changes and fixes:
+ * Support RFC 3986 by not encoding '~' in POST body (request #15368)
+ * Prevent an error with particular versions of PHP and Curl (bug #15617)
+ * Regular expressions used in HTTP_Request2 are now class constants 
+   (request #15630)
+ * Curl adapter now throws an exception in case of malformed (non-HTTP) 
+   response rather than dies with a fatal error (bug #15716)
+ * Curl handle wasn't closed in Curl adapter in case of error (bug #15721)
+ * Curl adapter sent an extra 'sentHeaders' event and returned bogus 
+   response status when server returned 100-Continue response (bug #15785)
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.0</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-01-07</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+API changes:
+ * HTTP_Request2::getConfigValue() is deprecated and will be removed in next 
+   release. Use HTTP_Request2::getConfig().
+ * Changed HTTP_Request2::setConfig() to accept a pair of parameter name and
+   parameter value in addition to array('parameter name' =&gt; 'value')
+ * Added HTTP_Request2::getConfig() method that can return a single 
+   configuration parameter or the whole configuration array
+
+Other additions and changes:
+ * Added a debug Observer that can log request progress to a file or an 
+   instance of PEAR::Log (thanks to David Jean Louis, request #15424)
+ * Added a new 'timeout' parameter that limits total number of seconds
+   a request can take (see requests #5735 and #8964)
+ * Added various SSL protocol options: 'ssl_verify_peer', 'ssl_verify_host',
+   'ssl_cafile', 'ssl_capath', 'ssl_local_cert', 'ssl_passphrase'. Note that
+   'ssl_verify_host' option behaves differently in Socket and Curl Adapters:
+   http://bugs.php.net/bug.php?id=47030
+
+Fixes:
+ * Fixed 'data error' when processing response encoded by 'deflate'
+   encoding (bug #15305)
+ * Curl Adapter now passes full request headers in 'sentHeaders' event
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>0.1.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-11-17</date>
+    <license uri="http://opensource.org/licenses/bsd-license.php">BSD License</license>
+    <notes>
+Initial release. The features supported are mostly the same as those of
+HTTP_Request, with the following additional feature requests implemented:
+  * cURL extension support (request #5463)
+  * It is now possible to monitor the file upload progress with Observers
+	(request #7630)
+  * Added 'sentHeaders' notification providing the request headers to the
+    Observers (request #7633)
+  * Added support for 'deflate' encoding (request #11246)
+   </notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

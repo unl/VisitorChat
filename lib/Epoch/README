@@ -1,0 +1,12 @@
+This is an attempt to make a very lightweight php PSR-0 complient framework based on Savvy, Regexp Router, and a simple active record class.  Using these three things we have
+everything we need to start a very customizible application, with little start up time.
+
+To get started, do the following:
+1) set up your config file.
+2) call the following code:
+        $app = new \App\Controller($_GET);
+        echo $app->render();
+3) ????
+4) profit!
+
+More details comming soon.

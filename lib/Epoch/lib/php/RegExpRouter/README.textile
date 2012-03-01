@@ -1,0 +1,51 @@
+h1. RegExpRouter
+
+h2. Introduction
+
+RegExpRouter is a php router system that routes clean URLs based on regular expressions and support PSR-0 complient projects.
+
+*Possible Options for a new Router:*
+$options = array(
+'baseURL'=>'yoururl', //required: the full url: http://www.yoururl.com/
+'srcDir'=>'yourSrcDir' //Only required if you want to scan your models.  *Must* be a full system path to your source directory.
+);
+
+h2. Methods of routing:
+
+1. *Scanning*
+
+The router will scan though your models and load routes.  You will need a file called Routes.php within each of your model's directories (ie: project/exampleModel/Routes.php).  This Routes.php file must extend RegExpRouter\RoutesInterface and define all of the routes for that model.
+
+For each Model that has a route, you will need to place a file named "Routes" within that class, which implements RegExpRouter\RoutesInterface and define the regex routes for the model.
+
+Routes are defined as an array of routes. And example route would look like this: $routes = array(array('yourRegex' => 'referenceModel'), array('moreRegex' => 'anotherModel'));
+The reference model should be the name of a class within the current model *without* it's namespace.  The namespace will be added to it automatically.
+
+*Here is some example code for scanning your models:*
+
+$options = array('baseURL'=>'yoururl', 'srcDir'=>'yourSrcDir');
+$router  = new RegExpRouter\Router($options);
+$router->route($_SERVER['REQUEST_URI'], $_GET);
+
+2. *User Defined Mapping*
+
+You can compile the array of regex to model mapping yourself and call the RegExpRouter->setRoutes(array) method:
+
+*Here is some example code for using your own mapping:*
+
+Routes are the same as the scaning method, except you should *always* define the fulll namesapce to the class within the model that you are referencing.
+
+$options = array('baseURL'=>'yoururl');
+$router = new RegExpRouter\Router($options);
+$router->setRoutes(array('/^home$/i' => 'ExampleProject\ExampleModel\View'));
+$router->route($_SERVER['REQUEST_URI'], $_GET);
+
+h2. Example
+
+To view the very simple Example application in the Example folder to get a better feel of how it works.
+
+To set up the example application you will have to do the following:
+1) Copy the config.sample.php to a new file called config.inc.php in the same folder.
+2) Change the Example\Controller::$url in config.inc.php to a url that works with your setup.
+3) Copy the sample.htaccess file to a new file called .htaccess in the same folder.
+4) In .htaccess change the RewriteBase path to work with your setup.

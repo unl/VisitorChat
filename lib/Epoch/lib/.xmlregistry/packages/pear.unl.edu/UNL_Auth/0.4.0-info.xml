@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>UNL_Auth</name>
+ <channel>pear.unl.edu</channel>
+ <summary>An authentication framework for PHP Applications at UNL</summary>
+ <description>This package provides an authentication framework for web 
+applications developed at UNL.</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>brett.bieber@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-02-02</date>
+ <time>09:06:29</time>
+ <version>
+  <release>0.4.0</release>
+  <api>0.4.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+ <notes>
+* Fix E_STRICT warning about static methods.
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="/" md5sum="b7a35f1bfe174ef2725733df1539f212" name="UNL/Auth/SimpleCAS/ZendAuth.php" role="php"/>
+   <file baseinstalldir="/" md5sum="6def037a77fd9fa49bcc5e752cbb8170" name="UNL/Auth/SimpleCAS.php" role="php"/>
+   <file baseinstalldir="/" md5sum="ada4bb738641430ba2420da94ec3e749" name="UNL/Auth/CAS/PEARAuth.php" role="php"/>
+   <file baseinstalldir="/" md5sum="76deaf815ba781ca6f7f6bbcc7095912" name="UNL/Auth/CAS.php" role="php"/>
+   <file baseinstalldir="/" md5sum="f0bb48dadf42f6511b718032203f9c28" name="UNL/Auth.php" role="php"/>
+   <file baseinstalldir="/" md5sum="c4ee1094cd276ff40fbd2b16d66068fe" name="docs/examples/Zend_SimpleCAS_example.php" role="doc"/>
+   <file baseinstalldir="/" md5sum="3a80ba084e5bc5f8b17d188b15e6a7aa" name="docs/examples/SimpleCAS_example.php" role="doc"/>
+   <file baseinstalldir="/" md5sum="3759e0e8f63d4161653c158b08cdd0ed" name="docs/examples/CAS_example.php" role="doc"/>
+   <file baseinstalldir="/" md5sum="e89e49dca8497ec59459d17140c6e63a" name="docs/examples/CASPEARAuth_example.php" role="doc"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.3</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <package>
+    <name>Auth</name>
+    <channel>pear.php.net</channel>
+    <min>1.0</min>
+   </package>
+   <package>
+    <name>CAS</name>
+    <channel>pear.unl.edu</channel>
+    <min>1.0.0</min>
+   </package>
+   <package>
+    <name>SimpleCAS</name>
+    <channel>simplecas.googlecode.com/svn</channel>
+    <min>0.3.0</min>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>0.1.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2007-12-17</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+First Release - only CAS is available.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.1</release>
+     <api>0.1.1</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-05-20</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Check if session is already started - kabel
+* Improve PHP docs and fix example. - bbieber
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.2.0</release>
+     <api>0.2.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-08-22</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Upgrade CAS driver dependency to 1.0.0
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.0</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2008-12-09</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Enable SimpleCAS support. http://code.google.com/p/simplecas/
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.1</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-02-12</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Increase SimpleCAS dependency of 0.2.0 to take advantage of getRequest() so we can ignore the ssl peer verification.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.3.2</release>
+     <api>0.3.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-03-03</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Increase SimpleCAS dependency of 0.3.0 to use new object names and array options for the constructor.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.4.0</release>
+     <api>0.4.0</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>alpha</api>
+    </stability>
+    <date>2009-11-18</date>
+    <license uri="http://www1.unl.edu/wdn/wiki/Software_License">BSD License</license>
+    <notes>
+* Fix E_STRICT warning about static methods.
+   </notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.9.0" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd      http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Mail_mimeDecode</name>
+ <channel>pear.php.net</channel>
+ <summary>Provides a class to decode mime messages.</summary>
+ <description>Provides a class to deal with the decoding and interpreting of mime messages.
+ This package used to be part of the Mail_Mime package, but has been split off.</description>
+ <lead>
+  <name>Cipriano Groenendal</name>
+  <user>cipri</user>
+  <email>cipri@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Alan Knowles</name>
+  <user>alan_k</user>
+  <email>alan@akbkhome.com</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>George Schlossnagle</name>
+  <user>gschlossnagle</user>
+  <email>george@omniti.com</email>
+  <active>no</active>
+ </developer>
+ <date>2010-02-11</date>
+ <time>16:11:57</time>
+ <version>
+  <release>1.5.1</release>
+  <api>1.3.1</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+ <notes>
+Minor Bugfix release.
+
+
+    Bug Fixes
+    #----- - fix bug in getSendArray() - not handling multiple recipents
+    #14129 - E_NOTICE fixes
+
+    Requests
+    #12365 - Add option to also include raw attached messages patched on the request of till
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="Mail" md5sum="bf5a6ae607a80118a765313c7f57aab9" name="tests/semicolon_content_type_bug1724.phpt" role="test"/>
+   <file baseinstalldir="Mail" md5sum="e20e16dde04f3479fc6ab48000fe68a6" name="tests/parse_header_value.phpt" role="test"/>
+   <file baseinstalldir="Mail" md5sum="195e64d17023031024f82f6d6bf416cd" name="mimeDecode.php" role="php"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.6.0</min>
+   </pearinstaller>
+   <package>
+    <name>Mail_Mime</name>
+    <channel>pear.php.net</channel>
+    <min>1.4.0</min>
+    <exclude>1.4.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease>
+  <changelog>
+   <release>
+    <date>2007-06-17</date>
+    <time>17:20:44</time>
+    <version>
+     <release>1.5.0</release>
+     <api>1.3.1</api>
+    </version>
+    <stability>
+     <release>stable</release>
+     <api>stable</api>
+    </stability>
+    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+    <notes>
+First release of mail_mimeDecode as a seperate package.
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>0.1.0</release>
+     <api>1.3.1</api>
+    </version>
+    <stability>
+     <release>alpha</release>
+     <api>stable</api>
+    </stability>
+    <date>2007-06-10</date>
+    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+    <notes>
+Initial Release
+   </notes>
+   </release>
+   <release>
+    <version>
+     <release>1.0.0RC1</release>
+     <api>1.3.1</api>
+    </version>
+    <stability>
+     <release>beta</release>
+     <api>stable</api>
+    </stability>
+    <date>2007-06-10</date>
+    <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
+    <notes>
+Initial Release
+   </notes>
+   </release>
+  </changelog>
+ </phprelease>
+</package>

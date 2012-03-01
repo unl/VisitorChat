@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>UNL_WDN_Emailer</name>
+ <channel>pear.unl.edu</channel>
+ <summary>Send emails using the UNL HTML email template
+</summary>
+ <description>
+Send emails using the UNL HTML email template
+</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>brett.bieber@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-03-02</date>
+ <time>15:49:18</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package UNL_WDN_Email release notes for version 0.1.0.
+
+Basic functionality is available.
+</notes>
+ <contents>
+  <dir name="/">
+   <file role="www" name="www/index.php" md5sum="8c2e0e611ced41a0019f48a353258736"/>
+   <file role="php" name="src/UNL/WDN/Emailer/Main.php" md5sum="66b309cec6aea616bcfad88de111b9e4"/>
+   <file role="data" name="data/WDNEmailTemplate.tpl.php" md5sum="8ea4a75601e0a51634eafc0ab0a2575d"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd">
+ <name>UNL_Peoplefinder</name>
+ <channel>pear.unl.edu</channel>
+ <summary>The UNL faculty staff and student directory.
+</summary>
+ <description>
+The UNL_Peoplefinder package contains all the source code for the UNL directory.
+Additionally, this package provides an API which developers can use to retrieve
+directory information and perform searches.
+</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>brett.bieber@gmail.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-02-02</date>
+ <time>10:44:49</time>
+ <version>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Package UNL_Peoplefinder release notes for version 0.1.0.
+
+Basic functionality is available. The default driver uses the
+web service, and no LDAP connection info is required.
+
+
+Package UNL_Peoplefinder API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="www" name="www/standardForm.php" md5sum="0bb606ab21c3e7b7ffe2b1927d0157d8"/>
+   <file role="www" name="www/small_devices.css" md5sum="671b2a2b7ff388a6c7a0256a27dc57a7"/>
+   <file role="www" name="www/service.php" md5sum="49caa1e90509e3af7431dd3276b16ed1"/>
+   <file role="www" name="www/README" md5sum="387849598c64632e513c7eefa2155e12"/>
+   <file role="www" name="www/peoplefinder_default.css" md5sum="6f1677797f73b1a31fecba23a6ce11b2"/>
+   <file role="www" name="www/peoplefinder.js" md5sum="2b27c4364db8740eaae0aea12ce4a0c1"/>
+   <file role="www" name="www/index.php" md5sum="51f36d605af956784f4ab16047dfc02f"/>
+   <file role="www" name="www/images/person.gif" md5sum="833a67d6d816e88d0bfe25b2854d2295"/>
+   <file role="www" name="www/images/mobile.gif" md5sum="c5489ea5b5eb1d8814e2b49f6fdb9cdd"/>
+   <file role="www" name="www/images/icon_question.gif" md5sum="e26a423eed7840f8eece890631e246b9"/>
+   <file role="www" name="www/images/home.gif" md5sum="d2c93d8510e7fc077f9ef7765ff20a89"/>
+   <file role="www" name="www/departments/index.php" md5sum="37bbf184fb9944a5e29c33dd7ce6d323"/>
+   <file role="www" name="www/config.inc.php" md5sum="49d1a921b7b4edb23b1e2e4bdc766000"/>
+   <file role="www" name="www/config-sample.inc.php" md5sum="3b75e12039198b0f51c41a6e7c8360eb"/>
+   <file role="www" name="www/apple-touch-icon.png" md5sum="e182bd1eb8858d0f406187e21d03c6fd"/>
+   <file role="www" name="www/advancedForm.php" md5sum="be5159d40d1cc6f9ed6399089fd748da"/>
+   <file role="test" name="tests/testStudentWithNoLocalAddress.html" md5sum="1636d84da04979ce70d9d46b862f896b"/>
+   <file role="test" name="tests/PeoplefinderTest.php" md5sum="d4da346cb13ca1357ee89b37b59dba6c"/>
+   <file role="test" name="tests/OUTest.php" md5sum="e40ef5265dd4213fdcbfeb0735e1b8b0"/>
+   <file role="test" name="tests/BrowserTest.php" md5sum="9cce4b1ffdbab7375b1cf3f60fb4987d"/>
+   <file role="php" name="src/UNL/Peoplefinder/RendererInterface.php" md5sum="7b52d098c49dd4e9915741ac794d8f4a"/>
+   <file role="php" name="src/UNL/Peoplefinder/Renderer/XML.php" md5sum="9b612809c71a7af3b22de36ea4988b78"/>
+   <file role="php" name="src/UNL/Peoplefinder/Renderer/vCard.php" md5sum="7c9aeb7c9a898849c173dd894f0f3a05"/>
+   <file role="php" name="src/UNL/Peoplefinder/Renderer/Serialized.php" md5sum="b7edf78a1f82cd2e790e879462ae5dd3"/>
+   <file role="php" name="src/UNL/Peoplefinder/Renderer/JSON.php" md5sum="7fa212209cb5e86cb2aefda0b2fca12d"/>
+   <file role="php" name="src/UNL/Peoplefinder/Renderer/HTML.php" md5sum="9f2789e9724ce6d8033be663c9ed4131"/>
+   <file role="php" name="src/UNL/Peoplefinder/Record.php" md5sum="7071048e5e91575c01ccb92019c7cafe"/>
+   <file role="php" name="src/UNL/Peoplefinder/DriverInterface.php" md5sum="8f211374f1a6609f9609ea90c74afcba"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/WebService.php" md5sum="5abd2c0936d173df09c1a36cbd4ee510"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP/Util.php" md5sum="7dc7a0423d62a6e193523d84ad89f4af"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP/TelephoneFilter.php" md5sum="6cfe4455d67a76d642dc4b8239e367ac"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP/StandardFilter.php" md5sum="87b019a6a8a57d0bdfe37145800e23d6"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP/OUFilter.php" md5sum="7028b5a762580c32c76f70c8ccdd14bc"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP/AdvancedFilter.php" md5sum="4547ed66c563bd0f8b24d1f07728dbfd"/>
+   <file role="php" name="src/UNL/Peoplefinder/Driver/LDAP.php" md5sum="5b2d241e70cccdff56d6504691fad864"/>
+   <file role="php" name="src/UNL/Peoplefinder/Department/Search.php" md5sum="3c3a87e9fc95a53231dd408b45c82d0a"/>
+   <file role="php" name="src/UNL/Peoplefinder/Department.php" md5sum="763b1e19c28712a251c1552857cf8e7d"/>
+   <file role="php" name="src/UNL/Peoplefinder.php" md5sum="86236345234234cc5a4dd1e66a2e8393"/>
+   <file role="doc" name="examples/getUID.php" md5sum="b2e8620bc6e9b9ce921ebea48bab3133"/>
+   <file role="doc" name="examples/getLikeMatches.php" md5sum="ff695239f9295eabaa187cf74e056408"/>
+   <file role="doc" name="examples/getExactMatches.php" md5sum="187f8be90f09db8cb49a7aec912be8c4"/>
+   <file role="doc" name="examples/config.inc.php" md5sum="8aa9afd73dcf4178a8214b98eb2c5771"/>
+   <file role="data" name="data/hr_tree.xml" md5sum="d9962fcbef0e4e6ed3869f9dc4843899"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>2.0.0a1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

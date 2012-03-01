@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://pear.php.net/dtd/package-2.1" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.1     http://pear.php.net/dtd/package-2.1.xsd" packagerversion="2.0.0">
+ <name>Savvy</name>
+ <channel>phpsavant.com</channel>
+ <summary>Savvy is a powerful but lightweight object-oriented template system for PHP.
+</summary>
+ <description>
+Unlike other template systems, Savvy by default does not compile your
+templates into PHP; instead, it uses PHP itself as its template language so you
+don't need to learn a new markup system.</description>
+ <lead>
+  <name>Brett Bieber</name>
+  <user>saltybeagle</user>
+  <email>saltybeagle@php.net</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Gregory Beaver</name>
+  <user>cellog</user>
+  <email>cellog@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-01-20</date>
+ <time>13:03:30</time>
+ <version>
+  <release>0.7.1</release>
+  <api>0.1.0</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
+ <notes>Bugfix Release:
+
+ - Improve escaping of arrays
+ - Add tests for globals
+
+
+Package Savvy API release notes for version 0.1.0.</notes>
+ <contents>
+  <dir name="/">
+   <file role="test" name="tests/test_framework.php.inc" md5sum="d7b66614eef48d4945901a43a9568b14"/>
+   <file role="test" name="tests/render/string.phpt" md5sum="1a60e68f87d277aa9c653472b8c0ef76"/>
+   <file role="test" name="tests/render/object.phpt" md5sum="5555262b6c42f604b38f3e3aaf77e974"/>
+   <file role="test" name="tests/render/Foo.tpl.php" md5sum="2af7ae28b4d35227c53921eaabfaeaad"/>
+   <file role="test" name="tests/render/fastcompile.phpt" md5sum="923e958a495177f4be567abd6d7d37f6"/>
+   <file role="test" name="tests/render/echostring.tpl.php" md5sum="138231e0b170c36ff602c09eaaa1690f"/>
+   <file role="test" name="tests/render/array.phpt" md5sum="3f284e6ec2d710398f4b67378f373de4"/>
+   <file role="test" name="tests/globals/escape.phpt" md5sum="d1b9276341877c681e62ddad93d2d1dc"/>
+   <file role="test" name="tests/globals/escape.nestedarrays.phpt" md5sum="7f1e04a1302995ed6c0a43d525ebd73d"/>
+   <file role="test" name="tests/globals/escape.arrays.phpt" md5sum="20312ab95ea7901b79e21fdd61f5dca4"/>
+   <file role="test" name="tests/globals/basic.tpl.php" md5sum="7898705f5a0a5792a191cca28501e22e"/>
+   <file role="test" name="tests/globals/basic.phpt" md5sum="ac2ae80d9f5344694e6f2d90c0417b2c"/>
+   <file role="test" name="tests/escape/string.phpt" md5sum="4fd594fef7e7621e79cefa341c2439a0"/>
+   <file role="test" name="tests/escape/raw.tpl.php" md5sum="2e7b87c466f106a575d6740258356109"/>
+   <file role="test" name="tests/escape/object.phpt" md5sum="7012a6b97c7cb20391bde8243b582e1b"/>
+   <file role="test" name="tests/escape/Foo.tpl.php" md5sum="d960fd1fa4867a04702db10cda65d772"/>
+   <file role="test" name="tests/escape/echostring.tpl.php" md5sum="a45c7c6b67b56e43935d844f358f080b"/>
+   <file role="php" name="src/Savvy/UnexpectedValueException.php" md5sum="bc88ee83b651bea0cb3190c4785be447"/>
+   <file role="php" name="src/Savvy/TemplateException.php" md5sum="0dcf725a67d3db2457f4f9793654e8d1"/>
+   <file role="php" name="src/Savvy/ObjectProxy/Traversable.php" md5sum="d8ecfde88e9de6d70e051ac27c1f5952"/>
+   <file role="php" name="src/Savvy/ObjectProxy/ArrayAccess.php" md5sum="a18cde5a30fcd4f6c5b6437a1fa702d9"/>
+   <file role="php" name="src/Savvy/ObjectProxy.php" md5sum="e00947b3a0e75f35076592189fed7737"/>
+   <file role="php" name="src/Savvy/MapperInterface.php" md5sum="127c43a259b071872044a492d101faca"/>
+   <file role="php" name="src/Savvy/FilterAbstract.php" md5sum="dc9abe43fa8f2a7ec038d8bc4e2fd0da"/>
+   <file role="php" name="src/Savvy/FastCompilerInterface.php" md5sum="213b589107a0b18d2074167f2d0fe864"/>
+   <file role="php" name="src/Savvy/Exception.php" md5sum="1e05784e2648c5daf2bf8848f302290d"/>
+   <file role="php" name="src/Savvy/CompilerInterface.php" md5sum="45622fa0a1eea84981eb8265b43ce2da"/>
+   <file role="php" name="src/Savvy/CompilerException.php" md5sum="05e9107fb803c7f54d512a4daee8cd30"/>
+   <file role="php" name="src/Savvy/ClassToTemplateMapper.php" md5sum="fd04a4a3f7bb2e2317bc32e5451b56a3"/>
+   <file role="php" name="src/Savvy/BasicFastCompiler.php" md5sum="313d6d9ac280509c7f0e072e6841d80d"/>
+   <file role="php" name="src/Savvy/BadMethodCallException.php" md5sum="e5d06612d101d72bc82709df7ae0426e"/>
+   <file role="php" name="src/Savvy/Autoload.php" md5sum="c0ee9b9628bed191991bc641721a39d8"/>
+   <file role="php" name="src/Savvy.php" md5sum="2a296e078915d90395ad47b1dd5ad4dc"/>
+   <file role="doc" name="examples/templates/StringView.tpl.php" md5sum="b4746d9c4e29624cb75c4bbf74600371"/>
+   <file role="doc" name="examples/templates/stdClass.tpl.php" md5sum="ecb083ab102eac7b1bc6d5306092b36d"/>
+   <file role="doc" name="examples/templates/MyTemplate.tpl.php" md5sum="b7004c1f5eed19602e5c7afe97dbbd27"/>
+   <file role="doc" name="examples/basic.php" md5sum="74ae4c065f1920ecfb59e9a9ad6e3746"/>
+   <file role="doc" name="examples/baseball/PartialSeason.tpl.php" md5sum="028f2aa4e14931455bf1c2b89407def3"/>
+   <file role="doc" name="examples/baseball/ListItem.tpl.php" md5sum="606d5c6b9e5987776d70f5eb4431783d"/>
+   <file role="doc" name="examples/baseball/index.php" md5sum="3a7e6408b0fc2ad9a2ff6fcbeee4a43a"/>
+   <file role="doc" name="examples/baseball/BaseballTeam.tpl.php" md5sum="dd3d25e88626d358a05050b3a5b22f78"/>
+   <file role="doc" name="examples/baseball/BaseballPlayer.tpl.php" md5sum="ff0ddb3f097ac934f71c442d6893bece"/>
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease/>
+</package>

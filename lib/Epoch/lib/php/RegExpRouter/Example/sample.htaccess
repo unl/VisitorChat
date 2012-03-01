@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /app/vendor/RegExpRouter/Example
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule . index.php [L]
