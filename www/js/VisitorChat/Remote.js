@@ -35,17 +35,29 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   initWatchers: function() {
-    this._super();
+    /* This method is called several times thoughout 
+     * executation.  Thus in order to stop the stacking
+     * of watch functions, we should always unbind previous 
+     * watch functions before applying the new ones.
+     */
+    $('#visitorChat_launchButton,' +
+            '#visitorChat_close,' +
+            '#visitorChat_container,' +
+            'visitorChat_email_fallback,' +
+            '#visitorChat_collapse').unbind();
     
-    //Remove old event handlers
-    $('#visitorChat_launchButton, #visitorChat_close').unbind();
+    //Validator
+    $('#visitorchat_clientLogin').validation();
+    
+    //Call the parent.
+    this._super();
     
     $('#visitorChat_launchButton, #visitorChat_close').click($.proxy(function(){
       if (VisitorChat.chatOpened) {
         if ((this.chatStatus == 'CHATTING'
             || this.chatStatus == 'OPERATOR_PENDING_APPROVAL') && !this.confirmClose()) {
           return false;
-      }
+        }
         VisitorChat.stop();
       } else {
         VisitorChat.start();
@@ -53,8 +65,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       
       return false;
     }, this));
-    
-    $("#visitorChat_container, visitorChat_email_fallback").unbind();
     
     //Field watermarks
     $("#visitorChat_name").watermark("Name (Optional)");
@@ -81,16 +91,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }
     });
     
-    //Validator
-    $('#visitorchat_clientLogin').validation();
-    
     //This will slide down the Name and Email fields, plus the Ask button
     $("#visitorChat_messageBox").keyup(function(){
         $(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
     });
     
     //This is where the collapse button happens
-    $("#visitorChat_collapse").unbind();
     $("#visitorChat_collapse").click(function(){
         $("#visitorChat_container").slideToggle("fast", function() {
             if ($('#visitorChat_container').css('display') === 'none') {
