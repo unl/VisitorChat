@@ -78,7 +78,7 @@
                 <li><a href="http://www.unl.edu/" title="University of Nebraska–Lincoln">UNL</a></li>
 
                 <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>" title="Visitor Chat">VisitorChat</a></li>
-                <li>Water Media Map</li>
+                <li>Client Login Page</li>
             </ul>
             <!-- InstanceEndEditable --></div>
 
