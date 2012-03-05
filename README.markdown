@@ -13,4 +13,4 @@ Install
    - Site URL
    - A unique session key
    - Any default operators (these are the people the chat will fall though to if no one else can be found)
- - From command line run scrips/install.php (This will install the database)
+ - From command line run scripts/install.php (This will install the database)
