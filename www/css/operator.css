@@ -132,8 +132,7 @@
 }
 
 #visitorChat_url {
-	position: absolute;
-	top:12px;
+	margin-left: 25px;
 }
 
 #maincontent

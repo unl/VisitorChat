@@ -1,16 +1,11 @@
 <script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url?>js/chat.php?for=operator"></script>
 
-<!--
-<div id="visitorChat_header">
-    Status: <span id="currentOperatorStatus"></span>
-</div>
--->
-
 <div id="operatorOptions">
     <a href="#" id="toggleOperatorStatus"><span id="currentOperatorStatus"></span></a>
 </div>
 
 <div id="clientList">
+<h2>Conversations</h2>
 </div>
 
 <div id="clientChat">
