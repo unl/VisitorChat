@@ -27,12 +27,24 @@ class RecordList extends \Epoch\RecordList
     
     public static function getOpenConversations($userID, $options = array())
     {
+        return self::getConversationsForUser($userID, 'CHATTING', $options);
+    }
+    
+    public static function getConversationsForUser($userID, $chatStatus = false, $options = array())
+    {
+        //Build the chat status constraint.
+        $constraint = "";
+        if ($chatStatus) {
+            $constraint = "AND conversations.status = '" . self::escapeString($chatStatus) . "'";
+        }
+        
+        //Build the list
         $options = $options + self::getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
                            WHERE assignments.users_id = " . (int)$userID . "
-                               AND conversations.status = 'CHATTING'
+                               $constraint
                            ORDER BY conversations.date_created ASC";
         
         return self::getBySql($options);
