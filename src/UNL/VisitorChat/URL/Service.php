@@ -5,14 +5,17 @@ class Service
 {
     protected $options;
     
+    protected $url;
+    
     function __construct($options = array())
     {
         $this->options = $options;
+        $this->url = \UNL\VisitorChat\Controller::$url;
     }
     
     function generateSiteURL($path, $appendFormat = false, $appendPhpsessid = false)
     {
-        $url = \UNL\VisitorChat\Controller::$url . $path;
+        $url = $this->url . $path;
         
         if ($appendFormat) {
             $url = $this->appendFormat($url, $appendFormat);
@@ -45,44 +48,39 @@ class Service
     }
     
     function appendFormat($url, $format) {
-        if (!$data = parse_url($url)) {
-            return false;
-        }
-        
-        $url = $this->generateURLWithURLData($data);
-        
         if ($format === true) {
             $format = $this->options['format'];
         }
         
-        $query = array();
-        
-        if (isset($data['query'])) {
-            $data['query'] .= "&format=" . $format;
-        } else {
-            $data['query'] = "format=" . $format;
+        if (!$url = $this->addParams($url, array('format' => $format))) {
+            return false;
         }
         
-        $query = http_build_query($this->queryToArray($data['query']));
-        
-        return $url .= "?" . $query;
+        return $url;
     }
     
     function appendPhpsessid($url)
     {
+        if (!$url = $this->addParams($url, array('PHPSESSID' => session_id()))) {
+            return false;
+        }
+        
+        return $url;
+    }
+    
+    function addParams($url, $params) {
         if (!$data = parse_url($url)) {
             return false;
         }
         
         $url = $this->generateURLWithURLData($data);
         
+        $existingQuery = array();
         if (isset($data['query'])) {
-            $data['query'] .= "&PHPSESSID=" . session_id();
-        } else {
-            $data['query'] = "PHPSESSID=" . session_id();
+            $existingQuery = $this->queryToArray($data['query']);
         }
         
-        $query = http_build_query($this->queryToArray($data['query']));
+        $query = http_build_query($existingQuery + $params);
         
         return $url .= "?" . $query;
     }
@@ -94,7 +92,11 @@ class Service
         foreach ($pairs as $pair) {
             
             if ($temp = explode("=", $pair)) {
-              $array[$temp[0]] = $temp[1];
+              if (isset($temp[1])) {
+                  $array[$temp[0]] = $temp[1];
+              } else {
+                  $array[$temp[0]] = "";
+              }
             } else {
               $array[] = $pair;
             }
