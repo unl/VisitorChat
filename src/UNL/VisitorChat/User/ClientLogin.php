@@ -52,6 +52,12 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         
         $user->save();
         
+        //Append a unique ID to the end of an annon user's name
+        if ($user->name == "Anonymous") {
+            $user->name = $user->name . $user->id;
+            $user->save();
+        }
+        
         //Start up a new conversation for the user.
         $conversation = new \UNL\VisitorChat\Conversation\Record();
         $conversation->users_id       = $user->id;
