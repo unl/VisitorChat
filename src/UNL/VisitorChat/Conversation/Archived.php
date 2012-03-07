@@ -7,9 +7,7 @@ class Archived
     
     function __construct($options = array())
     {
-        //Do a permission check.
-        //Get the current user.
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        \UNL\VisitorChat\Controller::requireOperatorLogin();
         
         //Get and set the conversation for viewing.
         if (!isset($options['conversation_id'])) {
