@@ -1,4 +1,4 @@
-]UNL VisitorChat
+UNL VisitorChat
 ---------------
 
 This app will be integrated into the UNL templates.  The goal is to allow end users to chat with site support for whatever site they are viewing.  The chat system is linked with the WDN Registry so that it knows who to route chat requests to.
