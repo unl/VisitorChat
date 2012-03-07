@@ -14,6 +14,8 @@
     
     <?php
     //render a new message box.
-    echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversations_id' => $context->conversation->id)));
+    if ($context->conversation->status == "CHATTING") {
+        echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversations_id' => $context->conversation->id)));
+    }
     ?>
 </div>
