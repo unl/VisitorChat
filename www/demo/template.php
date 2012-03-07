@@ -181,27 +181,6 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
     <a style="color: white; text-decoration: none;" href="<?php echo \UNL\VisitorChat\Controller::$url ?>" id='visitorChat_launchButton'>
         Chat with us now</a>
 <!-- </div> -->
-
-<form action="http://www1.unl.edu/comments/" method="post" id="wdn_feedback_comments" title="WDN Feedback Form" class="comments">
-    <fieldset><legend>Comments for this page</legend>
-    <ol>
-        <li class="wdn_comment_name">
-            <label for="wdn_comment_name">Name (optional)</label>
-            <input type="text" name="name" id="wdn_comment_name" />
-        </li>
-        <li class="wdn_comment_email">
-
-            <label for="wdn_comment_email">Email (optional)</label>
-            <input type="text" name="email" id="wdn_comment_email" />
-        </li>
-        <li><label for="wdn_comments">Comments</label>
-          <textarea rows="2" cols="20" name="comment" id="wdn_comments"></textarea>
-        </li>
-    </ol>
-
-    <input type="submit" value="Submit" name="submit" class="wdn_comment_submit" /></fieldset>
-</form>
-
             </div>
             <div class="footer_col"><!-- InstanceBeginEditable name="leftcollinks" -->
                 <h3>Related Links</h3>
