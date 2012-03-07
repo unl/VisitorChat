@@ -91,6 +91,12 @@ abstract class RecordList extends \LimitIterator implements \Countable
         return new $options['listClass']($options);
     }
     
+    public static function escapeString($string)
+    {
+        $mysqli = \Epoch\Controller::getDB();
+        return $mysqli->escape_string($string);
+    }
+    
     function current() {
         return call_user_func($this->options['itemClass'] . "::getByID", parent::current());
     }
