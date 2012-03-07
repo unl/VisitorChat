@@ -7,6 +7,8 @@ class Edit extends \UNL\VisitorChat\User\Record
     {
         if (isset($options['id']) && $object = \UNL\VisitorChat\User\Record::getByID($options['id'])) {
             $this->synchronizeWithArray($object->toArray());
+        } else {
+            $this->synchronizeWithArray(\UNL\VisitorChat\User\Record::getCurrentUser()->toArray());
         }
     }
     
@@ -27,14 +29,16 @@ class Edit extends \UNL\VisitorChat\User\Record
             $this->status = $post['status'];
         }
         
-        if (isset($post['max_chats']) && !empty($post['max_chats'])) {
-            $this->max_chats = $post['max_chats'];
+        if (isset($post['max_chats'])) {
+            if ($post['max_chats'] < 1) {
+                throw new \Exception("You must have atleast 1 max chat", 400);
+            }
             
-            $this->status = $post['status'];
+            $this->max_chats = $post['max_chats'];
         }
         
         $this->save();
         
-        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true, true));
+        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
     }
 }

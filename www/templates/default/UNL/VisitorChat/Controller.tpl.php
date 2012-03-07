@@ -91,7 +91,19 @@
                           <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">My History</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>logout" title="Log Out">Logout</a></li>
+                    <?php 
+                    if (\UNL\VisitorChat\user\Record::getCurrentUser()) {
+                    ?>
+                    <li>
+                        <a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\user\Record::getCurrentUser()->name;?></a>
+                        <ul>
+                            <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>">Settings</a></li>
+                            <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>logout" title="Log Out">Logout</a></li>
+                        </ul>
+                    </li>
+                    <?php 
+                    }
+                    ?>
                 </ul>
                 <!-- InstanceEndEditable --></div>
         </div>

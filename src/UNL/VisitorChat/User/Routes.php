@@ -6,13 +6,14 @@ class Routes extends \RegExpRouter\RoutesInterface
     public static function getGetRoutes()
     {
         return array('/^logout$/i' => 'Logout',
-                     '/^user\/info$/i' => 'Info',);
+                     '/^user\/info$/i' => 'Info');
     }
     
     public static function getPostRoutes() 
     {
         return array('/^clientLogin$/i' => 'ClientLogin',
                      '/^operatorLogin$/i' => 'OperatorLogin',
+                     '/^user\/settings$/i' => 'Edit',
                      '/^users\/(?<id>[\d]+)\/edit$/i' => 'Edit');
     }
     
