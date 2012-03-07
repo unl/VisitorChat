@@ -5,9 +5,11 @@ class Routes extends \RegExpRouter\RoutesInterface
 {
     public static function getGetRoutes()
     {
-        return array('/^conversation$/i' => 'View',
-                     '/^$/i'             => 'View',
-                     '/^conversations$/i' => 'RecordList',);
+        return array('/^conversation$/i'  => 'View',
+                     '/^history\/(?<conversation_id>[\d]+)$/i' => 'Archived',
+                     '/^$/i'              => 'View',
+                     '/^conversations$/i' => 'RecordList',
+                     '/^history$/i'       => 'History',);
     }
     
     public static function getPostRoutes() 

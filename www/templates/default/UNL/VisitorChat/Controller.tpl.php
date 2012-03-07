@@ -85,6 +85,12 @@
         <div id="wdn_navigation_wrapper">
             <div id="navigation"><!-- InstanceBeginEditable name="navlinks" -->
                 <ul>
+                    <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('manage');?>">Dashboard</a></li>
+                    <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">History</a>
+                        <ul>
+                          <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">My History</a></li>
+                        </ul>
+                    </li>
                     <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>logout" title="Log Out">Logout</a></li>
                 </ul>
                 <!-- InstanceEndEditable --></div>
