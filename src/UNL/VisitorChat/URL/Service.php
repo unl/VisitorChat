@@ -82,7 +82,10 @@ class Service
         
         $query = http_build_query($existingQuery + $params);
         
-        return $url .= "?" . $query;
+        if (!empty($query)) {
+            $query = "?" . $query;
+        }
+        return $url .= $query;
     }
     
     private function queryToArray($query = array())
