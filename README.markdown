@@ -1,4 +1,4 @@
-UNL VisitorChat
+]UNL VisitorChat
 ---------------
 
 This app will be integrated into the UNL templates.  The goal is to allow end users to chat with site support for whatever site they are viewing.  The chat system is linked with the WDN Registry so that it knows who to route chat requests to.
@@ -13,4 +13,6 @@ Install
    - Site URL
    - A unique session key
    - Any default operators (these are the people the chat will fall though to if no one else can be found)
- - From command line run scrips/install.php (This will install the database)
+ - From command line run scripts/install.php (This will install the database)
+ - Copy the www/sample.htaccess to www/.htaccess
+ - Edit www/.htaccess to fit your own environment.
