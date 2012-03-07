@@ -485,4 +485,20 @@ class Record extends \Epoch\Record
             $assignment->markAsCompleted();
         }
     }
+    
+    function getAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($this->id);
+    }
+    
+    function getInvolvedUsers()
+    {
+        $users = array($this->users_id);
+        
+        foreach ($this->getAssignments() as $assignment) {
+            $users[] = $assignment->users_id;
+        }
+        
+        return $users;
+    }
 }
