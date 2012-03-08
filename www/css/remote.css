@@ -4,7 +4,7 @@
     font-size:13px;
     left: 15px; 
     bottom: 0px;
-    width: 236px;
+    width: 240px;
     color: black;
     background-color: transparent;
     border-radius: 3px;
@@ -106,7 +106,11 @@
     margin: 5px auto;
     overflow-y: hidden;
     resize: none;
-    width: 222px;
+    width: 218px;
+}
+
+.visitorChat_center {
+    text-align: center;
 }
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email {
