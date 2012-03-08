@@ -175,7 +175,7 @@
     display: none;
 }
 
-#visitorChat_launchButton {
+#footer #visitorChat_launchButton {
 	background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png") 6px 50% no-repeat;
 	background-color: #6FBF4D;
 	border-radius: 3px;
@@ -187,6 +187,8 @@
 	text-decoration: none;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.6);
 	padding-left: 30px;
+	color: white;
+    text-decoration: none;
 }
 
 #visitorChat_url {
@@ -277,4 +279,13 @@
 	line-height: 120%;
 	margin: 4px 0;
 	margin-left: 25px;
+}
+
+#visitorChat_offline {
+    background-color: #aaa;
+}
+
+#visitorChat_online {
+    background-color: #6FBF4D;
+    
 }

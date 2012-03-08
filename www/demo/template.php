@@ -178,7 +178,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 </form>
 
 <!-- <div id="visitorChat_launchContainer"> -->
-    <a style="color: white; text-decoration: none;" href="<?php echo \UNL\VisitorChat\Controller::$url ?>" id='visitorChat_launchButton'>
+    <a id='visitorChat_launchButton' class='visitorChat_offline' href="<?php echo \UNL\VisitorChat\Controller::$url ?>">
         Chat with us now</a>
 <!-- </div> -->
             </div>
