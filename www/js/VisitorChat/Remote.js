@@ -158,11 +158,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   displaySiteAvailability: function() {
     if (this.operatorsAvailable) {
       $("#visitorChat_launchButton").html("Chat with us now");
-      $("#visitorChat_launchButton, #visitorChat_header").addClass('online');
-      $("#visitorChat_launchButton, #visitorChat_header").removeClass('offline');
+      $("#visitorChat_launchButton, #visitorChat_header").addClass('visitorChat_online');
+      $("#visitorChat_launchButton, #visitorChat_header").removeClass('visitorChat_offline');
     } else {
-      $("#visitorChat_launchButton, #visitorChat_header").addClass('offline');
-      $("#visitorChat_launchButton, #visitorChat_header").removeClass('online');
+      $("#visitorChat_launchButton, #visitorChat_header").addClass('visitorChat_offline');
+      $("#visitorChat_launchButton, #visitorChat_header").removeClass('visitorChat_online');
       $("#visitorChat_launchButton").html("Send us an email");
     }
   }

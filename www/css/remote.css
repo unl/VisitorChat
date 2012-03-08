@@ -177,7 +177,7 @@
 
 #footer #visitorChat_launchButton {
 	background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png") 6px 50% no-repeat;
-	background-color: #6FBF4D;
+	background-color: #aaa;
 	border-radius: 3px;
 	color: white;
 	display: block;
@@ -281,11 +281,12 @@
 	margin-left: 25px;
 }
 
-#visitorChat_offline {
-    background-color: #aaa;
+.visitorChat_offline {
+    background-color: #aaa !important;
+    background: #aaa !important;
 }
 
-#visitorChat_online {
-    background-color: #6FBF4D;
-    
+.visitorChat_online {
+    background-color: #6FBF4D !important;
+    background: #6FBF4D !important;
 }
