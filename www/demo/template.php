@@ -60,6 +60,11 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
     <div id="wdn_wrapper">
+        <div id='visitorChat_launcher_container'>
+            <div id='visitorChat_launcher' class='visitorChat_offline'>
+                Chat
+            </div>
+        </div>
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
@@ -154,9 +159,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-                <a id='visitorChat_launchButton' class='visitorChat_offline' href="<?php echo \UNL\VisitorChat\Controller::$url ?>">
-        Chat with us now</a>
-                <!--#include virtual="/wdn/templates_3.1/includes/feedback.html" -->
+                <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/feedback.html'; ?>
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->

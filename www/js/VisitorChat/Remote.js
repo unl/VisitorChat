@@ -52,7 +52,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Call the parent.
     this._super();
     
-    $('#visitorChat_launchButton, #visitorChat_close').click($.proxy(function(){
+    $('#visitorChat_launcher, #visitorChat_close').click($.proxy(function(){
       if (VisitorChat.chatOpened) {
         if ((this.chatStatus == 'CHATTING'
             || this.chatStatus == 'OPERATOR_PENDING_APPROVAL') && !this.confirmClose()) {
@@ -157,13 +157,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   displaySiteAvailability: function() {
     if (this.operatorsAvailable) {
-      $("#visitorChat_launchButton").html("Chat with us now");
-      $("#visitorChat_launchButton, #visitorChat_header").addClass('visitorChat_online');
-      $("#visitorChat_launchButton, #visitorChat_header").removeClass('visitorChat_offline');
+      $("#visitorChat_launcher").html("Chat");
+      $("#visitorChat_launcher, #visitorChat_header").addClass('visitorChat_online');
+      $("#visitorChat_launcher, #visitorChat_header").removeClass('visitorChat_offline');
     } else {
-      $("#visitorChat_launchButton, #visitorChat_header").addClass('visitorChat_offline');
-      $("#visitorChat_launchButton, #visitorChat_header").removeClass('visitorChat_online');
-      $("#visitorChat_launchButton").html("Send us an email");
+      $("#visitorChat_launcher, #visitorChat_header").addClass('visitorChat_offline');
+      $("#visitorChat_launcher, #visitorChat_header").removeClass('visitorChat_online');
+      $("#visitorChat_launcher").html("Email");
     }
   }
 });

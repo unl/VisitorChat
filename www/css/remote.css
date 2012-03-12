@@ -1,3 +1,34 @@
+#visitorChat_launcher {
+    width: 25px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 3px 0px 0px 3px;
+    color: white;
+    background-color: transparent;
+    padding: 35px 10px 0px 10px;
+    text-decoration: none;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+}
+
+#visitorChat_launcher_container {
+    position: fixed;
+    margin-left: -62px;
+    bottom: 50%;
+    width: 35px;
+    height: 75px;
+    border-radius: 3px 0px 0px 3px;
+    border-left: 5px solid #EEEEEE;
+    border-top: 5px solid #EEEEEE;
+    border-bottom: 5px solid #EEEEEE;
+    display: block;
+    font-size: 11px;
+    text-decoration: none;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.6);
+    color: white;
+    background-color: #EEE;
+}
+
 #visitorChat {
     font-family:arial,tahoma,verdana, sans-serif;
     position: fixed;
@@ -9,8 +40,8 @@
     background-color: transparent;
     border-radius: 3px;
     -webkit-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
-	-moz-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
-	box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
+    -moz-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
+    box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
     max-height: 450px;
     z-index: 1000;
 }
@@ -20,9 +51,6 @@
 	font-size: 20px;
 	letter-spacing: -0.04em;
     background-color: #B70302;
-    background-image: linear-gradient(top,#b70302 0%,#9d0201 100%);
-	background-image: -moz-linear-gradient(top,#b70302 0%,#9d0201 100%);
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#b70302),color-stop(100%,#9d0201));
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     color: #fff;
@@ -179,22 +207,6 @@
     display: none;
 }
 
-#footer #visitorChat_launchButton {
-	background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png") 6px 50% no-repeat;
-	background-color: #aaa;
-	border-radius: 3px;
-	color: white;
-	display: block;
-	font-size: 11px;
-	margin: 6px 0;
-	padding: 3px;
-	text-decoration: none;
-	text-shadow: 0 1px rgba(0, 0, 0, 0.6);
-	padding-left: 30px;
-	color: white;
-    text-decoration: none;
-}
-
 #visitorChat_url {
     display: none;
 }
@@ -287,10 +299,16 @@
 
 .visitorChat_offline {
     background-color: #aaa !important;
-    background: #aaa !important;
+    background: #aaa;
+}
+
+#visitorChat_launcher.visitorChat_online {
+    background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.gif");
+    background-position: 50% 16px;
+    background-repeat: no-repeat;
 }
 
 .visitorChat_online {
     background-color: #6FBF4D !important;
-    background: #6FBF4D !important;
+    background: #6FBF4D;
 }
