@@ -12,15 +12,22 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 //Make sure the browser knows it is javascript.
 header('Content-Type: application/javascript');
 
-?>
-var $ = WDN.jQuery;
-var VisitorChat = false;
-<?php
-
 $for = 'client';
 if (isset($_GET['for'])) {
     $for = $_GET['for'];
 }
+
+$filename = sys_get_temp_dir() . "/VisitorChatJS_" . md5(\UNL\VisitorChat\Controller::$url . $for) . ".php";
+if (file_exists($filename)) {
+    echo file_get_contents($filename);
+    exit();
+}
+
+ob_start();
+?>
+var $ = WDN.jQuery;
+var VisitorChat = false;
+<?php
 
 //Include the required things:
 require_once(dirname(__FILE__) . "/SimpleJavaScriptInheritance.js");
@@ -37,4 +44,15 @@ switch($for) {
         require_once(dirname(__FILE__) . "/jquery.watermark.min.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Remote.js");
 }
+
+$js = ob_get_contents();
+ob_clean();
+
+require_once('jsmin.php');
+
+$js = JSMin::minify($js);
+
+file_put_contents($filename, $js);
+
+echo $js;
 ?>
