@@ -55,7 +55,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="document" -->
 </head>
-<body class="document">
+<body class="fixed">
     <nav class="skipnav">
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
@@ -83,8 +83,8 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
                     <h3 class="wdn_list_descriptor hidden">Navigation</h3>
                     <!-- InstanceBeginEditable name="navlinks" -->
                     <ul>
-                        <li><a href="index.html" title="Home">Home</a></li>
-                        <li><?php echo $link?></li>
+                        <li><a href="index.php" title="Home">Home</a></li>
+                        <li><?php echo $link;?></li>
                     </ul>
                     <!-- InstanceEndEditable -->
                 </nav>
