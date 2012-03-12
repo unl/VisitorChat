@@ -70,12 +70,12 @@ var VisitorChat_ChatBase = Class.extend({
    * Initalize event watchers related to the current window.
    */
   initWindow: function(){
-    $([window, document]).blur(function(){
+    WDN.jQuery([window, document]).blur(function(){
       
       VisitorChat.windowVisible = false;
     });
     
-    $([window, document]).focus(function(){
+    WDN.jQuery([window, document]).focus(function(){
       VisitorChat.windowVisible = true;
       VisitorChat.clearAlert();
       document.title = VisitorChat.siteTitle;
@@ -125,13 +125,13 @@ var VisitorChat_ChatBase = Class.extend({
     }
     
     //Start the chat.
-    $.ajax({
+    WDN.jQuery.ajax({
       url: this.serverURL + "user/info?format=json&PHPSESSID=" + this.phpsessid + checkOperators,
       xhrFields: {
         withCredentials: true
       },
       dataType: "json",
-      success: $.proxy(function(data, textStatus, jqXHR) {
+      success: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
         this.handleUserDataResponse(data);
       }, this)
     });
@@ -170,13 +170,13 @@ var VisitorChat_ChatBase = Class.extend({
       url = this.generateChatURL();
     }
     
-    $.ajax({
+    WDN.jQuery.ajax({
       url: url,
       xhrFields: {
         withCredentials: true
       },
       dataType: "json",
-      success: $.proxy(function(data, textStatus, jqXHR) {
+      success: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
         this.updateChatWithData(data);
       }, this)
     });
@@ -316,7 +316,7 @@ var VisitorChat_ChatBase = Class.extend({
     }
     
     //set the for_url
-    data['html'] = $($(data['html']).find('#initial_url')[0]).val(document.URL).parent();
+    data['html'] = WDN.jQuery(WDN.jQuery(data['html']).find('#initial_url')[0]).val(document.URL).parent();
     
     //Update the chat container.
     this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
@@ -329,13 +329,13 @@ var VisitorChat_ChatBase = Class.extend({
    */
   updateChatContainerWithHTML: function(selector, html) {
     //Should we alert the user?
-    if ($(selector).html() !== html) {
+    if (WDN.jQuery(selector).html() !== html) {
       this.clearAlert();
       this.alert();
     }
     
     //Update the html
-    $(selector).html(html);
+    WDN.jQuery(selector).html(html);
     
     //Scroll if we can.
     this.scroll();
@@ -352,15 +352,15 @@ var VisitorChat_ChatBase = Class.extend({
    */
   initWatchers: function() {
     //Remove old elvent handlers
-    $('#visitorChat_messageBox').unbind();
+    WDN.jQuery('#visitorChat_messageBox').unbind();
     
-    $('#visitorChat_messageBox').keypress(function(e){
+    WDN.jQuery('#visitorChat_messageBox').keypress(function(e){
       if(e.which == 13 && !e.shiftKey){
         e.preventDefault();
         if (VisitorChat.chatStatus == 'LOGIN') {
-          $('#visitorchat_clientLogin').submit();
+          WDN.jQuery('#visitorchat_clientLogin').submit();
         } else {
-          $('#visitorChat_messageForm').submit();
+          WDN.jQuery('#visitorChat_messageForm').submit();
         }
       }
     });
@@ -372,7 +372,7 @@ var VisitorChat_ChatBase = Class.extend({
    * scroll is used to scroll the current chat to the bottom of the chat div.
    */
   scroll: function() {
-    $("#visitorChat_chatBox").scrollTop($("#visitorChat_chatBox").prop('scrollHeight'));
+    WDN.jQuery("#visitorChat_chatBox").scrollTop(WDN.jQuery("#visitorChat_chatBox").prop('scrollHeight'));
   },
   
   /**
@@ -384,16 +384,16 @@ var VisitorChat_ChatBase = Class.extend({
           clearForm: true,
           timeout:   3000,
           dataType: "json",
-          complete: $.proxy(function(data, textStatus, jqXHR) {
+          complete: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
             this.handleAjaxResponse(data, textStatus);
             //this.updateChatWithData(data);
           }, this),
-          beforeSubmit: $.proxy(function() {
+          beforeSubmit: WDN.jQuery.proxy(function() {
               var html = "<div class='visitorChat_loading'></div>";
               if (VisitorChat.chatStatus == 'LOGIN') {
-                  $('#visitorChat_container').html(html);
+                  WDN.jQuery('#visitorChat_container').html(html);
               } else {
-                  $('#visitorChat_chatBox').addClass("visitorChat_loading");
+                  WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
               }
               
               return true;
@@ -404,19 +404,19 @@ var VisitorChat_ChatBase = Class.extend({
           }
       };
       
-    var action = $('.unl_visitorchat_form').attr('action');
+    var action = WDN.jQuery('.unl_visitorchat_form').attr('action');
       
     if (action !== undefined && action.indexOf("format=json") == -1) {
-      $('.unl_visitorchat_form').attr('action', $.proxy(function(i, val) {
+      WDN.jQuery('.unl_visitorchat_form').attr('action', WDN.jQuery.proxy(function(i, val) {
         return val + '?format=json&PHPSESSID=' + this.phpsessid;
       }, this));
     }
       
     //bind form using 'ajaxForm' 
-    $('.unl_visitorchat_form').ajaxForm(options);
+    WDN.jQuery('.unl_visitorchat_form').ajaxForm(options);
     
     if (this.windowVisible) {
-      $('#visitorChat_messageBox').focus();
+      WDN.jQuery('#visitorChat_messageBox').focus();
     }
   },
   
@@ -533,7 +533,7 @@ var VisitorChat_ChatBase = Class.extend({
   handleAjaxResponse: function(data, textStatus)
   {
     if (data["responseText"] !== undefined) {
-      data = $.parseJSON(data["responseText"]);
+      data = WDN.jQuery.parseJSON(data["responseText"]);
     }
     
     if (textStatus == 'error') {
@@ -555,10 +555,10 @@ var VisitorChat_ChatBase = Class.extend({
     this.chatOpened = false;
     
     //2. Close the chatbox.
-    $("#visitorChat").remove();
+    WDN.jQuery("#visitorChat").remove();
     
     //3. logout
-    $.ajax({
+    WDN.jQuery.ajax({
         url: this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
         xhrFields: {
             withCredentials: true

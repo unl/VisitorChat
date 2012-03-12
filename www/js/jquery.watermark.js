@@ -560,4 +560,4 @@ if ($.watermark.runOnce) {
 	});
 }
 
-})($, window);
+})(WDN.jQuery, window);

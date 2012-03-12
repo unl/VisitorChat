@@ -7,7 +7,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   requestExpireDate : new Array(),
   
   initWindow: function() {
-    $("#toggleOperatorStatus").click(function(){
+    WDN.jQuery("#toggleOperatorStatus").click(function(){
         VisitorChat.toggleOperatorStatus();
         return false;
     });
@@ -17,12 +17,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   initWatchers: function() {
     //Remove old elvent handlers
-    $('.conversationLink').unbind();
+    WDN.jQuery('.conversationLink').unbind();
   
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
-    $('.conversationLink').click(function(){
+    WDN.jQuery('.conversationLink').click(function(){
       //Empty out the current chat.
-      $('#clientChat').empty();
+      WDN.jQuery('#clientChat').empty();
       
       //Load the chat.
       VisitorChat.updateChat(this);
@@ -41,11 +41,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     
     if (window.webkitNotifications && window.webkitNotifications.checkPermission()) {
-      $('notificationOptions').show();
+      WDN.jQuery('notificationOptions').show();
     }
     
     //Request permission for notifications.
-    $('#requestNotifications').click(function() {
+    WDN.jQuery('#requestNotifications').click(function() {
       if (!window.webkitNotifications) {
         return false;
       }
@@ -73,7 +73,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       if (this.unreadMessages[conversation]) {
         html = this.unreadMessages[conversation];
       }
-      $("#visitorChat_UnreadMessages_" + conversation).html(html);
+      WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
     }
   },
   
@@ -147,19 +147,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       //3. Alert the user.
       if (this.currentRequest != data['pendingAssignment']) {
         //start a new dialog box.
-        $("#chatRequest").dialog({
+        WDN.jQuery("#chatRequest").dialog({
           resizable: false,
           height:140,
           modal: true,
           buttons: {
-            "Reject": $.proxy(function() {
-              $("#chatRequest").dialog("close");
+            "Reject": WDN.jQuery.proxy(function() {
+              WDN.jQuery("#chatRequest").dialog("close");
               this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
               this.clearAlert();
               clearTimeout(VisitorChat.requestLoopID);
             }, this),
-            "Accept": $.proxy(function() {
-               $("#chatRequest").dialog("close");
+            "Accept": WDN.jQuery.proxy(function() {
+               WDN.jQuery("#chatRequest").dialog("close");
                this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
                clearTimeout(VisitorChat.requestLoopID);
                this.clearAlert();
@@ -181,7 +181,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   sendChatRequestResponse: function(id, response) {
-    $.ajax({
+    WDN.jQuery.ajax({
       type: "POST",
       url: this.serverURL + "assignment/" + id + "/edit?format=json&PHPSESSID=" + this.phpsessid,
       data: "status=" + response
@@ -208,10 +208,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   requestLoop: function(id) {
     currentDate = new Date();
     difference = Math.round((VisitorChat.requestExpireDate[id] - currentDate.getTime())/1000);
-    $("#chatRequestCountDown").html(difference);
+    WDN.jQuery("#chatRequestCountDown").html(difference);
     
     if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
-        $("#chatRequest").dialog("close"); //Remove the dialog box.
+        WDN.jQuery("#chatRequest").dialog("close"); //Remove the dialog box.
         clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
         this.clearAlert();
     }
@@ -238,35 +238,35 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   onConversationStatus_Closed: function(data) {
 	    //Disable the input message input.
-	    $("visitorChat_messageBox").attr("disabled", "disabled");
+	    WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
 	    
 	    //Display a closed message.
 	    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
-	    html = $("#visterChat_conversation").prepend(html);
+	    html = WDN.jQuery("#visterChat_conversation").prepend(html);
 	    this.updateChatContainerWithHTML("#clientChat", html);
 	    
 	    //Fade out everything BUT closed message
 
 			//loop through all the children in #items		 
 				//set the opacity of all siblings
-				$('#visitorChat_closed').siblings().css({'opacity': '0.1'})
+				WDN.jQuery('#visitorChat_closed').siblings().css({'opacity': '0.1'})
 				//set the opacity of current item to full, and add the effect class
-				$('#visitorChat_closed').css({'opacity': '1.0'});   
+				WDN.jQuery('#visitorChat_closed').css({'opacity': '1.0'});   
 			 
 				//reset all the opacity to full and remove effect class
-				//$(this).removeClass('effect');
-				//$(this).siblings().fadeTo('fast', '1.0')  
+				//WDN.jQuery(this).removeClass('effect');
+				//WDN.jQuery(this).siblings().fadeTo('fast', '1.0')  
 	  },
   
   updateConversationList: function() {
     //Update the Client List
-    $.ajax({
+    WDN.jQuery.ajax({
       url: this.serverURL + "conversations?format=partial",
       xhrFields: {
           withCredentials: true
       },
-      success: $.proxy(function(data) {
-          $("#clientList").html(data);
+      success: WDN.jQuery.proxy(function(data) {
+          WDN.jQuery("#clientList").html(data);
           this.initWatchers();
       }, this)
     });
@@ -283,11 +283,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       return false;
     }
     
-    $.ajax({
+    WDN.jQuery.ajax({
       type: "POST",
       url: this.serverURL + "users/" + this.userID + "/edit?format=json",
       data: "status=" + status,
-      success: $.proxy(function(data) {
+      success: WDN.jQuery.proxy(function(data) {
         this.updateOperatorStatus(status);
       }, this)
     });
@@ -297,22 +297,22 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 	  var formatStatus = 'Busy';
 	  
 	if (newStatus == 'BUSY') {
-      $("#toggleOperatorStatus").addClass("closed");
-      $("#toggleOperatorStatus").removeClass("open");
+      WDN.jQuery("#toggleOperatorStatus").addClass("closed");
+      WDN.jQuery("#toggleOperatorStatus").removeClass("open");
     } else {
-      $("#toggleOperatorStatus").addClass("open");
-      $("#toggleOperatorStatus").removeClass("closed");
+      WDN.jQuery("#toggleOperatorStatus").addClass("open");
+      WDN.jQuery("#toggleOperatorStatus").removeClass("closed");
       formatStatus = 'Available';
     }
     
-    $("#currentOperatorStatus").html(formatStatus);
+    WDN.jQuery("#currentOperatorStatus").html(formatStatus);
     
     this.operatorStatus = newStatus;
   }
   
 });
 
-$(function(){
+WDN.jQuery(function(){
   VisitorChat = new VisitorChat_Chat();
   VisitorChat.start();
 });

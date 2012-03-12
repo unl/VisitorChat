@@ -25,7 +25,6 @@ if (file_exists($filename)) {
 
 ob_start();
 ?>
-var $ = WDN.jQuery;
 var VisitorChat = false;
 <?php
 
