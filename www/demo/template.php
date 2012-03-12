@@ -11,9 +11,15 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 }
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><!-- InstanceBegin template="/Templates/fixed.dwt" codeOutsideHTMLIsLocked="false" -->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="ie iem7"><![endif]-->
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"><![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"><![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"><![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7) ]><html class="ie" lang="en"><![endif]-->
+<!--[if !(IEMobile) | !(IE)]><!--><html lang="en"><!-- InstanceBegin template="/Templates/fixed.dwt" codeOutsideHTMLIsLocked="false" --><!--<![endif]-->
 <head>
+<?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/metanfavico.html'; ?>
 <!--
     Membership and regular participation in the UNL Web Developer Network
     is required to use the UNL templates. Visit the WDN site at 
@@ -26,214 +32,154 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
     create a derivative work.
     This message may not be removed from any pages based on the UNL site template.
     
-    $Id: fixed.dwt 536 2009-07-23 15:47:30Z bbieber2 $
+    $Id: fixed.dwt | 1e98ba6f3cd3310802e61545987e6582d0abac6f | Wed Feb 15 11:42:58 2012 -0600 | Kevin Abel  $
 -->
-<link rel="stylesheet" type="text/css" media="screen" href="/wdn/templates_3.0/css/all.css" />
-<link rel="stylesheet" type="text/css" media="print" href="/wdn/templates_3.0/css/print.css" />
-<script type="text/javascript" src="/wdn/templates_3.0/scripts/all.js"></script>
-<!--[if lt IE 9]>
-    <link rel="stylesheet" type="text/css" media="screen" href="/wdn/templates_3.0/css/ie.css" />
-<![endif]-->
-<meta name="author" content="University of Nebraska-Lincoln | Web Developer Network" />
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
-<meta http-equiv="content-language" content="en" />
-<meta name="language" content="en" />
-<link rel="shortcut icon" href="/wdn/templates_3.0/images/favicon.ico" />
-
+<?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/scriptsandstyles.html'; ?>
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>UNL | Chat Demo | <?php echo $title?></title>
-
-<!-- InstanceEndEditable --><!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
+<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php"></script>
 <style type="text/css">
-/*
-.style1 {font-style: italic}
-*/
+#maincontent .grid1, #maincontent  .grid2, #maincontent  .grid3, #maincontent  .grid4, #maincontent  .grid5, #maincontent  .grid6, #maincontent  .grid7, #maincontent  .grid8, #maincontent  .grid9, #maincontent  .grid10, #maincontent  .grid11, #maincontent  .grid12 {
+    margin-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: rgba(111,191,77,.4);
+    border: solid 1px #6FBF4D;
+    border-width: 1px 0;
+    text-align:center;
+}
 </style>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php"></script>
+<!-- InstanceParam name="class" type="text" value="document" -->
 </head>
-<body class="fixed">
-<p class="skipnav"> <a class="skipnav" href="#maincontent">Skip Navigation</a> </p>
-
-<div id="wdn_wrapper">
-    <div id="header"> <a href="http://www.unl.edu/" title="UNL website"><img src="/wdn/templates_3.0/images/logo.png" alt="UNL graphic identifier" id="logo" /></a>
-        <h1>University of Nebraska&ndash;Lincoln</h1>
-        <div id="wdn_search">
-    <form id="wdn_search_form" action="http://www.google.com/u/UNL1?sa=Google+Search&amp;q=" method="get">
-        <fieldset>
-            <label for="q">Search this site, all UNL or for a person</label>
-
-            <input accesskey="f" id="q" name="q" type="text" />
-            <input class="search" type="submit" value="Go" name="submit" />
-        </fieldset>
-    </form>
-</div>
-<h3 class="wdn_list_descriptor hidden">UNL Tools</h3>
-<ul id="wdn_tool_links">
-    <!-- <li style="border-color:#ac0203;"><a href="http://emergency.unl.edu/" class="alert tooltip" title="Emergency Alert: An alert has been issued!">Emergency</a></li> -->
-    <li><a href="http://www1.unl.edu/feeds/" class="feeds tooltip" title="RSS Feeds: View and Subscribe to News Feeds">Feeds</a></li>
-
-    <li><a href="http://forecast.weather.gov/MapClick.php?CityName=Lincoln&amp;state=NE&amp;site=OAX" class="weather tooltip" title="Weather: Local Forecast and Radar">Weather</a></li>
-    <li><a href="http://events.unl.edu/" class="events tooltip" title="UNL Events: Calendar of Upcoming Events">Events</a></li>
-    <li><a href="http://directory.unl.edu/" class="peoplefinder tooltip" title="UNL Directory: Search for Faculty, Staff, Students and Departments">Directory</a></li>
-    <li><a href="http://www.unl.edu/unlpub/cam/cam1.shtml" class="webcams tooltip" title="Webcams: Live UNL Campus Cameras">Webcams</a></li>
-</ul>
-
-    </div>
-    <div id="wdn_navigation_bar">
-
-        <div id="breadcrumbs">
-            <!-- WDN: see glossary item 'breadcrumbs' -->
-            <!-- InstanceBeginEditable name="breadcrumbs" -->
-            <ul>
-                <li><a href="http://www.unl.edu/" title="University of Nebraska–Lincoln">UNL</a></li>
-                                <li><?php echo $title?></li>
-            </ul>
-            <!-- InstanceEndEditable --></div>
-
-        <div id="wdn_navigation_wrapper">
-            <div id="navigation"><!-- InstanceBeginEditable name="navlinks" -->
+<body class="document">
+    <nav class="skipnav">
+        <a class="skipnav" href="#maincontent">Skip Navigation</a>
+    </nav>
+    <div id="wdn_wrapper">
+        <header id="header" role="banner">
+            <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
+            <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->College of Agricultural Sciences &amp; Natural Resources <span>A division of the College of Arts &amp; Sciences</span><!-- InstanceEndEditable --></span>
+            <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/idm.html'; ?>
+            <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/wdnTools.html'; ?>
+        </header>
+        <div id="wdn_navigation_bar">
+            <nav id="breadcrumbs">
+                <!-- WDN: see glossary item 'breadcrumbs' -->
+                <h3 class="wdn_list_descriptor hidden">Breadcrumbs</h3>
+                <!-- InstanceBeginEditable name="breadcrumbs" -->
                 <ul>
-    <li><a href="index.html" title="Home">Home</a></li>
-    <li><?php echo $link?></li>
-</ul>
-
-                <!-- InstanceEndEditable --></div>
-        </div>
-    </div>
-
-    <div id="wdn_content_wrapper">
-        <div id="titlegraphic"><!-- InstanceBeginEditable name="titlegraphic" -->
-            <h1><?php echo $title?></h1>
-            <!-- InstanceEndEditable --></div>
-        <div id="pagetitle"><!-- InstanceBeginEditable name="pagetitle" -->
-                <h2><?php echo $title?></h2>
-                <!-- InstanceEndEditable --></div>
-        <div id="maincontent">
-            <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
-            <!-- InstanceBeginEditable name="maincontentarea" -->
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            TEXT! <br />
-            <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
-      </div>
-        <div id="footer">
-            <div id="footer_floater"></div>
-            <div class="footer_col">
-
-                <h3>Your Feedback</h3>
-<form action="http://www1.unl.edu/comments/" method="post" id="wdn_feedback" title="WDN Feedback Form:4" class="rating">
-    <fieldset><legend>Please rate this page</legend>
-    <ol>
-        <li><label for="r1">Your Rating:</label> 
-            <select id="r1" name="rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </li>
-    </ol>
-    <input type="submit" value="Submit" name="submit" /></fieldset>
-</form>
-
-<!-- <div id="visitorChat_launchContainer"> -->
-    <a id='visitorChat_launchButton' class='visitorChat_offline' href="<?php echo \UNL\VisitorChat\Controller::$url ?>">
-        Chat with us now</a>
-<!-- </div> -->
-            </div>
-            <div class="footer_col"><!-- InstanceBeginEditable name="leftcollinks" -->
-                <h3>Related Links</h3>
-
-                <!-- InstanceEndEditable --></div>
-            <div class="footer_col"><!-- InstanceBeginEditable name="contactinfo" -->
-
-                <h3>Contacting Us</h3>
-
-                <!-- InstanceEndEditable --></div>
-            <div class="footer_col">
-                <h3>Share This Page</h3>
-<ul class="socialmedia">
-    <li><a href="http://go.unl.edu/?url=referer" id="wdn_createGoURL" rel="nofollow">Get a G<span>o</span>URL</a></li>
-    <li class="outpost" id="wdn_emailthis"><a href="mailto:" title="Email this page to a friend" rel="nofollow">Email This Page</a></li>
-
-    <li class="outpost" id="wdn_facebook"><a href="http://www.facebook.com/" title="Share this page on Facebook" rel="nofollow">Facebook</a></li>   
-    <li class="outpost" id="wdn_twitter"><a href="http://www.twitter.com/" title="Share this page on Twitter" rel="nofollow">Twitter</a></li>
-</ul>
-            </div>
-            <!-- InstanceBeginEditable name="optionalfooter" --> <!-- InstanceEndEditable -->
-            <div id="wdn_copyright"><!-- InstanceBeginEditable name="footercontent" -->
-                <script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-26427016-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-
-&copy; 2011 University of Nebraska&ndash;Lincoln | Lincoln, NE 68588 | 402-472-7211 | <a href="http://www.unl.edu/ucomm/aboutunl/" title="Click here to know more about UNL">About UNL</a> | <a href="http://www1.unl.edu/comments/" title="Click here to direct your comments and questions">comments?</a>
+                    <li><a href="http://www.unl.edu/" title="University of Nebraska–Lincoln">UNL</a></li>
+                    <li><?php echo $title?></li>
+                </ul>
                 <!-- InstanceEndEditable -->
-                <br />
-UNL web templates and quality assurance provided by the <a href="http://wdn.unl.edu/" title="UNL Web Developer Network">Web Developer Network</a>
-<div id="wdn_logos">
-    <a href="http://www.unl.edu/" title="UNL Home" id="unl_wordmark"><img src="/wdn/templates_3.0/css/footer/images/wordmark_white.png" alt="UNL Wordmark" /></a>
-
-    <a href="http://www.cic.net/" title="CIC Website" id="cic_wordmark"><img src="/wdn/templates_3.0/css/footer/images/cic.png" alt="Committee on Institutional Cooperation Logo" /></a>
-    <a href="http://www.bigten.org/" title="Big Ten Website" id="b1g_wordmark"><img src="/wdn/templates_3.0/css/footer/images/B1G.png" alt="Big Ten Logo" /></a>
-</div>
-
-                | <a href="http://validator.unl.edu/check/referer">W3C</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">CSS</a> <a href="http://www.unl.edu/" title="UNL Home" id="wdn_unl_wordmark"><img src="/wdn/templates_3.0/css/footer/images/wordmark.png" alt="UNL's wordmark" /></a> </div>
+            </nav>
+            <div id="wdn_navigation_wrapper">
+                <nav id="navigation" role="navigation">
+                    <h3 class="wdn_list_descriptor hidden">Navigation</h3>
+                    <!-- InstanceBeginEditable name="navlinks" -->
+                    <ul>
+                        <li><a href="index.html" title="Home">Home</a></li>
+                        <li><?php echo $link?></li>
+                    </ul>
+                    <!-- InstanceEndEditable -->
+                </nav>
+            </div>
         </div>
-
+        <div id="wdn_content_wrapper">
+            <div id="pagetitle">
+                <!-- InstanceBeginEditable name="pagetitle" -->
+                <h1><?php echo $title?></h1>
+                <!-- InstanceEndEditable -->
+            </div>
+            <div id="maincontent" role="main">
+                <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
+                <!-- InstanceBeginEditable name="maincontentarea" -->
+                  <h2 class="sec_header"><?php echo $title?></h2>
+                  <div class="grid1 first"> grid1 </div>
+                  <div class="grid11"> grid11 </div>
+                  <div class="grid2 first"> grid2 </div>
+                  <div class="grid10"> grid10 </div>
+                  <div class="grid3 first"> grid3 </div>
+                  <div class="grid9"> grid9 </div>
+                  <div class="grid4 first"> grid4 </div>
+                  <div class="grid8"> grid8 </div>
+                  <div class="grid4 first"> grid4 </div>
+                  <div class="grid4"> grid4 </div>
+                  <div class="grid4"> grid4 </div>
+                  <div class="grid5 first"> grid5 </div>
+                  <div class="grid7"> grid7 </div>
+                  <div class="grid6 first"> grid6 </div>
+                  <div class="grid6"> grid6 </div>
+                  <div class="grid3 first"> grid3 </div>
+                  <div class="grid3"> grid3 </div>
+                  <div class="grid1"> grid1 </div>
+                  <div class="grid5"> grid5 </div>
+                  <h3 class="sec_header">Heading 3</h3>
+                  <h4 class="sec_header">Heading 4</h4>
+                  <h5 class="sec_header">Heading 5</h5>
+                  <h6 class="sec_header">Heading 6</h6>
+                  <div class="grid1 first"> grid1 </div>
+                  <div class="grid5"> grid5 </div>
+                  <div class="grid3"> grid3 </div>
+                  <div class="grid3"> grid3 </div>
+                  <div class="grid3 first"> 3 </div>
+                  <div class="grid9">
+                    <div class="grid3 first">3</div>
+                    <div class="grid3">3</div>
+                    <div class="grid3">3</div>
+                    <div class="grid5 first">5</div>
+                    <div class="grid2">2</div>
+                    <div class="grid2">2</div>
+                  </div>
+                  <div class="grid8 first">
+                    <div class="grid3 first">3</div>
+                    <div class="grid3">3</div>
+                    <div class="grid2">2</div>
+                    <div class="grid1 first">1</div>
+                    <div class="grid1">1</div>
+                    <div class="grid6">6</div>
+                  </div>
+                  <div class="grid4"> 4 </div>
+                  <!-- InstanceEndEditable -->
+                <div class="clear"></div>
+                <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/noscript.html'; ?>
+                <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
+            </div>
+        </div>
+        <footer id="footer">
+            <div id="footer_floater"></div>
+            <div class="footer_col" id="wdn_footer_feedback">
+                <a id='visitorChat_launchButton' class='visitorChat_offline' href="<?php echo \UNL\VisitorChat\Controller::$url ?>">
+        Chat with us now</a>
+                <!--#include virtual="/wdn/templates_3.1/includes/feedback.html" -->
+            </div>
+            <div class="footer_col" id="wdn_footer_related">
+                <!-- InstanceBeginEditable name="leftcollinks" -->
+                example
+                <!-- InstanceEndEditable --></div>
+            <div class="footer_col" id="wdn_footer_contact">
+                <!-- InstanceBeginEditable name="contactinfo" -->
+                example
+                <!-- InstanceEndEditable --></div>
+            <div class="footer_col" id="wdn_footer_share">
+                <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/socialmediashare.html'; ?>
+            </div>
+            <!-- InstanceBeginEditable name="optionalfooter" -->
+            <!-- InstanceEndEditable -->
+            <div id="wdn_copyright">
+                <div>
+                    <!-- InstanceBeginEditable name="footercontent" -->
+                    <!-- InstanceEndEditable -->
+                    <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/wdn.html'; ?>
+                </div>
+                <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/logos.html'; ?>
+            </div>
+        </footer>
     </div>
-    <div id="wdn_wrapper_footer"> </div>
-</div>
 </body>
-<!-- InstanceEnd -->
-</html>
+<!-- InstanceEnd --></html>

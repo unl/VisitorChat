@@ -169,7 +169,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 });
 
 $(function(){
-  WDN.loadJS('/wdn/templates_3.0/scripts/plugins/validator/jquery.validator.js', function() {
+  WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
     VisitorChat = new VisitorChat_Chat();
   });
 });
