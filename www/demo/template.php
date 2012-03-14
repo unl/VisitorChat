@@ -159,7 +159,32 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-                <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/feedback.html'; ?>
+<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
+    <fieldset><legend>Client Login</legend>
+        <ul>
+            <li class="visitorChat_info">
+                <label for="visitorChat_name"></label>
+                <input type="text" name="name" id="visitorChat_name"/>
+            </li>
+            <li class="visitorChat_info">
+                <label for="visitorChat_email"></label>
+                <input type="text" name="email" class="validate-email" id="visitorChat_email"/>
+            </li>
+            <li class="visitorChat_info">
+                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
+                <span id="email-fallback-text">If no operators are available,<br />I would like to receive an email.</span>
+            </li>
+            <li class="visitorChat_center">
+                <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message"></textarea>
+            </li>
+            
+        </ul>
+    </fieldset>
+    <input type="hidden" name="initial_url" id="initial_url" value=""/>
+    <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
+    <input id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
+</form>
+                
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->

@@ -31,5 +31,5 @@ function get_var($var, $context) {
     <input type="hidden" name="initial_url" id="initial_url" value=""/>
     <input type="hidden" name="id" value='<?php echo $context->id;?>'/>
     <input type="hidden" name="_class" value='<?php echo get_class($context->getRawObject()); ?>'/>
-    <input id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
+    <input id="visitorChat_login_sumbit" type="submit" value="Submit" name="visitorChat_login_sumbit" />
 </form>

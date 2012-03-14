@@ -312,3 +312,7 @@
     background-color: #6FBF4D !important;
     background: #6FBF4D;
 }
+
+#wdn_footer_feedback form {
+    display: block;
+}

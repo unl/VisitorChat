@@ -315,9 +315,6 @@ var VisitorChat_ChatBase = Class.extend({
       return true;
     }
     
-    //set the for_url
-    data['html'] = WDN.jQuery(WDN.jQuery(data['html']).find('#initial_url')[0]).val(document.URL).parent();
-    
     //Update the chat container.
     this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
   },

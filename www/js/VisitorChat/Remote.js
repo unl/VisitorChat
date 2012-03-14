@@ -44,10 +44,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_close,' +
             '#visitorChat_container,' +
             'visitorChat_email_fallback,' +
-            '#visitorChat_collapse').unbind();
+            '#visitorChat_collapse' +
+            '#visitorChat_login_sumbit').unbind();
     
     //Validator
     WDN.jQuery('#visitorchat_clientLogin').validation();
+    
+    WDN.jQuery('#visitorChat_login_sumbit').click(function(){
+        VisitorChat.start();
+    });
     
     //Call the parent.
     this._super();
@@ -144,6 +149,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     if (phpsessid != null) {
       this.phpsessid = phpsessid;
     }
+    
+    //set the for_url
+    WDN.jQuery('#initial_url').val(document.URL);
     
     this._super();
   },
