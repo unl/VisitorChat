@@ -40,7 +40,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
      * of watch functions, we should always unbind previous 
      * watch functions before applying the new ones.
      */
-    WDN.jQuery('#visitorChat_launchButton,' +
+    WDN.jQuery('#visitorChat_launcher,' +
             '#visitorChat_close,' +
             '#visitorChat_container,' +
             'visitorChat_email_fallback,' +
