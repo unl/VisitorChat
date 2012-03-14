@@ -40,7 +40,7 @@ class View
         }
         
         //Handle assignments for the conversation.
-        $this->conversation->handleAssignments();
+        \UNL\VisitorChat\Assignment\Service::handleAssignments($this->conversation);
         
         //The rest of the logic only applies if we are currently chatting.
         if ($this->conversation->status !== 'CHATTING') {
