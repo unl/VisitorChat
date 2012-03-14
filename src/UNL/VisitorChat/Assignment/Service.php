@@ -15,6 +15,16 @@ class Service
      */
     public static function handleAssignments(\UNL\VisitorChat\Conversation\Record $conversation)
     {
+        //Are we communicating via email?
+        if ($conversation->method == 'EMAIL') {
+            //Send an email if it wasn't already sent.
+            if ($conversation->status != "EMAILED" && $conversation->email()) {
+                $conversation->status = "EMAILED";
+                $conversation->save();
+            }
+            return true;
+        }
+        
         //Check if there are no current operators.
         $currentOperators = false;
         foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($conversation->id) as $assignment)
