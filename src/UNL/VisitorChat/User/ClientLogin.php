@@ -73,10 +73,10 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         
         //Save the first message.
         $message = new \UNL\VisitorChat\Message\Record();
-        $message->users_id = $user->id;
-        $message->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $message->users_id         = $user->id;
+        $message->date_created     = \UNL\VisitorChat\Controller::epochToDateTime();
         $message->conversations_id = $conversation->id;
-        $message->message = $post['message'];
+        $message->message          = $post['message'];
         $message->save();
         $user->ping();
         
