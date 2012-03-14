@@ -198,7 +198,7 @@
 	box-shadow: inset 0 0 3px 2px #ccc,0 1px 0 0 #eee;
 }
 
-#visitorChat form legend {
+.unl_visitorchat_form legend {
     display: none;
 }
 

@@ -1,4 +1,6 @@
 var VisitorChat_Chat = VisitorChat_ChatBase.extend({
+  loginHTML: false,
+  
   start: function()
   {
     //Remove an old one if it is there.
@@ -18,6 +20,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                          "</div>" +
                        "<div id='visitorChat_container'><div class='chat_notify visitorChat_loading'>Initializing, please wait.</div></div>" +
                    "</div>");
+    
+    this.chatStatus = "LOGIN";
+    
+    this.loginHTML = WDN.jQuery("#visitorchat_clientLogin_email").parent().html();
+    
+    WDN.jQuery("#visitorchat_clientLogin_email").parent().html("Disabled");
+    
+    this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     this.displaySiteAvailability();
     
@@ -159,8 +169,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   stop: function() {
     this._super();
     
+    WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
+    
     //Delete the current cookie.
     WDN.jQuery.cookies.del('UNL_Visitorchat_Session');
+    
+    this.initWatchers();
   },
   
   displaySiteAvailability: function() {

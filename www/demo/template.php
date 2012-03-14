@@ -159,7 +159,8 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
+<div id="visitorChat_footercontainer">
+<form id='visitorchat_clientLogin_email' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
     <fieldset><legend>Client Login</legend>
         <ul>
             <li class="visitorChat_info">
@@ -184,7 +185,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
     <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
     <input id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
 </form>
-                
+</div>
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->
