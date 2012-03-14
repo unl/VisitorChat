@@ -18,7 +18,7 @@ if (isset($_GET['for'])) {
 }
 
 $filename = sys_get_temp_dir() . "/VisitorChatJS_" . md5(\UNL\VisitorChat\Controller::$url . $for) . ".php";
-if (file_exists($filename)) {
+if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($filename)) {
     echo file_get_contents($filename);
     exit();
 }
@@ -47,11 +47,12 @@ switch($for) {
 $js = ob_get_contents();
 ob_clean();
 
-require_once('jsmin.php');
+if (\UNL\VisitorChat\Controller::$cacheJS) {
+    require_once('jsmin.php');
 
-$js = JSMin::minify($js);
-
-file_put_contents($filename, $js);
+    $js = JSMin::minify($js);
+    file_put_contents($filename, $js);
+}
 
 echo $js;
 ?>

@@ -11,6 +11,9 @@ class Controller extends \Epoch\Controller
     
     public static $sessionKey = "key";
     
+    //Should the sysem compress and cache JS output?
+    public static $cacheJS = true;
+    
     /**
      * an array of default operators.  Must be the UIDs
      * of the operators.  When no operators for a site

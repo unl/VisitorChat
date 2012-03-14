@@ -39,6 +39,9 @@ error_reporting(E_ALL);
 //Set session key to prevent man in the middle attacks.
 \UNL\VisitorChat\Controller::$sessionKey = "totallyCoolKey";
 
+//To cache and minimize or not to cache and minimize javascrip.  That is the question.
+\UNL\VisitorChat\Controller::$cacheJS = false;
+
 \Epoch\Controller::setDbSettings(array(
     'host'     => 'localhost',
     'user'     => 'visitorchatapp',
