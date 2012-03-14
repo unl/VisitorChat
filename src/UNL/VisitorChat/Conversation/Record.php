@@ -41,6 +41,11 @@ class Record extends \Epoch\Record
      */
     public $status;
     
+    /* The chosen method of communication.
+     * Either CHAT or EMAIL
+     */
+    public $method;
+    
     /**
      * Returns a conversation record by ID.
      * 

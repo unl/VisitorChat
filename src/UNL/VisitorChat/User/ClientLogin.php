@@ -33,10 +33,14 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             throw new \Exception("No message was provided", '400');
         }
         
+        $fallback = 1;
         if (!isset($post['email_fallback']) || empty($post['email_fallback'])) {
-            $post['email_fallback'] = 0;
-        } else {
-            $post['email_fallback'] = 1;
+            $fallback = 0;
+        }
+        
+        $method = "CHAT";
+        if (isset($post['method']) && $post['method'] == "EMAIL") {
+            $method = "EMAIL";
         }
         
         $user = new self();
@@ -61,9 +65,10 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         //Start up a new conversation for the user.
         $conversation = new \UNL\VisitorChat\Conversation\Record();
         $conversation->users_id       = $user->id;
+        $conversation->method         = $method;
         $conversation->initial_url    = $post['initial_url'];
         $conversation->status         = "SEARCHING";
-        $conversation->email_fallback = $post['email_fallback'];
+        $conversation->email_fallback = $fallback;
         $conversation->save();
         
         //Save the first message.

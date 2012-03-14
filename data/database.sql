@@ -38,6 +38,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`conversations` (
   `status` ENUM('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') NOT NULL DEFAULT 'SEARCHING' ,
   `emailed` INT(1) NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.' ,
   `email_fallback` INT(1) NULL ,
+  `method` ENUM('CHAT', 'EMAIL') NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_conversations_users` (`users_id` ASC) ,
   CONSTRAINT `fk_conversations_users`
