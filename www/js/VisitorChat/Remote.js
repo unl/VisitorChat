@@ -6,8 +6,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.start();
   },
   
-  startChat: function() {
+  startChat: function(chatInProgress) {
     this.launchChatContainer();
+    
+    if (chatInProgress) {
+      this.chatStatus = "CHATTING";
+    }
     
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
@@ -41,8 +45,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.chatStatus = "LOGIN";
     
     this.loginHTML = WDN.jQuery("#visitorchat_clientLogin").parent().html();
-    
-    
     
     this.displaySiteAvailability();
   },
@@ -154,7 +156,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Handle the rest of the data.
     if (data['conversationID']) {
-      this.start(data);
+      this.startChat(true);
     }
     
     this.displaySiteAvailability();
