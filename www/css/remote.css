@@ -39,9 +39,6 @@
     color: black;
     background-color: transparent;
     border-radius: 3px;
-    -webkit-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
-    -moz-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
-    box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
     max-height: 450px;
     z-index: 1000;
 }
@@ -54,10 +51,14 @@
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     color: #fff;
-    height:20px;
+    height:16px;
     padding:4px;
-    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     filter: dropshadow(color=rgba(0, 0, 0, 0.3), offx=0, offy=1);
+}
+
+#visitorChat_header:hover {
+	cursor: pointer;
 }
 
 #visitorChat_container {
@@ -69,6 +70,10 @@
 	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#ebffffff',GradientType=1 );
 	padding: 6px;
+	
+	-webkit-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
+    -moz-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
+    box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
 }
 
 #visitorChat_header .visitorChat_options {
@@ -77,6 +82,7 @@
 
 .visitorChat_options li {
 	float: right;
+	/*display: none;	/* Don't need them at the moment */
 }
 
 .visitorChat_options li a {
@@ -120,7 +126,9 @@
 
 #visitorChat_close {
 	background: transparent url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/close.png') no-repeat;
+	bottom: 2px;
 	height: 20px;
+	position: relative;
 	text-indent: -9999px;
 	width: 20px;
 }

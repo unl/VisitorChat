@@ -35,24 +35,25 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     //set up a container.
     WDN.jQuery("body").append("<div id='visitorChat'>" +
-                   "<div id='visitorChat_header'>Chat" +
-                      //"Chat <span id='visitorChat_availability'></span>" +
-                         //Turn this div into an unordered list
-                         "<ul class='visitorChat_options'>" +
-                              "<li><a id='visitorChat_close' href='" + this.serverURL + "logout'>close</a></li>" +
-                              "<li><a id='visitorChat_collapse' href='#'>collapse</a></li>" +
-                         "</ul>" +
-                         "<div id='visitorChat_sound_container'>" +
-                             "<audio id='visitorChat_sound' src='"+ this.serverURL + "audio/message.wav'></audio></div>" +
-                       "</div>" +
-                     "<div id='visitorChat_container'><div class='chat_notify visitorChat_loading'>Initializing, please wait.</div></div>" +
-                 "</div>");
+    		//Note: We have to call the server to get the phpssid.
+            "<div id='visitorChat_header'>Chat" +
+               //"Chat <span id='visitorChat_availability'></span>" +
+                  //Turn this div into an unordered list
+                  "<ul class='visitorChat_options'>" +
+                       "<li><a id='visitorChat_close' href='" + this.serverURL + "logout'>close</a></li>" +
+                  "</ul>" +
+                  "<div id='visitorChat_sound_container'>" +
+                      "<audio id='visitorChat_sound' src='"+ this.serverURL + "audio/message.wav'></audio></div>" +
+                "</div>" +
+              "<div id='visitorChat_container'><div class='chat_notify visitorChat_loading'>Initializing, please wait.</div></div>" +
+          "</div>");       
     
     this.chatStatus = "LOGIN";
     
     this.loginHTML = WDN.jQuery("#visitorchat_clientLogin").parent().html();
     
-    //Note: We have to call the server to get the phpssid.
+    
+    
     this.displaySiteAvailability();
   },
   
@@ -89,7 +90,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       return true;
     });
     
-    //Call the parent.
+    //Call the parent
     this._super();
     
     WDN.jQuery('#visitorChat_launcher, #visitorChat_close').click(WDN.jQuery.proxy(function(){
@@ -136,13 +137,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
     });
     
-    //This is where the collapse button happens
-    WDN.jQuery("#visitorChat_collapse").click(function(){
+    //This is where the collapse function happens
+    WDN.jQuery("#visitorChat_header").click(function(){
         WDN.jQuery("#visitorChat_container").slideToggle("fast", function() {
             if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-                WDN.jQuery("#visitorChat_collapse").css({'background-image' : "url('<?php echo \UNL\VisitorChat\Controller::$url;?>images/coll_up.png')"})
+            	WDN.jQuery("#visitorChat_close").animate({'opacity': '0'}, 240)
+                WDN.jQuery("#visitorChat_header").animate({'width': '100px'}, 240)
             } else {
-                WDN.jQuery("#visitorChat_collapse").css({'background-image' : "url('<?php echo \UNL\VisitorChat\Controller::$url;?>images/coll_down.png')"})
+            	WDN.jQuery("#visitorChat_close").animate({'opacity': '1'}, 240)
+            	WDN.jQuery("#visitorChat_header").animate({'width': '232px'}, 240)
             }
         });
     });
