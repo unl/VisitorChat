@@ -24,6 +24,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       //Empty out the current chat.
       WDN.jQuery('#clientChat').empty();
       
+      //reset the chat status.
+      VisitorChat.chatStatus = false;
+      
       //Load the chat.
       VisitorChat.updateChat(this);
       
