@@ -86,11 +86,18 @@ var VisitorChat_ChatBase = Class.extend({
    * Start function.  This function starts the application
    * flow of the chat.
    */
-  start: function() {
-    this.chatOpened = true;
+  start: function(loop) {
+    if (loop = undefined) {
+      loop = true;
+    }
     
+    this.chatOpened = true;
+
     clearTimeout(VisitorChat.loopID);
-    VisitorChat_Timer_ID = VisitorChat.loop();
+    
+    if (loop) {
+      VisitorChat_Timer_ID = VisitorChat.loop();
+    }
   },
   
   /**
@@ -385,15 +392,8 @@ var VisitorChat_ChatBase = Class.extend({
             this.handleAjaxResponse(data, textStatus);
             //this.updateChatWithData(data);
           }, this),
-          beforeSubmit: WDN.jQuery.proxy(function() {
-              var html = "<div class='visitorChat_loading'></div>";
-              if (VisitorChat.chatStatus == 'LOGIN') {
-                  WDN.jQuery('#visitorChat_container').html(html);
-              } else {
-                  WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
-              }
-              
-              return true;
+          beforeSubmit: WDN.jQuery.proxy(function(arr, $form, options) {
+              return this.ajaxBeforeSubmit(arr, $form, options);
           }, this),
           crossDomain: true,
           xhrFields: {
@@ -415,6 +415,17 @@ var VisitorChat_ChatBase = Class.extend({
     if (this.windowVisible) {
       WDN.jQuery('#visitorChat_messageBox').focus();
     }
+  },
+  
+  ajaxBeforeSubmit: function(arr, $form, options) {
+    var html = "<div class='visitorChat_loading'></div>";
+    if (VisitorChat.chatStatus == 'LOGIN') {
+      WDN.jQuery('#visitorChat_container').html(html);
+    } else {
+      WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
+    }
+    
+    return true;
   },
   
   /**

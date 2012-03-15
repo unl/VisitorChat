@@ -1,37 +1,59 @@
 var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   loginHTML: false,
   
-  start: function()
+  start: function(loop)
   {
-    //Remove an old one if it is there.
-    WDN.jQuery('#visitorChat_container').remove();
+    if (loop == undefined) {
+      loop = true;
+    }
+    
+    
+    this._super(loop);
+  },
   
-    //set up a container.
-    WDN.jQuery("body").append("<div id='visitorChat'>" +
-                     "<div id='visitorChat_header'>Chat" +
-                        //"Chat <span id='visitorChat_availability'></span>" +
-                           //Turn this div into an unordered list
-                           "<ul class='visitorChat_options'>" +
-                                "<li><a id='visitorChat_close' href='" + this.serverURL + "logout'>close</a></li>" +
-                                "<li><a id='visitorChat_collapse' href='#'>collapse</a></li>" +
-                           "</ul>" +
-                           "<div id='visitorChat_sound_container'>" +
-                               "<audio id='visitorChat_sound' src='"+ this.serverURL + "audio/message.wav'></audio></div>" +
-                         "</div>" +
-                       "<div id='visitorChat_container'><div class='chat_notify visitorChat_loading'>Initializing, please wait.</div></div>" +
-                   "</div>");
+  startEmail: function() {
+    this.launchChatContainer();
+    this.start();
+  },
+  
+  startChat: function() {
+    this.launchChatContainer();
     
-    this.chatStatus = "LOGIN";
-    
-    this.loginHTML = WDN.jQuery("#visitorchat_clientLogin_email").parent().html();
-    
-    WDN.jQuery("#visitorchat_clientLogin_email").parent().html("Disabled");
+    WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
-    this.displaySiteAvailability();
+    WDN.jQuery("#visitorChat_login_chatmethod").val("CHAT");
     
-    this._super();
+    this.start();
+  },
+  
+  launchChatContainer: function()
+  {
+    //Remove an old one if it is there.
+    WDN.jQuery('#visitorChat_container').remove();
+
+    //set up a container.
+    WDN.jQuery("body").append("<div id='visitorChat'>" +
+                   "<div id='visitorChat_header'>Chat" +
+                      //"Chat <span id='visitorChat_availability'></span>" +
+                         //Turn this div into an unordered list
+                         "<ul class='visitorChat_options'>" +
+                              "<li><a id='visitorChat_close' href='" + this.serverURL + "logout'>close</a></li>" +
+                              "<li><a id='visitorChat_collapse' href='#'>collapse</a></li>" +
+                         "</ul>" +
+                         "<div id='visitorChat_sound_container'>" +
+                             "<audio id='visitorChat_sound' src='"+ this.serverURL + "audio/message.wav'></audio></div>" +
+                       "</div>" +
+                     "<div id='visitorChat_container'><div class='chat_notify visitorChat_loading'>Initializing, please wait.</div></div>" +
+                 "</div>");
+    
+    this.chatStatus = "LOGIN";
+    
+    this.loginHTML = WDN.jQuery("#visitorchat_clientLogin").parent().html();
+    
+    //Note: We have to call the server to get the phpssid.
+    this.displaySiteAvailability();
   },
   
   confirmClose: function(id) {
@@ -60,8 +82,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Validator
     WDN.jQuery('#visitorchat_clientLogin').validation();
     
-    WDN.jQuery('#visitorChat_login_sumbit').click(function(){
-        VisitorChat.start();
+    WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function(event, result) {
+      if (result) {
+        VisitorChat.startEmail();
+      }
+      return true;
     });
     
     //Call the parent.
@@ -75,7 +100,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         VisitorChat.stop();
       } else {
-        VisitorChat.start();
+        VisitorChat.startChat();
       }
       
       return false;

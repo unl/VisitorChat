@@ -160,7 +160,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
 <div id="visitorChat_footercontainer">
-<form id='visitorchat_clientLogin_email' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
+<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
     <fieldset><legend>Client Login</legend>
         <ul>
             <li class="visitorChat_info">
