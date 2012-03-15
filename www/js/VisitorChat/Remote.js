@@ -9,11 +9,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    if (chatInProgress) {
-      this.chatStatus = "CHATTING";
-    }
-    
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
+    
+    if (chatInProgress) {
+      this.chatStatus = false;
+      return this.start();
+    }
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
