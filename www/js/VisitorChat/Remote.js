@@ -135,10 +135,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_container").slideToggle("fast", function() {
             if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
             	WDN.jQuery("#visitorChat_close").animate({'opacity': '0'}, 240)
-                WDN.jQuery("#visitorChat_header").animate({'width': '100px'}, 240)
+                WDN.jQuery("#visitorChat_header").animate({'width': '72px'}, 240, function(){
+                	//This is here, otherwise you have a chance of closing while minimized
+                	WDN.jQuery("#visitorChat_close").css({'display': 'none'})
+                })
             } else {
+            	WDN.jQuery("#visitorChat_close").css({'display': 'inline-block'})
             	WDN.jQuery("#visitorChat_close").animate({'opacity': '1'}, 240)
-            	WDN.jQuery("#visitorChat_header").animate({'width': '232px'}, 240)
+            	WDN.jQuery("#visitorChat_header").animate({'width': '230px'}, 240)
             }
         });
     });
