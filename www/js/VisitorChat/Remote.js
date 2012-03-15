@@ -1,16 +1,6 @@
 var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   loginHTML: false,
   
-  start: function(loop)
-  {
-    if (loop == undefined) {
-      loop = true;
-    }
-    
-    
-    this._super(loop);
-  },
-  
   startEmail: function() {
     this.launchChatContainer();
     this.start();

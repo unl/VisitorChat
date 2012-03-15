@@ -86,18 +86,12 @@ var VisitorChat_ChatBase = Class.extend({
    * Start function.  This function starts the application
    * flow of the chat.
    */
-  start: function(loop) {
-    if (loop = undefined) {
-      loop = true;
-    }
-    
+  start: function() {
     this.chatOpened = true;
 
     clearTimeout(VisitorChat.loopID);
     
-    if (loop) {
-      VisitorChat_Timer_ID = VisitorChat.loop();
-    }
+    VisitorChat_Timer_ID = VisitorChat.loop();
   },
   
   /**
