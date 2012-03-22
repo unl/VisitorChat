@@ -17,10 +17,6 @@ class ConfirmationEmail extends Email
         
         $email->subject = "UNL VisitorChat System: Confirmation";
         
-        if (!$email->send()) {
-            echo "here"; exit();
-        }
-        
-        
+        return $email->send();
     }
 }
