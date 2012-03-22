@@ -90,7 +90,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if ((VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') && !VisitorChat.confirmClose()) {
           return false;
         }
-        WDN.jQuery("#visitorChat_header").animate({width: '72px', opacity: '0.8'}, 240)
+        WDN.jQuery("#visitorChat_header").animate({width: '60px', opacity: '0.65'}, 240)
         
         WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240)
         VisitorChat.stop();
@@ -107,9 +107,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   //Hover header function
     WDN.jQuery("#visitorChat_header").hover(
       function(){
-    	WDN.jQuery(this).animate({opacity: '1'}, 160)
+    	WDN.jQuery(this).animate({opacity: '1'}, 140)
       }, function(){
-    	WDN.jQuery(this).animate({opacity: '0.8'}, 160)
+    	WDN.jQuery(this).animate({opacity: '0.65'}, 140)
       }
     );
     
@@ -149,7 +149,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_container").slideToggle("fast", function() {
             if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
             	WDN.jQuery("#visitorChat_close").animate({'opacity': '0'}, 240)
-                WDN.jQuery("#visitorChat_header").animate({'width': '72px'}, 240)
+                WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 240)
             } else {
             	WDN.jQuery("#visitorChat_close").css({'display': 'inline-block'})
             	WDN.jQuery("#visitorChat_close").animate({'opacity': '1'}, 240)
