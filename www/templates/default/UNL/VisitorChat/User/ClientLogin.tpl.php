@@ -20,7 +20,7 @@ function get_var($var, $context) {
             </li>
             <li class="visitorChat_info">
                 <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
-                <span id="email-fallback-text">If no operators are available,<br />I would like to receive an email.</span>
+                <span id="email-fallback-text">I would like a response via email.</span>
             </li>
             <li class="visitorChat_center">
                 <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message"></textarea>

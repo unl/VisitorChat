@@ -47,21 +47,42 @@
 	-webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
     -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
     box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
-	font-family: Helvetica, Arial,sans-serif;
-	font-size: 20px;
-	letter-spacing: -0.04em;
-    background: url('http://ucommwiedel.unl.edu/visitorchat/www/images/chat.gif') no-repeat 50px 50%;
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), #76CC52;
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), -moz-linear-gradient(top,  #76CC52 0%, #6FBF4D 40%);
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%,#76CC52), color-stop(40%,#6FBF4D));
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), -webkit-linear-gradient(top,  #76CC52 0%,#6FBF4D 40%);
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), -o-linear-gradient(top,  #76CC52 0%,#6FBF4D 40%);
+	background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png'), -ms-linear-gradient(top,  #76CC52 0%,#6FBF4D 40%);
+	background-image: linear-gradient(top,  #76CC52 0%,#6FBF4D 40%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76CC52', endColorstr='#6FBF4D',GradientType=0 );
+	
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76CC52', endColorstr='#95b8cc',GradientType=0 );
+    
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
-    color: #fff;
     height:16px;
     padding:4px 5px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
-    filter: dropshadow(color=rgba(0, 0, 0, 0.3), offx=0, offy=1);
+    width: 72px;
+    
+    opacity:0.85;
+    
 }
 
 #visitorChat_header:hover {
 	cursor: pointer;
+}
+
+#visitorChat_header_text {
+	font-family: Helvetica, Arial,sans-serif;
+	font-size: 16px;
+	letter-spacing: -0.04em;
+	color: #fff;
+	text-shadow: 0 1px 2px #60A642;
+    filter: dropshadow(color=#60A642, offx=0, offy=1);
+    margin-left: 3px;
+    opacity: 0;
 }
 
 #visitorChat_container {
@@ -73,6 +94,8 @@
 	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#ebffffff',GradientType=1 );
 	padding: 6px;
+	display: none;
+	height: 20px
 	
 	-webkit-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
     -moz-box-shadow: 0px -1px 10px -2px rgba(10, 10, 10, 0.5);
@@ -149,6 +172,7 @@
 
 .visitorChat_center {
     text-align: center;
+    border-bottom: transparent !important;
 }
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email {
@@ -158,6 +182,7 @@
 
 .visitorChat_info {
 	display: none;
+	border-bottom: transparent !important;
 }
 
 #visitorChat_login_sumbit {
@@ -247,6 +272,10 @@
 }
 
 /* Validation Stylings */
+
+.validation-advice {
+	border-top: transparent !important;
+}
 
 .validation-advice li {
 	background: rgb(251,236,93); /* Old browsers */

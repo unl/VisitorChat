@@ -60,11 +60,6 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
     <div id="wdn_wrapper">
-        <div id='visitorChat_launcher_container'>
-            <div id='visitorChat_launcher' class='visitorChat_offline'>
-                Chat
-            </div>
-        </div>
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
@@ -173,7 +168,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
             </li>
             <li class="visitorChat_info">
                 <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
-                <span id="email-fallback-text">If no operators are available,<br />I would like to receive an email.</span>
+                <span id="email-fallback-text">I would like a response via email.</span>
             </li>
             <li class="visitorChat_center">
                 <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message"></textarea>
@@ -210,5 +205,14 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
             </div>
         </footer>
     </div>
+    <div id='visitorChat'>
+      <div id='visitorChat_header'><span id="visitorChat_header_text">Chat</span></div>
+      <div id='visitorChat_sound_container'>
+        <!-- This url needs to be dynamic -->
+        <audio id='visitorChat_sound'></audio></div>
+      </div>
+
+    </div>
+    
 </body>
 <!-- InstanceEnd --></html>

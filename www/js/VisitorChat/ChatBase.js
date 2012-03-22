@@ -557,7 +557,7 @@ var VisitorChat_ChatBase = Class.extend({
     this.chatOpened = false;
     
     //2. Close the chatbox.
-    WDN.jQuery("#visitorChat").remove();
+    WDN.jQuery("#visitorChat_container").remove();
     
     //3. logout
     WDN.jQuery.ajax({
