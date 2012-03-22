@@ -106,9 +106,7 @@ class Email
     
     public function render()
     {
-        $html = \UNL\VisitorChat\Controller::$templater->render($this, 'UNL/VisitorChat/Controller.tpl.php');
-        
-        return $html;
+        return \UNL\VisitorChat\Controller::$templater->render($this, 'UNL/VisitorChat/Controller.tpl.php');
     }
     
     public function generateHeaders()
