@@ -15,10 +15,16 @@ class Service
      */
     public static function handleAssignments(\UNL\VisitorChat\Conversation\Record $conversation)
     {
+        //Determin if we need to handle assignments. If they are currently chatting however, we will check to see if their operator left and assign them a new one.
+        if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED'))) {
+            //We don't need to continue.
+            return true;
+        }
+        
         //Are we communicating via email?
         if ($conversation->method == 'EMAIL') {
             //Send an email if it wasn't already sent.
-            if ($conversation->status != "EMAILED" && $conversation->email()) {
+            if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
                 $conversation->status = "EMAILED";
                 $conversation->save();
             }
@@ -30,16 +36,14 @@ class Service
         foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($conversation->id) as $assignment)
         {
             //If we are currently talking or if the assignment is pending, don't  find another operator.
-            if ($assignment->status == 'ACCEPTED' 
-               || $assignment->status == 'PENDING'
-               || $assignment->status == 'COMPLETED') {
+            if (in_array($assignment->status, array('ACCEPTED', 'PENDING', 'COMPLETED'))) {
                 $currentOperators = true;
                 break;
             }
         }
         
         //Find another operator if the current one left.
-        if (!$currentOperators && !$conversation->emailed) {
+        if (!$currentOperators) {
             $conversation->status = 'SEARCHING';
             $conversation->save();
         }
@@ -56,9 +60,13 @@ class Service
             //Failed to assign an operator.
             $conversation->status = "OPERATOR_LOOKUP_FAILED";
             
+            //Save here so that if multiple requests come in a REALLY short time, only one email is sent.
+            $conversation->save();
+            
             //Try to send an email to the team.
-            if ($conversation->email()) {
-                $conversation->status = "EMAILED";
+            if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
+                $conversation->status  = "EMAILED";
+                $conversation->emailed = 1;
             }
         }
         
