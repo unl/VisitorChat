@@ -10,13 +10,13 @@ class Logout
             // Short-circuit, no one is logged in
             return;
         }
-
-        if (isset($_SESSION['id'])) {
-            unset($_SESSION['id']);
-        }
         
         if ($conversation = $user->getConversation()) {
             $conversation->close();
+        }
+        
+        if (isset($_SESSION['id'])) {
+            unset($_SESSION['id']);
         }
         
         $user->status = "BUSY";
