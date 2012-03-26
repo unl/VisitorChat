@@ -9,14 +9,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
-    
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-    	                                       'opacity': '1',
-    	                                       'background-position': '8px 50%'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
-    
     if (chatInProgress) {
       this.chatStatus = false;
       return this.start();
@@ -24,7 +16,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
-    WDN.jQuery("#visitorChat_login_chatmethod").val("CHAT");
+    
     
     this.start();
   },
@@ -48,6 +40,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.loginHTML = WDN.jQuery("#visitorchat_clientLogin").parent().html();
     
     this.displaySiteAvailability();
+    
+    WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
+    
+    WDN.jQuery("#visitorChat_container").slideDown(450);
+    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
+                                               'opacity': '1',
+                                               'background-position': '8px 50%'}, 280);
+    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
   },
   
   confirmClose: function(id) {
@@ -73,6 +73,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_collapse, ' +
             '#visitorChat_login_sumbit, ' +
             '#visitorChat_header').unbind();
+    
+    //Make sure the footer input is only submitting as email
+    WDN.jQuery("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
+    
+    //Make sure the chat input is only submitting as chat.
+    WDN.jQuery("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
     
     //Validator
     WDN.jQuery('#visitorchat_clientLogin').validation();
