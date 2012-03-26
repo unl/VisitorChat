@@ -16,7 +16,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
-    
+    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     
     this.start();
   },
@@ -33,7 +33,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
         "</div>"
     );
-    WDN.jQuery("#visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     
     this.chatStatus = "LOGIN";
     
