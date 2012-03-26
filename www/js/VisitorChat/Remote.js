@@ -17,6 +17,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
+    WDN.jQuery("#visitorChat_container").slideDown(450);
+    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
+                                               'opacity': '1',
+                                               'background-position': '8px 50%'}, 280);
+    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
     
     this.start();
   },
@@ -28,7 +33,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     //set up a container.
     WDN.jQuery("#visitorChat").append(
-      //Note: We have to call the server to get the phpssid (For close and sound functions).
         "<div id='visitorChat_container'>" +
           "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
         "</div>"
@@ -41,12 +45,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.displaySiteAvailability();
     
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
-    
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1',
-                                               'background-position': '8px 50%'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
   },
   
   confirmClose: function(id) {
