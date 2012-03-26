@@ -33,7 +33,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
         "</div>"
     );
-    WDN.jQuery("#email-fallback-text").html('If no operators are available,<br />I would like to receive an email.');
+    WDN.jQuery("#visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     
     this.chatStatus = "LOGIN";
     
