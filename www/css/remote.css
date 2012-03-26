@@ -2,7 +2,7 @@
     font-family:arial,tahoma,verdana, sans-serif;
     position: fixed;
     font-size:13px;
-    left: 70px; 
+    left: 7%; 
     bottom: 0px;
     width: 240px;
     color: black;
@@ -23,7 +23,7 @@
     padding:4px 5px;
     width: 60px;
     
-    opacity:0.65;
+    opacity: 0.7;
     
 }
 
@@ -65,7 +65,8 @@
 
 #visitorChat_chatBox ul li {
 	border-bottom: 1px solid #eee;
-	filter: dropshadow(color=#ffffff, offx=0, offy=1);
+	/*This looks super ugly
+	filter: dropshadow(color=#ffffff, offx=0, offy=1);*/
 	margin: 0 6px;
 	padding: 6px 0;
 	text-shadow: 0 1px white;
@@ -214,7 +215,7 @@
 }
 
 .advice-validate-email::after {
-	bottom: 31px;
+	bottom: 2.8em;
 	right: 10px;
 	border-width: 0 10px 10px;
 	border-color: #FBEC5D transparent;
@@ -226,7 +227,7 @@
 }
 
 .advice-required-entry::after {
-	bottom: 13px;
+	bottom: 15px;
 	right: 130px;
 	border-width: 0 10px 10px;
 	border-color: #FBEC5D transparent;

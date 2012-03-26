@@ -115,7 +115,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       function(){
     	WDN.jQuery(this).animate({opacity: '1'}, 140)
       }, function(){
-    	WDN.jQuery(this).animate({opacity: '0.65'}, 140)
+    	WDN.jQuery(this).animate({opacity: '0.7'}, 140)
       }
     );
     
@@ -194,7 +194,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   stop: function() {
     this._super();
     WDN.jQuery("#visitorChat_header").animate({'width': '60px',
-    	   							           'opacity': '0.65',
+    	   							           'opacity': '0.7',
     	   							           'background-position': '50% 50%'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240);
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
