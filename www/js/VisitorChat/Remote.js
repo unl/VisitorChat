@@ -52,6 +52,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       var link = document.getElementById(id);
       
       if (confirm("Logout?")) {
+    	
         return true;
       }
       
@@ -65,10 +66,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
      * watch functions before applying the new ones.
      */
     WDN.jQuery('#visitorChat_launcher, ' +
-            '#visitorChat_close, ' +
             '#visitorChat_container, ' +
             '#visitorChat_email_fallback, ' +
-            '#visitorChat_collapse, ' +
+            '#visitorChat_logout, ' +
             '#visitorChat_login_sumbit, ' +
             '#visitorChat_header').unbind();
     
@@ -94,8 +94,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(WDN.jQuery.proxy(function(){
       if (VisitorChat.chatOpened) {
-        if ((VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') && !VisitorChat.confirmClose()) {
-          return false;
+        if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
+          if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
+            WDN.jQuery("#visitorChat_container").slideDown(450);
+          } else {
+        	WDN.jQuery("#visitorChat_container").slideUp(450);
+          }
+          
+        return false;
         }
         VisitorChat.stop();
       } else {
@@ -104,6 +110,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         
       return false;
     }, this));
+    
+    //Logout function
+    WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function(){
+      if (!VisitorChat.confirmClose()) {return false;}
+      VisitorChat.stop();
+      return false;
+    }, this));
+    
     
     //Hover header function
     WDN.jQuery("#visitorChat_header").hover(
@@ -138,10 +152,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }
     });
     
-    //This will slide down the Name and Email fields, plus the Ask button
+    //This will slide down the Name and Email fields, plus the Submit button
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
         WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
     });
+    
+    //Header is fully-visible when message box is focued
+    WDN.jQuery("#visitorChat_messageBox").focus(function(){
+    	WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
+    });
+    
   },
   
   handleUserDataResponse: function(data) {
