@@ -150,13 +150,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   handleUserDataResponse: function(data) {
     this.conversationID  = data['conversationID'];
-    var previousPHPSESSID = this.phpsessid;
     
     //Call the parent logic.
     this._super(data);
-    
-    //set the cookie.
-    WDN.jQuery.cookies.set('UNL_Visitorchat_Session', this.phpsessid, {domain: '.unl.edu'});
     
     //Handle the rest of the data.
     if (data['conversationID']) {
@@ -166,6 +162,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.displaySiteAvailability();
   },
   
+  updatePHPSESSID: function(phpsessid) {
+    this.phpsessid = phpsessid;
+  
+    //set the cookie.
+    WDN.jQuery.cookies.set('UNL_Visitorchat_Session', phpsessid, {domain: '.unl.edu'});
+  },
+
   loadStyles: function() {
     //load styling.
     if (document.createStyleSheet){

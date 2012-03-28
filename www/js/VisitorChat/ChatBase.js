@@ -139,13 +139,18 @@ var VisitorChat_ChatBase = Class.extend({
   },
   
   handleUserDataResponse: function(data) {
-    this.phpsessid        = data['phpssid'];
-    this.userID           = data['userID'];
-    
+    this.userID = data['userID'];
+
+    this.updatePHPSESSID(data['phpssid']);
+
     if (!this.operatorsChecked) {
       this.operatorsAvailable = data['operatorsAvailable'];
     }
     this.operatorsChecked = true;
+  },
+
+  updatePHPSESSID: function(phpsessid) {
+    this.phpsessid = phpsessid;
   },
   
   /**
@@ -543,6 +548,10 @@ var VisitorChat_ChatBase = Class.extend({
       return this.updateChat(this.generateChatURL(), true);
     }
     
+    if (data['phpssid'] !== undefined) {
+      this.updatePHPSESSID(data['phpssid']);
+    }
+
     return this.updateChatWithData(data);
   },
   
