@@ -270,6 +270,9 @@ var VisitorChat_ChatBase = Class.extend({
     }
     
     this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+
+    //Logout option now visible
+    WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
   },
   
   /**
@@ -308,6 +311,7 @@ var VisitorChat_ChatBase = Class.extend({
   onConversationStatus_Searching: function(data) {
     var html = '<div class="chat_notify visitorChat_loading">Please wait while we find someone to help you.</div>';
     this.updateChatContainerWithHTML("#visitorChat_container", html);
+    
   },
   
   /**
@@ -569,16 +573,18 @@ var VisitorChat_ChatBase = Class.extend({
     WDN.jQuery("#visitorChat_container").remove();
     
     //3. logout
-    WDN.jQuery.ajax({
-        url: this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
-        xhrFields: {
-            withCredentials: true
-        },
-        dataType: "html",
-        complete: function(jqXHR, textStatus) {
-            //TODO: close chat.
-        }
-    });
+    //WDN.jQuery('#vistorChat_logout').click(
+      WDN.jQuery.ajax({
+          url: this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
+          xhrFields: {
+              withCredentials: true
+          },
+          dataType: "html",
+          complete: function(jqXHR, textStatus) {
+              //TODO: close chat.
+          }
+      });
+    //);
     
     //4. clear vars.
     this.latestMessageId = 0;
