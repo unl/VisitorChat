@@ -10,7 +10,7 @@ class Routes extends \RegExpRouter\RoutesInterface
     
     public static function getPostRoutes() 
     {
-        return array('/^assignment\/(?<id>[\d]+)\/edit$/i' => 'Edit');
+        return array('/^assignment\/(?P<id>[\d]+)\/edit$/i' => 'Edit');
     }
     
     public static function getDeleteRoutes()
