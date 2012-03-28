@@ -206,9 +206,8 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         </footer>
     </div>
     <div id='visitorChat'>
-      <div id='visitorChat_header'><span id="visitorChat_header_text">Chat</span></div>
+      <div id='visitorChat_header'><span id="visitorChat_header_text">Chat</span><div id="visitorChat_logout"><a href="#">close</a></div></div>
       <div id='visitorChat_sound_container'>
-        <!-- This url needs to be dynamic -->
         <audio id='visitorChat_sound'></audio></div>
       </div>
 

@@ -10,6 +10,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.launchChatContainer();
     
     if (chatInProgress) {
+    	
       this.chatStatus = false;
       return this.start();
     }
@@ -19,11 +20,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     WDN.jQuery("#visitorChat_container").slideDown(450);
     WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1',
-                                               'background-position': '8px 50%'}, 280);
+                                               'opacity': '1'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
     
     this.start();
+
   },
   
   launchChatContainer: function()
@@ -89,9 +90,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Call the parent
     this._super();
-        
-    //Workaround for FF 2.0 bug
-    WDN.jQuery('#visitorChat_header').css({backgroundPosition: '50% 50%'}) 
     
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(WDN.jQuery.proxy(function(){
@@ -112,7 +110,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       function(){
     	WDN.jQuery(this).animate({opacity: '1'}, 140)
       }, function(){
-    	WDN.jQuery(this).animate({opacity: '0.7'}, 140)
+    	WDN.jQuery(this).animate({opacity: '0.8'}, 140)
       }
     );
     
@@ -159,6 +157,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Handle the rest of the data.
     if (data['conversationID']) {
       this.startChat(true);
+      
     }
     
     this.displaySiteAvailability();
@@ -190,9 +189,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
   stop: function() {
     this._super();
+    WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     WDN.jQuery("#visitorChat_header").animate({'width': '60px',
-    	   							           'opacity': '0.7',
-    	   							           'background-position': '50% 50%'}, 280);
+    	   							           'opacity': '0.8'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240);
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
 
@@ -209,7 +208,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     if (this.operatorsAvailable) {
       WDN.jQuery("#visitorChat_header").css({'display': 'block'});
     } else {
-    	//Comment out during testing
     	WDN.jQuery("#visitorChat_header").css({'display': 'none'});
     }
   }
