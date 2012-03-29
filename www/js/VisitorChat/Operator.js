@@ -52,7 +52,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return false;
       }
       
-      window.webkitNotifications.requestPermission();
+      window.webkitNotifications.requestPermission(function() {
+        if (!window.webkitNotifications.checkPermission()) {
+          WDN.jQuery('#notificationOptions').hide();
+        }
+      });
       return false
     });
   },
