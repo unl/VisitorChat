@@ -215,10 +215,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this._super();
     WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     WDN.jQuery("#visitorChat_header").animate({'width': '60px',
-    	   							           'opacity': '0.8'}, 280);
+                                               'opacity': '0.8'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240);
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
-
+    
     //Delete the current cookie.
     WDN.jQuery.cookies.del('UNL_Visitorchat_Session');
     
