@@ -43,7 +43,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.initWatchers();
     
     if (window.webkitNotifications && window.webkitNotifications.checkPermission()) {
-      WDN.jQuery('notificationOptions').show();
+      WDN.jQuery('#notificationOptions').show();
     }
     
     //Request permission for notifications.
