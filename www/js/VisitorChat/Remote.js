@@ -9,8 +9,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
+    WDN.jQuery("#visitorChat_container").slideDown(450);
+    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
+                                               'opacity': '1'}, 280);
+    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
+    WDN.jQuery("#visitorChat_header").css({'display': 'block'});
+    
     if (chatInProgress) {
-    	
       this.chatStatus = false;
       return this.start();
     }
@@ -18,10 +23,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
+    
     
     this.start();
 
@@ -154,12 +156,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //This will slide down the Name and Email fields, plus the Submit button
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
-        WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
+      WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
     });
     
     //Header is fully-visible when message box is focued
     WDN.jQuery("#visitorChat_messageBox").focus(function(){
-    	WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
+      WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
     });
     
   },
@@ -170,13 +172,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Call the parent logic.
     this._super(data);
     
+    this.displaySiteAvailability();
+    
     //Handle the rest of the data.
     if (data['conversationID']) {
       this.startChat(true);
-      
     }
-    
-    this.displaySiteAvailability();
   },
   
   updatePHPSESSID: function(phpsessid) {
@@ -231,7 +232,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     if (this.operatorsAvailable) {
       WDN.jQuery("#visitorChat_header").css({'display': 'block'});
     } else {
-    	WDN.jQuery("#visitorChat_header").css({'display': 'none'});
+      WDN.jQuery("#visitorChat_header").css({'display': 'none'});
     }
   }
 });
