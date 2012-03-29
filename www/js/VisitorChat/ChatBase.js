@@ -359,7 +359,7 @@ var VisitorChat_ChatBase = Class.extend({
    * add a new watcher.
    */
   initWatchers: function() {
-    //Remove old elvent handlers
+    //Remove old event handlers
     WDN.jQuery('#visitorChat_messageBox').unbind();
     
     WDN.jQuery('#visitorChat_messageBox').keypress(function(e){

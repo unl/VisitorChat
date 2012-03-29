@@ -22,8 +22,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
+<<<<<<< HEAD
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     
+=======
+    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,' +
+    		                                                                   '<br />I would like to receive an email.');
+    WDN.jQuery("#visitorChat_container").slideDown(450);
+    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
+                                               'opacity': '1'}, 280);
+    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
+>>>>>>> Checkbox css tweaks
     
     this.start();
 
@@ -67,12 +76,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
      * of watch functions, we should always unbind previous 
      * watch functions before applying the new ones.
      */
+
     WDN.jQuery('#visitorChat_launcher, ' +
             '#visitorChat_container, ' +
             '#visitorChat_email_fallback, ' +
             '#visitorChat_logout, ' +
             '#visitorChat_login_sumbit, ' +
             '#visitorChat_header').unbind();
+
     
     //Make sure the footer input is only submitting as email
     WDN.jQuery("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
@@ -92,6 +103,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Call the parent
     this._super();
+     
+    //Unfocus messageBox when minimizing
+    WDN.jQuery("#visitorChat_messageBox").focus(function(){
+    	return false;
+    });
     
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(WDN.jQuery.proxy(function(){
@@ -164,6 +180,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
     });
     
+    
   },
   
   handleUserDataResponse: function(data) {
@@ -213,6 +230,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
   stop: function() {
     this._super();
+    
     WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     WDN.jQuery("#visitorChat_header").animate({'width': '60px',
                                                'opacity': '0.8'}, 280);
