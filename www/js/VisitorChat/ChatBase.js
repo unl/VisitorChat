@@ -273,7 +273,6 @@ var VisitorChat_ChatBase = Class.extend({
 
     //Logout option now visible
     WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
-    
   },
   
   /**
@@ -576,6 +575,7 @@ var VisitorChat_ChatBase = Class.extend({
     WDN.jQuery("#visitorChat_container").remove();
     
     //3. logout
+    //WDN.jQuery('#vistorChat_logout').click(
       WDN.jQuery.ajax({
           url: this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
           xhrFields: {
@@ -586,6 +586,7 @@ var VisitorChat_ChatBase = Class.extend({
               //TODO: close chat.
           }
       });
+    //);
     
     //4. clear vars.
     this.latestMessageId = 0;
