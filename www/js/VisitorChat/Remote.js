@@ -9,13 +9,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
-    WDN.jQuery("#visitorChat_header").css({'display': 'block'});
-    
     if (chatInProgress) {
+    	
       this.chatStatus = false;
       return this.start();
     }
@@ -23,9 +18,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
-    
-    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,' +
-    		                                                                   '<br />I would like to receive an email.');
     WDN.jQuery("#visitorChat_container").slideDown(450);
     WDN.jQuery("#visitorChat_header").animate({'width': '230px',
                                                'opacity': '1'}, 280);
@@ -60,7 +52,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       var link = document.getElementById(id);
       
       if (confirm("Logout?")) {
-    	
         return true;
       }
       
@@ -73,14 +64,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
      * of watch functions, we should always unbind previous 
      * watch functions before applying the new ones.
      */
-
     WDN.jQuery('#visitorChat_launcher, ' +
+            '#visitorChat_close, ' +
             '#visitorChat_container, ' +
             '#visitorChat_email_fallback, ' +
-            '#visitorChat_logout, ' +
+            '#visitorChat_collapse, ' +
             '#visitorChat_login_sumbit, ' +
             '#visitorChat_header').unbind();
-
     
     //Make sure the footer input is only submitting as email
     WDN.jQuery("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
@@ -100,23 +90,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Call the parent
     this._super();
-     
-    //Unfocus messageBox when minimizing
-    WDN.jQuery("#visitorChat_messageBox").focus(function(){
-    	return false;
-    });
     
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(WDN.jQuery.proxy(function(){
       if (VisitorChat.chatOpened) {
-        if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
-          if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-            WDN.jQuery("#visitorChat_container").slideDown(450);
-          } else {
-        	WDN.jQuery("#visitorChat_container").slideUp(450);
-          }
-          
-        return false;
+        if ((VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') && !VisitorChat.confirmClose()) {
+          return false;
         }
         VisitorChat.stop();
       } else {
@@ -125,14 +104,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         
       return false;
     }, this));
-    
-    //Logout function
-    WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function(){
-      if (!VisitorChat.confirmClose()) {return false;}
-      VisitorChat.stop();
-      return false;
-    }, this));
-    
     
     //Hover header function
     WDN.jQuery("#visitorChat_header").hover(
@@ -167,17 +138,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }
     });
     
-    //This will slide down the Name and Email fields, plus the Submit button
+    //This will slide down the Name and Email fields, plus the Ask button
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
-      WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
+        WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
     });
-    
-    //Header is fully-visible when message box is focued
-    WDN.jQuery("#visitorChat_messageBox").focus(function(){
-      WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
-    });
-    
-    
   },
   
   handleUserDataResponse: function(data) {
@@ -186,12 +150,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Call the parent logic.
     this._super(data);
     
-    this.displaySiteAvailability();
-    
     //Handle the rest of the data.
     if (data['conversationID']) {
       this.startChat(true);
+      
     }
+    
+    this.displaySiteAvailability();
   },
   
   updatePHPSESSID: function(phpsessid) {
@@ -227,13 +192,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
   stop: function() {
     this._super();
-    
     WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     WDN.jQuery("#visitorChat_header").animate({'width': '60px',
-                                               'opacity': '0.8'}, 280);
+    	   							           'opacity': '0.8'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240);
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
-    
+
     //Delete the current cookie.
     WDN.jQuery.cookies.del('UNL_Visitorchat_Session');
     
@@ -247,7 +211,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     if (this.operatorsAvailable) {
       WDN.jQuery("#visitorChat_header").css({'display': 'block'});
     } else {
-      WDN.jQuery("#visitorChat_header").css({'display': 'none'});
+    	WDN.jQuery("#visitorChat_header").css({'display': 'none'});
     }
   }
 });

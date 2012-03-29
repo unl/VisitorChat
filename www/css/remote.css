@@ -272,11 +272,12 @@
 	float: left;
 }
 
-#visitorChat_email_fallback_text {
-	display: inline-block;
+#email-fallback-text {
+	display: block;
 	font-size: 12px;
-	line-height: 130%;
-	margin-left: 6px;
+	line-height: 120%;
+	margin: 4px 0;
+	margin-left: 25px;
 }
 
 #wdn_footer_feedback form {
