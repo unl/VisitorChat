@@ -110,7 +110,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Logout function
     WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function(){
-      if (!VisitorChat.confirmClose()) {return false;}
+      if (!VisitorChat.confirmClose()) { return false; }
       VisitorChat.stop();
       return false;
     }, this));

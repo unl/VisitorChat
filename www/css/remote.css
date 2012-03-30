@@ -80,17 +80,21 @@
 	background: -ms-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
 	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#ebffffff',GradientType=1 );
-	padding: 6px;
 	display: none;
-	
+	padding-bottom: 6px;
 	-webkit-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     -moz-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
 }
 
+#visitorchat_clientLogin {
+	padding: 6px 6px 0;
+}
+
 #visitorChat_chatBox {
     height: 300px;
     overflow: auto;
+    padding: 6px;
 }
 
 #visitorChat_chatBox ul li {

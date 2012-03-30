@@ -34,13 +34,14 @@
 
 #clientChat {
     width: 680px;
-    height: 490px;
-    border: 1px solid #ccc;
+    height: 492px;
+    border-left: 5px solid #eee;
     margin-top: 5px;	/* Same number as first value in header padding */
-    border-bottom: none;
-    -webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+    -moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	-webkit-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+	padding: 4px 0;
 }
 
 #visitorChat_chatBox {
@@ -104,14 +105,14 @@
 
 #clientList {
     width: 200px;
-    height: 500px;
-    border: 1px solid #ccc;
-    border-bottom: transparent;
-    border-left: transparent;
+    height: 492px;
+    border-left: 3px solid #eee;
     float: right;
-    -webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomleft: 10px;
+	-webkit-border-radius: 10px 0px 0px 10px;
+	border-radius: 10px 0px 0px 10px;
+	padding: 4px 10px;
 }
 
 #chatRequestCountDown {
