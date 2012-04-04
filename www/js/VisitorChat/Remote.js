@@ -53,7 +53,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return true;
       }
       
-      if (confirm("Logout?")) {
+      if (confirm("End your chat?")) {
         return true;
       }
       
@@ -117,7 +117,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       return false;
     }, this));
     
-    //Hover header function
+    /*Hover header function
     WDN.jQuery("#visitorChat_header").hover(
       function(){
     	WDN.jQuery(this).animate({opacity: '1'}, 140)
@@ -125,6 +125,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     	WDN.jQuery(this).animate({opacity: '0.8'}, 140)
       }
     );
+    */
     
     //Field watermarks
     WDN.jQuery("#visitorChat_name").watermark("Name (Optional)");

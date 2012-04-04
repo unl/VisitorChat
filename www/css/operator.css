@@ -260,3 +260,7 @@
 	-moz-box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.1);
 	box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.1);
 }
+
+#notificationOptions {
+	margin-top: 12px;
+}

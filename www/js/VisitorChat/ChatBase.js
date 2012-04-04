@@ -271,8 +271,25 @@ var VisitorChat_ChatBase = Class.extend({
     
     this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
 
+  //Minimize header function while chatting
+    WDN.jQuery('#visitorChat_header').click(function(){
+      if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
+    	  WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
+      } else {
+    	  WDN.jQuery("#visitorChat_header").animate({'width': '230px'}, 280);
+      }
+    });
+    
     //Logout option now visible
-    WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
+    WDN.jQuery("#visitorChat_header").hover(function () {
+        WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
+      }, function () {
+        WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
+    });
+    
+    
+    
+    
   },
   
   /**
