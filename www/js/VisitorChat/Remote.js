@@ -9,19 +9,18 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    if (chatInProgress) {
-    	
-      this.chatStatus = false;
-      return this.start();
-    }
-    
-    this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
-    
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     WDN.jQuery("#visitorChat_container").slideDown(450);
     WDN.jQuery("#visitorChat_header").animate({'width': '230px',
                                                'opacity': '1'}, 280);
     WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
+    
+    if (chatInProgress) {
+      this.chatStatus = false;
+      return this.start();
+    }
+    
+    this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     this.start();
 
