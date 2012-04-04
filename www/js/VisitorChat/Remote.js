@@ -49,7 +49,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   confirmClose: function(id) {
-      var link = document.getElementById(id);
+      if (this.chatStatus == 'CLOSED') {
+        return true;
+      }
       
       if (confirm("Logout?")) {
         return true;

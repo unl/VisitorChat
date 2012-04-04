@@ -17,7 +17,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   initWatchers: function() {
     //Remove old elvent handlers
-    WDN.jQuery('.conversationLink').unbind();
+    WDN.jQuery('.conversationLink, .closeConversation').unbind();
   
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
@@ -31,6 +31,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       VisitorChat.updateChat(this);
       
       return false;
+    });
+    
+    WDN.jQuery('#closeConversation').click(function() {
+      if (confirm("Are you sure you want to end the conversation?")) {
+        VisitorChat.changeConversationStatus("CLOSED");
+      }
     });
     
     this._super();

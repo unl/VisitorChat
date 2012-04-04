@@ -1,6 +1,17 @@
 <div id='visterChat_conversation'>
-    <div id='visitorChat_url'>
-        <span id='visitorChat_url_title'>For Site:</span> <?php echo $context->conversation->initial_url;?>
+    <div id='visitorChat_conversation_header'>
+        <div id='visitorChat_url'>
+            <span id='visitorChat_url_title'>For Site:</span> <?php echo $context->conversation->initial_url;?>
+        </div>
+        <?php 
+        if (\UNL\VisitorChat\User\Record::getCurrentUser()->type == 'operator') {
+        ?>
+        <div id='visitorChat_conversation_options'>
+            <a href='#' id='closeConversation'>End Conversation</a>
+        </div>
+        <?php 
+        }
+        ?>
     </div>
     <div id='visitorChat_chatBox'>
         <ul>

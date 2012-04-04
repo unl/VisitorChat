@@ -561,6 +561,22 @@ var VisitorChat_ChatBase = Class.extend({
     return this.updateChatWithData(data);
   },
   
+  changeConversationStatus: function(status) {
+    if (!this.conversationID || this.conversationID == undefined) {
+      return false;
+    }
+    
+    //Send a post response.
+    WDN.jQuery.ajax({
+      type: "POST",
+      url: this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&PHPSESSID=" + this.phpsessid,
+      data: "status=" + status
+    }).done(WDN.jQuery.proxy(function(msg) {
+      //update the chat.
+      this.updateChat(this.generateChatURL(), true);
+    }, this));
+  },
+  
   /**
    * stop will stop the chat by logging the user out, removing the chat box
    * and reseting chat variables.
