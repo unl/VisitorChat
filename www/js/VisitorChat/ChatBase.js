@@ -201,6 +201,10 @@ var VisitorChat_ChatBase = Class.extend({
     if (data['status'] !== undefined) {
       this.chatStatus = data['status'];
     }
+    
+    if (data['phpssid'] !== undefined) {
+      this.updatePHPSESSID(data['phpssid']);
+    }
   
     if (data['conversation_id'] !== undefined) {
       this.conversationID = data['conversation_id'];

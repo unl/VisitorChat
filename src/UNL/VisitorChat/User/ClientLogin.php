@@ -85,6 +85,9 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $message->save();
         $user->ping();
         
+        //Prevent session fixation attacks
+        session_regenerate_id();
+        
         $_SESSION['id'] = $user->id;
     }
 }

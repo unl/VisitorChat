@@ -135,12 +135,6 @@ class Controller extends \Epoch\Controller
             session_write_close();
             session_start();
         }
-        
-        //Prevent session fixation attacks
-        if (!isset($_SESSION['initiated'])) {
-            session_regenerate_id();
-            $_SESSION['initiated'] = true;
-        }
     }
     
     function run()
@@ -152,9 +146,15 @@ class Controller extends \Epoch\Controller
           * webkit cant follow cors redirects, so... if the user isn't logged in don't
           * redirect, instead change the current model.
           */
-         if ($this->options['model'] =='VisitorChat\Conversation\View' && !$user = \UNL\VisitorChat\User\Record::getCurrentUser()) {
+         //are they already logged in?
+         if ($this->options['model'] =='UNL\VisitorChat\Conversation\View' && !isset($_SESSION['id'])) {
             //redirect to client login
             $this->options['model'] = '\UNL\VisitorChat\User\ClientLogin';
+         }
+         
+         if ($this->options['model'] =='UNL\VisitorChat\User\ClientLogin' && isset($_SESSION['id'])) {
+            //redirect to conversation view
+            $this->options['model'] = '\UNL\VisitorChat\Conversation\View';
          }
          
          return parent::run();
