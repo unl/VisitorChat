@@ -10,10 +10,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.launchChatContainer();
     
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
     
     if (chatInProgress) {
       this.chatStatus = false;
@@ -45,6 +41,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.displaySiteAvailability();
     
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
+    
+    WDN.jQuery("#visitorChat_container").slideDown(450);
+    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
+                                               'opacity': '1'}, 280);
+    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
   },
   
   confirmClose: function(id) {
