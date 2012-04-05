@@ -5,7 +5,7 @@ class Logout
 {
     function __construct() {
         $user = Record::getCurrentUser();
-
+        
         if (!$user) {
             // Short-circuit, no one is logged in
             return;
@@ -15,12 +15,10 @@ class Logout
             $conversation->close();
         }
         
-        if (isset($_SESSION['id'])) {
-            unset($_SESSION['id']);
-        }
-        
         $user->status = "BUSY";
         $user->save();
+        
+        session_destroy();
         
         if ($user && $user->type == 'operator') {
             //Leave all current open chats.
