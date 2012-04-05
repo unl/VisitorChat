@@ -19,7 +19,6 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
   `uid` VARCHAR(45) NULL COMMENT 'UNL id to associate accounts' ,
   `max_chats` INT NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.' ,
   `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
-  `user_agent` VARCHAR(255) NULL COMMENT 'The user agent of the last login.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) )
 ENGINE = InnoDB;
@@ -35,6 +34,8 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`conversations` (
   `date_updated` DATETIME NOT NULL ,
   `date_closed` DATETIME NULL ,
   `initial_url` VARCHAR(128) NULL COMMENT 'The initial URL of the chat (IE: where the chat started)' ,
+  `initial_pagetitle` VARCHAR(255) NOT NULL COMMENT 'The page title of the page were the chat was started.' ,
+  `user_agent` VARCHAR(255) NULL COMMENT 'The user agent of the client when the conversation was started.' ,
   `status` ENUM('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') NOT NULL DEFAULT 'SEARCHING' ,
   `emailed` INT(1) NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.' ,
   `email_fallback` INT(1) NULL ,

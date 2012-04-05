@@ -21,6 +21,9 @@ class Record extends \Epoch\Record
     //The initial url of the chat.
     public $initial_url;
     
+    //The intitle pagetitle of the chat.
+    public $initial_pagetitle;
+    
     public $emailed;  //Was an email sent for a fallback?
     
     /* Does the client want a response via email if
@@ -45,6 +48,9 @@ class Record extends \Epoch\Record
      * Either CHAT or EMAIL
      */
     public $method;
+    
+    //the user_agent of the client.
+    public $user_agent;
     
     /**
      * Returns a conversation record by ID.
