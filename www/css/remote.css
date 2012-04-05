@@ -1,3 +1,8 @@
+#footer .footer_col ul li {
+	margin: 0;
+	border-bottom: 0;
+}
+
 #visitorChat {
     font-family:arial,tahoma,verdana, sans-serif;
     position: fixed;
@@ -88,14 +93,14 @@
 	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#ebffffff',GradientType=1 );
 	display: none;
-	padding-bottom: 6px;
+	padding-bottom: 5px;
 	-webkit-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     -moz-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
 }
 
 #visitorchat_clientLogin {
-	padding: 6px 6px 0;
+	padding: 5px;
 }
 
 #visitorChat_chatBox {
@@ -125,8 +130,9 @@
     border: 1px solid #CCCCCC;
     margin: 5px auto 0;
     overflow-y: hidden;
+    padding: 2px;
     resize: none;
-    width: 218px;
+    width: 198px;
 }
 
 .visitorChat_center {
@@ -135,13 +141,14 @@
 }
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email {
-	margin-bottom: 5px;
-	width: 218px;
+	margin-bottom: 6px;
+	width: 198px;
 }
 
 .visitorChat_info {
 	display: none;
 	border-bottom: transparent !important;
+	width: 204px;
 }
 
 #visitorChat_login_sumbit {
@@ -285,11 +292,18 @@
 
 #visitorChat_email_fallback_text {
 	display: inline-block;
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 130%;
-	margin-left: 6px;
+	margin-left: 5px;
 }
 
 #wdn_footer_feedback form {
     display: block;
+}
+
+#visitorChat_footercontainer {
+	background: #E3E3E3;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
