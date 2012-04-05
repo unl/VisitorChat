@@ -9,14 +9,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
-    
     if (chatInProgress) {
       this.chatStatus = false;
       return this.start();
     }
     
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
+    
+    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
     
     this.start();
 
