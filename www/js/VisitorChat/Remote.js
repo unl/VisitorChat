@@ -203,6 +203,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //set the for_url
     WDN.jQuery('#initial_url').val(document.URL);
+    WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
     
     this._super();
   },

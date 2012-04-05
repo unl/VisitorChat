@@ -18,7 +18,11 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
     function handlePost($post = array())
     {
         if (!isset($post['initial_url']) || empty($post['initial_url'])) {
-            throw new \Exception("No initial url was found", '400');
+            throw new \Exception("No initial url was found", 400);
+        }
+        
+        if (!isset($post['initial_pagetitle']) || empty($post['initial_pagetitle'])) {
+            throw new \Exception("No initial pagetitle url was found", 400);
         }
         
         if (!isset($post['email']) || empty($post['email'])) {
@@ -30,7 +34,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         }
         
         if (!isset($post['message']) || empty($post['message'])) {
-            throw new \Exception("No message was provided", '400');
+            throw new \Exception("No message was provided", 400);
         }
         
         $fallback = 1;
@@ -63,12 +67,13 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         
         //Start up a new conversation for the user.
         $conversation = new \UNL\VisitorChat\Conversation\Record();
-        $conversation->users_id       = $user->id;
-        $conversation->method         = $method;
-        $conversation->initial_url    = $post['initial_url'];
-        $conversation->status         = "SEARCHING";
-        $conversation->email_fallback = $fallback;
-        $conversation->user_agent     = $_SERVER['HTTP_USER_AGENT'];
+        $conversation->users_id          = $user->id;
+        $conversation->method            = $method;
+        $conversation->initial_url       = $post['initial_url'];
+        $conversation->initial_pagetitle = $post['initial_pagetitle'];
+        $conversation->status            = "SEARCHING";
+        $conversation->email_fallback    = $fallback;
+        $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
         $conversation->save();
         
         //Save the first message.
