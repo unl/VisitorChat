@@ -73,28 +73,11 @@ class Service
         return $conversation->save();
     }
     
-    /* Finds an online operator and assigns them to this chat.
-     * 
-     * Follows these requirements:
-     * 1.Operator must have atleast 1 slot open.
-     * 2.Operator must must be assigned to the initial url.
-     * 3.Operator must be listed as avaiable
-     * 4.Operator must not have already been assigned to this conversation.
-     * 
-     * @return bool
-     */
-    public static function assignOperator(\UNL\VisitorChat\Conversation\Record $conversation)
+    public static function findAvaiableOperatorForConversation($url, $operators, \UNL\VisitorChat\Conversation\Record $conversation)
     {
-        if ($conversation->initial_url == NULL) {
-            return false;
-        }
-
-        //Get a list of operators for this site.
-        $operators = \UNL\VisitorChat\Site\Members::getMembersByTypeAndSite('operator', $conversation->initial_url);
-
         //If there are no operators assigned to this site, bail out now.
         if ($operators->count() == 0) {
-          return false;
+            return false;
         }
         
         $db = \UNL\VisitorChat\Controller::getDB();
@@ -135,8 +118,43 @@ class Service
         
         $row = $result->fetch_assoc();
         
+        return $row['id'];
+    }
+    
+    /* Finds an online operator and assigns them to this chat.
+     * 
+     * Follows these requirements:
+     * 1.Operator must have atleast 1 slot open.
+     * 2.Operator must must be assigned to the initial url.
+     * 3.Operator must be listed as avaiable
+     * 4.Operator must not have already been assigned to this conversation.
+     * 
+     * @return bool
+     */
+    public static function assignOperator(\UNL\VisitorChat\Conversation\Record $conversation)
+    {
+        if ($conversation->initial_url == NULL) {
+            return false;
+        }
+        
+        //Get a list of operators for this site.
+        $operators = \UNL\VisitorChat\Controller::$registryService->getMembers($conversation->initial_url, 'operator');
+        
+        //try to find an avaiable operator for the initial url.
+        if (!$operatorID = self::findAvaiableOperatorForConversation($conversation->initial_url, $operators, $conversation)) {
+            //No one was found, look at the default operators.
+            $operators = \UNL\VisitorChat\Controller::$defaultOperators;
+            
+            $operatorID = self::findAvaiableOperatorForConversation($conversation->initial_url, $operators, $conversation);
+        }
+        
+        if (!$operatorID) {
+            //Couldn't find anyone
+            return false;
+        }
+        
         //Create a new assignment.
-        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($row['id'], $conversation->id);
+        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operatorID, $conversation->id);
     }
     
     public static function rejectAllExpiredRequests()

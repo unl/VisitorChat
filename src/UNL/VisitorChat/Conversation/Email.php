@@ -50,6 +50,7 @@ class Email
         if (empty($to)) {
             $this->to_group = "SITE";
             
+            //TODO: Remove reference to this class and isntead call the registry driver for the site email.
             $siteMembers = \UNL\VisitorChat\Site\Members::getMembersByTypeAndSite('all', $this->conversation->initial_url);
             
             foreach ($siteMembers as $person) {
@@ -70,6 +71,7 @@ class Email
         if (empty($to)) {
             $this->to_group = "ADMINS";
             
+            //TODO: Remove reference to this class and isntead call the registry driver for the site email.
             foreach (\UNL\VisitorChat\Controller::$defaultOperators as $person) {
                 $person = new \UNL\VisitorChat\Site\Member($person);
                 if ($mail = $person->getDefaultEmail()) {

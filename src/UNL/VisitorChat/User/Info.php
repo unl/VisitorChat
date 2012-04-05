@@ -20,8 +20,7 @@ class Info
         $this->serverTime = date('r');
         
         if (isset($options['checkOperators'])) {
-            $site = new \UNL\VisitorChat\Site\Site($options['checkOperators']);
-            $this->operatorsAvailable = $site->operatorsOnline();
+            $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
         }
         
         if (!$user = \UNL\VisitorChat\User\Record::getCurrentUser()) {
@@ -45,5 +44,17 @@ class Info
             //send the total message count.
             $this->unreadMessages = $user->getCurrentUnreadMessageCounts();
         }
+    }
+    
+    function areOperatorsAvaiable($url)
+    {
+        $operators = \UNL\VisitorChat\Controller::$registryService->getMembers($url);
+        
+        //None were found, lets check the default operators.
+        if ($operators->count() == 0) {
+            $operators = \UNL\VisitorChat\Controller::$defaultOperators;
+        }
+        
+        return \UNL\VisitorChat\User\Service::areUsersAvaiable($operators);
     }
 }

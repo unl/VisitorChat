@@ -23,7 +23,11 @@ class Controller extends \Epoch\Controller
     
     public static $URLService = false;
     
-    public static $registryService = "http://www1.unl.edu/wdn/registry/";
+    /**
+     * The driver for the registry service.  If false, the system will load
+     * the default WDN registry driver.
+     */
+    public static $registryService = false;
     
     function __construct($options = array())
     {
@@ -46,6 +50,10 @@ class Controller extends \Epoch\Controller
         
         //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);
+        
+        if (!self::$registryService) {
+            self::$registryService = new \UNL\VisitorChat\OperatorRegistry\WDN\Driver();
+        }
         
         //4. Move along...
         parent::__construct($options);

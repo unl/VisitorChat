@@ -1,4 +1,5 @@
 <?php
+//TODO: remove this class.
 namespace UNL\VisitorChat\Site;
 class Member
 {
