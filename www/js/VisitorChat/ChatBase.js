@@ -280,7 +280,7 @@ var VisitorChat_ChatBase = Class.extend({
       if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
     	  WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
       } else {
-    	  WDN.jQuery("#visitorChat_header").animate({'width': '230px'}, 280);
+    	  WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 280);
       }
     });
     
@@ -612,7 +612,6 @@ var VisitorChat_ChatBase = Class.extend({
     WDN.jQuery("#visitorChat_container").remove();
     
     //3. logout
-    //WDN.jQuery('#vistorChat_logout').click(
       WDN.jQuery.ajax({
           url: this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
           xhrFields: {
@@ -623,7 +622,6 @@ var VisitorChat_ChatBase = Class.extend({
               //TODO: close chat.
           }
       });
-    //);
     
     //4. clear vars.
     this.latestMessageId = 0;

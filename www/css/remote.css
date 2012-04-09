@@ -9,7 +9,7 @@
     font-size:13px;
     left: 7%; 
     bottom: 0px;
-    width: 240px;
+    width: 214px;
     color: black;
     background-color: transparent;
     border-radius: 3px;
@@ -27,6 +27,7 @@
     height:16px;
     padding:4px 5px;
     width: 60px;
+    display: none;
     
     transition: all 0.12s ease-in-out;
 	-moz-transition: all 0.12s ease-in-out;
@@ -116,7 +117,7 @@
 	margin: 0 6px;
 	padding: 6px 0;
 	text-shadow: 0 1px white;
-	line-height: 120%;
+	line-height: 125%;
 }
 
 #visitorChat_chatBox ul li .stamp {

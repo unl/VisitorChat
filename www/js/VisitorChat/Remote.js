@@ -13,7 +13,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       this.chatStatus = false;
       return this.start();
     }
-    
+  
     this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
     WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
@@ -42,10 +42,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
-    WDN.jQuery("#visitorChat_container").slideDown(450);
-    WDN.jQuery("#visitorChat_header").animate({'width': '230px',
-                                               'opacity': '1'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '1'}, 240);
+    WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 200);
+    WDN.jQuery("#visitorChat_container").delay(10).slideDown(450);  
   },
   
   confirmClose: function(id) {
@@ -92,14 +90,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this._super();
     
     //Click header to open up Chat
-    WDN.jQuery('#visitorChat_header').click(WDN.jQuery.proxy(function(){
+    WDN.jQuery('#visitorChat_header').click(function(){
+      if (!WDN.jQuery('#visitorChat_container').is(":visible")) {
+		WDN.jQuery("#visitorChat_container").slideDown(450);
+      } else {
+        WDN.jQuery("#visitorChat_container").slideUp(450);
+      }
+	  
       if (VisitorChat.chatOpened) {
     	if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
-    	  if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-    		WDN.jQuery("#visitorChat_container").slideDown(450);
-          } else {
-    	    WDN.jQuery("#visitorChat_container").slideUp(450);
-          }
     	  return false;
         }
         VisitorChat.stop();
@@ -108,7 +107,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }
         
       return false;
-    }, this));
+    });
     
     //Logout function
     WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function(){
@@ -116,16 +115,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       VisitorChat.stop();
       return false;
     }, this));
-    
-    /*Hover header function
-    WDN.jQuery("#visitorChat_header").hover(
-      function(){
-    	WDN.jQuery(this).animate({opacity: '1'}, 140)
-      }, function(){
-    	WDN.jQuery(this).animate({opacity: '0.8'}, 140)
-      }
-    );
-    */
     
     //Field watermarks
     WDN.jQuery("#visitorChat_name").watermark("Name (Optional)");
@@ -154,11 +143,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //This will slide down the Name and Email fields, plus the Ask button
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
         WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
-    });
-    
-    //Header is fully-visible when message box is focued
-    WDN.jQuery("#visitorChat_messageBox").focus(function(){
-      WDN.jQuery("#visitorChat_header").css({'opacity': '1'})
     });
   },
   
@@ -208,13 +192,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     this._super();
   },
-
+  
   stop: function() {
-    this._super();
+	if (WDN.jQuery('#visitorChat_container').is(":visible")) {
+      WDN.jQuery("#visitorChat_container").slideUp(400, WDN.jQuery.proxy(function() {
+	    this.stop();
+      }, this));
+	}
+	
+	this._super();
+	
     WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
-    WDN.jQuery("#visitorChat_header").animate({'width': '60px',
-    	   							           'opacity': '0.8'}, 280);
-    WDN.jQuery("#visitorChat_header_text").animate({'opacity': '0'}, 240);
+    WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 200);
+    
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
 
     //Delete the current cookie.
