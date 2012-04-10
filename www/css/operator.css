@@ -130,8 +130,16 @@
     width: 100%;
 }
 
-#visitorChat_url {
+#visitorChat_conversation_header {
+	display: block;
+	height: 50px;
+	margin-bottom: 5px;
 	margin-left: 25px;
+}
+
+#visitorChat_url {
+	display: inline;
+	float: left;
 }
 
 #maincontent
@@ -262,7 +270,7 @@
 }
 
 #notificationOptions {
-	margin-top: 12px;
+	margin-top: 30px;
 }
 
 #visitorChat_url_title {
@@ -273,6 +281,12 @@
 	margin-bottom: 0.3em;
 }
 
-#visitorChat_conversation_options a {
+#visitorChat_conversation_options {
+	display: inline;
 	float: right;
+}
+
+#closeConversation {
+	position: relative;
+	top: 1.8em;
 }
