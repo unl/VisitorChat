@@ -47,7 +47,7 @@
 #visitorChat_chatBox {
     margin:5px 25px ;
     overflow: auto;
-    height: 400px;
+    height: 350px;
 }
 
 #operatorOptions {
