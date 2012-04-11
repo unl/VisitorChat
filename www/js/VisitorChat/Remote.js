@@ -34,11 +34,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         "</div>"
     );
     
+    WDN.jQuery("#visitorChat_header").show();
+    
     this.chatStatus = "LOGIN";
     
     this.loginHTML = WDN.jQuery("#visitorchat_clientLogin").parent().html();
-    
-    this.displaySiteAvailability();
     
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
@@ -217,7 +217,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   displaySiteAvailability: function() {
-    if (this.operatorsAvailable) {
+    if (this.operatorsAvailable || this.chatOpened) {
       WDN.jQuery("#visitorChat_header").css({'display': 'block'});
     } else {
     	WDN.jQuery("#visitorChat_header").css({'display': 'none'});
