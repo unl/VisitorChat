@@ -105,8 +105,6 @@
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-                <a id='visitorChat_launchButton' class='visitorChat_offline' href="<?php echo \UNL\VisitorChat\Controller::$url ?>">
-        Chat with us now</a>
                 <?php include dirname(__DIR__) . '/../../../../../wdn/templates_3.1/includes/feedback.html'; ?>
             </div>
             <div class="footer_col" id="wdn_footer_related">
