@@ -261,7 +261,7 @@
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	font-size: 11px;
+	font-size: 10px;
 	margin: 8px 0 !important;
 	padding: 5px;
 	text-align: center;
@@ -271,7 +271,7 @@
 }
 
 .advice-validate-email::after {
-	bottom: 2.8em;
+	bottom: 2.95em;
 	right: 10px;
 	border-width: 0 10px 10px;
 	border-color: #FBEC5D transparent;
