@@ -64,12 +64,18 @@
 }
 
 #visitorChat_chatBox ul li .stamp {
-	color: #888;
+	color: #aaa;
+	display: block;
 	font-size: 11px;
-	padding: 12px;
-	
+	padding-left: 1em;
 }
 
+#visitorChat_chatBox ul li .timestamp {
+	color: #ccc;
+	float: right;
+	font-size: 0.8em;
+	margin-right: 5px;
+}
 
 .unl_visitorchat_submit {
 	border: 3px solid white;
@@ -284,9 +290,4 @@
 #visitorChat_conversation_options {
 	display: inline;
 	float: right;
-}
-
-#closeConversation {
-	position: relative;
-	top: 1.8em;
 }

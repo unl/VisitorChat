@@ -8,7 +8,8 @@ function get_var($var, $context) {
 }
 ?>
 <form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo $context->getEditURL(); ?>" >
-    <fieldset><legend>Client Login</legend>
+    
+    <fieldset><legend>Comments for us</legend>
         <ul>
             <li class="visitorChat_info">
                 <label for="visitorChat_name"></label>

@@ -156,7 +156,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
             <div class="footer_col" id="wdn_footer_feedback">
 <div id="visitorChat_footercontainer">
 <form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
-    <fieldset><legend>Client Login</legend>
+    <fieldset><legend id="visitorChat_footerHeader">Comments for this page</legend>
         <ul>
             <li class="visitorChat_info">
                 <label for="visitorChat_name"></label>

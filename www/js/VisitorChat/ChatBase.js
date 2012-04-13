@@ -305,8 +305,8 @@ var VisitorChat_ChatBase = Class.extend({
    */
   onConversationStatus_Closed: function(data) {
     clearTimeout(VisitorChat.loopID);
-    var html = '<div class="chat_notify" id="visitorChat_closed">The conversation has been closed.</div>';
-    this.updateChatContainerWithHTML("#visitorChat_container", html);
+    var html = '<div class="chat_notify" id="visitorChat_closed">This conversation has ended.</div>';
+    this.updateChatContainerWithHTML(".visitorChat_center", html);
   },
   
   /**
