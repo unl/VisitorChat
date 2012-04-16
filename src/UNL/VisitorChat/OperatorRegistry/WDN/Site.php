@@ -40,7 +40,19 @@ class Site implements \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     function getEmail()
     {
-        return $this->email;
+        if ($this->email !== null) {
+            return $this->email;
+        }
+        
+        foreach ($this->getMembers() as $person) {
+            $person = new \UNL\VisitorChat\Site\Member($person);
+            $email = "";
+            if ($mail = $person->getEmail()) {
+                $email .= $mail . ', ';
+            }
+        }
+        
+        return $email;
     }
     
     function getTitle()
