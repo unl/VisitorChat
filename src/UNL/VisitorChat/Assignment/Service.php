@@ -76,7 +76,7 @@ class Service
     public static function findAvaiableOperatorForConversation($operators, \UNL\VisitorChat\Conversation\Record $conversation)
     {
         //If there are no operators assigned to this site, bail out now.
-        if ($operators->count() == 0) {
+        if (empty($operators)) {
             return false;
         }
         
@@ -146,8 +146,8 @@ class Service
             
             //Loop though each member and add it to the operators array.
             foreach ($site->getMembers() as $member) {
-                if ($member->getRole != 'other') {
-                    $operators[] = $member;
+                if ($member->getRole() != 'other') {
+                    $operators[] = $member->getUID();
                 }
             }
             
