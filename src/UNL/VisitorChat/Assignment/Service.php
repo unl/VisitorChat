@@ -150,14 +150,7 @@ class Service
         
         //Loop though those sites until am avaiable member can be found.
         foreach ($sites as $site) {
-            $operators = array();
-            
-            //Loop though each member and add it to the operators array.
-            foreach ($site->getMembers() as $member) {
-                if ($member->getRole() != 'other') {
-                    $operators[] = $member->getUID();
-                }
-            }
+            $operators = $this->generateOperatorsArrayForSite($site);
             
             //Break out of the loop once we find someone.
             if ($operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation)) {
@@ -167,6 +160,24 @@ class Service
         
         //Try to find an avaiable operator though other channels as a last resort.
         if (!$operatorID) {
+            foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
+                $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($conversation->initial_url);
+                
+                //Loop though those sites until am avaiable member can be found.
+                foreach ($sites as $site) {
+                    $operators = $this->generateOperatorsArrayForSite($site);
+                    
+                    //Break out of the loop once we find someone.
+                    if ($operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation)) {
+                        continue;
+                    }
+                }
+                
+                //Break out of the search if we found someone.
+                if ($operatorID) {
+                    break;
+                }
+            }
             //No one was found, look at the default operators.
             $operators = \UNL\VisitorChat\Controller::$defaultOperators;
             
@@ -180,6 +191,20 @@ class Service
         
         //Create a new assignment.
         return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operatorID, $conversation->id);
+    }
+    
+    function generateOperatorsArrayForSite($site)
+    {
+        $operators = array();
+        
+        //Loop though each member and add it to the operators array.
+        foreach ($site->getMembers() as $member) {
+            if ($member->getRole() != 'other') {
+                $operators[] = $member->getUID();
+            }
+        }
+        
+        return $operators;
     }
     
     function rejectAllExpiredRequests()
