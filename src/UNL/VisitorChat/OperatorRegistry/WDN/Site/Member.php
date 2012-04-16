@@ -16,6 +16,21 @@ class Member implements \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
         $this->site  = $site;
     }
     
+    function getEmail()
+    {
+        $data_url = 'http://directory.unl.edu/?uid='.urlencode($this->uid).'&format=json';
+        
+        if (!(($person = file_get_contents($data_url)) && $details = json_decode($person, true))) {
+            return false;
+        }
+        
+        if (!isset($details['mail'][0])) {
+            return false;
+        }
+        
+        return $details['mail'][0];;
+    }
+    
     function getSite()
     {
         return $this->site;
