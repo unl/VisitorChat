@@ -86,15 +86,15 @@
 }
 
 #visitorChat_container {
-    background: -moz-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%, rgba(255,255,255,0.92) 100%);
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(244,244,244,1)), color-stop(100%,rgba(255,255,255,0.92)));
-	background: -webkit-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
-	background: -o-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
-	background: -ms-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
-	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.92) 100%);
+    background: -moz-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%, rgba(255,255,255,0.85) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(244,244,244,1)), color-stop(100%,rgba(255,255,255,0.85)));
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
+	background: -o-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
+	background: radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#ebffffff',GradientType=1 );
 	display: none;
-	padding-bottom: 5px;
+	
 	-webkit-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     -moz-box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
     box-shadow: 0px 5px 10px -2px rgba(10, 10, 10, 0.5);
@@ -105,6 +105,7 @@
 }
 
 #visitorChat_chatBox {
+    font-size: 12px;
     height: 300px;
     overflow: auto;
     padding: 6px;
@@ -121,15 +122,22 @@
 }
 
 #visitorChat_chatBox ul li .stamp {
-	color: #888;
+	color: #aaa;
+	display: block;
 	font-size: 11px;
-	padding: 12px;
-	
+	padding-left: 1em;
+}
+
+#visitorChat_chatBox ul li .timestamp {
+	color: #ccc;
+	float: right;
+	font-size: 0.8em;
+	margin-right: 5px;
 }
 
 #visitorChat_messageBox {
     border: 1px solid #CCCCCC;
-    margin: 5px auto 0;
+    margin: 5px auto;
     overflow-y: hidden;
     padding: 2px;
     resize: none;
@@ -141,8 +149,8 @@
     border-bottom: transparent !important;
 }
 
-#visitorChat_message, #visitorChat_name, #visitorChat_email {
-	margin-bottom: 6px;
+#visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
+	margin-top: 6px;
 	width: 198px;
 }
 
@@ -170,7 +178,6 @@
 	font-size: 11px;
 	font-weight: bold;
 	line-height: 1;
-	margin-top: 6px;
 	padding: 8px 0;
 	text-align: center;
 	text-shadow: 0 1px 0 #EEE;
@@ -202,7 +209,7 @@
 }
 
 .unl_visitorchat_form legend {
-    display: none;
+    font-weight: bold;
 }
 
 .unl_visitorchat_submit
@@ -254,7 +261,7 @@
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	font-size: 11px;
+	font-size: 10px;
 	margin: 8px 0 !important;
 	padding: 5px;
 	text-align: center;
@@ -264,7 +271,7 @@
 }
 
 .advice-validate-email::after {
-	bottom: 2.8em;
+	bottom: 2.95em;
 	right: 10px;
 	border-width: 0 10px 10px;
 	border-color: #FBEC5D transparent;
@@ -292,10 +299,10 @@
 }
 
 #visitorChat_email_fallback_text {
-	display: inline-block;
+	display: block;
 	font-size: 11px;
 	line-height: 130%;
-	margin-left: 5px;
+	text-align: center;
 }
 
 #wdn_footer_feedback form {
@@ -307,4 +314,16 @@
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
+}
+
+#visitorChat_closed {
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0.25) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(20%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.25)));
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
+	background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
+	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
+	background: linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#59000000',GradientType=0 );
+	padding-bottom: 25px;
+	text-shadow: 0 1px #fff;
 }

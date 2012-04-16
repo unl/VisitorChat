@@ -13,10 +13,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       this.chatStatus = false;
       return this.start();
     }
-  
-    this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
     
-    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,<br />I would like to receive an email.');
+    this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
+    WDN.jQuery("#visitorChat_footerHeader").css({'display': 'none'});
+    
+    WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
     
     this.start();
 
@@ -43,7 +44,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
     WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 200);
-    WDN.jQuery("#visitorChat_container").delay(10).slideDown(450);  
+    WDN.jQuery("#visitorChat_container").delay(10).slideDown(320);  
   },
   
   confirmClose: function(id) {
@@ -92,9 +93,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(function(){
       if (!WDN.jQuery('#visitorChat_container').is(":visible")) {
-		WDN.jQuery("#visitorChat_container").slideDown(450);
+		WDN.jQuery("#visitorChat_container").slideDown(320);
       } else {
-        WDN.jQuery("#visitorChat_container").slideUp(450);
+        WDN.jQuery("#visitorChat_container").slideUp(320);
       }
 	  
       if (VisitorChat.chatOpened) {
@@ -206,7 +207,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 200);
     
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
-
+	WDN.jQuery("#visitorChat_footerHeader").css({'display': 'block'});
+	
     //Delete the current cookie.
     WDN.jQuery.cookies.del('UNL_Visitorchat_Session');
     
