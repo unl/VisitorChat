@@ -4,42 +4,49 @@ use UNL\VisitorChat, UNL\VisitorChat\OperatorRegistry;
 
 class MockDriver implements OperatorRegistry\DriverInterface
 {
-    function getMembers($site, $type = null)
-    {
-        return new MockSiteMembers();
-    }
-
-    function getSites($member, $type = null)
+    function getSitesByURL($site)
     {
         return new MockSites();
     }
 
-    function getEmail($site)
+    function getSitesForUser($member)
     {
-        return 'me@example.com';
+        return new MockSites();
+    }
+
+    function getAllSites()
+    {
+        return new MockSites();
     }
 }
 
 class MockSiteMembers extends ArrayIterator implements OperatorRegistry\SiteMembersIterator
 {
-    function __construct()
+    protected $url;
+    
+    function __construct($url, $members)
     {
-        parent::__construct(new ArrayIterator(array('bbieber2', 'manager2')));
+        $this->url = $url;
+        parent::__construct($members);
     }
     
-    function current()
-    {
-        return new MockSiteMember(parent::current());
+    function current() {
+        $data = parent::current();
+        return new MockSiteMember(parent::key(), $data['roles'], $this->url);
     }
 }
 
 class MockSiteMember implements OperatorRegistry\SiteMemberInterface
 {
     protected $uid;
+    protected $url;
+    protected $roles;
 
-    function __construct($uid)
+    function __construct($uid, $roles, $url)
     {
-        $this->uid = $uid;
+        $this->uid   = $uid;
+        $this->site  = $url;
+        $this->roles = $roles;
     }
 
     function getUID()
@@ -49,12 +56,44 @@ class MockSiteMember implements OperatorRegistry\SiteMemberInterface
 
     function getSite()
     {
-        return 'http://www.unl.edu/';
+        return $this->site;
     }
 
     function getRole()
     {
-        return 'manager';
+        return $this->roles[0];
+    }
+    
+    function getEmail()
+    {
+        return 'email@unl.com';
+    }
+}
+
+class MockSite implements OperatorRegistry\SiteInterface
+{
+    protected $url;
+    protected $data;
+    
+    function __construct($url, $data)
+    {
+        $this->url = $url;
+        $this->data = $data;
+    }
+    
+    function getEmail()
+    {
+        return $this->data['email'];
+    }
+    
+    function getTitle()
+    {
+        return $this->data['title'];
+    }
+    
+    function getMembers()
+    {
+        return new MockSiteMembers($this->url, $this->data['members']);
     }
 }
 
@@ -62,6 +101,13 @@ class MockSites extends ArrayIterator implements OperatorRegistry\SitesIterator
 {
     function __construct()
     {
-        parent::__construct(new ArrayIterator(array('http://www.unl.edu/')));
+        parent::__construct(new ArrayIterator(array('http://www.unl.edu/' => array('support_email'=>'support@unl.edu', 
+                                                                                   'title'=>'UNL',
+                                                                                   'members'=>array('bbieber2'=>array('roles' => array('operator')),
+                                                                                                    's-mfairch4'=>array('roles' => array('manager')))))));
+    }
+    
+    function current() {
+        return new MockSite(parent::key(),  parent::current());
     }
 }
