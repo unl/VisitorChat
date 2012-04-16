@@ -50,15 +50,12 @@ class Email
         if (empty($to)) {
             $this->to_group = "SITE";
             
-            //TODO: isntead call the registry driver for the site email rather than site members.
-            $siteMembers = \UNL\VisitorChat\Controller::$registryService->getMembers($this->conversation->initial_url, 'operator');
+            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url);
             
-            foreach ($siteMembers as $person) {
-                $person = new \UNL\VisitorChat\Site\Member($person);
-                if ($mail = $person->getDefaultEmail()) {
-                    $to[] = $mail;
-                }
-            }
+            //Get only site members for the top level site.
+            $emails = $sites->current()->getEmail();
+            
+            $to = explode(', ', $emails);
         }
         
         /* Edge case.  If a site contains only students as team members or people who
