@@ -73,7 +73,7 @@ class Service
         return $conversation->save();
     }
     
-    public static function findAvaiableOperatorForConversation($url, $operators, \UNL\VisitorChat\Conversation\Record $conversation)
+    public static function findAvaiableOperatorForConversation($operators, \UNL\VisitorChat\Conversation\Record $conversation)
     {
         //If there are no operators assigned to this site, bail out now.
         if ($operators->count() == 0) {
@@ -137,15 +137,32 @@ class Service
             return false;
         }
         
-        //Get a list of operators for this site.
-        $operators = \UNL\VisitorChat\Controller::$registryService->getMembers($conversation->initial_url, 'operator');
+        //Get a list of sites associated with this url
+        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($conversation->initial_url);
         
-        //try to find an avaiable operator for the initial url.
-        if (!$operatorID = self::findAvaiableOperatorForConversation($conversation->initial_url, $operators, $conversation)) {
+        //Loop though those sites until am avaiable member can be found.
+        foreach ($sites as $site) {
+            $operators = array();
+            
+            //Loop though each member and add it to the operators array.
+            foreach ($site->getMembers() as $member) {
+                if ($member->getRole != 'other') {
+                    $operators[] = $member;
+                }
+            }
+            
+            //Break out of the loop once we find someone.
+            if ($operatorID = self::findAvaiableOperatorForConversation($operators, $conversation)) {
+                continue;
+            }
+        }
+        
+        //Try to find an avaiable operator though other channels as a last resort.
+        if (!$operatorID) {
             //No one was found, look at the default operators.
             $operators = \UNL\VisitorChat\Controller::$defaultOperators;
             
-            $operatorID = self::findAvaiableOperatorForConversation($conversation->initial_url, $operators, $conversation);
+            $operatorID = self::findAvaiableOperatorForConversation($operators, $conversation);
         }
         
         if (!$operatorID) {
