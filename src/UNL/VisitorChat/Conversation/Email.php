@@ -69,11 +69,12 @@ class Email
             $this->to_group = "ADMINS";
             
             //TODO: Remove reference to this class and isntead call the registry driver for the site email.
-            foreach (\UNL\VisitorChat\Controller::$defaultOperators as $person) {
-                $person = new \UNL\VisitorChat\Site\Member($person);
-                if ($mail = $person->getDefaultEmail()) {
-                    $to[] = $mail;
-                }
+            foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
+                $sites = \UNL\VisitorChat\Controller::$registryService->getByURL($url);
+                
+                $emails = $sites->current()->getEmail();
+                
+                $to = explode(', ', $emails);
             }
         }
         

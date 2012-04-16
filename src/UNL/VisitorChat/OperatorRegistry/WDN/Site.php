@@ -45,7 +45,6 @@ class Site implements \UNL\VisitorChat\OperatorRegistry\SiteInterface
         }
         
         foreach ($this->getMembers() as $person) {
-            $person = new \UNL\VisitorChat\Site\Member($person);
             $email = "";
             if ($mail = $person->getEmail()) {
                 $email .= $mail . ', ';
