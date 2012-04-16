@@ -33,8 +33,8 @@ error_reporting(E_ALL);
 //Refresh rate of the chat in miliseconds.
 \UNL\VisitorChat\Controller::$refreshRate = 1000;
 
-//Set the default operators.  (by UIDs)
-\UNL\VisitorChat\Controller::$defaultOperators = array('s-mfairch4');
+//Set the fallback URLs (conversations will be routed to these operatoes if no one is available).
+\UNL\VisitorChat\Controller::$fallbackURLs = new \ArrayIterator(array('http://ucommfairchild.unl.edu'));
 
 //Set session key to prevent man in the middle attacks.
 \UNL\VisitorChat\Controller::$sessionKey = "totallyCoolKey";

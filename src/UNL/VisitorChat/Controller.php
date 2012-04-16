@@ -28,7 +28,7 @@ class Controller extends \Epoch\Controller
      * of the operators.  When no operators for a site
      * are found, these operators will be used.
      */
-    public static $defaultOperators = array();
+    public static $fallbackURLs = array();
     
     public static $URLService = false;
     
