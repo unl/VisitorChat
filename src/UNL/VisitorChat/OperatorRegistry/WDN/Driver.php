@@ -5,33 +5,33 @@ class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
 {
     public static $baseURI = "http://www1.unl.edu/wdn/registry/";
     
-    function getMembers($site, $type = 'all')
+    function query($query)
     {
-        $members = array();
+        $data = @file_get_contents(self::$baseURI . "?u=" . urlencode($query) . "&output=json");
         
-        //Get Site Details
-        $data = @file_get_contents(self::$baseURI . "?u=" . urlencode($site) . "&output=php&memberType=" . $type);
-        
-        if ($data) {
-            $data = unserialize($data);
+        if (!$data) {
+            return false;
         }
         
-        if (is_array($data)) {
-            $members = $data;
+        if (!$sites = json_decode($data, true)) {
+            return false;
         }
         
-        return new Site\MemberList($members);
+        return new SiteList($sites);
+    }
+    
+    function getSitesByURL($site)
+    {
+        return $this->query($site);
+    }
+    
+    function getSitesForUser($user)
+    {
+        return $this->query($user);
     }
 
-    function getSites($member, $type = null)
+    function getAllSites()
     {
-        //NOT IMPLEMENTED
-        return false;
-    }
-
-    function getEmail($site)
-    {
-        //NOT IMPLEMENTED
-        return false;
+        return $this->query('*');
     }
 }
