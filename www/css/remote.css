@@ -160,7 +160,7 @@
 	width: 204px;
 }
 
-#visitorChat_login_sumbit {
+#visitorChat_login_submit {
 	background: -moz-linear-gradient(top,#EFECE9 0%,#F2F1ED 50%,#E7E4E3 51%,#E4E0DD 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#EFECE9),color-stop(50%,#F2F1ED),color-stop(51%,#E7E4E3),color-stop(100%,#E4E0DD));
 	background: -webkit-linear-gradient(top,#EFECE9 0%,#F2F1ED 50%,#E7E4E3 51%,#E4E0DD 100%);
@@ -181,11 +181,11 @@
 	padding: 8px 0;
 	text-align: center;
 	text-shadow: 0 1px 0 #EEE;
-	width: 100px;
+	width: 100%;
 	display: none;
 }
 
-#visitorChat_login_sumbit:hover {
+#visitorChat_login_submit:hover {
 	background: -moz-linear-gradient(top,#E5E2DF 0%,#F2F1ED 50%,#E7E4E3 51%,#E4E0DD 100%);
 	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#E5E2DF),color-stop(50%,#F2F1ED),color-stop(51%,#E7E4E3),color-stop(100%,#E4E0DD));
 	background: -webkit-linear-gradient(top,#E5E2DF 0%,#F2F1ED 50%,#E7E4E3 51%,#E4E0DD 100%);
@@ -200,7 +200,7 @@
 	display: block;
 }
 
-#visitorChat_login_sumbit:active {
+#visitorChat_login_submit:active {
 	border: 1px solid #aaa;
 	border-bottom: 1px solid #888;
 	-moz-box-shadow: inset 0 0 3px 2px #ccc,0 1px 0 0 #eee;

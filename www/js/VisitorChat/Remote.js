@@ -68,7 +68,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery('#visitorChat_container, ' +
             '#visitorChat_email_fallback, ' +
             '#visitorChat_logout, ' +
-            '#visitorChat_login_sumbit, ' +
+            '#visitorChat_login_submit, ' +
             '#visitorChat_header').unbind();
     
     //Make sure the footer input is only submitting as email
@@ -143,7 +143,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //This will slide down the Name and Email fields, plus the Ask button
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
-        WDN.jQuery(".visitorChat_info, #visitorChat_login_sumbit").slideDown("fast");
+        WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast");
     });
   },
   
