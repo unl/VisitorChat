@@ -154,7 +154,7 @@ class Service
             
             //Break out of the loop once we find someone.
             if ($operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation)) {
-                continue;
+                break;
             }
         }
         
@@ -169,7 +169,7 @@ class Service
                     
                     //Break out of the loop once we find someone.
                     if ($operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation)) {
-                        continue;
+                        break;
                     }
                 }
                 
