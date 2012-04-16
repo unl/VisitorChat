@@ -9,9 +9,13 @@ class ConfirmationEmail extends Email
         
         $to = array();
         $client = $conversation->getClient();
-        if (isset($client->email) && !empty($client->email)) {
-            $to[] = $client->email;
+        
+        //Do we have an email address to send this to?
+        if (!isset($client->email) || empty($client->email)) {
+            return false;
         }
+        
+        $to[] = $client->email;
         
         $email = new $class($conversation, $to, $options);
         
