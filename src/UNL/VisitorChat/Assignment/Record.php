@@ -9,6 +9,7 @@ class Record extends \Epoch\Record
     public $date_created;
     public $status;
     public $date_updated;
+    public $answering_site;
     
     function __construct($options = array()) {
         parent::__construct($options);
