@@ -190,7 +190,7 @@ class Service
         }
         
         //Create a new assignment.
-        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operatorID, $conversation->id);
+        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operatorID, $site->getURL(), $conversation->id);
     }
     
     function generateOperatorsArrayForSite($site)

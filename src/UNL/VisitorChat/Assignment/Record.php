@@ -107,12 +107,13 @@ class Record extends \Epoch\Record
      * 
      * @return bool
      */
-    public static function createNewAssignment($userID, $conversationID)
+    public static function createNewAssignment($userID, $answeringSite, $conversationID)
     {
         $assignment = new self();
         $assignment->users_id         = $userID;
         $assignment->status           = 'PENDING';
         $assignment->conversations_id = $conversationID;
+        $assignment->answering_site   = $answeringSite;
         return $assignment->save();
     }
 }
