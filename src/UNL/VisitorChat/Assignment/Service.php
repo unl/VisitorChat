@@ -178,10 +178,6 @@ class Service
                     break;
                 }
             }
-            //No one was found, look at the default operators.
-            $operators = \UNL\VisitorChat\Controller::$defaultOperators;
-            
-            $operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation);
         }
         
         if (!$operatorID) {
