@@ -48,13 +48,8 @@ class Info
     
     function areOperatorsAvaiable($url)
     {
-        $operators = \UNL\VisitorChat\Controller::$registryService->getMembers($url);
+        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
         
-        //None were found, lets check the default operators.
-        if ($operators->count() == 0) {
-            $operators = \UNL\VisitorChat\Controller::$defaultOperators;
-        }
-        
-        return \UNL\VisitorChat\User\Service::areUsersAvaiable($operators);
+        return \UNL\VisitorChat\User\Service::areUsersAvaiable($sites->current()->getMembers());
     }
 }
