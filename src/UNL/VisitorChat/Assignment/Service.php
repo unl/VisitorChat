@@ -73,6 +73,14 @@ class Service
         return $conversation->save();
     }
     
+    /**
+     * Finds an avaiable operator from a set of operators and a conversation.
+     * 
+     * @param array $operators
+     * @param \UNL\VisitorChat\Conversation\Record $conversation
+     * 
+     * @return mixed (string $id, false if failed)
+     */
     public static function findAvaiableOperatorForConversation($operators, \UNL\VisitorChat\Conversation\Record $conversation)
     {
         //If there are no operators assigned to this site, bail out now.
