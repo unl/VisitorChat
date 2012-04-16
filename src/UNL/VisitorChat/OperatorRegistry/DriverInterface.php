@@ -17,27 +17,24 @@ interface DriverInterface
      * Get the list of members for a site
      * 
      * @param string $site
-     * @param string $type One of: operator, manager
-     * 
-     * @return SiteMembersIterator
-     */
-    function getMembers($site, $type = null);
-
-    /**
-     * Get the list of sites the user is a member of
-     * @param string $user
-     * @param string $type One of: operator, manager
      * 
      * @return SitesIterator
      */
-    function getSites($user, $type = null);
+    function getSitesByURL($site);
 
     /**
-     * Get the email address(es) for a specific site
+     * Get the list of sites the user is a member of
      * 
-     * @param string $site
+     * @param string $user
      * 
-     * @return string Email address
+     * @return SitesIterator
      */
-    function getEmail($site);
+    function getSitesForUser($user);
+
+    /**
+     * Get all of the sites in the registry
+     * 
+     * @return SitesIterator
+     */
+    function getAllSites();
 }
