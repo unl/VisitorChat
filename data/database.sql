@@ -85,6 +85,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`assignments` (
   `date_created` DATETIME NOT NULL ,
   `status` ENUM('PENDING','REJECTED','ACCEPTED','EXPIRED','COMPLETED','LEFT') NOT NULL DEFAULT 'PENDING' COMMENT 'The status of the assignment.' ,
   `date_updated` DATETIME NULL ,
+  `answering_site` VARCHAR(255) NOT NULL COMMENT 'The site that is answering the chat.' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_assignments_users1` (`users_id` ASC) ,
   INDEX `fk_assignments_conversations1` (`conversations_id` ASC) ,
