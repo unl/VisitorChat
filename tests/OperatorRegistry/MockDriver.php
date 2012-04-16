@@ -42,7 +42,7 @@ class MockSiteMember implements OperatorRegistry\SiteMemberInterface
         $this->uid = $uid;
     }
 
-    function getMember()
+    function getUID()
     {
         return $this->uid;
     }

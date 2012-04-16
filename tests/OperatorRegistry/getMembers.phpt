@@ -12,7 +12,7 @@ $members = $registry->getMembers('http://www.unl.edu/');
 
 foreach ($members as $site_member) {
     /* @var $site_member UNL\VisitorChat\OperatorRegistry\SiteMemberInterface  */
-    echo $site_member->getMember() . PHP_EOL;
+    echo $site_member->getUID() . PHP_EOL;
     echo $site_member->getRole() . PHP_EOL;
     echo $site_member->getSite() . PHP_EOL;
 }

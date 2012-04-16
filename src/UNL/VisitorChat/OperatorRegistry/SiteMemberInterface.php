@@ -18,9 +18,9 @@ interface SiteMemberInterface
     function getSite();
 
     /**
-     * Get the member
+     * Get the member's unique ID.
      * 
      * @return string
      */
-    function getMember();
+    function getUID();
 }
