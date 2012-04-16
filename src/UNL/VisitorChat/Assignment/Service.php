@@ -13,7 +13,7 @@ class Service
      * 
      * @return bool
      */
-    public static function handleAssignments(\UNL\VisitorChat\Conversation\Record $conversation)
+    function handleAssignments(\UNL\VisitorChat\Conversation\Record $conversation)
     {
         //Determin if we need to handle assignments. If they are currently chatting however, we will check to see if their operator left and assign them a new one.
         if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED'))) {
@@ -54,7 +54,7 @@ class Service
         }
         
         //Try to assign an operator.
-        if (self::assignOperator($conversation)) {
+        if ($this->assignOperator($conversation)) {
             $conversation->status = "OPERATOR_PENDING_APPROVAL";
         } else {
             //Failed to assign an operator.
@@ -81,7 +81,7 @@ class Service
      * 
      * @return mixed (string $id, false if failed)
      */
-    public static function findAvaiableOperatorForConversation($operators, \UNL\VisitorChat\Conversation\Record $conversation)
+    function findAvaiableOperatorForConversation($operators, \UNL\VisitorChat\Conversation\Record $conversation)
     {
         //If there are no operators assigned to this site, bail out now.
         if (empty($operators)) {
@@ -139,7 +139,7 @@ class Service
      * 
      * @return bool
      */
-    public static function assignOperator(\UNL\VisitorChat\Conversation\Record $conversation)
+    function assignOperator(\UNL\VisitorChat\Conversation\Record $conversation)
     {
         if ($conversation->initial_url == NULL) {
             return false;
@@ -160,7 +160,7 @@ class Service
             }
             
             //Break out of the loop once we find someone.
-            if ($operatorID = self::findAvaiableOperatorForConversation($operators, $conversation)) {
+            if ($operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation)) {
                 continue;
             }
         }
@@ -170,7 +170,7 @@ class Service
             //No one was found, look at the default operators.
             $operators = \UNL\VisitorChat\Controller::$defaultOperators;
             
-            $operatorID = self::findAvaiableOperatorForConversation($operators, $conversation);
+            $operatorID = $this->findAvaiableOperatorForConversation($operators, $conversation);
         }
         
         if (!$operatorID) {
@@ -182,7 +182,7 @@ class Service
         return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operatorID, $conversation->id);
     }
     
-    public static function rejectAllExpiredRequests()
+    function rejectAllExpiredRequests()
     {
         $db = \UNL\VisitorChat\Controller::getDB();
         $sql = "UPDATE assignments

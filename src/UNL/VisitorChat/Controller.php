@@ -55,7 +55,8 @@ class Controller extends \Epoch\Controller
         $this->retrievePostData();
         
         //reject all old requests.
-        \UNL\VisitorChat\Assignment\Service::rejectAllExpiredRequests();
+        $assignmentService = new \UNL\VisitorChat\Assignment\Service();
+        $assignmentService->rejectAllExpiredRequests();
         
         //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);
