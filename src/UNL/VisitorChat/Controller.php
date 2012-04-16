@@ -15,6 +15,15 @@ class Controller extends \Epoch\Controller
     public static $cacheJS = true;
     
     /**
+     * An array of possible roles.
+     * Note tha the lower the index, the less rights will be given to that user.
+     * 'other' will have no rights.
+     * 
+     * @var array
+     */
+    public static $roles = array('other', 'operator', 'operator1', 'operator2', 'manager');
+    
+    /**
      * an array of default operators.  Must be the UIDs
      * of the operators.  When no operators for a site
      * are found, these operators will be used.
