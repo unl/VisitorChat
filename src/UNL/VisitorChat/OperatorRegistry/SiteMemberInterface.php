@@ -23,4 +23,11 @@ interface SiteMemberInterface
      * @return string
      */
     function getUID();
+    
+    /**
+     * Get the email of the member.
+     * 
+     * @return mixed (string if exisits, false if no email provided).
+     */
+    function getEmail();
 }
