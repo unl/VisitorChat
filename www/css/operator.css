@@ -68,7 +68,7 @@
 	display: block;
 	font-size: 11px;
 	padding-left: 1em;
-	padding-top: 0.5em;
+	padding-top: 0.35em;
 }
 
 #visitorChat_chatBox ul li .timestamp {
@@ -120,6 +120,10 @@
 	-webkit-border-radius: 10px 0px 0px 10px;
 	border-radius: 10px 0px 0px 10px;
 	padding: 4px 10px;
+}
+
+#clientList ul li {
+	line-height: 175%
 }
 
 #chatRequestCountDown {

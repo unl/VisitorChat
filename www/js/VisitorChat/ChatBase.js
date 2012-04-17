@@ -275,7 +275,7 @@ var VisitorChat_ChatBase = Class.extend({
     
     this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
 
-  //Minimize header function while chatting
+    //Minimize header function while chatting
     WDN.jQuery('#visitorChat_header').click(function(){
       if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
     	  WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
@@ -291,7 +291,16 @@ var VisitorChat_ChatBase = Class.extend({
         WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     });
     
-    
+    //Reveal timestamp
+    WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
+      function () {
+        WDN.jQuery(this).children(".timestamp").animate({'opacity': '1'}, 120);
+        WDN.jQuery(this).children(".stamp").animate({'opacity': '1'}, 120);
+      }, function () {
+    	WDN.jQuery(this).children(".timestamp").animate({'opacity': '0'}, 120);
+    	WDN.jQuery(this).children(".stamp").animate({'opacity': '0.65'}, 120);
+      }
+    );
     
     
   },
