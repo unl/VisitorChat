@@ -41,11 +41,11 @@
 	-moz-border-radius-bottomleft: 10px;
 	-webkit-border-radius: 10px 0px 0px 10px;
 	border-radius: 10px 0px 0px 10px;
-	padding: 4px 0;
+	padding: 4px;
 }
 
 #visitorChat_chatBox {
-    margin:5px 25px ;
+    margin:5px 0 ;
     overflow: auto;
     height: 350px;
 }
@@ -56,17 +56,33 @@
 }
 
 #visitorChat_chatBox ul li {
-	border-bottom: 1px solid #eee;
-	padding: 6px 0;
+	/*border-bottom: 1px solid #F0F0F0;*/
+	padding: 6px 6px 6px 22px;
 	text-shadow: 0 1px white;
 	line-height: 120%;
 	list-style: none;
+}
+
+.visitorChat_client {
+	border-left: 3px solid #76CC52;
+	font-weight: bold;
+}
+
+.visitorChat_me {
+	background-color: #f8f8f8;
+	border-bottom: 1px solid #F0F0F0;
+	border-left: 3px solid transparent;
+}
+
+.visitorChat_them {
+	border-left: 3px solid #e0e0e0;
 }
 
 #visitorChat_chatBox ul li .stamp {
 	color: #aaa;
 	display: block;
 	font-size: 11px;
+	font-weight: normal;
 	padding-left: 1em;
 	padding-top: 0.35em;
 }
@@ -75,6 +91,7 @@
 	color: #ccc;
 	float: right;
 	font-size: 0.8em;
+	font-weight: normal;
 	margin-right: 5px;
 }
 
