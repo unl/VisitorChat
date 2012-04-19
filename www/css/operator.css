@@ -71,7 +71,7 @@
 .visitorChat_me {
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #fff;
-	border-left: 4px solid transparent;
+	border-left: 4px solid #fff;
 }
 
 .visitorChat_them {
