@@ -139,6 +139,10 @@
 	padding: 4px 10px;
 }
 
+#visitorChat_rightSide h2 {
+	padding-top: 2px;
+}
+
 #clientList {
 
 }
