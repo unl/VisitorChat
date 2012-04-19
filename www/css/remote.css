@@ -112,7 +112,7 @@
 }
 
 #visitorChat_chatBox ul li {
-	border-bottom: 1px solid #F0F0F0;
+	border-bottom: 1px solid #fff;
 	color: #555;
 	/*This looks super ugly
 	filter: dropshadow(color=#ffffff, offx=0, offy=1);*/
