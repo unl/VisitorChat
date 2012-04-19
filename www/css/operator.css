@@ -33,15 +33,15 @@
 }
 
 #clientChat {
-    width: 680px;
-    height: 492px;
+    width: 678px;
+    height: 490px;
     border-left: 5px solid #eee;
     margin-top: 5px;	/* Same number as first value in header padding */
     -moz-border-radius-topleft: 10px;
 	-moz-border-radius-bottomleft: 10px;
 	-webkit-border-radius: 10px 0px 0px 10px;
 	border-radius: 10px 0px 0px 10px;
-	padding: 4px;
+	padding: 5px;
 }
 
 #visitorChat_chatBox {
@@ -57,25 +57,25 @@
 
 #visitorChat_chatBox ul li {
 	/*border-bottom: 1px solid #F0F0F0;*/
-	padding: 6px 6px 6px 22px;
+	padding: 6px 6px 6px 20px;
 	text-shadow: 0 1px white;
 	line-height: 120%;
 	list-style: none;
 }
 
 .visitorChat_client {
-	border-left: 3px solid #76CC52;
+	border-left: 4px solid #76CC52;
 	font-weight: bold;
 }
 
 .visitorChat_me {
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #F0F0F0;
-	border-left: 3px solid transparent;
+	border-left: 4px solid transparent;
 }
 
 .visitorChat_them {
-	border-left: 3px solid #e0e0e0;
+	border-left: 4px solid #e0e0e0;
 }
 
 #visitorChat_chatBox ul li .stamp {
@@ -117,7 +117,7 @@
 #visitorChat_messageBox {
 	border-color: #CCC;
 	display: block;
-	margin: 20px 25px 0px;
+	margin: 12px 24px 0px;
 	padding: 2px;
 	resize: none;
 	width: 524px;
@@ -127,7 +127,7 @@
 	/*display: inline;*/
 }
 
-#clientList {
+#visitorChat_rightSide {
     width: 200px;
     height: 492px;
     border-left: 3px solid #eee;
@@ -139,8 +139,12 @@
 	padding: 4px 10px;
 }
 
+#clientList {
+
+}
+
 #clientList ul li {
-	line-height: 175%
+	margin-bottom: 0.35em;
 }
 
 #chatRequestCountDown {
@@ -162,7 +166,7 @@
 	display: block;
 	height: 50px;
 	margin-bottom: 5px;
-	margin-left: 25px;
+	margin-left: 24px;
 }
 
 #visitorChat_url {

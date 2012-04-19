@@ -4,8 +4,9 @@
     <a href="#" id="toggleOperatorStatus"><span id="currentOperatorStatus"></span></a>
 </div>
 
-<div id="clientList">
-<h2>Conversations</h2>
+<div id="visitorChat_rightSide">
+  <h2>Conversations</h2>
+  <div id="clientList"></div>
 </div>
 
 <div id="clientChat">
