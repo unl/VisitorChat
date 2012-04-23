@@ -28,7 +28,20 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
 
 $db = \UNL\VisitorChat\Controller::getDB();
 
-$sql = file_get_contents(dirname(dirname(__FILE__)) . "/data/database.sql");
+$sql = "";
+
+
+if (isset($argv[1]) && $argv[1] == '-f') {
+    echo "Deleting old install" . PHP_EOL;
+    $sql .= "SET FOREIGN_KEY_CHECKS=0;
+             DROP TABLE IF EXISTS users;
+             DROP TABLE IF EXISTS conversations;
+             DROP TABLE IF EXISTS invitations;
+             DROP TABLE IF EXISTS messages;
+             DROP TABLE IF EXISTS assignments;
+             SET FOREIGN_KEY_CHECKS=1;";
+}
+$sql .= file_get_contents(dirname(dirname(__FILE__)) . "/data/database.sql");
 
 exec_sql($db, $sql, 'updatating database');
 
