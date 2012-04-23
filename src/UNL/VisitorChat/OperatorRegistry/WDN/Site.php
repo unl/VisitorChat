@@ -1,7 +1,7 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
-class Site implements \UNL\VisitorChat\OperatorRegistry\SiteInterface
+class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
 {
     private $url     = null;
     

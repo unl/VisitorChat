@@ -1,7 +1,7 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry\WDN\Site;
 
-class Member implements \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
+class Member extends \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
 {
     private $uid   = null;
     

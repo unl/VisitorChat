@@ -1,26 +1,54 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry;
 
-interface SiteInterface
+abstract class SiteInterface
 {
     /**
      * Get the support email for this site.
      * 
      * @return string
      */
-    function getEmail();
+    abstract function getEmail();
 
     /**
      * Get the site members
      * 
      * @return ArrayIterator
      */
-    function getMembers();
+    abstract function getMembers();
     
     /**
      * Get the title of the site.
      * 
      * @return string
      */
-    function getTitle();
+    abstract function getTitle();
+    
+    /**
+     * Determins the number of operators for this site that are current available.
+     * 
+     * @return int the number of operators currently available
+     */
+    function getAvailableCount()
+    {
+        $count = 0;
+        
+        foreach ($this->getMembers() as $member) {
+            if ($member->getRole() == 'other') {
+                continue;
+            }
+            
+            if (!$user = $member->getAccount()) {
+                continue;
+            }
+            
+            if ($user->status != 'AVAILABLE') {
+                continue;
+            }
+            
+            $count++;
+        }
+        
+        return $count;
+    }
 }
