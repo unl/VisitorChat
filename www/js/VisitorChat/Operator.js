@@ -8,7 +8,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   initWindow: function() {
     WDN.jQuery("#toggleOperatorStatus").click(function(){
-        VisitorChat.toggleOperatorStatus();
+        if (VisitorChat.operatorStatus == 'AVAILABLE') {
+          VisitorChat.checkOperatorCountBeforeStatusChange();
+        } else {
+          VisitorChat.toggleOperatorStatus();
+        }
         return false;
     });
     
@@ -281,6 +285,58 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           WDN.jQuery("#clientList").html(data);
           this.initWatchers();
       }, this)
+    });
+  },
+  
+  checkOperatorCountBeforeStatusChange: function() {
+    WDN.jQuery.ajax({
+      type: "GET",
+      url: this.serverURL + "user/sites?format=json",
+      success: WDN.jQuery.proxy(function(data) {
+        var offline = new Array();
+        
+        for (url in data) {
+          if ((data[url]['total_available'] - 1) < 1) {
+            offline[url] = data[url]['title'];
+          }
+        }
+        
+        if (offline.length == 0) {
+            this.displayStatusChangeAlert(offline);
+        }
+        
+      }, this),
+      error: WDN.jQuery.proxy(function(data) {
+        this.toggleOperatorStatus();
+    }, this)
+    });
+  },
+  
+  displayStatusChangeAlert: function(offline)
+  {
+    var html = "You are the last person online for the following sites.  If you go offline now, these sites will have chat functionality turned off. <ul id='visitorChat_sitesWarning'>";
+    
+    for (site in offline) {
+      html += "<li>" + offline[site] + "</li>";
+    }
+    
+    html += "</ul>";
+    
+    WDN.jQuery("#alert").html(html);
+    
+    //start a new dialog box.
+    WDN.jQuery("#alert").dialog({
+      resizable: false,
+      modal: true,
+      buttons: {
+        "Go Offline Anyway": WDN.jQuery.proxy(function() {
+          WDN.jQuery("#alert").dialog("close");
+          this.toggleOperatorStatus();
+        }, this),
+        "Nevermind": WDN.jQuery.proxy(function() {
+           WDN.jQuery("#alert").dialog("close");
+        }, this),
+      }
     });
   },
   

@@ -17,6 +17,9 @@
     This request will expire in <span id="chatRequestCountDown">10</span> seconds.
 </div>
 
+<div id="alert" title="Alert">
+</div>
+
 <div id='visitorChat_sound_container'>
     <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url?>audio/message.wav'></audio>
 </div>
