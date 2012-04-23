@@ -36,7 +36,7 @@ class MockSiteMembers extends ArrayIterator implements OperatorRegistry\SiteMemb
     }
 }
 
-class MockSiteMember implements OperatorRegistry\SiteMemberInterface
+class MockSiteMember extends OperatorRegistry\SiteMemberInterface
 {
     protected $uid;
     protected $url;
@@ -70,7 +70,7 @@ class MockSiteMember implements OperatorRegistry\SiteMemberInterface
     }
 }
 
-class MockSite implements OperatorRegistry\SiteInterface
+class MockSite extends OperatorRegistry\SiteInterface
 {
     protected $url;
     protected $data;
