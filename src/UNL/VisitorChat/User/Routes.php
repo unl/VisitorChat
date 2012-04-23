@@ -6,6 +6,7 @@ class Routes extends \RegExpRouter\RoutesInterface
     public static function getGetRoutes()
     {
         return array('/^logout$/i' => 'Logout',
+                     '/^user\/sites$/i' => 'SiteList',
                      '/^user\/info$/i' => 'Info');
     }
     
