@@ -8,7 +8,7 @@ class Logout
         
         if (!$user) {
             // Short-circuit, no one is logged in
-            return;
+            return session_destroy();;
         }
         
         if ($conversation = $user->getConversation()) {
