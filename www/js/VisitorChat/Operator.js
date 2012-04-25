@@ -15,12 +15,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         return false;
     });
-    
-  //BrightBox Testing hurr.
-    var mouse_is_inside = false;
 
-    WDN.jQuery("#visitorChat_siteList").click(function() {
-        
+    this._super();
+  },
+  
+  showBrightBox: function() {
+    var mouse_is_inside = false;
+  
       //Navigation needs to be under back-drop
       WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
       
@@ -42,15 +43,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
           WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
         }
-      });
     });
-    
-    this._super();
   },
   
   initWatchers: function() {
     //Remove old elvent handlers
-    WDN.jQuery('.conversationLink, .closeConversation').unbind();
+    WDN.jQuery('.conversationLink, .closeConversation, #shareConversation').unbind();
   
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
@@ -122,8 +120,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           withCredentials: true
       },
       success: WDN.jQuery.proxy(function(data) {
-        alert(data);
-        WDN.jQuery("#shareChat").html(data);
+    	
+        WDN.jQuery("#visitorChat_brightBox").html(data);
+        this.showBrightBox();
         
         //start a new dialog box.
       }, this),

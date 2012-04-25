@@ -2,7 +2,6 @@
 
 <div id="operatorOptions">
     <a id="toggleOperatorStatus" href="#"><span id="currentOperatorStatus"></span></a>
-    <a id="visitorChat_siteList" href="#">Sites I operate</a>
 </div>
 
 <div id="visitorChat_rightSide">
