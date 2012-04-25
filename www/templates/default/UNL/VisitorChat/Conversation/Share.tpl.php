@@ -1,5 +1,5 @@
 <h2>Share this conversation</h2>
-<form name="share action="<?php UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->id . '/share', true)?>" method="POST">
+<form id='shareForm' name="share action="<?php UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->id . '/share', true)?>" method="POST">
     <fieldset>
         <legend>Select sharing method</legend>
         <ul>

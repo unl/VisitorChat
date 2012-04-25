@@ -120,12 +120,43 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
           withCredentials: true
       },
       success: WDN.jQuery.proxy(function(data) {
-    	
+        
         WDN.jQuery("#visitorChat_brightBox").html(data);
         this.showBrightBox();
-        
+        this.loadShareWatchers();
         //start a new dialog box.
       }, this),
+    });
+  },
+  
+  loadShareWatchers: function() {
+    WDN.jQuery('#shareForm input[type="radio"][name="to"]').change(WDN.jQuery.proxy(function() {
+      this.confirmShare();
+    }, this));
+  },
+  
+  confirmShare: function() {
+    var toHTML = WDN.jQuery('input[name=to]:checked', '#shareForm').parent().text();
+    var to     = WDN.jQuery('input[name=to]:checked', '#shareForm').val();
+    
+    //Clean to as it may contain lots of whitepsace
+    toHTML = WDN.jQuery.trim(toHTML);
+    
+    var method     = WDN.jQuery('input[name=method]:checked', '#shareForm').val();
+    var methodHTML = method;
+    
+    if (confirm('Are sure you want to ' + methodHTML + ' ' + toHTML + '?')) {
+        this.share(method, to);
+    }
+  },
+  
+  share: function(method, to) {
+    WDN.jQuery.ajax({
+      type: "POST",
+      url: this.serverURL + "conversation/" + this.conversationID + "/share?format=json",
+      data: "method=" + method + "&to=" + to
+    }).error(function(msg) {
+      alert('There was an error sharing, please try back later.');
     });
   },
   
