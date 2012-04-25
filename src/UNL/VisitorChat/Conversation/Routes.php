@@ -14,7 +14,8 @@ class Routes extends \RegExpRouter\RoutesInterface
     
     public static function getPostRoutes() 
     {
-        return array('/^conversation\/(?P<id>[\d]+)\/edit$/i' => 'Edit');
+        return array('/^conversation\/(?P<id>[\d]+)\/edit$/i' => 'Edit',
+                     '/^conversation\/(?P<id>[\d]+)\/share$/i' => 'Share');
     }
     
     public static function getDeleteRoutes()
