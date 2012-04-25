@@ -20,6 +20,9 @@
 <div id="alert" title="Alert">
 </div>
 
+<div id="shareChat" title="Share">
+</div>
+
 <div id='visitorChat_sound_container'>
     <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url?>audio/message.wav'></audio>
 </div>

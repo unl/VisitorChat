@@ -43,6 +43,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }
     });
     
+    WDN.jQuery('#shareConversation').click(function() {
+      VisitorChat.openShareWindow();
+    });
+    
     this._super();
   },
   
@@ -79,6 +83,22 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   start: function() {
       //load the conversation list.
       this._super();
+  },
+  
+  openShareWindow: function() {
+    //Update the Client List
+    WDN.jQuery.ajax({
+      url: this.serverURL + "conversation/" + this.conversationID + "/share?format=partial",
+      xhrFields: {
+          withCredentials: true
+      },
+      success: WDN.jQuery.proxy(function(data) {
+        alert(data);
+        WDN.jQuery("#shareChat").html(data);
+        
+        //start a new dialog box.
+      }, this),
+    });
   },
   
   updateConversationListWithUnreadMessages: function()

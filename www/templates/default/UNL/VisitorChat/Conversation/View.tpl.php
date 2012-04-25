@@ -12,7 +12,10 @@ $user = \UNL\VisitorChat\User\Record::getCurrentUser();
         if ($user->type == 'operator') {
         ?>
         <div id='visitorChat_conversation_options'>
-            <a href='#' id='closeConversation'>End Conversation</a>
+            <ul>
+                <li><a href='#' id='shareConversation'>Share</a></li>
+                <li><a href='#' id='closeConversation'>End Conversation</a></li>
+            </ul>
         </div>
         <?php 
         }
