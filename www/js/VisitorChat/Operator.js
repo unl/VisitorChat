@@ -16,6 +16,35 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return false;
     });
     
+  //BrightBox Testing hurr.
+    var mouse_is_inside = false;
+
+    WDN.jQuery("#visitorChat_siteList").click(function() {
+        
+      //Navigation needs to be under back-drop
+      WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
+      
+      //Add in the back-drop and show brightBox
+      WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
+      WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
+
+      //Track mouse position
+      WDN.jQuery('#visitorChat_brightBox').hover(function() {
+        mouse_is_inside = true;
+      }, function() {
+        mouse_is_inside = false;
+      });
+
+      //Click outside container to close
+      WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
+        if (!mouse_is_inside) {
+          WDN.jQuery("#visitorChat_backDrop").remove();
+          WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
+          WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
+        }
+      });
+    });
+    
     this._super();
   },
   

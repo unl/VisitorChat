@@ -1,7 +1,8 @@
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url?>js/chat.php?for=operator"></script>
+<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?for=operator"></script>
 
 <div id="operatorOptions">
-    <a href="#" id="toggleOperatorStatus"><span id="currentOperatorStatus"></span></a>
+    <a id="toggleOperatorStatus" href="#"><span id="currentOperatorStatus"></span></a>
+    <a id="visitorChat_siteList" href="#">Sites I operate</a>
 </div>
 
 <div id="visitorChat_rightSide">
@@ -24,9 +25,13 @@
 </div>
 
 <div id='visitorChat_sound_container'>
-    <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url?>audio/message.wav'></audio>
+    <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url ?>audio/message.wav'></audio>
 </div>
 
 <div id="notificationOptions">
     <a href="#" id="requestNotifications">Show Desktop Notifications</a>
+</div>
+
+<div id="visitorChat_brightBox">
+  <p>Hello all!</p>
 </div>
