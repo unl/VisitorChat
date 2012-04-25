@@ -10,6 +10,7 @@ class Record extends \Epoch\Record
     public $status;
     public $date_updated;
     public $answering_site;
+    public $invitations_id;
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -33,6 +34,7 @@ class Record extends \Epoch\Record
     public function insert()
     {
         $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         return parent::insert();
     }
     
@@ -100,6 +102,35 @@ class Record extends \Epoch\Record
         return $record;
     }
     
+    public static function getLatestForInvitation($invitionID)
+    {
+        $db = \UNL\VisitorChat\Controller::getDB();
+        
+        $sql = "SELECT * FROM assignments 
+                WHERE invitions_id = " . (int)$invitionID . "
+                ORDER BY date_created ASC
+                LIMIT 1";
+        
+        if (!$result = $db->query($sql)) {
+            return false;
+        }
+        
+        if ($result->num_rows == 0) {
+            return false;
+        }
+        
+        $record = new self();
+        
+        $record->synchronizeWithArray($result->fetch_assoc());
+        
+        return $record;
+    }
+    
+    function getInvitation()
+    {
+        return \UNL\VisitorChat\Invitation\Record::getByID($this->invitations_id);
+    }
+    
     /**
      * Creates a new assigment record.
      * 
@@ -108,13 +139,28 @@ class Record extends \Epoch\Record
      * 
      * @return bool
      */
-    public static function createNewAssignment($userID, $answeringSite, $conversationID)
+    public static function createNewAssignment($userID, $answeringSite, $conversationID, $invitationID)
     {
         $assignment = new self();
         $assignment->users_id         = $userID;
         $assignment->status           = 'PENDING';
         $assignment->conversations_id = $conversationID;
         $assignment->answering_site   = $answeringSite;
+        $assignment->invitations_id   = $invitationID;
+        
         return $assignment->save();
+    }
+    
+    public function accept()
+    {
+        $this->status = "ACCEPTED";
+        $this->getInvitation()->complete();
+        return $this->save();
+    }
+    
+    public function reject()
+    {
+        $this->status = "REJECTED";
+        return $this->save();
     }
 }

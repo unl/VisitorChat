@@ -34,16 +34,17 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
             throw new \Exception("invalid status.", 400);
         }
         
-        $this->status = $post['status'];
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-        
-        $this->save();
+        if ($post['status'] == "ACCEPTED") {
+            $this->accept();
+        } else {
+            $this->reject();
+        }
         
         //Update the conversation status
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
         
         $conversation->status = "SEARCHING";
-        if ($this->status == 'ACCEPTED') {
+        if ($post['status'] == 'ACCEPTED') {
             $conversation->status = "CHATTING";
         }
         
