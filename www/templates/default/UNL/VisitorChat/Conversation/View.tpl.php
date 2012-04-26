@@ -11,9 +11,7 @@ $user = \UNL\VisitorChat\User\Record::getCurrentUser();
                 foreach ($context->conversation->getAcceptedAndCompletedAssignments() as $assignment) {
                     $operator = $assignment->getUser();
                     
-                    $class = strtolower($operator->status);
-                    
-                    echo "<li class='$class'>" . $assignment->getUser()->name . "</li>";
+                    echo "<li>" . $assignment->getUser()->name . "</li>";
                 }
                 ?>
             </ul> <br />

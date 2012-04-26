@@ -330,7 +330,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Does the message box current exist?  If it does, only replace the message list.
     if (WDN.jQuery("#visitorChat_chatBox").length !== 0) {
+        //Replace the header
+       this.updateChatContainerWithHTML("#visitorChat_conversation_header", WDN.jQuery(data['html']).find("#visitorChat_conversation_header").html());
+        
+        //Replace conversation.
         this.updateChatContainerWithHTML("#visitorChat_chatBox", WDN.jQuery(data['html']).find("#visitorChat_chatBox").html());
+        
+        //remove the loading class.
         WDN.jQuery("#visitorChat_chatBox").removeClass('visitorChat_loading');
     } else {
         //Load all of it.

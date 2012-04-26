@@ -373,15 +373,6 @@
     pargin-right: 2px;
 }
 
-#visitorChat_url_operatorList li .busy{
+#visitorChat_url_operatorList li {
     display: inline;
-    list-style-type: circle;
-}
-
-#visitorChat_url_operatorList .available {
-    background-color: green;
-}
-
-#visitorChat_url_operatorList .busy{
-    background-color: red;
 }
