@@ -76,6 +76,11 @@ class Service
      */
     function appendFormat($url, $format) {
         if ($format === true) {
+            //Do we know what the format is?
+            if (!isset($this->options['format'])) {
+                return $url;
+            }
+            
             $format = $this->options['format'];
         }
         
