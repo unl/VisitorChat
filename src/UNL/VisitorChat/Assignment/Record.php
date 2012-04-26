@@ -163,4 +163,9 @@ class Record extends \Epoch\Record
         $this->status = "REJECTED";
         return $this->save();
     }
+    
+    public function getUser()
+    {
+        return \UNL\VisitorChat\User\Record::getByID($this->users_id);
+    }
 }
