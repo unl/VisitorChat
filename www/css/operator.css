@@ -167,7 +167,7 @@
 
 #visitorChat_conversation_header {
 	display: block;
-	height: 50px;
+	height: 65px;
 	margin-bottom: 5px;
 	margin-left: 24px;
 }
@@ -360,4 +360,28 @@
     background-color: #000000;
     opacity: .35;
     filter:progid:DXImageTransform.Microsoft.BasicImage(opacity=.7);
+}
+
+#visitorChat_url_operatorList {
+    display: inline;
+}
+
+#visitorChat_url_operatorList li{
+    display: inline;
+    list-style-type: circle;
+    margin-left: 2px;
+    pargin-right: 2px;
+}
+
+#visitorChat_url_operatorList li .busy{
+    display: inline;
+    list-style-type: circle;
+}
+
+#visitorChat_url_operatorList .available {
+    background-color: green;
+}
+
+#visitorChat_url_operatorList .busy{
+    background-color: red;
 }

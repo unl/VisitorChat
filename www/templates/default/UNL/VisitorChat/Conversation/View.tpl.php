@@ -6,6 +6,17 @@ $user = \UNL\VisitorChat\User\Record::getCurrentUser();
     <div id='visitorChat_conversation_header'>
         <div id='visitorChat_url'>
             <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span><br />
+            With <ul id='visitorChat_url_operatorList'>
+                <?php 
+                foreach ($context->conversation->getAcceptedAndCompletedAssignments() as $assignment) {
+                    $operator = $assignment->getUser();
+                    
+                    $class = strtolower($operator->status);
+                    
+                    echo "<li class='$class'>" . $assignment->getUser()->name . "</li>";
+                }
+                ?>
+            </ul> <br />
             on <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
         </div>
         <?php 
