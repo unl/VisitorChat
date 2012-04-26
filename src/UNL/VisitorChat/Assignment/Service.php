@@ -35,7 +35,8 @@ class Service
                         /* Make sure they are not already assigned */
                         AND (SELECT COUNT(assignments.id)
                                    FROM assignments
-                                   WHERE assignments.status = 'ACCEPTED'
+                                   WHERE assignments.users_id = users1.id
+                                         AND assignments.status = 'ACCEPTED'
                                          AND assignments.conversations_id = " . (int)$invitation->conversations_id .")
                             = 0
                         /* Make sure we are not sending a request to the same person twice. */
@@ -89,7 +90,7 @@ class Service
             }
             
             //We expect to proceed with an array containing an operatorID and the responding site.
-            $operator = array('operatorID'=>$operatorID, 'site'=>$invitation->invitee);
+            $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
         }
         
         //Create a new assignment.
