@@ -51,7 +51,7 @@ class Record extends \Epoch\Record
         $invitation->users_id         = $inviter;
         $invitation->status           = "SEARCHING";
         
-        $invitation->save();
+        return $invitation->save();
     }
     
     public function complete()
