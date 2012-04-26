@@ -42,9 +42,12 @@ class Share extends \UNL\VisitorChat\Conversation\Record
             throw new \Exception('No one was specified to share this conversation with.', 400);
         }
         
-        switch ($post['to']) {
+        switch ($post['method']) {
             case 'invite': 
-                //Start a new invitation here.
+                //Start a new invitation.
+                if (!\UNL\VisitorChat\Invitation\Record::createNewInvitation($this->id, $post['to'], \UNL\VisitorChat\User\Record::getCurrentUser()->id)) {
+                    throw new \Exception('Failed to send invite', 500);
+                }
                 break;
         }
         
