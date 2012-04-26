@@ -276,6 +276,7 @@ var VisitorChat_ChatBase = Class.extend({
     //Does the message box current exist?  If it does, only replace the message list.
     if (WDN.jQuery("#visitorChat_chatBox").length !== 0) {
         this.updateChatContainerWithHTML("#visitorChat_chatBox", WDN.jQuery(data['html']).find("#visitorChat_chatBox").html());
+        WDN.jQuery("#visitorChat_chatBox").removeClass('visitorChat_loading');
     } else {
         //load all of it.
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
