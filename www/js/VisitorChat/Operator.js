@@ -328,7 +328,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       return true;
     }
     
-    this.updateChatContainerWithHTML("#clientChat", data['html']);
+    //Does the message box current exist?  If it does, only replace the message list.
+    if (WDN.jQuery("#visitorChat_chatBox").length !== 0) {
+        this.updateChatContainerWithHTML("#visitorChat_chatBox", WDN.jQuery(data['html']).find("#visitorChat_chatBox").html());
+    } else {
+        //Load all of it.
+        this.updateChatContainerWithHTML("#clientChat", data['html']);
+    }
   },
   
   onConversationStatus_Closed: function(data) {
