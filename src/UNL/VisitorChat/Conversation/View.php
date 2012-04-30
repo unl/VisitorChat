@@ -13,6 +13,8 @@ class View
     
     public $latest_message_id = 0;
     
+    public $invitations = false;
+    
     public $sendHTML = false;
     
     function __construct($options = array())
@@ -31,6 +33,8 @@ class View
             if (!$this->conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversation_id)) {
                 throw new \Exception("No conversation was found!", 500);
             }
+            
+            $this->invitations = $this->conversation->getInvitations();
         } else {
             //Just get the latest conversation.
             if (!$this->conversation = $user->getConversation()) {

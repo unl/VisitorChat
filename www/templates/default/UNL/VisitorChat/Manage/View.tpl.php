@@ -9,7 +9,13 @@
   <div id="clientList"></div>
 </div>
 
-<div id="clientChat">
+<div id='clientChatContainer'>
+    <div id="clientChat">
+    </div>
+    <div id="clientChatInfoContainer">
+        <div id="clientChat_Invitations">
+        </div>
+    </div>
 </div>
 
 <div id="chatRequest" title="Incoming Chat Request">

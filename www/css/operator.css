@@ -32,16 +32,30 @@
     margin-right: 5px;
 }
 
-#clientChat {
-    width: 678px;
+#clientChatContainer {
+    width: 700px;
     height: 490px;
     border-left: 5px solid #eee;
-    margin-top: 5px;	/* Same number as first value in header padding */
+    margin-top: 5px;    /* Same number as first value in header padding */
     -moz-border-radius-topleft: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	-webkit-border-radius: 10px 0px 0px 10px;
-	border-radius: 10px 0px 0px 10px;
-	padding: 5px;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0px 0px 10px;
+    padding: 5px;
+}
+
+#clientChat {
+    float:left;
+    width:475px;
+    height: 100%;
+}
+
+#clientChatInfoContainer {
+    float:left;
+    width:215px;
+    height: 100px;
+    margin-left: 10px;
+    margin-top: 70px;
 }
 
 #visitorChat_chatBox {
@@ -53,6 +67,30 @@
 #operatorOptions {
 	display: block;
 	margin-bottom: 5px;
+}
+
+#visitorChat_InvitationList .searching{
+    background-color: yellow;
+}
+
+#visitorChat_InvitationList .failed{
+    background-color: red;
+}
+
+#visitorChat_InvitationList .completed{
+    background-color: green;
+}
+
+#visitorChat_InvitationList .visitorChat_AssignmentList .pending{
+    background-color: yellow;
+}
+
+#visitorChat_InvitationList .visitorChat_AssignmentList .rejected{
+    background-color: red;
+}
+
+#visitorChat_InvitationList .visitorChat_AssignmentList .accepted{
+    background-color: green;
 }
 
 #visitorChat_chatBox ul li {
@@ -166,10 +204,12 @@
 }
 
 #visitorChat_conversation_header {
+	width: 678px;
 	display: block;
 	height: 65px;
 	margin-bottom: 5px;
 	margin-left: 24px;
+	background-color: #F8F8F8;
 }
 
 #visitorChat_url {

@@ -5,6 +5,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   operatorStatus    : false,
   unreadMessages    : new Array(), //The total number of messages for all open conversations
   requestExpireDate : new Array(),
+  invitationsHTML   : false, //Holds a copy of the latest invitations html
   
   initWindow: function() {
     WDN.jQuery("#toggleOperatorStatus").click(function(){
@@ -320,6 +321,21 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     }
     
     this._super(url);
+  },
+  
+  updateChatWithData: function(data) {
+    if (data['invitations_html'] !== undefined && data['invitations_html']) {
+      this.updateInvitationsListWithHTML(data['invitations_html']);
+    }
+    
+    return this._super(data);
+  },
+  
+  updateInvitationsListWithHTML: function(html) {
+    if (this.invitationsHTML != html) {
+      this.invitationsHTML = html;
+      WDN.jQuery("#clientChat_Invitations").html(html);
+    }
   },
   
   onConversationStatus_Chatting: function(data)
