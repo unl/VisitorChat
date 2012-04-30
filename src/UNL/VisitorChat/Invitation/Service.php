@@ -65,7 +65,6 @@ class Service
                 continue;
             }
             
-            
             //If it was accepted, close this invitation
             if (is_object($assignment) && $assignment->status == "ACCEPTED") {
                 $invitation->complete();
