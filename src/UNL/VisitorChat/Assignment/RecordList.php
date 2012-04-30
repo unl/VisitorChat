@@ -29,6 +29,17 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
     
+    public static function getAllAssignmentsForInvitation($invitationID, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE invitations_id = " . (int)$invitationID . "
+                           ORDER BY date_created ASC";
+        
+        return self::getBySql($options);
+    }
+    
     public static function getAcceptedAndCompletedAssignmentsForConversation($conversationID, $options = array())
     {
         $options = $options + self::getDefaultOptions();
