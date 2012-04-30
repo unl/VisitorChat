@@ -43,6 +43,20 @@ class Record extends \Epoch\Record
         return parent::save();
     }
     
+    /**
+     * Determins if the invitee is a site.
+     * 
+     * @return bool
+     */
+    function isForSite()
+    {
+        if (filter_var($this->invitee, FILTER_VALIDATE_URL)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     public static function createNewInvitation($conversationID, $invitee, $inviter = 1)
     {
         $invitation = new self();
@@ -64,5 +78,10 @@ class Record extends \Epoch\Record
     {
         $this->status = "FAILED";
         $this->save();
+    }
+    
+    public function getAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForInvitation($this->id);
     }
 }
