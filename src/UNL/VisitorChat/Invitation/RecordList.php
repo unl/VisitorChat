@@ -29,4 +29,15 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+    
+    public static function getAllForConversation($conversationID, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM invitations
+                           WHERE conversations_id = " . (int)$conversationID . "
+                           ORDER BY date_created ASC";
+        
+        return self::getBySql($options);
+    }
 }
