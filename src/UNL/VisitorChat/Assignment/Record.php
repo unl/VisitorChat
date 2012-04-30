@@ -107,7 +107,7 @@ class Record extends \Epoch\Record
         $db = \UNL\VisitorChat\Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
-                WHERE invitions_id = " . (int)$invitionID . "
+                WHERE invitations_id = " . (int)$invitionID . "
                 ORDER BY date_created ASC
                 LIMIT 1";
         
