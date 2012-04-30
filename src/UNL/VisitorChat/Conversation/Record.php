@@ -299,4 +299,9 @@ class Record extends \Epoch\Record
         
         return $users;
     }
+    
+    function getInvitations()
+    {
+        return \UNL\VisitorChat\Invitation\RecordList::getAllForConversation($this->id);
+    }
 }
