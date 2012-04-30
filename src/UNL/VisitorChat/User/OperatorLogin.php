@@ -36,12 +36,12 @@ class OperatorLogin
             $user->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
             $user->type         = 'operator';
             $user->max_chats    = 3;
+            $user->uid          = $auth->getUser();
             
             if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $auth->getUser() . "&format=json")) {
                 if ($data = json_decode($json, true)) {
                     $user->name  = $data['displayName'][0];
                     $user->email = $data['mail'][0];
-                    $user->uid   = $auth->getUser();
                 }
             }
         }
