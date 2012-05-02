@@ -15,7 +15,7 @@ $user = \UNL\VisitorChat\User\Record::getCurrentUser();
                 }
                 ?>
             </ul> <br />
-            on <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
+            on <a class="visitorChat_topicPage" href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
         </div>
         <?php 
         if ($user->type == 'operator') {

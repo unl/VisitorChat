@@ -94,11 +94,11 @@
 }
 
 #visitorChat_chatBox ul li {
-	border-bottom: 3px solid #fff;
 	padding: 6px 6px 6px 20px;
 	text-shadow: 0 1px white;
 	line-height: 130%;
 	list-style: none;
+	margin-bottom: 1px;
 }
 
 .visitorChat_client {
@@ -406,13 +406,34 @@
     display: inline;
 }
 
-#visitorChat_url_operatorList li{
-    display: inline;
-    list-style-type: circle;
-    margin-left: 2px;
-    pargin-right: 2px;
+#visitorChat_url_operatorList li {
+    display: inline-block;
+	list-style-type: circle;
+	margin-left: 2px;
+	margin-right: 2px;
+	/*
+	background-color: #00A8FF;
+	border-radius: 2px;
+	padding: 1px 2px;
+	color: white;
+	text-shadow: 0 1px 2px #006FA6;
+	box-shadow: inset 0px 5px 8px -4px #a8e2ff;
+	*/
 }
 
-#visitorChat_url_operatorList li {
-    display: inline;
+#maincontent
+.visitorChat_topicPage {
+	background-color: #C50202;
+	color: white;
+	padding: 1px 3px;
+	text-shadow: 0 1px 2px #8D0101;
+	border-radius: 3px;
+	box-shadow: inset 0px 5px 10px -4px #FECDCD;
+}
+
+#maincontent
+.visitorChat_topicPage:hover {
+	text-shadow: 0 -1px 2px #8D0101;
+	box-shadow: inset 0px -5px 10px -4px #FECDCD;
+	color: white;
 }
