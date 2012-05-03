@@ -43,7 +43,12 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
         //Update the conversation status
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
         
-        $conversation->status = "SEARCHING";
+        //Reset to searching if we are initalizing the chat.
+        if ($conversation->status == "OPERATOR_PENDING_APPROVAL") {
+            $conversation->status = "SEARCHING";
+        }
+        
+        //Only change the status to chatting if it was accepted.
         if ($post['status'] == 'ACCEPTED') {
             $conversation->status = "CHATTING";
         }
