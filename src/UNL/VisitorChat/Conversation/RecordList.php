@@ -30,6 +30,20 @@ class RecordList extends \Epoch\RecordList
         return self::getConversationsForUser($userID, 'CHATTING', $options);
     }
     
+    public static function getConversationsForSite($url, $options = array())
+    {
+        //Build the list
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT conversations.id
+                           FROM conversations
+                           LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
+                           WHERE assignments.answering_site LIKE '%" . self::escapeString($url) . "%'
+                           GROUP BY conversations.id
+                           ORDER BY conversations.date_created ASC";
+        
+        return self::getBySql($options);
+    }
+    
     public static function getConversationsForUser($userID, $chatStatus = false, $options = array())
     {
         //Build the chat status constraint.

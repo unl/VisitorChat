@@ -1,6 +1,6 @@
 <?php
-namespace UNL\VisitorChat\Conversation;
-class History extends RecordList
+namespace UNL\VisitorChat\Conversation\History;
+class User extends \UNL\VisitorChat\Conversation\RecordList
 {
     function __construct($options = array())
     {

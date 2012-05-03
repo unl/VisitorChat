@@ -1,3 +1,5 @@
+<h2>Chats for <?php echo $context->url?></h2>
+
 <ul class="historyList">
     <?php 
     foreach ($context as $conversation) {
@@ -17,7 +19,7 @@ if (count($context) > $context->options['limit'] && $context->options['limit'] !
     $pager->total  = count($context);
     $pager->limit  = $context->options['limit'];
     $pager->offset = $context->options['offset'];
-    $pager->url    = \UNL\VisitorChat\Controller::$url . 'history';
+    $pager->url    = $context->getPagerURL();
     echo $savvy->render($pager, 'UNL/VisitorChat/PaginationLinks.tpl.php');
 }
 ?>

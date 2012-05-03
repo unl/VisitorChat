@@ -83,4 +83,29 @@ class Record extends \Epoch\Record
         
         return $totals;
     }
+    
+    function getManagedSites()
+    {
+        if (empty($this->uid)) {
+            return false;
+        }
+        
+        $sites = array();
+        
+        foreach (\UNL\VisitorChat\Controller::$registryService->getSitesForUser($this->uid) as $site) {
+            foreach ($site->getMembers() as $member) {
+                if ($member->getUID() !== $this->uid) {
+                    continue;
+                }
+                
+                if ($member->getRole() !== 'manager') {
+                    continue;
+                }
+                
+                $sites[] = $site;
+            }
+        }
+        
+        return $sites;
+    }
 }

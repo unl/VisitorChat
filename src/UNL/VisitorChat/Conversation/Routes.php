@@ -9,7 +9,9 @@ class Routes extends \RegExpRouter\RoutesInterface
                      '/^history\/(?P<conversation_id>[\d]+)$/i' => 'Archived',
                      '/^$/i'              => 'View',
                      '/^conversations$/i' => 'RecordList',
-                     '/^history$/i'       => 'History',);
+                     '/^history$/i'       => 'History\User',
+                     '/^history\/sites$/i'  => 'History\SiteList',
+                     '/^history\/sites\/(?P<site_url>.+)$/i'  => 'History\Site',);
     }
     
     public static function getPostRoutes() 

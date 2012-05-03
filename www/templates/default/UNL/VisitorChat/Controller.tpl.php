@@ -65,6 +65,7 @@
                       <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">History</a>
                             <ul>
                               <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">My History</a></li>
+                              <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history/sites');?>">Managed Site History</a></li>
                             </ul>
                         </li>
                         <?php 
