@@ -44,6 +44,7 @@ class RecordList extends \Epoch\RecordList
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
                            WHERE assignments.users_id = " . (int)$userID . "
+                               AND (assignments.status = 'ACCEPTED' OR assignments.status = 'COMPLETED')
                                $constraint
                            ORDER BY conversations.date_created ASC";
         
