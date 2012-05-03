@@ -83,14 +83,16 @@ class Service
             if (!$operator = $this->findAvaiableOperatorForURL($invitation->invitee, $invitation)) {
                 return false;
             }
-        } else {
+        } else if ($to = $invitation->getAccountUID()) {
             //get a specific operator
-            if (!$operator = $this->findAvaiableOperatorForInvitation(array($invitation->invitee), $invitation)) {
+            if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
                 return false;
             }
             
             //We expect to proceed with an array containing an operatorID and the responding site.
             $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
+        } else {
+            return false;
         }
         
         //Create a new assignment.
@@ -152,7 +154,7 @@ class Service
         $db = \UNL\VisitorChat\Controller::getDB();
         $sql = "UPDATE assignments
                 LEFT JOIN conversations ON (assignments.conversations_id = conversations.id)
-                SET assignments.status = 'EXPIRED', conversations.status = 'SEARCHING'
+                SET assignments.status = 'EXPIRED', conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING')
                 WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
                     AND assignments.status = 'PENDING'";
         

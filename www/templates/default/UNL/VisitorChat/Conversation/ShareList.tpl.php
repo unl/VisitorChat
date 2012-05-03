@@ -25,7 +25,7 @@
                        $class = "online";
                    }
                    
-                   echo "<li class='" . $class . "'><input type='radio' name='to' value='" . $account->uid . "' />" . $account->name . "</li>";
+                   echo "<li class='" . $class . "'><input type='radio' name='to' value='" .  $site->getURL() . "::" . $account->uid . "' />" . $account->name . "</li>";
                }    
                ?>
            </ul>

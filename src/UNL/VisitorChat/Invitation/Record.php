@@ -57,6 +57,28 @@ class Record extends \Epoch\Record
         return false;
     }
     
+    function getSiteURL()
+    {
+        $data = explode('::', $this->invitee);
+        
+        return $data[0];
+    }
+    
+    function getAccountUID()
+    {
+        if ($this->isForSite()) {
+            return false;
+        }
+        
+        $data = explode('::', $this->invitee);
+        
+        if (!isset($data[1])) {
+            return false;
+        }
+        
+        return $data[1];
+    }
+    
     public static function createNewInvitation($conversationID, $invitee, $inviter = 1)
     {
         $invitation = new self();
