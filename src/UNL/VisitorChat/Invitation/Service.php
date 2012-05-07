@@ -36,7 +36,7 @@ class Service
         foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($conversation->id) as $assignment)
         {
             //If we are currently talking or if the assignment is pending, don't  find another operator.
-            if (in_array($assignment->status, array('ACCEPTED', 'PENDING', 'COMPLETED'))) {
+            if (in_array($assignment->status, array('ACCEPTED', 'PENDING'))) {
                 $currentOperators = true;
                 break;
             }
