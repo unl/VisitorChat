@@ -21,6 +21,15 @@ class Service
             return true;
         }
         
+        //Only update a maximum of 1 time every second to save resources.
+        if (strtotime($conversation->date_updated) == time()) {
+            return true;
+        } else {
+            //Continue, but update the last update time so that other requests will stop.
+            $conversation->date_updated = \UNL\VisitorChat\Controller::epochToDateTime(time());
+            $conversation->save();
+        }
+        
         //Are we communicating via email?
         if ($conversation->method == 'EMAIL') {
             //Send an email if it wasn't already sent.
@@ -45,7 +54,7 @@ class Service
         //Find another operator if the current one left.
         if (!$currentOperators && $conversation->status == 'CHATTING') {
             $conversation->status = 'SEARCHING';
-            $conversation->save();
+            //$conversation->save();
         }
         
         if (!$currentOperators && $conversation->status == 'SEARCHING') { 
@@ -84,7 +93,7 @@ class Service
                     $conversation->status = "OPERATOR_LOOKUP_FAILED";
                     
                     //Save here so that if multiple requests come in a REALLY short time, only one email is sent.
-                    $conversation->save();
+                    //$conversation->save();
                     
                     //Try to send an email to the team.
                     if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
@@ -92,7 +101,6 @@ class Service
                         $conversation->emailed = 1;
                     }
                 }
-                
                 $conversation->save();
             }
         }
