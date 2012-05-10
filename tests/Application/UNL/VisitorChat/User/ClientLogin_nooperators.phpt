@@ -2,7 +2,7 @@
 APPLICATION TEST - Client Login: test POST with no operators available
 --FILE--
 <?php
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/config.inc.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/loadConfig.php';
 
 $DBHelper->installDB("FreshDB.sql");
 
