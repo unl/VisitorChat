@@ -22,7 +22,7 @@ class Service
         }
         
         //Only update a maximum of 1 time every second to save resources.
-        if (strtotime($conversation->date_updated) == time()) {
+        if (strtotime($conversation->date_updated) == time() && $conversation->date_updated != $conversation->date_created) {
             return true;
         } else {
             //Continue, but update the last update time so that other requests will stop.
@@ -57,7 +57,7 @@ class Service
             //$conversation->save();
         }
         
-        if (!$currentOperators && $conversation->status == 'SEARCHING') { 
+        if (!$currentOperators && $conversation->status == 'SEARCHING') {
             Record::createNewInvitation($conversation->id, $conversation->initial_url);
         }
         
