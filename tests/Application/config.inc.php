@@ -1,0 +1,54 @@
+<?php
+function autoload($class)
+{
+    $file = str_replace(array('_', '\\'), '/', $class).'.php';
+    if ($fullpath = stream_resolve_include_path($file)) {
+        include $fullpath;
+        return true;
+    }
+    return false;
+}
+
+spl_autoload_register("autoload");
+
+set_include_path(
+    implode(PATH_SEPARATOR, array(get_include_path())).PATH_SEPARATOR
+    .dirname(dirname(dirname(__FILE__))) . '/lib/Epoch/src'.PATH_SEPARATOR //path to Epoch's src dir.
+    .dirname(dirname(dirname(__FILE__))) . '/lib'.PATH_SEPARATOR
+    .dirname(dirname(dirname(__FILE__))) . '/src'.PATH_SEPARATOR
+);
+
+require_once dirname(dirname(__FILE__)) . "/OperatorRegistry/MockDriver.php";
+require_once dirname(__FILE__) . "/DBHelper.php";
+
+$DBHelper = new DBHelper();
+
+ini_set('display_errors', true);
+
+error_reporting(E_ALL);
+
+\Epoch\Controller::$cacheRoutes = false;
+
+//Change this to the full base url of this instance.
+\Epoch\Controller::$url = 'http://visitorchattest.com/';
+
+//Set the Registry
+\UNL\VisitorChat\Controller::$registryService = new MockDriver();
+
+//Refresh rate of the chat in miliseconds.
+\UNL\VisitorChat\Controller::$refreshRate = 1000;
+
+//Set the fallback URLs (conversations will be routed to these operatoes if no one is available).
+\UNL\VisitorChat\Controller::$fallbackURLs = new \ArrayIterator(array('http://visitorchattest.com/'));
+
+//Set session key to prevent man in the middle attacks.
+\UNL\VisitorChat\Controller::$sessionKey = "lol";
+
+\UNL\VisitorChat\Controller::$cacheJS = false;
+
+\Epoch\Controller::setDbSettings(array(
+    'host'     => 'localhost',
+    'user'     => 'visitorchattest',
+    'password' => 'visitorchattest',
+    'dbname'   => 'visitorchattest'
+));
