@@ -83,7 +83,7 @@ class MockSite extends OperatorRegistry\SiteInterface
     
     function getEmail()
     {
-        return $this->data['email'];
+        return $this->data['support_email'];
     }
     
     function getTitle()
