@@ -55,7 +55,10 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $user->max_chats    = 3;
         $user->status       = 'BUSY';
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-        $user->ip           = $_SERVER['REMOTE_ADDR'];
+        
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $user->ip           = $_SERVER['REMOTE_ADDR'];
+        }
         
         $user->save();
         
@@ -73,7 +76,11 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $conversation->initial_pagetitle = $post['initial_pagetitle'];
         $conversation->status            = "SEARCHING";
         $conversation->email_fallback    = $fallback;
-        $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
+        
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
+        }
+        
         $conversation->save();
         
         //Save the first message.

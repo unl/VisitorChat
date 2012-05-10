@@ -95,8 +95,11 @@ class Controller extends \Epoch\Controller
     
     function sendCORS()
     {
+        $headers = array();
         //Get the headers.
-        $headers = getallheaders();
+        if (function_exists("getallheaders")) {
+            $headers = getallheaders();
+        }
         
         //set the origin to allow all by default.
         $origin = "*";
@@ -120,7 +123,7 @@ class Controller extends \Epoch\Controller
         header("Access-Control-Allow-Headers: 'X-Requested-With'");
         
         // Exit early so the page isn't fully loaded for options requests
-        if (strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
+        if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
             exit();
         }
     }
@@ -142,6 +145,10 @@ class Controller extends \Epoch\Controller
         }
         
         session_start();
+        
+        if (!isset($_SERVER['HTTP_USER_AGENT'])) {
+            $_SERVER['HTTP_USER_AGENT'] = "unknown";
+        }
         
         //Do we have a key in the session? (session hijacking prevention)
         if (!isset($_SESSION['key'])) {
