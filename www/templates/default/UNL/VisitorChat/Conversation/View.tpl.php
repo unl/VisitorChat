@@ -5,8 +5,8 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
 <div id='visterChat_conversation'>
     <div id='visitorChat_conversation_header'>
         <div id='visitorChat_url'>
-            <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span><br />
-            with <ul id='visitorChat_url_operatorList'>
+            <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span>
+            <br />with <ul id='visitorChat_url_operatorList'>
                 <?php 
                 foreach ($context->conversation->getAcceptedAndCompletedAssignments() as $assignment) {
                     $operator = $assignment->getUser();
