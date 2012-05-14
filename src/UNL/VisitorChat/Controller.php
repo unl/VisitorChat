@@ -40,6 +40,8 @@ class Controller extends \Epoch\Controller
     
     public static $mailService = false;
     
+    public static $environment = "PRODUCTION";
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.
@@ -231,5 +233,15 @@ class Controller extends \Epoch\Controller
         }
         
         return date("Y-m-d H:i:s", $time);
+    }
+    
+    public static function redirect($url, $exit = true)
+    {
+        if (self::$environment == "PHPT") {
+            echo "Location: " . $url  . PHP_EOL;
+            return true;
+        }
+        
+        parent::redirect($url, $exit);
     }
 }
