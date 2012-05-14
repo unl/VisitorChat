@@ -30,6 +30,8 @@ require_once dirname(__FILE__) . "/Application/DBHelper.php";
 
 $DBHelper = new DBHelper();
 
+\UNL\VisitorChat\Controller::$environment = "PHPT";
+
 ini_set('display_errors', true);
 
 error_reporting(E_ALL);
