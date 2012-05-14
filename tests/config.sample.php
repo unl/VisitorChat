@@ -18,8 +18,15 @@ set_include_path(
     .dirname(dirname(__FILE__)) . '/src'.PATH_SEPARATOR
 );
 
-require_once dirname(__FILE__) . "/OperatorRegistry/MockDriver.php";
+require_once dirname(__FILE__) . "/OperatorRegistry/MockRegistryDriver.php";
+require_once dirname(__FILE__) . "/Mail/MockMailDriver.php";
 require_once dirname(__FILE__) . "/Application/DBHelper.php";
+
+//Set the Registry
+\UNL\VisitorChat\Controller::$registryService = new MockRegistryDriver();
+
+//Set the mailer
+\UNL\VisitorChat\Controller::$mailService = new MockMailDriver();
 
 $DBHelper = new DBHelper();
 
@@ -31,9 +38,6 @@ error_reporting(E_ALL);
 
 //Change this to the full base url of this instance.
 \Epoch\Controller::$url = 'http://visitorchattest.com/';
-
-//Set the Registry
-\UNL\VisitorChat\Controller::$registryService = new MockDriver();
 
 //Refresh rate of the chat in miliseconds.
 \UNL\VisitorChat\Controller::$refreshRate = 1000;

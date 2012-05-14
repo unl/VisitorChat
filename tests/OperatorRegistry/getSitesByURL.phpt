@@ -4,9 +4,9 @@ OperatorRegistry: test getMembers()
 <?php
 
 require_once __DIR__ . '/../loadConfig.php';
-require_once __DIR__ . '/MockDriver.php';
+require_once __DIR__ . '/MockRegistryDriver.php';
 
-$registry = new MockDriver();
+$registry = new MockRegistryDriver();
 
 $sites = $registry->getSitesByURL('http://www.unl.edu/');
 

@@ -2,7 +2,7 @@
 
 use UNL\VisitorChat, UNL\VisitorChat\OperatorRegistry;
 
-class MockDriver implements OperatorRegistry\DriverInterface
+class MockRegistryDriver implements OperatorRegistry\DriverInterface
 {
     function getSitesByURL($site)
     {
