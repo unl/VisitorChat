@@ -1,8 +1,6 @@
 language: php
 php:
   - 5.3
-before_install:
- - sudo apt-get install sendmail
 before_script: 
   - pyrus install -p pyrus.net/Pyrus_Developer-alpha
   - mysql -e 'create database visitorchattest;'
