@@ -44,6 +44,15 @@ class Record extends \Epoch\Record
         return 'users';
     }
     
+    public function update()
+    {
+        parent::update();
+        
+        if (\UNL\VisitorChat\User\Service::getCurrentUser() && \UNL\VisitorChat\User\Service::getCurrentUser()->id == $this->id) {
+            \UNL\VisitorChat\User\Service::setCurrentUser($this);
+        }
+    }
+    
     public static function getCurrentUser()
     {
         if (isset($_SESSION['id'])) {

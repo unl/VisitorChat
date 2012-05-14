@@ -4,7 +4,7 @@ namespace UNL\VisitorChat\User;
 class Logout
 {
     function __construct() {
-        $user = Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         if (!$user) {
             // Short-circuit, no one is logged in

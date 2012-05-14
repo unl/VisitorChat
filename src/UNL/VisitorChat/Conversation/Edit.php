@@ -11,7 +11,7 @@ class Edit extends \UNL\VisitorChat\Conversation\Record
         if (isset($options['id']) && $object = \UNL\VisitorChat\Conversation\Record::getByID($options['id'])) {
             $this->synchronizeWithArray($object->toArray());
         } else {
-            if (!$conversation = \UNL\VisitorChat\Conversation\Record::getCurrentUser()->getConversation()) {
+            if (!$conversation = \UNL\VisitorChat\User\Service::getCurrentUser()->getConversation()) {
                 throw new \Exception("No conversation was found", 400);
             }
             $this->synchronizeWithArray($conversation->toArray());

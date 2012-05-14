@@ -16,7 +16,7 @@
                    }
                    
                    //Do not display yourself.
-                   if ($account->id == \UNL\VisitorChat\User\Record::getCurrentUser()->id) {
+                   if ($account->id == \UNL\VisitorChat\User\Service::getCurrentUser()->id) {
                        continue;
                    }
                    

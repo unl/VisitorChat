@@ -9,6 +9,6 @@ class View
     {
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
-        $this->conversations = \UNL\VisitorChat\Conversation\RecordList::getOpenConversations(\UNL\VisitorChat\User\Record::getCurrentUser()->id);
+        $this->conversations = \UNL\VisitorChat\Conversation\RecordList::getOpenConversations(\UNL\VisitorChat\User\Service::getCurrentUser()->id);
     }
 }

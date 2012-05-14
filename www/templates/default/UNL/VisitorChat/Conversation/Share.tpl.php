@@ -13,7 +13,7 @@
             <legend>Your sites</legend>
             <?php 
             //Display a list of your sites first.
-            $list = \UNL\VisitorChat\Controller::$registryService->getSitesForUser(\UNL\VisitorChat\User\Record::getCurrentUser()->uid);
+            $list = \UNL\VisitorChat\Controller::$registryService->getSitesForUser(\UNL\VisitorChat\User\Service::getCurrentUser()->uid);
             echo \Epoch\Controller::$templater->render($list, 'UNL/Visitorchat/Conversation/ShareList.tpl.php');
             ?>
         </fieldset>

@@ -5,7 +5,7 @@ class Edit extends \UNL\VisitorChat\Message\Record
 {
     function __construct($options = array())
     {
-        if (!$user = \UNL\VisitorChat\User\Record::getCurrentUser()) {
+        if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url);
         }
         
@@ -30,7 +30,7 @@ class Edit extends \UNL\VisitorChat\Message\Record
             throw new \Exception("Could not find that conversation", 400);
         }
         
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         //check if we have permission to post here.
         if ($user->id !== $conversation->users_id && $user->type == 'client') {

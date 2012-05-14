@@ -8,13 +8,13 @@ class Edit extends \UNL\VisitorChat\User\Record
         if (isset($options['id']) && $object = \UNL\VisitorChat\User\Record::getByID($options['id'])) {
             $this->synchronizeWithArray($object->toArray());
         } else {
-            $this->synchronizeWithArray(\UNL\VisitorChat\User\Record::getCurrentUser()->toArray());
+            $this->synchronizeWithArray(\UNL\VisitorChat\User\Service::getCurrentUser()->toArray());
         }
     }
     
     function handlePost($post = array())
     {
-        if (\UNL\VisitorChat\User\Record::getCurrentUser()->id !== $this->id) {
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->id) {
             throw new \Exception("you do not have permission to edit this.", 401);
         }
         

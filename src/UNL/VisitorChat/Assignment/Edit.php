@@ -5,7 +5,7 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
 {
     function __construct($options = array())
     {
-        if (!$user = \UNL\VisitorChat\User\Record::getCurrentUser()) {
+        if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url);
         }
         
@@ -20,7 +20,7 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
              throw new \Exception("this request has already been processed", 400);
         }
         
-        if (\UNL\VisitorChat\User\Record::getCurrentUser()->id !== $this->users_id) {
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->users_id) {
             throw new \Exception("you do not have permission to edit this.", 401);
         }
         

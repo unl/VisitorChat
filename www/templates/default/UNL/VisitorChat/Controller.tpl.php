@@ -69,10 +69,10 @@
                             </ul>
                         </li>
                         <?php 
-                        if (\UNL\VisitorChat\user\Record::getCurrentUser()) {
+                        if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
                         ?>
                         <li>
-                            <a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\user\Record::getCurrentUser()->name;?></a>
+                            <a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name;?></a>
                             <ul>
                                 <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>">Settings</a></li>
                                 <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>logout" title="Log Out">Logout</a></li>

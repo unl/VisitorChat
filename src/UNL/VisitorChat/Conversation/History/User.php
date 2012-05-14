@@ -8,7 +8,7 @@ class User extends \UNL\VisitorChat\Conversation\RecordList
         
         $options['limit'] = 10;
         
-        $options['array'] = self::getConversationsForUser(\UNL\VisitorChat\User\Record::getCurrentUser()->id, false, $options);
+        $options['array'] = self::getConversationsForUser(\UNL\VisitorChat\User\Service::getCurrentUser()->id, false, $options);
         
         parent::__construct($options);
     }

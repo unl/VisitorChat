@@ -37,7 +37,7 @@ class Archived
      */
     function canView()
     {
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         //Is the client viewing it?
         if ($this->conversation->users_id == $user->id) {

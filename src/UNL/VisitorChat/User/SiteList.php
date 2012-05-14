@@ -9,7 +9,7 @@ class SiteList
     {
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         foreach (\UNL\VisitorChat\Controller::$registryService->getSitesForUser($user->uid) as $site) {
             $this->sites[$site->getURL()]['title']           = $site->getTitle();

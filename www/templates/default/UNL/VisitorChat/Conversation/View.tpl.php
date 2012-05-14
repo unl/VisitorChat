@@ -1,5 +1,5 @@
 <?php 
-$user = \UNL\VisitorChat\User\Record::getCurrentUser();
+$user = \UNL\VisitorChat\User\Service::getCurrentUser();
 ?>
 
 <div id='visterChat_conversation'>

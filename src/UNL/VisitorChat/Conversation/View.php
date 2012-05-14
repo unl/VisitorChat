@@ -23,7 +23,7 @@ class View
         \UNL\VisitorChat\Controller::requireClientLogin();
         
         //Get the current user.
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         //Get and set the conversation for viewing.
         if (isset($options['conversation_id']) && $user->type == 'operator') {

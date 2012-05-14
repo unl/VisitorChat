@@ -5,7 +5,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
 {
     function __construct($options = array())
     {
-        if (\UNL\VisitorChat\User\Record::getCurrentUser()) {
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
             \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation", true, true));
         }
     }

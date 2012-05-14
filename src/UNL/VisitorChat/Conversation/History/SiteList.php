@@ -6,7 +6,7 @@ class SiteList extends \ArrayIterator
     {
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
-        $user = \UNL\VisitorChat\User\Record::getCurrentUser();
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         parent:: __construct($user->getManagedSites());
     }

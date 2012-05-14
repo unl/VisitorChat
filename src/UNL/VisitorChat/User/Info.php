@@ -23,7 +23,7 @@ class Info
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
         }
         
-        if (!$user = \UNL\VisitorChat\User\Record::getCurrentUser()) {
+        if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             return;
         }
         

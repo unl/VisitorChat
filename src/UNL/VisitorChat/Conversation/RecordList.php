@@ -11,7 +11,7 @@ class RecordList extends \Epoch\RecordList
         
         $options['returnArray'] = true;
         
-        $options['array'] = self::getOpenConversations(\UNL\VisitorChat\User\Record::getCurrentUser()->id, $options);
+        $options['array'] = self::getOpenConversations(\UNL\VisitorChat\User\Service::getCurrentUser()->id, $options);
         
         parent::__construct($options);
     }

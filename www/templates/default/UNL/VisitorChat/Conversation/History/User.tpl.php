@@ -1,4 +1,4 @@
-<h2>Chats for <?php echo \UNL\VisitorChat\User\Record::getCurrentUser()->name?></h2>
+<h2>Chats for <?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name?></h2>
 
 <ul class="historyList">
     <?php 
