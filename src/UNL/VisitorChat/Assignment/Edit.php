@@ -70,6 +70,6 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
             $phpsessid .= "PHPSESSID=" . $_GET['PHPSESSID'];
         }
         
-        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url . "success" . $format . $phpsessid);
+        \UNL\VisitorChat\Controller::redirect(\UNL\VisitorChat\Controller::$url . "success" . $format . $phpsessid);
     }
 }
