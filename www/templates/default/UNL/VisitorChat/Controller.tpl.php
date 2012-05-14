@@ -23,7 +23,7 @@
 -->
 <?php include dirname(__DIR__) . '/../../../../../wdn/templates_3.1/includes/scriptsandstyles.html'; ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>UNL | VisitorChat</title>
+<title>UNL | Visitor Chat</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
@@ -89,7 +89,7 @@
         <div id="wdn_content_wrapper">
             <div id="pagetitle">
                 <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1>UNL VisitorChat</h1>
+                <h1>UNL Visitor Chat</h1>
                 <!-- InstanceEndEditable -->
             </div>
             <div id="maincontent" role="main">
