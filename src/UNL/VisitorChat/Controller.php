@@ -38,6 +38,8 @@ class Controller extends \Epoch\Controller
      */
     public static $registryService = false;
     
+    public static $mailService = false;
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.
@@ -63,6 +65,10 @@ class Controller extends \Epoch\Controller
         
         if (!self::$registryService) {
             self::$registryService = new \UNL\VisitorChat\OperatorRegistry\WDN\Driver();
+        }
+        
+        if (!self::$mailService) {
+            self::$mailService = new \UNL\VisitorChat\Mail\Driver();
         }
         
         //4. Move along...

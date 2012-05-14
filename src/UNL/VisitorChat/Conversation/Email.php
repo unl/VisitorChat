@@ -131,8 +131,7 @@ class Email
         
         $body = $mime->get();
         $hdrs = $mime->headers($this->generateHeaders());
-        $mail =& \Mail::factory('sendmail');
         
-        return $mail->send($this->generateToString(), $hdrs, $body);
+        return \UNL\VisitorChat\Controller::$mailService->send($this->generateToString(), $hdrs, $body);
     }
 }
