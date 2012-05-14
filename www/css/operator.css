@@ -56,7 +56,7 @@
     width:215px;
     height: 100px;
     margin-left: 10px;
-    margin-top: 70px;
+    margin-top: 90px;
 }
 
 #visitorChat_chatBox {
@@ -70,29 +70,103 @@
 	margin-bottom: 5px;
 }
 
-#visitorChat_InvitationList .searching{
+#maincontent
+#visitorChat_InvitationList,
+#maincontent
+#visitorChat_InvitationList ul {
+	list-style: none;
+	padding: 0;
+}
+
+#maincontent
+#visitorChat_InvitationList .userAddress {
+    font-weight: normal;
+	font-size: 9px;
+	/*color: #AAA;*/
+	display: block;
+	margin-top: -0.4em;
+	margin-bottom: 0.8em;
+}
+
+#maincontent
+#visitorChat_InvitationList .timestamp {
+    display: none;
+}
+
+#maincontent
+#visitorChat_InvitationList li ul {
+	box-shadow: 0px 3px 18px -7px #000;
+	padding: 3px;
+	margin: -4px;
+	margin-bottom: 15px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching:after {
+	font-size: 14px;
+	content: "inviting...";
+}
+
+#maincontent
+#visitorChat_InvitationList .searching {
+    background-color: #F7F76E;
+    border: 1px solid #ECEC13;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching > li {
+    text-align: right;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching,
+#maincontent
+#visitorChat_InvitationList .searching > .userAddress {
+	text-shadow: 0 1px #FCFCCF;
+}
+
+#maincontent
+#visitorChat_InvitationList .completed {
+    background-color: #77CB52;
+	border: 1px solid #A5E17A;
+}
+#maincontent
+#visitorChat_InvitationList .completed,
+#maincontent
+#visitorChat_InvitationList .completed > .userAddress {
+	color: white;
+	text-shadow: 0 1px #4C952D;
+}
+
+#maincontent
+#visitorChat_InvitationList .failed {
+    display: none; /* Just for now */
+    background-color: red;
+    color: white;
+}
+
+#maincontent
+#visitorChat_InvitationList > li {
+    font-weight: bold;
+    text-align: left;
+    text-shadow: 0 1px white;
+}
+/*
+#visitorChat_InvitationList .pending {
     background-color: yellow;
 }
 
-#visitorChat_InvitationList .failed{
+#visitorChat_InvitationList .rejected {
     background-color: red;
 }
 
-#visitorChat_InvitationList .completed{
-    background-color: green;
+#visitorChat_InvitationList .accepted {
+    
 }
-
-#visitorChat_InvitationList .visitorChat_AssignmentList .pending{
-    background-color: yellow;
-}
-
-#visitorChat_InvitationList .visitorChat_AssignmentList .rejected{
-    background-color: red;
-}
-
-#visitorChat_InvitationList .visitorChat_AssignmentList .accepted{
-    background-color: green;
-}
+*/
 
 #visitorChat_chatBox ul li {
 	padding: 6px 6px 6px 20px;

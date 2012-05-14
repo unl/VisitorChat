@@ -1,5 +1,3 @@
-<h3>Invitations</h3>
-
 <ul id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
@@ -16,12 +14,13 @@ foreach ($context as $invitation) {
         $name = $account->name;
     }
     
-    echo "<li class='$class'><span class='timestamp'>" . date("g:i:s A", strtotime($invitation->date_created)) . "</span> " . $name . "<ul class='visitorChat_AssignmentList'>";
+    echo "<li><ul class='$class'>";
     foreach ($invitation->getAssignments() as $assignment) {
         $class = strtolower($assignment->status);
-        echo "<li class='$class'>" . $assignment->getUser()->name . "</li>";
+        echo "<li>" . $assignment->getUser()->name . "<span class='userAddress'>" . $name . "</span>"
+        . "<span class='timestamp'>" . date("g:i:s A", strtotime($invitation->date_created)) . "</span></li>";
     }
-    echo "</ul></li>";
+    echo "</li></ul>";
 }
 ?>
 </ul>
