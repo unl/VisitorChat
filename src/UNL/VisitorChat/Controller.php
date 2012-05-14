@@ -87,6 +87,10 @@ class Controller extends \Epoch\Controller
         if (!isset($_SESSION['id'])) {
             self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin", true, true));
         }
+        
+        if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {
+            throw new \Exception("You do not have permission to view this", 403);
+        }
     }
     
     function retrievePostData()
