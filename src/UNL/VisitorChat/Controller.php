@@ -146,6 +146,12 @@ class Controller extends \Epoch\Controller
      */
     function startSession()
     {
+        //has it already been started?
+        if (session_id() !== "") {
+            return true;
+        }
+        
+        
         /**
          * IE8+ does not allow for cookies to be passed with its XDomainRequest.
          * So use a work around instead.
