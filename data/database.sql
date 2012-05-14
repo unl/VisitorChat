@@ -6,6 +6,25 @@ CREATE SCHEMA IF NOT EXISTS `visitorchatapp` DEFAULT CHARACTER SET utf8 COLLATE 
 USE `visitorchatapp` ;
 
 -- -----------------------------------------------------
+-- Table `visitorchatapp`.`users`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL DEFAULT '' ,
+  `email` VARCHAR(45) NULL DEFAULT '' ,
+  `ip` VARCHAR(45) NULL ,
+  `date_created` DATETIME NULL ,
+  `date_updated` DATETIME NULL ,
+  `type` ENUM('operator','client') NULL COMMENT 'Must be either client or operator' ,
+  `uid` VARCHAR(45) NULL COMMENT 'UNL id to associate accounts' ,
+  `max_chats` INT NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.' ,
+  `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `visitorchatapp`.`conversations`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`conversations` (
@@ -32,53 +51,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `visitorchatapp`.`invitations`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`invitations` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `conversations_id` INT NOT NULL COMMENT 'the conversation that this invitation belongs to' ,
-  `invitee` VARCHAR(255) NOT NULL COMMENT 'The (url or person) to invite' ,
-  `status` ENUM('SEARCHING','FAILED','COMPLETED') NOT NULL DEFAULT 'SEARCHING' ,
-  `date_created` DATETIME NOT NULL COMMENT 'the date the invitation was created' ,
-  `date_updated` DATETIME NOT NULL ,
-  `users_id` INT NOT NULL COMMENT 'The id of the user that created the invitation (if applicable)' ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_Invitations_conversations1` (`conversations_id` ASC) ,
-  CONSTRAINT `fk_Invitations_conversations1`
-    FOREIGN KEY (`conversations_id` )
-    REFERENCES `visitorchatapp`.`conversations` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `visitorchatapp`.`users`
--- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NULL DEFAULT '' ,
-  `email` VARCHAR(45) NULL DEFAULT '' ,
-  `ip` VARCHAR(45) NULL ,
-  `date_created` DATETIME NULL ,
-  `date_updated` DATETIME NULL ,
-  `type` ENUM('operator','client') NULL COMMENT 'Must be either client or operator' ,
-  `uid` VARCHAR(45) NULL COMMENT 'UNL id to associate accounts' ,
-  `max_chats` INT NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.' ,
-  `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
-  `Invitations_id` INT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) ,
-  INDEX `fk_users_Invitations1` (`Invitations_id` ASC) ,
-  CONSTRAINT `fk_users_Invitations1`
-    FOREIGN KEY (`Invitations_id` )
-    REFERENCES `visitorchatapp`.`invitations` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `visitorchatapp`.`messages`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`messages` (
@@ -98,6 +70,33 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`messages` (
   CONSTRAINT `fk_messages_conversations1`
     FOREIGN KEY (`conversations_id` )
     REFERENCES `visitorchatapp`.`conversations` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `visitorchatapp`.`invitations`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`invitations` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `conversations_id` INT NOT NULL COMMENT 'the conversation that this invitation belongs to' ,
+  `invitee` VARCHAR(255) NOT NULL COMMENT 'The (url or person) to invite' ,
+  `status` ENUM('SEARCHING','FAILED','COMPLETED') NOT NULL DEFAULT 'SEARCHING' ,
+  `date_created` DATETIME NOT NULL COMMENT 'the date the invitation was created' ,
+  `date_updated` DATETIME NOT NULL ,
+  `users_id` INT NOT NULL COMMENT 'The id of the user that created the invitation (if applicable)' ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_Invitations_conversations1` (`conversations_id` ASC) ,
+  INDEX `fk_invitations_users1` (`users_id` ASC) ,
+  CONSTRAINT `fk_Invitations_conversations1`
+    FOREIGN KEY (`conversations_id` )
+    REFERENCES `visitorchatapp`.`conversations` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_invitations_users1`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `visitorchatapp`.`users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
