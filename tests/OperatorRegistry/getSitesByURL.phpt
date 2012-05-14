@@ -3,7 +3,7 @@ OperatorRegistry: test getMembers()
 --FILE--
 <?php
 
-require_once __DIR__ . '/../../config.inc.php';
+require_once __DIR__ . '/../loadConfig.php';
 require_once __DIR__ . '/MockDriver.php';
 
 $registry = new MockDriver();

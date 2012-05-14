@@ -13,13 +13,13 @@ spl_autoload_register("autoload");
 
 set_include_path(
     implode(PATH_SEPARATOR, array(get_include_path())).PATH_SEPARATOR
-    .dirname(dirname(dirname(__FILE__))) . '/lib/Epoch/src'.PATH_SEPARATOR //path to Epoch's src dir.
-    .dirname(dirname(dirname(__FILE__))) . '/lib'.PATH_SEPARATOR
-    .dirname(dirname(dirname(__FILE__))) . '/src'.PATH_SEPARATOR
+    .dirname(dirname(__FILE__)) . '/lib/Epoch/src'.PATH_SEPARATOR //path to Epoch's src dir.
+    .dirname(dirname(__FILE__)) . '/lib'.PATH_SEPARATOR
+    .dirname(dirname(__FILE__)) . '/src'.PATH_SEPARATOR
 );
 
-require_once dirname(dirname(__FILE__)) . "/OperatorRegistry/MockDriver.php";
-require_once dirname(__FILE__) . "/DBHelper.php";
+require_once dirname(__FILE__) . "/OperatorRegistry/MockDriver.php";
+require_once dirname(__FILE__) . "/Application/DBHelper.php";
 
 $DBHelper = new DBHelper();
 
