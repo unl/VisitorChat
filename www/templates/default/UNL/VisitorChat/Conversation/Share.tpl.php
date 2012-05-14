@@ -28,5 +28,5 @@
         </fieldset>
     </fieldset>
     
-    <input type="submit" value="Submit"/>
+    <input type="submit" class='submit' value="Submit"/>
 </form>

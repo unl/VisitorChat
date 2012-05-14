@@ -36,7 +36,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }, function() {
         mouse_is_inside = false;
       });
-
+      
       //Click outside container to close
       WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
         if (!mouse_is_inside) {
@@ -49,7 +49,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   initWatchers: function() {
     //Remove old elvent handlers
-    WDN.jQuery('.conversationLink, .closeConversation, #shareConversation').unbind();
+    WDN.jQuery('.conversationLink, .closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
   
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
@@ -137,9 +137,29 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   loadShareWatchers: function() {
+    WDN.jQuery('.visitorChat_shareList_userList li').click(function() {
+      WDN.jQuery(this).children('input').attr('checked', 'checked');
+      
+      VisitorChat.confirmShare();
+    });
     WDN.jQuery('#shareForm input[type="radio"][name="to"]').change(WDN.jQuery.proxy(function() {
       this.confirmShare();
     }, this));
+    
+    WDN.jQuery(".visitorChat_shareList > li").hover(function() {
+      WDN.jQuery(this).children(".dropArrow").hover(function() {
+        WDN.jQuery(this).siblings(".visitorChat_shareList_userList").slideDown("fast", function() {
+          WDN.jQuery(this).siblings(".dropArrow").addClass("rotate");
+        });
+      }, function() {
+        WDN.jQuery(this).siblings(".visitorChat_shareList_userList").show();
+      });
+      
+    }, function() {
+      WDN.jQuery(this).children(".visitorChat_shareList_userList").slideUp("fast", function() {
+        WDN.jQuery(this).siblings().removeClass("rotate");
+      });
+    });
   },
   
   confirmShare: function() {

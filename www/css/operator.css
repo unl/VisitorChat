@@ -1,3 +1,5 @@
+@import url("share.css");
+
 /* #clientChat #visitorChat_container {
     width: 700px;
 }
@@ -9,7 +11,6 @@
 #clientList ul {
 	padding: 0;
 	list-style: none;
-	
 }
 
 #notificationOptions {

@@ -1,4 +1,4 @@
-<ul>
+<ul class='visitorChat_shareList'>
    <?php 
    foreach ($context as $site) {
        $class = "offline";
@@ -7,8 +7,12 @@
        }
        ?>
        <li class=<?php echo $class?>>
-           <input type='radio' name='to' value='<?php echo $site->getURL();?>' /><?php echo $site->getTitle();?>
-           <ul>
+           <?php echo $site->getTitle();?>
+           <span class="dropArrow"></span>
+           <ul class='visitorChat_shareList_userList'>
+               <li>
+                   <input type='radio' name='to' value='<?php echo $site->getURL();?>' />All Operators for <?php echo $site->getTitle();?>
+               </li>
                <?php
                foreach ($site->getMembers() as $member) {
                    if (!$account = $member->getAccount()) {
