@@ -16,9 +16,9 @@ foreach ($context as $invitation) {
     
     echo "<li><ul class='$class'>";
     foreach ($invitation->getAssignments() as $assignment) {
-        $class = strtolower($assignment->status);
-        echo "<li>" . $assignment->getUser()->name . "<span class='userAddress'>" . $name . "</span>"
-        . "<span class='timestamp'>" . date("g:i:s A", strtotime($invitation->date_created)) . "</span></li>";
+        //$class = strtolower($assignment->status);
+        echo "<li>" . $assignment->getUser()->name . "<span class='userAddress'>" . $name
+        . "<span class='timestamp'>" . date("g:i:s A", strtotime($invitation->date_created)) . "</span></li></span>";
     }
     echo "</li></ul>";
 }

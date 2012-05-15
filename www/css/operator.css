@@ -90,7 +90,7 @@
 
 #maincontent
 #visitorChat_InvitationList .timestamp {
-    display: none;
+    float: right;
 }
 
 #maincontent
@@ -105,15 +105,15 @@
 }
 
 #maincontent
-#visitorChat_InvitationList .searching:after {
-	font-size: 14px;
-	content: "inviting...";
-}
-
-#maincontent
 #visitorChat_InvitationList .searching {
     background-color: #F7F76E;
     border: 1px solid #ECEC13;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching:after {
+	font-size: 14px;
+	content: "inviting...";
 }
 
 #maincontent
@@ -126,6 +126,12 @@
 #maincontent
 #visitorChat_InvitationList .searching > .userAddress {
 	text-shadow: 0 1px #FCFCCF;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching .timestamp {
+    display: block;
+    float: none;
 }
 
 #maincontent
@@ -142,10 +148,70 @@
 }
 
 #maincontent
-#visitorChat_InvitationList .failed {
-    
-    background-color: red;
+#visitorChat_InvitationList .failed {   
+    background-color: #D84848;
+    border: 1px solid #E68989;
+}
+
+#maincontent
+#visitorChat_InvitationList .failed:before {
+	font-size: 14px;
+	content: "Failed invites";
+}
+
+#maincontent
+#visitorChat_InvitationList .failed > li {
+    text-align: right;
+}
+
+#maincontent
+#visitorChat_InvitationList .failed,
+#maincontent
+#visitorChat_InvitationList .failed > .userAddress {
     color: white;
+    text-shadow: 0 1px #AD1F1F;
+}
+
+#maincontent
+#visitorChat_InvitationList .failed .timestamp {
+    display: block;
+    float: none;
+}
+
+#maincontent
+#visitorChat_InvitationList .dormant {
+    background-color: white !important;
+	border: 1px solid transparent !important;
+	box-shadow: none !important;
+	color: #333 !important;
+	display: inline !important;
+	text-shadow: 0 1px white !important;
+}
+
+#maincontent
+#visitorChat_InvitationList .dormant:before {
+    font-size: 14px;
+    content: "Failed invites";
+    text-decoration: underline;
+}
+
+#maincontent
+#visitorChat_InvitationList .dormant > li {
+    display: none;
+    text-align: right;
+}
+
+#maincontent
+#visitorChat_InvitationList .dormant,
+#maincontent
+#visitorChat_InvitationList .dormant > .userAddress {
+
+}
+
+#maincontent
+#visitorChat_InvitationList .dormant .timestamp {
+    display: block;
+    float: none;
 }
 
 #maincontent
