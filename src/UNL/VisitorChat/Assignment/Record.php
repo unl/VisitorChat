@@ -126,6 +126,32 @@ class Record extends \Epoch\Record
         return $record;
     }
     
+    public static function getLatestByStatusForUserAndConversation($status, $userID, $conversationID)
+    {
+        $db = \UNL\VisitorChat\Controller::getDB();
+        
+        $sql = "SELECT * FROM assignments 
+                WHERE status = '" . \Epoch\RecordList::escapeString($status) . "'
+                    AND users_id = " . (int)$userID . "
+                    AND conversations_id = " . (int)$conversationID . "
+                ORDER BY date_created ASC
+                LIMIT 1";
+        
+        if (!$result = $db->query($sql)) {
+            return false;
+        }
+        
+        if ($result->num_rows == 0) {
+            return false;
+        }
+        
+        $record = new self();
+        
+        $record->synchronizeWithArray($result->fetch_assoc());
+        
+        return $record;
+    }
+    
     function getInvitation()
     {
         return \UNL\VisitorChat\Invitation\Record::getByID($this->invitations_id);
