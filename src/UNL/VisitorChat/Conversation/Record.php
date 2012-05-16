@@ -289,6 +289,11 @@ class Record extends \Epoch\Record
         return \UNL\VisitorChat\Assignment\RecordList::getAcceptedAndCompletedAssignmentsForConversation($this->id);
     }
     
+    function getAcceptedAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getAcceptedForConversation($this->id);
+    }
+    
     function getInvolvedUsers()
     {
         $users = array($this->users_id);
