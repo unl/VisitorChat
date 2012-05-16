@@ -65,6 +65,18 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
     
+    public static function getAcceptedForConversation($conversationID, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE status = 'ACCEPTED'
+                               AND conversations_id = " . (int)$conversationID . "
+                           ORDER BY date_created ASC";
+        
+        return self::getBySql($options);
+    }
+    
     public static function getAcceptedAssignmentsForUser($userID, $options = array())
     {
         $options = $options + self::getDefaultOptions();

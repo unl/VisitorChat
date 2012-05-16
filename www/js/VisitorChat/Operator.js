@@ -6,6 +6,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   unreadMessages    : new Array(), //The total number of messages for all open conversations
   requestExpireDate : new Array(),
   invitationsHTML   : false, //Holds a copy of the latest invitations html
+  operators         : new Array(), //An array of operators currently in the chat
   
   initWindow: function() {
     WDN.jQuery("#toggleOperatorStatus").click(function(){
@@ -73,6 +74,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     WDN.jQuery('#shareConversation').click(function() {
       VisitorChat.openShareWindow();
+    });
+    
+    WDN.jQuery('#leaveConversation').click(function() {
+      if (confirm("Are you sure you want to leave the conversation?")) {
+        VisitorChat.leaveConversation();
+      }
     });
     
     this._super();
@@ -184,6 +191,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       data: "method=" + method + "&to=" + to
     }).error(function(msg) {
       alert('There was an error sharing, please try back later.');
+    });
+  },
+  
+  leaveConversation: function()
+  {
+    WDN.jQuery.ajax({
+      type: "POST",
+      url: this.serverURL + "conversation/" + this.conversationID + "/leave?format=json",
+      data: "confirm=1"
+    }).error(function(msg) {
+      alert('There was an error leaving, please try back later.');
     });
   },
   
@@ -352,6 +370,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   updateChatWithData: function(data) {
     if (data['invitations_html'] !== undefined && data['invitations_html']) {
       this.updateInvitationsListWithHTML(data['invitations_html']);
+    }
+    
+    if (data['operators'] !== undefined) {
+      this.operators = new Array();
+      
+      for (operator in data['operators']) {
+          this.operators.push(data['operators'][operator]);
+      }
+      if (this.operators.length > 1) {
+          WDN.jQuery('#leaveConversation').show();
+      } else {
+          WDN.jQuery('#leaveConversation').hide();
+      }
     }
     
     return this._super(data);
