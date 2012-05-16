@@ -1,6 +1,6 @@
 <div>
     <p>
-        Thank you for chatting with us.  A record of your conversation can be found bellow.
+        Thank you for chatting with us.  A record of your conversation can be found below.
     </p>
 </div>
 
