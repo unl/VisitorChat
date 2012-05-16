@@ -15,6 +15,7 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         <div id='visitorChat_conversation_options'>
             <ul>
                 <li><a href='#' id='shareConversation'>Share</a></li>
+                <li><a href='#' id='leaveConversation'>Leave Conversation</a></li>
                 <li><a href='#' id='closeConversation'>End Conversation</a></li>
             </ul>
         </div>

@@ -17,6 +17,8 @@ class View
     
     public $sendHTML = false;
     
+    public $operators = array();
+    
     function __construct($options = array())
     {
         //Always require that someone is logged in
@@ -46,6 +48,12 @@ class View
         //Handle assignments for the conversation.
         $invitationService = new \UNL\VisitorChat\Invitation\Service();
         $invitationService->handleInvitations($this->conversation);
+        
+        foreach ($this->conversation->getAcceptedAssignments() as $assignment) {
+            if ($operator = $assignment->getUser()) {
+                $this->operators[] = $operator->name;
+            }
+        }
         
         //The rest of the logic only applies if we are currently chatting.
         if ($this->conversation->status !== 'CHATTING') {
