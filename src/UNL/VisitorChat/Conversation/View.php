@@ -47,7 +47,7 @@ class View
         
         //Handle assignments for the conversation.
         $invitationService = new \UNL\VisitorChat\Invitation\Service();
-        $invitationService->handleInvitations($this->conversation);
+        $this->conversation = $invitationService->handleInvitations($this->conversation);
         
         foreach ($this->conversation->getAcceptedAssignments() as $assignment) {
             if ($operator = $assignment->getUser()) {
