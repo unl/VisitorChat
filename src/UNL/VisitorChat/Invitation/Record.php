@@ -30,6 +30,30 @@ class Record extends \Epoch\Record
         return array('id');
     }
     
+    public static function getLatestForConversation($conversationID)
+    {
+        $db = \UNL\VisitorChat\Controller::getDB();
+        
+        $sql = "SELECT * FROM invitations 
+                WHERE conversations_id = " . (int)$conversationID . "
+                ORDER BY date_created DESC
+                LIMIT 1";
+        
+        if (!$result = $db->query($sql)) {
+            return false;
+        }
+        
+        if ($result->num_rows == 0) {
+            return false;
+        }
+        
+        $record = new self();
+        
+        $record->synchronizeWithArray($result->fetch_assoc());
+        
+        return $record;
+    }
+    
     public function insert()
     {
         $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
@@ -100,6 +124,22 @@ class Record extends \Epoch\Record
     {
         $this->status = "FAILED";
         $this->save();
+        
+        //Update the conversation status if needed.
+        $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
+        
+        //Was this invitation sent by the system?  if so, that means we need to fall though to email.
+        if ($this->users_id == 1) {
+            $conversation->status = "OPERATOR_LOOKUP_FAILED";
+            
+            //Try to send an email to the team.
+            if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
+                $conversation->status  = "EMAILED";
+                $conversation->emailed = 1;
+            }
+            
+            $conversation->save();
+        }
     }
     
     public function getAssignments()

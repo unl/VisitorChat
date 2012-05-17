@@ -84,7 +84,7 @@ class Record extends \Epoch\Record
         $sql = "SELECT * FROM assignments 
                 WHERE status = 'PENDING' 
                     AND users_id = " . (int)$userID . "
-                    ORDER BY date_created DESC
+                    ORDER BY date_created ASC
                     LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -108,7 +108,7 @@ class Record extends \Epoch\Record
         
         $sql = "SELECT * FROM assignments 
                 WHERE invitations_id = " . (int)$invitionID . "
-                ORDER BY date_created ASC
+                ORDER BY date_created DESC
                 LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -134,7 +134,7 @@ class Record extends \Epoch\Record
                 WHERE status = '" . \Epoch\RecordList::escapeString($status) . "'
                     AND users_id = " . (int)$userID . "
                     AND conversations_id = " . (int)$conversationID . "
-                ORDER BY date_created ASC
+                ORDER BY date_created DESC
                 LIMIT 1";
         
         if (!$result = $db->query($sql)) {
