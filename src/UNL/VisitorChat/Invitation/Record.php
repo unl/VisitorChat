@@ -123,7 +123,10 @@ class Record extends \Epoch\Record
     public function fail()
     {
         $this->status = "FAILED";
-        $this->save();
+        
+        if (!$this->save()) {
+            return false;
+        }
         
         //Update the conversation status if needed.
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
@@ -140,6 +143,8 @@ class Record extends \Epoch\Record
             
             $conversation->save();
         }
+        
+        return $conversation->status;
     }
     
     public function getAssignments()
