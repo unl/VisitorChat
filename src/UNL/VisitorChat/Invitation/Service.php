@@ -59,13 +59,13 @@ class Service
         
         //Get the last invitation was auto created by the system
         $latest = \UNL\VisitorChat\Invitation\Record::getLatestForConversation($conversation->id);
-        $new = true;
+        $autoinvite = true;
         if ($latest && $latest->users_id == 1) {
-            $new = false;
+            $autoinvite = false;
         }
         
         //Create a new invitation if there are no operators, we are searching and the last invitation was not created by the system.
-        if (!$currentOperators && $conversation->status == 'SEARCHING' && $new) {
+        if (!$currentOperators && $conversation->status == 'SEARCHING' && $autoinvite) {
             Record::createNewInvitation($conversation->id, $conversation->initial_url);
         }
         
