@@ -56,6 +56,12 @@ var VisitorChat_ChatBase = Class.extend({
   
   notifications: new Array(),
   
+  //true if there are any pending updateChat Ajax connections
+  pendingChatAJAX: false,
+  
+  //true if there are any pending updateUserInfo Ajax connections
+  pendingUserAJAX: false,
+  
   /**
    * Constructor function.
    */
@@ -120,6 +126,13 @@ var VisitorChat_ChatBase = Class.extend({
    * chat sever, this data includes session id.
    */
   updateUserInfo: function() {
+    //Don't flood the server
+    if (this.pendingUserAJAX) {
+      return false;
+    }
+    
+    this.pendingUserAJAX = true;
+    
     var checkOperators = "";
     if (!this.operatorsChecked) {
       checkOperators = "&checkOperators=" + escape(document.URL);
@@ -134,6 +147,7 @@ var VisitorChat_ChatBase = Class.extend({
       dataType: "json",
       success: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
         this.handleUserDataResponse(data);
+        this.pendingUserAJAX = false;
       }, this)
     });
   },
@@ -167,7 +181,8 @@ var VisitorChat_ChatBase = Class.extend({
         || this.chatStatus == 'OPERATOR_LOOKUP_FAILED'
         || this.chatStatus == 'EMAILED'
         || this.chatOpened == false
-        || this.phpsessid == false)
+        || this.phpsessid == false
+        || this.pendingChatAJAX == true)
         && force != true) {
       return false;
     }
@@ -175,6 +190,8 @@ var VisitorChat_ChatBase = Class.extend({
     if (url == undefined) {
       url = this.generateChatURL();
     }
+    
+    this.pendingChatAJAX = true;
     
     WDN.jQuery.ajax({
       url: url,
@@ -184,6 +201,7 @@ var VisitorChat_ChatBase = Class.extend({
       dataType: "json",
       success: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
         this.updateChatWithData(data);
+        this.pendingChatAJAX = false;
       }, this)
     });
   },
