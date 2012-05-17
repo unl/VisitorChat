@@ -91,148 +91,149 @@
 #maincontent
 #visitorChat_InvitationList .timestamp {
     float: right;
-}
-
-#maincontent
-#visitorChat_InvitationList li ul {
-	box-shadow: 0px 3px 18px -7px #000;
-	padding: 3px;
-	margin: -4px;
-	margin-bottom: 15px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-#maincontent
-#visitorChat_InvitationList .searching {
-    background-color: #F7F76E;
-    border: 1px solid #ECEC13;
-}
-
-#maincontent
-#visitorChat_InvitationList .searching:after {
-	font-size: 14px;
-	content: "inviting...";
-}
-
-#maincontent
-#visitorChat_InvitationList .searching > li {
-    text-align: right;
-}
-
-#maincontent
-#visitorChat_InvitationList .searching,
-#maincontent
-#visitorChat_InvitationList .searching > .userAddress {
-	text-shadow: 0 1px #FCFCCF;
-}
-
-#maincontent
-#visitorChat_InvitationList .searching .timestamp {
-    display: block;
-    float: none;
-}
-
-#maincontent
-#visitorChat_InvitationList .completed {
-    background-color: #77CB52;
-	border: 1px solid #A5E17A;
-}
-#maincontent
-#visitorChat_InvitationList .completed,
-#maincontent
-#visitorChat_InvitationList .completed > .userAddress {
-	color: white;
-	text-shadow: 0 1px #4C952D;
-}
-
-#maincontent
-#visitorChat_InvitationList .failed {   
-    background-color: #D84848;
-    border: 1px solid #E68989;
-}
-
-#maincontent
-#visitorChat_InvitationList .failed:before {
-	font-size: 14px;
-	content: "Failed invites";
-}
-
-#maincontent
-#visitorChat_InvitationList .failed > li {
-    text-align: right;
-}
-
-#maincontent
-#visitorChat_InvitationList .failed,
-#maincontent
-#visitorChat_InvitationList .failed > .userAddress {
-    color: white;
-    text-shadow: 0 1px #AD1F1F;
-}
-
-#maincontent
-#visitorChat_InvitationList .failed .timestamp {
-    display: block;
-    float: none;
-}
-
-#maincontent
-#visitorChat_InvitationList .dormant {
-    background-color: white !important;
-	border: 1px solid transparent !important;
-	box-shadow: none !important;
-	color: #333 !important;
-	display: inline !important;
-	text-shadow: 0 1px white !important;
-}
-
-#maincontent
-#visitorChat_InvitationList .dormant:before {
-    font-size: 14px;
-    content: "Failed invites";
-    text-decoration: underline;
-}
-
-#maincontent
-#visitorChat_InvitationList .dormant > li {
-    display: none;
-    text-align: right;
-}
-
-#maincontent
-#visitorChat_InvitationList .dormant,
-#maincontent
-#visitorChat_InvitationList .dormant > .userAddress {
-
-}
-
-#maincontent
-#visitorChat_InvitationList .dormant .timestamp {
-    display: block;
-    float: none;
+	font-size: 0.8em;
 }
 
 #maincontent
 #visitorChat_InvitationList > li {
-    font-weight: bold;
-    text-align: left;
-    text-shadow: 0 1px white;
-}
-/*
-#visitorChat_InvitationList .pending {
-    background-color: yellow;
+	box-shadow: 0px 3px 18px -7px black;
+	margin: 0 8px 8px;
+	padding: 2px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
 }
 
-#visitorChat_InvitationList .rejected {
-    background-color: red;
+#visitorChat_InvitationList .completed {
+    background: #a5e17a;
+	background: -moz-linear-gradient(top,  #a5e17a 0%, #77cb52 100%);
+	background: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0%,#a5e17a), color-stop(100%,#77cb52));
+	background: -webkit-linear-gradient(top,  #a5e17a 0%,#77cb52 100%);
+	background: -o-linear-gradient(top,  #a5e17a 0%,#77cb52 100%);
+	background: -ms-linear-gradient(top,  #a5e17a 0%,#77cb52 100%);
+	background: linear-gradient(top,  #a5e17a 0%,#77cb52 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#a5e17a', endColorstr='#77cb52',GradientType=0 );
+	border: 1px solid #77cb52;
+	color: #0A7561;
+	text-shadow: 0 1px #D0E4C7;
 }
 
-#visitorChat_InvitationList .accepted {
-    
+#visitorChat_InvitationList .searching {
+    background: #f7f76e;
+	background: -moz-linear-gradient(top,  #f7f76e 0%, #ecec13 100%);
+	background: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0%,#f7f76e), color-stop(100%,#ecec13));
+	background: -webkit-linear-gradient(top,  #f7f76e 0%,#ecec13 100%);
+	background: -o-linear-gradient(top,  #f7f76e 0%,#ecec13 100%);
+	background: -ms-linear-gradient(top,  #f7f76e 0%,#ecec13 100%);
+	background: linear-gradient(top,  #f7f76e 0%,#ecec13 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#f7f76e', endColorstr='#ecec13',GradientType=0 );
+    border: 1px solid #ECEC13;
+	color: #646419;
+	text-shadow: 0 1px #FCFCCF;
 }
-*/
+
+#visitorChat_InvitationList .failed {
+    background: #e57979;
+	background: -moz-linear-gradient(top,  #e57979 0%, #d84848 100%);
+	background: -webkit-gradient(linear, left top, left bottom,
+		color-stop(0%,#e57979), color-stop(100%,#d84848));
+	background: -webkit-linear-gradient(top,  #e57979 0%,#d84848 100%);
+	background: -o-linear-gradient(top,  #e57979 0%,#d84848 100%);
+	background: -ms-linear-gradient(top,  #e57979 0%,#d84848 100%);
+	background: linear-gradient(top,  #e57979 0%,#d84848 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(
+		startColorstr='#e57979', endColorstr='#d84848',GradientType=0 );
+	border: 1px solid #d84848;
+	color: white;
+	text-shadow: 0 1px #AD1F1F;
+	
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul {
+	margin-top: 0.4em;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > li {
+	-webkit-border-radius: 5em;
+	border-radius: 5em;
+	box-shadow: 0 1px 10px -4px black;
+	margin-bottom: 3px;
+	padding: 0 8px;
+	width: 200px;
+	margin-left: -11px;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .accepted {
+    background-color: #77CB52;
+	border: 1px solid #A5E17A;
+	color: white;
+	text-shadow: 0 1px #4C952D;
+}
+
+
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .pending {
+    background-color: #F7F76E;
+    border: 1px solid #ECEC13;
+	color: #646419;
+	text-shadow: 0 1px #FCFCCF;
+	text-align: right;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .pending:before {
+    content: "inviting...";
+	font-size: 0.8em;
+	float: left;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .expired,
+#maincontent
+#visitorChat_InvitationList .rejected {   
+    background-color: #D84848;
+    border: 1px solid #E68989;
+	color: white;
+	text-align: right;
+	text-shadow: 0 1px #AD1F1F;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .expired:before {
+    content: "expired";
+	font-size: 0.8em;
+	float: left;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .rejected:before {
+    content: "rejected";
+	font-size: 0.8em;
+	float: left;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .left {
+    background-color: #DADADA;
+	border: 1px solid #E4E4E4;
+	color: #555;
+	text-shadow: 0 1px #F0F0F0;
+	text-align: right;
+}
+
+#maincontent
+#visitorChat_InvitationList > li > ul > .left:before {
+    content: "left";
+	font-size: 0.8em;
+	float: left;
+}
 
 #visitorChat_chatBox ul li {
 	padding: 6px 6px 6px 20px;
