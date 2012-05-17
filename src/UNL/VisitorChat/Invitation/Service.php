@@ -57,7 +57,15 @@ class Service
             //$conversation->save();
         }
         
-        if (!$currentOperators && $conversation->status == 'SEARCHING') {
+        //Get the last invitation was auto created by the system
+        $latest = \UNL\VisitorChat\Invitation\Record::getLatestForConversation($conversation->id);
+        $new = true;
+        if ($latest && $latest->users_id == 1) {
+            $new = false;
+        }
+        
+        //Create a new invitation if there are no operators, we are searching and the last invitation was not created by the system.
+        if (!$currentOperators && $conversation->status == 'SEARCHING' && $new) {
             Record::createNewInvitation($conversation->id, $conversation->initial_url);
         }
         
@@ -86,21 +94,8 @@ class Service
             }
             
             //Update the conversation status if needed.
-            if ($conversation->status == "SEARCHING") {
-                if ($assignmentResult) {
-                    $conversation->status = "OPERATOR_PENDING_APPROVAL";
-                } else {
-                    $conversation->status = "OPERATOR_LOOKUP_FAILED";
-                    
-                    //Save here so that if multiple requests come in a REALLY short time, only one email is sent.
-                    //$conversation->save();
-                    
-                    //Try to send an email to the team.
-                    if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
-                        $conversation->status  = "EMAILED";
-                        $conversation->emailed = 1;
-                    }
-                }
+            if ($conversation->status == "SEARCHING" && $assignmentResult) {
+                $conversation->status = "OPERATOR_PENDING_APPROVAL";
                 $conversation->save();
             }
         }
