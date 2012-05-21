@@ -55,6 +55,17 @@ class Edit extends \UNL\VisitorChat\Message\Record
             $conversation_id = "?conversation_id=" . $_GET['conversation_id'];
         }
         
-        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id, true, true));
+        $last = "?last=";
+        if (!empty($conversation_id)) {
+            $last = "&last=";
+        }
+        
+        if (isset($_GET['last'])) {
+            $last = $last.$_GET['last'];
+        } else {
+            $last = $last."0";
+        }
+        
+        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id . $last, true, true));
     }
 }
