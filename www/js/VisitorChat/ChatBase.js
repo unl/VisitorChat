@@ -248,10 +248,6 @@ var VisitorChat_ChatBase = Class.extend({
       break;
     }
     
-    if (data['latest_message_id'] !== undefined) {
-      this.updateLatestMessageId(data['latest_message_id']);
-    }
-    
     return true;
   },
   
@@ -320,6 +316,11 @@ var VisitorChat_ChatBase = Class.extend({
     
     for (id in messages) {
       this.appendMessage(messages[id]);
+      
+      id = parseInt(id)
+      if (id > this.latestMessageId) {
+          this.updateLatestMessageId(id);
+      }
     }
     
     //alert

@@ -1,6 +1,5 @@
 <?php
 $data = array();
-$data['latest_message_id']          = $context->latest_message_id;
 $data['status']                     = $context->conversation->status;
 $data['conversation_id']            = $context->conversation->id;
 $data['phpssid']                    = session_id();
