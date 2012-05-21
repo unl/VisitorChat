@@ -42,7 +42,7 @@ class Record extends \Epoch\Record
             $conversation_id = "?conversation_id=" . $_GET['conversation_id'];
         }
         
-        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id, true, true);
+        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id . "&last=0", true, true);
     }
     
     function save()

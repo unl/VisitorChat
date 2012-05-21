@@ -25,21 +25,6 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
     </div>
     <div id='visitorChat_chatBox'>
         <ul>
-            <?php 
-            foreach ($context->messages as $message) {
-            	$class = 'visitorChat_them';
-            	
-            	if ($message->users_id == $context->conversation->users_id) {
-            		$class = 'visitorChat_client';
-            	}
-            	
-            	if ($message->users_id == $user->id) {
-            		$class = 'visitorChat_me';
-            	}
-            	
-                echo "<li class='". $class . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
-            }
-            ?>
         </ul>
     </div>
     

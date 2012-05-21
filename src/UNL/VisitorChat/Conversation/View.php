@@ -19,6 +19,10 @@ class View
     
     public $operators = array();
     
+    public $containsOperatorResponse = false;
+    
+    public $containsClientResponse = false;
+    
     function __construct($options = array())
     {
         //Always require that someone is logged in
@@ -68,16 +72,40 @@ class View
             $this->latest_message_id = $message->id;
         }
         
-        if ($this->latest_message_id > $this->request_id) {
-            $this->messages = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
-        }
+        $this->messages = \UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id);
         
         //Only send html output if we have to (to reduce size of response).
         if (($this->latest_message_id > $this->request_id) || ($this->latest_message_id == 0)) {
             $this->sendHTML = true;
+            $this->containsClientResponse = $this->containsClientResponse();
+            $this->containsOperatorResponse = $this->containsOperatorResponse();
         }
         
         //save the last viewed time to the session (for operators).
         $_SESSION['last_viewed'][$this->conversation->id] = \UNL\VisitorChat\Controller::epochToDateTime();
+    }
+    
+    function containsOperatorResponse()
+    {
+        
+        foreach (\UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id) as $message) {
+            
+            if ($message->getPoster()->type == 'operator') {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    function containsClientResponse()
+    {
+        foreach (\UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id) as $message) {
+            if ($message->getPoster()->type == 'client') {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
