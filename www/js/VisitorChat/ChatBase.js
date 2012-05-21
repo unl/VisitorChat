@@ -212,10 +212,6 @@ var VisitorChat_ChatBase = Class.extend({
    * conversation status and fires off a related function.
    */
   updateChatWithData: function(data) {
-    if (data['latest_message_id'] !== undefined) {
-      this.latestMessageId = data['latest_message_id'];
-    }
-    
     if (data['status'] !== undefined) {
       this.chatStatus = data['status'];
     }
@@ -255,6 +251,17 @@ var VisitorChat_ChatBase = Class.extend({
     return true;
   },
   
+  updateLatestMessageId: function(latest)
+  {
+    
+    this.latestMessageId = latest;
+    
+    action = WDN.jQuery('.unl_visitorchat_form').attr('action');
+    
+    action = action.replace(/last=(\d)*/g,"last=" + latest);
+    WDN.jQuery('.unl_visitorchat_form').attr('action', action);
+  },
+  
   /**
    * onConversationStatus_OperatorLookupFailed
    * Related status code: OPERATOR_LOOKUP_FAILED
@@ -287,47 +294,47 @@ var VisitorChat_ChatBase = Class.extend({
    * HTML will be sent along with the data parm if new updates were found.
    */
   onConversationStatus_Chatting: function(data) {
-    if (data['html'] == undefined) {
+    if (this.latestMessageId == 0) {
+      if (data['html'] == undefined) {
+        alert('Expected html, but did not recieve any');
+      }
+      
+      this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+    }
+    
+    if (data['messages'] == undefined) {
       return true;
     }
     
-    //Does the message box current exist?  If it does, only replace the message list.
-    if (WDN.jQuery("#visitorChat_chatBox").length !== 0) {
-        this.updateChatContainerWithHTML("#visitorChat_chatBox", WDN.jQuery(data['html']).find("#visitorChat_chatBox").html());
-        WDN.jQuery("#visitorChat_chatBox").removeClass('visitorChat_loading');
-    } else {
-        //load all of it.
-        this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+    this.appendMessages(data['messages']);
+  },
+  
+  appendMessages: function(messages) {
+    if (messages.length == 0) {
+      return true;
     }
-
-    //Minimize header function while chatting
-    WDN.jQuery('#visitorChat_header').click(function(){
-      if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-    	  WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
-      } else {
-    	  WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 280);
+    
+    for (id in messages) {
+      this.appendMessage(messages[id]);
+      
+      id = parseInt(id)
+      if (id > this.latestMessageId) {
+          this.updateLatestMessageId(id);
       }
-    });
+    }
     
-    //Logout option now visible
-    WDN.jQuery("#visitorChat_header").hover(function () {
-        WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
-      }, function () {
-        WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
-    });
+    //alert
+    this.clearAlert();
+    this.alert();
     
-    //Reveal timestamp
-    WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
-      function () {
-        WDN.jQuery(this).children(".timestamp").animate({'opacity': '1'}, 120);
-        WDN.jQuery(this).children(".stamp").animate({'opacity': '1'}, 120);
-      }, function () {
-    	WDN.jQuery(this).children(".timestamp").animate({'opacity': '0'}, 120);
-    	WDN.jQuery(this).children(".stamp").animate({'opacity': '0.65'}, 120);
-      }
-    );
-    
-    
+    //Scroll if we can.
+    this.scroll();
+  },
+  
+  appendMessage: function(message) {
+    WDN.jQuery("#visitorChat_chatBox ul").append("<li class='"+ message['class'] +"'>" + message['message'] +
+          "<br /><span class='timestamp'>"+ message['date'] +"</span><span class='stamp'>from "+ message['poster']['name'] +"</span>" +
+          "</li>");
   },
   
   /**
@@ -423,6 +430,7 @@ var VisitorChat_ChatBase = Class.extend({
           WDN.jQuery('#visitorchat_clientLogin').submit();
         } else {
           WDN.jQuery('#visitorChat_messageForm').submit();
+          WDN.jQuery('#visitorChat_messageBox').val('');
         }
       }
     });
@@ -448,6 +456,7 @@ var VisitorChat_ChatBase = Class.extend({
           dataType: "json",
           complete: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
             this.handleAjaxResponse(data, textStatus);
+            WDN.jQuery('#visitorChat_chatBox').removeClass('visitorChat_loading');
             //this.updateChatWithData(data);
           }, this),
           beforeSubmit: WDN.jQuery.proxy(function(arr, $form, options) {
@@ -463,7 +472,7 @@ var VisitorChat_ChatBase = Class.extend({
       
     if (action !== undefined && action.indexOf("format=json") == -1) {
       WDN.jQuery('.unl_visitorchat_form').attr('action', WDN.jQuery.proxy(function(i, val) {
-        return val + '?format=json&PHPSESSID=' + this.phpsessid;
+        return val + '?format=json&PHPSESSID=' + this.phpsessid
       }, this));
     }
       

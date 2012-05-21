@@ -147,6 +147,39 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     });
   },
   
+  onConversationStatus_Chatting: function(data)
+  {
+    this._super(data);
+    
+    //Minimize header function while chatting
+    WDN.jQuery('#visitorChat_header').click(function(){
+      if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
+          WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
+      } else {
+          WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 280);
+      }
+    });
+    
+    //Logout option now visible
+    WDN.jQuery("#visitorChat_header").hover(function () {
+        WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
+      }, function () {
+        WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
+    });
+    
+    //Reveal timestamp
+    WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
+      function () {
+        WDN.jQuery(this).children(".timestamp").animate({'opacity': '1'}, 120);
+        WDN.jQuery(this).children(".stamp").animate({'opacity': '1'}, 120);
+      }, function () {
+        WDN.jQuery(this).children(".timestamp").animate({'opacity': '0'}, 120);
+        WDN.jQuery(this).children(".stamp").animate({'opacity': '0.65'}, 120);
+      }
+    );
+    
+  },
+  
   handleUserDataResponse: function(data) {
     this.conversationID  = data['conversationID'];
     

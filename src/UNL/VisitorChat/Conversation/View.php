@@ -11,13 +11,15 @@ class View
     
     public $request_id = 0;
     
-    public $latest_message_id = 0;
-    
     public $invitations = false;
     
     public $sendHTML = false;
     
     public $operators = array();
+    
+    public $containsOperatorResponse = false;
+    
+    public $containsClientResponse = false;
     
     function __construct($options = array())
     {
@@ -64,16 +66,10 @@ class View
             $this->request_id = $options['last'];
         }
         
-        if ($message = $this->conversation->getLastMessage()) {
-            $this->latest_message_id = $message->id;
-        }
-        
-        if ($this->latest_message_id > $this->request_id) {
-            $this->messages = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
-        }
+        $this->messages = \UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id);
         
         //Only send html output if we have to (to reduce size of response).
-        if (($this->latest_message_id > $this->request_id) || ($this->latest_message_id == 0)) {
+        if ($this->request_id == 0) {
             $this->sendHTML = true;
         }
         
