@@ -329,6 +329,8 @@ var VisitorChat_ChatBase = Class.extend({
     
     //Scroll if we can.
     this.scroll();
+    
+    this.initWatchers();
   },
   
   appendMessage: function(message) {
