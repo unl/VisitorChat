@@ -69,7 +69,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_email_fallback, ' +
             '#visitorChat_logout, ' +
             '#visitorChat_login_submit, ' +
-            '#visitorChat_header').unbind();
+            '#visitorChat_header',
+            '#visitorChat_chatBox > ul > li').unbind();
+    
+    //Reveal timestamp
+    WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
+      function () {
+        WDN.jQuery(this).children(".timestamp").animate({'opacity': '1'}, 120);
+        WDN.jQuery(this).children(".stamp").animate({'opacity': '1'}, 120);
+      }, function () {
+        WDN.jQuery(this).children(".timestamp").animate({'opacity': '0'}, 120);
+        WDN.jQuery(this).children(".stamp").animate({'opacity': '0.65'}, 120);
+      }
+    );
     
     //Make sure the footer input is only submitting as email
     WDN.jQuery("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
@@ -166,18 +178,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       }, function () {
         WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     });
-    
-    //Reveal timestamp
-    WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
-      function () {
-        WDN.jQuery(this).children(".timestamp").animate({'opacity': '1'}, 120);
-        WDN.jQuery(this).children(".stamp").animate({'opacity': '1'}, 120);
-      }, function () {
-        WDN.jQuery(this).children(".timestamp").animate({'opacity': '0'}, 120);
-        WDN.jQuery(this).children(".stamp").animate({'opacity': '0.65'}, 120);
-      }
-    );
-    
   },
   
   handleUserDataResponse: function(data) {
