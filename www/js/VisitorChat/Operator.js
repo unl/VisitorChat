@@ -6,6 +6,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   unreadMessages    : new Array(), //The total number of messages for all open conversations
   requestExpireDate : new Array(),
   invitationsHTML   : false, //Holds a copy of the latest invitations html
+  operators         : new Array(), //An array of operators currently in the chat
   
   initWindow: function() {
     WDN.jQuery("#toggleOperatorStatus").click(function(){
@@ -16,6 +17,29 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         return false;
     });
+	
+	
+	//For status toggle useability
+	WDN.jQuery('#toggleOperatorStatus').hover(function() {
+		var isOpen = WDN.jQuery(this).hasClass('open');
+		
+		if (isOpen) {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Go offline?");
+		} else {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Go online?");
+		}
+		
+	}, function() {
+		var isOpen = WDN.jQuery(this).hasClass('open');
+		
+		if (isOpen) {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Available");
+		} else {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Busy");
+		}
+	});
+	
+	
 
     this._super();
   },
@@ -73,6 +97,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     WDN.jQuery('#shareConversation').click(function() {
       VisitorChat.openShareWindow();
+    });
+    
+    WDN.jQuery('#leaveConversation').click(function() {
+      if (confirm("Are you sure you want to leave the conversation?")) {
+        VisitorChat.leaveConversation();
+      }
     });
     
     this._super();
@@ -187,6 +217,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     });
   },
   
+  leaveConversation: function()
+  {
+    WDN.jQuery.ajax({
+      type: "POST",
+      url: this.serverURL + "conversation/" + this.conversationID + "/leave?format=json",
+      data: "confirm=1"
+    }).error(function(msg) {
+      alert('There was an error leaving, please try back later.');
+    });
+  },
+  
   updateConversationListWithUnreadMessages: function()
   {
     //Do we need to display a notice?
@@ -245,9 +286,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   handleUserDataResponse: function(data) {
-      this.operatorStatus = data['userStatus'];
       
-      this.updateOperatorStatus(this.operatorStatus);
+      this.updateOperatorStatus(data['userStatus']);
       
       this._super(data);
       
@@ -352,6 +392,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   updateChatWithData: function(data) {
     if (data['invitations_html'] !== undefined && data['invitations_html']) {
       this.updateInvitationsListWithHTML(data['invitations_html']);
+    }
+    
+    if (data['operators'] !== undefined) {
+      this.operators = new Array();
+      
+      for (operator in data['operators']) {
+          this.operators.push(data['operators'][operator]);
+      }
+      if (this.operators.length > 1) {
+          WDN.jQuery('#leaveConversation').show();
+      } else {
+          WDN.jQuery('#leaveConversation').hide();
+      }
     }
     
     return this._super(data);
@@ -498,6 +551,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   updateOperatorStatus: function(newStatus) {
 	  var formatStatus = 'Busy';
 	  
+	  $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
+	  
 	if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
       WDN.jQuery("#toggleOperatorStatus").removeClass("open");
@@ -507,9 +562,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       formatStatus = 'Available';
     }
     
-    WDN.jQuery("#currentOperatorStatus").html(formatStatus);
-    
+	//Don't call this if its the same status
+	if (newStatus !== this.operatorStatus) {
+      WDN.jQuery("#currentOperatorStatus").html(formatStatus);
+	}
+	
     this.operatorStatus = newStatus;
+		
   }
   
 });

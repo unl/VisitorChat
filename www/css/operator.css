@@ -56,11 +56,13 @@
     width:215px;
     height: 100px;
     margin-left: 10px;
-    margin-top: 90px;
+    margin-top: 64px;
 }
 
 #visitorChat_chatBox {
-    margin:5px 0 ;
+	margin: 5px 0;
+	margin-top: -10px;
+	padding: 0 5px;
     overflow: auto;
     height: 350px;
 }
@@ -162,7 +164,7 @@
 	-webkit-border-radius: 5em;
 	border-radius: 5em;
 	box-shadow: 0 1px 10px -4px black;
-	margin-bottom: 3px;
+	margin-bottom: 4px;
 	padding: 0 8px;
 	width: 200px;
 	margin-left: -11px;
@@ -294,12 +296,12 @@
 }
 
 #visitorChat_messageBox {
-	border-color: #CCC;
-	display: block;
-	margin: 12px 24px 0px;
-	padding: 2px;
-	resize: none;
-	width: 524px;
+	border-color: #CdCdCd;
+    display: block;
+    margin: 0 9px;
+    padding: 2px;
+    resize: none;
+    width: 456px;
 }
 
 #visitorChat_messageForm fieldset { /* For Sumbit button */
@@ -345,18 +347,19 @@
     width: 100%;
 }
 
+#visterChat_conversation {
+	-webkit-box-shadow: 28px 23px 20px -31px rgba(0, 0, 0, 0.5);
+    box-shadow: 28px 23px 20px -31px rgba(0, 0, 0, 0.5);
+}
+
 #visitorChat_conversation_header {
 	width: 678px;
-	display: block;
 	height: 65px;
-	margin-bottom: 5px;
 	margin-left: 20px;
 	padding: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.78);
-	box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.78);
 }
+
+
 
 #visitorChat_url {
 	display: inline;
@@ -395,7 +398,7 @@
     text-shadow: 0 -1px 0 #8E2220;
     width: 150px;
 }
-
+/*
 .closed:hover {
     background-color: #B24947;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #B24947), color-stop(100%, #9B302E));
@@ -417,7 +420,7 @@
     -moz-box-shadow: inset 0 0 8px 4px #892A29, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
     box-shadow: inset 0 0 8px 4px #892A29, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
 }
-
+*/
 .open {
     background-color: #7FBF4D;
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
@@ -444,26 +447,30 @@
     width: 150px;
 }
 
-.open:hover {
-    background-color: #76B347;
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #76B347), color-stop(100%, #5E9E2E));
-    background-image: -webkit-linear-gradient(top, #76B347, #5E9E2E);
-    background-image: -moz-linear-gradient(top, #76B347, #5E9E2E);
-    background-image: -ms-linear-gradient(top, #76B347, #5E9E2E);
-    background-image: -o-linear-gradient(top, #76B347, #5E9E2E);
-    background-image: linear-gradient(top, #76B347, #5E9E2E);
-    -webkit-box-shadow: inset 0 1px 0 0 #8dbf67, 0px 0px 8px 0px rgba(200, 200, 200, 1);
-    -moz-box-shadow: inset 0 1px 0 0 #8dbf67, 0px 0px 8px 0px rgba(200, 200, 200, 1);
-    box-shadow: inset 0 1px 0 0 #8dbf67, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+#toggleOperatorStatus:hover {
+	background: #b2b2b2;
+	background: -moz-linear-gradient(top,  #b2b2b2 0%, #9b9b9b 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b2b2b2), color-stop(100%,#9b9b9b));
+	background: -webkit-linear-gradient(top,  #b2b2b2 0%,#9b9b9b 100%);
+	background: -o-linear-gradient(top,  #b2b2b2 0%,#9b9b9b 100%);
+	background: -ms-linear-gradient(top,  #b2b2b2 0%,#9b9b9b 100%);
+	background: linear-gradient(top,  #b2b2b2 0%,#9b9b9b 100%);
+	border: 1px solid #9b9b9b;
+	border-bottom: 1px solid #999;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2b2b2', endColorstr='#9b9b9b',GradientType=0 );
+    -webkit-box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+	text-shadow: 0 -1px 0 #8E8E8E;
     cursor: pointer;
 }
 
-.open:active {
-    border: 1px solid #5B992B;
-    border-bottom: 1px solid #538C27;
-    -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
-    -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
-    box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+#toggleOperatorStatus:active {
+    border: 1px solid #999;
+    border-bottom: 1px solid #898989;
+    -webkit-box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
 }
 
 #visitorChat_closed {
