@@ -50,7 +50,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   initWatchers: function() {
     //Remove old elvent handlers
-    WDN.jQuery('.conversationLink, .closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
+    WDN.jQuery('.conversationLink, #closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
   
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){

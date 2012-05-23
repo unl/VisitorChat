@@ -69,7 +69,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_email_fallback, ' +
             '#visitorChat_logout, ' +
             '#visitorChat_login_submit, ' +
-            '#visitorChat_header',
+            '#visitorChat_header, ' +
             '#visitorChat_chatBox > ul > li').unbind();
     
     //Reveal timestamp
@@ -124,8 +124,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     
     //Logout function
     WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function(){
-      if (!VisitorChat.confirmClose()) { return false; }
+      if (!VisitorChat.confirmClose()) {
+        return false;
+      }
+      
       VisitorChat.stop();
+      
       return false;
     }, this));
     
