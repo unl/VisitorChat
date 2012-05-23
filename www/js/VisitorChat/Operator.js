@@ -17,41 +17,41 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         return false;
     });
-
+    
     this._super();
   },
   
   showBrightBox: function() {
     var mouse_is_inside = false;
-  
-      //Navigation needs to be under back-drop
-      WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
+    
+    //Navigation needs to be under back-drop
+    WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
+    
+    //Add in the back-drop and show brightBox
+    WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
+    WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
+    
+    //Track mouse position
+    WDN.jQuery('#visitorChat_brightBox').hover(function() {
+      mouse_is_inside = true;
+    }, function() {
+      mouse_is_inside = false;
+    });
       
-      //Add in the back-drop and show brightBox
-      WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
-      WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
-
-      //Track mouse position
-      WDN.jQuery('#visitorChat_brightBox').hover(function() {
-        mouse_is_inside = true;
-      }, function() {
-        mouse_is_inside = false;
-      });
-      
-      //Click outside container to close
-      WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
-        if (!mouse_is_inside) {
-          WDN.jQuery("#visitorChat_backDrop").remove();
-          WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
-          WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
-        }
+    //Click outside container to close
+    WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
+      if (!mouse_is_inside) {
+        WDN.jQuery("#visitorChat_backDrop").remove();
+        WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
+        WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
+      }
     });
   },
   
   initWatchers: function() {
     //Remove old elvent handlers
     WDN.jQuery('.conversationLink, #closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
-  
+    
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
       //Empty out the current chat.
@@ -414,37 +414,30 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   onConversationStatus_Closed: function(data) {
-	    //Disable the input message input.
-	    WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
-	    
-	    //Display a closed message.
-	    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
-	    html = WDN.jQuery("#visterChat_conversation").prepend(html);
-	    this.updateChatContainerWithHTML("#clientChat", html);
-	    
-	    //Fade out everything BUT closed message
-
-			//loop through all the children in #items		 
-				//set the opacity of all siblings
-				WDN.jQuery('#visitorChat_closed').siblings().css({'opacity': '0.1'})
-				//set the opacity of current item to full, and add the effect class
-				WDN.jQuery('#visitorChat_closed').css({'opacity': '1.0'});   
-			 
-				//reset all the opacity to full and remove effect class
-				//WDN.jQuery(this).removeClass('effect');
-				//WDN.jQuery(this).siblings().fadeTo('fast', '1.0')  
-	  },
+    //Disable the input message input.
+    WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
+    
+    //Display a closed message.
+    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
+    html = WDN.jQuery("#visterChat_conversation").prepend(html);
+    this.updateChatContainerWithHTML("#clientChat", html);
+    
+    //set the opacity of all siblings
+    WDN.jQuery('#visitorChat_closed').siblings().css({'opacity': '0.1'})
+    //set the opacity of current item to full, and add the effect class
+    WDN.jQuery('#visitorChat_closed').css({'opacity': '1.0'});
+  },
   
   updateConversationList: function() {
     //Update the Client List
     WDN.jQuery.ajax({
       url: this.serverURL + "conversations?format=partial",
       xhrFields: {
-          withCredentials: true
+        withCredentials: true
       },
       success: WDN.jQuery.proxy(function(data) {
-          WDN.jQuery("#clientList").html(data);
-          this.initWatchers();
+        WDN.jQuery("#clientList").html(data);
+        this.initWatchers();
       }, this)
     });
   },
@@ -523,9 +516,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   updateOperatorStatus: function(newStatus) {
-	  var formatStatus = 'Busy';
-	  
-	if (newStatus == 'BUSY') {
+    var formatStatus = 'Busy';
+    
+    if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
       WDN.jQuery("#toggleOperatorStatus").removeClass("open");
     } else {

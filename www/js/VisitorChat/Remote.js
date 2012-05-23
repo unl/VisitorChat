@@ -105,14 +105,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Click header to open up Chat
     WDN.jQuery('#visitorChat_header').click(function(){
       if (!WDN.jQuery('#visitorChat_container').is(":visible")) {
-		WDN.jQuery("#visitorChat_container").slideDown(320);
+        WDN.jQuery("#visitorChat_container").slideDown(320);
       } else {
         WDN.jQuery("#visitorChat_container").slideUp(320);
       }
-	  
+      
       if (VisitorChat.chatOpened) {
-    	if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
-    	  return false;
+        if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
+          return false;
         }
         VisitorChat.stop();
       } else {
@@ -232,20 +232,20 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   stop: function() {
-	if (WDN.jQuery('#visitorChat_container').is(":visible")) {
+    if (WDN.jQuery('#visitorChat_container').is(":visible")) {
       WDN.jQuery("#visitorChat_container").slideUp(400, WDN.jQuery.proxy(function() {
-	    this.stop();
+        this.stop();
       }, this));
-	}
-	
-	this._super();
-	
+    }
+    
+    this._super();
+    
     WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
     WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 200);
     
     WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
-	WDN.jQuery("#visitorChat_footerHeader").css({'display': 'block'});
-	
+    WDN.jQuery("#visitorChat_footerHeader").css({'display': 'block'});
+    
     //Delete the current cookie.
     WDN.jQuery.cookies.del('UNL_Visitorchat_Session');
     
