@@ -284,7 +284,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       date = Math.round(date.getTime()/1000);
       difference = date - WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
       
-      WDN.analytics.callTrackEvent('WDN Chat', 'Ended', null, difference);
+      WDN.analytics.callTrackEvent('WDN Chat', 'Ended', undefined, difference);
     }
     
     //Delete the current cookie.
