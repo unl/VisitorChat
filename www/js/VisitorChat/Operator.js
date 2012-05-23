@@ -55,7 +55,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
       //Empty out the current chat.
-    VisitorChat.clearChat();
+      VisitorChat.clearChat();
       
       //reset the chat status.
       VisitorChat.chatStatus = false;
@@ -89,6 +89,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery('#clientChat').empty();
     WDN.jQuery('#clientChat_Invitations').empty();
     this.invitationsHTML = "";
+    this.latestMessageId = 0;
   },
   
   init: function()
