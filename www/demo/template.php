@@ -154,34 +154,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-<div id="visitorChat_footercontainer">
-<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
-    <fieldset><legend id="visitorChat_footerHeader">Comments for this page</legend>
-        <ul>
-            <li class="visitorChat_info">
-                <label for="visitorChat_name"></label>
-                <input type="text" name="name" id="visitorChat_name"/>
-            </li>
-            <li class="visitorChat_info">
-                <label for="visitorChat_email"></label>
-                <input type="text" name="email" class="validate-email" id="visitorChat_email"/>
-            </li>
-            <li class="visitorChat_info">
-                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
-                <span id="visitorChat_email_fallback_text">I would like a response via email.</span>
-            </li>
-            <li class="visitorChat_center">
-                <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message"></textarea>
-            </li>
-            
-        </ul>
-    </fieldset>
-    <input type="hidden" name="initial_url" id="initial_url" value=""/>
-    <input type="hidden" name="initial_pagetitle" id="initial_pagetitle" value=""/>
-    <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
-    <input id='visitorChat_login_submit' type="submit" value="Submit" name="visitorChat_login_submit" />
-</form>
-</div>
+               <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/feedback.html'; ?>
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->

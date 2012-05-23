@@ -12,6 +12,7 @@ class Info
     public $unreadMessages     = array(); //The total number of messages for all open conversations
     public $serverTime         = 0;
     public $operatorsAvailable = null;
+    public $loginHTML          = false;
     
     function __construct($options = array())
     {
@@ -19,8 +20,12 @@ class Info
         
         $this->serverTime = date('r');
         
-        if (isset($options['checkOperators'])) {
+        if (isset($options['checkOperators']) && (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client')) {
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
+            
+            //For now we need to include the login html (until rollout is complete).
+            $login = new \stdClass();
+            $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
         }
         
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
