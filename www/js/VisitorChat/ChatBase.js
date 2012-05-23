@@ -253,13 +253,12 @@ var VisitorChat_ChatBase = Class.extend({
   
   updateLatestMessageId: function(latest)
   {
-    
     this.latestMessageId = latest;
     
-    action = WDN.jQuery('.unl_visitorchat_form').attr('action');
-    
-    action = action.replace(/last=(\d)*/g,"last=" + latest);
-    WDN.jQuery('.unl_visitorchat_form').attr('action', action);
+    if (action = WDN.jQuery('.unl_visitorchat_form').attr('action')) {
+      action = action.replace(/last=(\d)*/g,"last=" + latest);
+      WDN.jQuery('.unl_visitorchat_form').attr('action', action);
+    }
   },
   
   /**
