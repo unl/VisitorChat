@@ -9,24 +9,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   startChat: function(chatInProgress) {
     this.launchChatContainer();
     
-    //Record a start event cookie (for analytics)
-    if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
-      //Set a cookie.
-      date = new Date();
-      WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime()/1000)), {domain: '.unl.edu'});
-      
-      //Send analytics data
-      _gaq.push(['wdn._setCustomVar',
-                 1,                   
-                 'WDN Chat',
-                 'Yes',
-                 2
-              ]);
-      
-      //Mark as started
-      WDN.analytics.callTrackEvent('WDN Chat', 'Started');
-    }
-    
     if (chatInProgress) {
       this.chatStatus = false;
       return this.start();
@@ -194,6 +176,29 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
         WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast");
     });
+  },
+  
+  onLogin: function()
+  {
+    this._super();
+    alert('here');
+    //Record a start event cookie (for analytics)
+    if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
+      //Set a cookie.
+      date = new Date();
+      WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime()/1000)), {domain: '.unl.edu'});
+      
+      //Send analytics data
+      _gaq.push(['wdn._setCustomVar',
+                 1,                   
+                 'WDN Chat',
+                 'Yes',
+                 2
+              ]);
+      
+      //Mark as started
+      WDN.analytics.callTrackEvent('WDN Chat', 'Started');
+    }
   },
   
   onConversationStatus_Chatting: function(data)

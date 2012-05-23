@@ -512,10 +512,15 @@ var VisitorChat_ChatBase = Class.extend({
     }
   },
   
-  ajaxBeforeSubmit: function(arr, $form, options) {
+  onLogin: function()
+  {
     var html = "<div class='visitorChat_loading'></div>";
+    WDN.jQuery('#visitorChat_container').html(html);
+  },
+  
+  ajaxBeforeSubmit: function(arr, $form, options) {
     if (VisitorChat.chatStatus == 'LOGIN') {
-      WDN.jQuery('#visitorChat_container').html(html);
+      VisitorChat.onLogin();
     } else {
       WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
     }
