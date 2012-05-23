@@ -181,7 +181,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   onLogin: function()
   {
     this._super();
-    alert('here');
+    
     //Record a start event cookie (for analytics)
     if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
       //Set a cookie.
