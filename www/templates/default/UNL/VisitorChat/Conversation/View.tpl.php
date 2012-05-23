@@ -31,7 +31,7 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
     <?php
     //render a new message box.
     if ($context->conversation->status == "CHATTING") {
-        echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversations_id' => $context->conversation->id)));
+        echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversation_id' => $context->conversation->id)));
     }
     ?>
 </div>

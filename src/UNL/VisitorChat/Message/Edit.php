@@ -9,10 +9,12 @@ class Edit extends \UNL\VisitorChat\Message\Record
             \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url);
         }
         
-        if (isset($options['conversations_id'])) {
-            $this->conversations_id = $options['conversations_id'];
+        if (isset($options['conversation_id'])) {
+            $this->conversations_id = $options['conversation_id'];
+        } else if ($conversation = \UNL\VisitorChat\Conversation\Record::getLatestForClient($user->id)) {
+            $this->conversations_id = $conversation->id;
         } else {
-            $this->conversations_id = \UNL\VisitorChat\Conversation\Record::getLatestForClient($user->id)->id;
+            throw new \Exception("Could not find a conversation", 500);
         }
     }
     
