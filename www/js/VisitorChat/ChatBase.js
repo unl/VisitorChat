@@ -306,6 +306,22 @@ var VisitorChat_ChatBase = Class.extend({
   },
   
   /**
+   * onOperatorMessage
+   * 
+   * Fired when a message by an operator is recieved.
+   */
+  onOperatorMessage: function(message) {
+  },
+  
+  /**
+   * onClientMessage
+   * 
+   * Fired when a message by a client is recieved.
+   */
+  onClientMessage: function(message) {
+  },
+  
+  /**
    * AppendMessages
    * Used to append messages to the current conversation.
    * The messages param should be a json formmated array of messages.
@@ -318,9 +334,15 @@ var VisitorChat_ChatBase = Class.extend({
     for (id in messages) {
       this.appendMessage(messages[id]);
       
+      if (messages[id]['poster']['type'] == 'operator') {
+        this.onOperatorMessage(messages[id]);
+      } else {
+        this.onClientMessage(messages[id]);
+      }
+      
       id = parseInt(id)
       if (id > this.latestMessageId) {
-          this.updateLatestMessageId(id);
+        this.updateLatestMessageId(id);
       }
     }
     
@@ -490,10 +512,15 @@ var VisitorChat_ChatBase = Class.extend({
     }
   },
   
-  ajaxBeforeSubmit: function(arr, $form, options) {
+  onLogin: function()
+  {
     var html = "<div class='visitorChat_loading'></div>";
+    WDN.jQuery('#visitorChat_container').html(html);
+  },
+  
+  ajaxBeforeSubmit: function(arr, $form, options) {
     if (VisitorChat.chatStatus == 'LOGIN') {
-      WDN.jQuery('#visitorChat_container').html(html);
+      VisitorChat.onLogin();
     } else {
       WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
     }
