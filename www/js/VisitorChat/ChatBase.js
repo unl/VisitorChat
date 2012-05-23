@@ -1,66 +1,63 @@
-/**
- * TODO: Add support for handling cookies. IE does not support passing session data back
- * to the server via CORS when you are on a different domain than the server.  To work around
- * this we need to get the session ID from the server, save it in a cookie, and use that 
- * cookie to remember who you are as you move across websites in the UNL templates.
- * 
- * TODO: The process of logging in and out COULD take a little bit.  So we need to display to the user 
- * that we are logging them in and out.
- */
-
 /*
  * The base Chat class.  This class can be extended.
  * However, the application is built so that ONLY one
  * instance of it is allowed at a time.  And that instance
  * MUST be a variable called VisitorChat.
+ * 
+ * @author Michael Fairchild <mfairchild365@gmail.com>
+ * @author Caleb Wiedel
  */
 var VisitorChat_ChatBase = Class.extend({
   //The id of the latest message for this conversation on the server.
-  latestMessageId: 0,
+  latestMessageId    : 0,
   
   //The current chat status, ie: login, searching, chatting, closed.
-  chatStatus     : false,
+  chatStatus         : false,
   
   //The chat sever url.
-  serverURL      : "<?php echo \UNL\VisitorChat\Controller::$url;?>",
+  serverURL          : "<?php echo \UNL\VisitorChat\Controller::$url;?>",
   
   //The refresh rate of the chat.
-  refreshRate    : <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>,
+  refreshRate        : <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>,
   
   //The original site title of the current web page.
-  siteTitle      : document.title,
+  siteTitle          : document.title,
   
   //The php session ID as determined by the server.  This passed due to IE not handling sessions with ajax and CORS.
-  phpsessid      : false,
+  phpsessid          : false,
   
   //True if the window that the chat is in is visible.
-  windowVisible  : true,
+  windowVisible      : true,
   
   //The timer ID for the looping process of the main chat.
-  loopID         : false,
+  loopID             : false,
   
   //The timer ID for the looping proccess of the alert notification.
-  alertID        : false,
+  alertID            : false,
   
   //Is the chat currently open?  Is true when the chat has been started, false when stopped.
-  chatOpened     : false,
+  chatOpened         : false,
   
   //The current conversationID for the user.
-  conversationID : false,
+  conversationID     : false,
   
-  userID         : false,
+  //The current user id.
+  userID             : false,
   
-  operatorsChecked: false,
+  //True if operators have been checked (so that they will only be checked once)
+  operatorsChecked   : false,
   
-  operatorsAvailable: false,
+  //True if there are operators currently available
+  operatorsAvailable : false,
   
-  notifications: new Array(),
+  //An array of current notifications
+  notifications      : new Array(),
   
   //true if there are any pending updateChat Ajax connections
-  pendingChatAJAX: false,
+  pendingChatAJAX    : false,
   
   //true if there are any pending updateUserInfo Ajax connections
-  pendingUserAJAX: false,
+  pendingUserAJAX    : false,
   
   /**
    * Constructor function.
@@ -94,7 +91,7 @@ var VisitorChat_ChatBase = Class.extend({
    */
   start: function() {
     this.chatOpened = true;
-
+    
     clearTimeout(VisitorChat.loopID);
     
     VisitorChat_Timer_ID = VisitorChat.loop();
@@ -120,7 +117,7 @@ var VisitorChat_ChatBase = Class.extend({
    */
   loadStyles: function() {
   },
-
+  
   /**
    * updateUserInfo grabs data about the current user from the 
    * chat sever, this data includes session id.
@@ -154,15 +151,15 @@ var VisitorChat_ChatBase = Class.extend({
   
   handleUserDataResponse: function(data) {
     this.userID = data['userID'];
-
+    
     this.updatePHPSESSID(data['phpssid']);
-
+    
     if (!this.operatorsChecked) {
       this.operatorsAvailable = data['operatorsAvailable'];
     }
     this.operatorsChecked = true;
   },
-
+  
   updatePHPSESSID: function(phpsessid) {
     this.phpsessid = phpsessid;
   },
@@ -219,7 +216,7 @@ var VisitorChat_ChatBase = Class.extend({
     if (data['phpssid'] !== undefined) {
       this.updatePHPSESSID(data['phpssid']);
     }
-  
+    
     if (data['conversation_id'] !== undefined) {
       this.conversationID = data['conversation_id'];
     }
@@ -308,6 +305,11 @@ var VisitorChat_ChatBase = Class.extend({
     this.appendMessages(data['messages']);
   },
   
+  /**
+   * AppendMessages
+   * Used to append messages to the current conversation.
+   * The messages param should be a json formmated array of messages.
+   */
   appendMessages: function(messages) {
     if (messages.length == 0) {
       return true;
@@ -332,6 +334,10 @@ var VisitorChat_ChatBase = Class.extend({
     this.initWatchers();
   },
   
+  /**
+   * appendMessage
+   * Appends a single message to the conversation.
+   */
   appendMessage: function(message) {
     WDN.jQuery("#visitorChat_chatBox ul").append("<li class='"+ message['class'] +"'>" + message['message'] +
           "<br /><span class='timestamp'>"+ message['date'] +"</span><span class='stamp'>from "+ message['poster']['name'] +"</span>" +
@@ -458,7 +464,6 @@ var VisitorChat_ChatBase = Class.extend({
           complete: WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
             this.handleAjaxResponse(data, textStatus);
             WDN.jQuery('#visitorChat_chatBox').removeClass('visitorChat_loading');
-            //this.updateChatWithData(data);
           }, this),
           beforeSubmit: WDN.jQuery.proxy(function(arr, $form, options) {
               return this.ajaxBeforeSubmit(arr, $form, options);
@@ -647,7 +652,6 @@ var VisitorChat_ChatBase = Class.extend({
    * and reseting chat variables.
    */
   stop: function() {
-    //TODO: Show that we are logging out.
     //1. stop server updates.
     clearTimeout(VisitorChat.loopID);
     this.chatOpened = false;
@@ -663,7 +667,6 @@ var VisitorChat_ChatBase = Class.extend({
           },
           dataType: "html",
           complete: function(jqXHR, textStatus) {
-              //TODO: close chat.
           }
       });
     
