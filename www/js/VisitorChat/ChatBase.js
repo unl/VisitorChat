@@ -306,6 +306,22 @@ var VisitorChat_ChatBase = Class.extend({
   },
   
   /**
+   * onOperatorMessage
+   * 
+   * Fired when a message by an operator is recieved.
+   */
+  onOperatorMessage: function(message) {
+  },
+  
+  /**
+   * onClientMessage
+   * 
+   * Fired when a message by a client is recieved.
+   */
+  onClientMessage: function(message) {
+  },
+  
+  /**
    * AppendMessages
    * Used to append messages to the current conversation.
    * The messages param should be a json formmated array of messages.
@@ -318,9 +334,15 @@ var VisitorChat_ChatBase = Class.extend({
     for (id in messages) {
       this.appendMessage(messages[id]);
       
+      if (messages[id]['poster']['type'] == 'operator') {
+        this.onOperatorMessage(messages[id]);
+      } else {
+        this.onClientMessage(messages[id]);
+      }
+      
       id = parseInt(id)
       if (id > this.latestMessageId) {
-          this.updateLatestMessageId(id);
+        this.updateLatestMessageId(id);
       }
     }
     
