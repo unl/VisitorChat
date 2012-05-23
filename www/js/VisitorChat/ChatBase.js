@@ -332,7 +332,12 @@ var VisitorChat_ChatBase = Class.extend({
     }
     
     for (id in messages) {
-      this.appendMessage(messages[id]);
+      //skip if a message with this id already exists
+      if (WDN.jQuery('#visitorChat_message_' + id).length != 0) {
+        continue;
+      }
+      
+      this.appendMessage(id, messages[id]);
       
       if (messages[id]['poster']['type'] == 'operator') {
         this.onOperatorMessage(messages[id]);
@@ -360,8 +365,8 @@ var VisitorChat_ChatBase = Class.extend({
    * appendMessage
    * Appends a single message to the conversation.
    */
-  appendMessage: function(message) {
-    WDN.jQuery("#visitorChat_chatBox ul").append("<li class='"+ message['class'] +"'>" + message['message'] +
+  appendMessage: function(id, message) {
+    WDN.jQuery("#visitorChat_chatBox ul").append("<li id='visitorChat_message_"+ id +"' class='"+ message['class'] +"'>" + message['message'] +
           "<br /><span class='timestamp'>"+ message['date'] +"</span><span class='stamp'>from "+ message['poster']['name'] +"</span>" +
           "</li>");
   },
