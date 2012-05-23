@@ -234,6 +234,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       
     }
     
+    if (data['loginHTML'] !== undefined && data['loginHTML']) {
+      this.loginHTML = data['loginHTML'];
+      WDN.jQuery("#wdn_feedback_comments").replaceWith(this.loginHTML);
+      this.initWatchers();
+      
+      //set the for_url
+      WDN.jQuery('#initial_url').val(document.URL);
+      WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
+    }
+    
     this.displaySiteAvailability();
   },
   
@@ -261,10 +271,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     if (phpsessid != null) {
       this.phpsessid = phpsessid;
     }
-    
-    //set the for_url
-    WDN.jQuery('#initial_url').val(document.URL);
-    WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
     
     this._super();
   },
