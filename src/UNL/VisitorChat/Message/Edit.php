@@ -9,10 +9,12 @@ class Edit extends \UNL\VisitorChat\Message\Record
             \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url);
         }
         
-        if (isset($options['conversations_id'])) {
-            $this->conversations_id = $options['conversations_id'];
+        if (isset($options['conversation_id'])) {
+            $this->conversations_id = $options['conversation_id'];
+        } else if ($conversation = \UNL\VisitorChat\Conversation\Record::getLatestForClient($user->id)) {
+            $this->conversations_id = $conversation->id;
         } else {
-            $this->conversations_id = \UNL\VisitorChat\Conversation\Record::getLatestForClient($user->id)->id;
+            throw new \Exception("Could not find a conversation", 500);
         }
     }
     
@@ -55,6 +57,17 @@ class Edit extends \UNL\VisitorChat\Message\Record
             $conversation_id = "?conversation_id=" . $_GET['conversation_id'];
         }
         
-        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id, true, true));
+        $last = "?last=";
+        if (!empty($conversation_id)) {
+            $last = "&last=";
+        }
+        
+        if (isset($_GET['last'])) {
+            $last = $last.$_GET['last'];
+        } else {
+            $last = $last."0";
+        }
+        
+        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id . $last, true, true));
     }
 }

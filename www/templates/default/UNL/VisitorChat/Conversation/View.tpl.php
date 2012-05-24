@@ -15,6 +15,7 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         <div id='visitorChat_conversation_options'>
             <ul>
                 <li><a href='#' id='shareConversation'>Share</a></li>
+                <li><a href='#' id='leaveConversation'>Leave Conversation</a></li>
                 <li><a href='#' id='closeConversation'>End Conversation</a></li>
             </ul>
         </div>
@@ -24,28 +25,13 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
     </div>
     <div id='visitorChat_chatBox'>
         <ul>
-            <?php 
-            foreach ($context->messages as $message) {
-            	$class = 'visitorChat_them';
-            	
-            	if ($message->users_id == $context->conversation->users_id) {
-            		$class = 'visitorChat_client';
-            	}
-            	
-            	if ($message->users_id == $user->id) {
-            		$class = 'visitorChat_me';
-            	}
-            	
-                echo "<li class='". $class . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
-            }
-            ?>
         </ul>
     </div>
     
     <?php
     //render a new message box.
     if ($context->conversation->status == "CHATTING") {
-        echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversations_id' => $context->conversation->id)));
+        echo \Epoch\Controller::$templater->render(new \UNL\VisitorChat\Message\Edit(array('conversation_id' => $context->conversation->id)));
     }
     ?>
 </div>

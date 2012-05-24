@@ -30,6 +30,9 @@
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/wdn/templates_3.1/scripts/plugins/ui/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo \UNL\VisitorChat\Controller::$url;?>css/operator.css" />
+<script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
+<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?for=<?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->type;?>"></script>
+
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="document" -->
 </head>
@@ -99,6 +102,29 @@
                     <?php 
                     echo $savvy->render($context->actionable);
                     ?>
+                </div>
+                
+                <div id="chatRequest" title="Incoming Chat Request">
+                    You have an incoming chat request.
+                    This request will expire in <span id="chatRequestCountDown">10</span> seconds.
+                </div>
+                
+                <div id="alert" title="Alert">
+                </div>
+                
+                <div id="shareChat" title="Share">
+                </div>
+                
+                <div id='visitorChat_sound_container'>
+                    <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url ?>audio/message.wav'></audio>
+                </div>
+                
+                <div id="notificationOptions">
+                    <a href="#" id="requestNotifications">Show Desktop Notifications</a>
+                </div>
+                
+                <div id="visitorChat_brightBox">
+                  <p>Hello all!</p>
                 </div>
                 <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
             </div>

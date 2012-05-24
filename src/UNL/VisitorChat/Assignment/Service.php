@@ -44,7 +44,7 @@ class Service
                                    FROM assignments
                                    LEFT JOIN conversations conv1 ON (conv1.id = assignments.conversations_id)
                                    WHERE assignments.users_id = users1.id
-                                         AND assignments.conversations_id = " . (int)$invitation->conversations_id .")
+                                         AND assignments.invitations_id = " . (int)$invitation->id .")
                             = 0
                          AND (false";
         foreach ($operators as $operator) {
@@ -154,7 +154,9 @@ class Service
         $db = \UNL\VisitorChat\Controller::getDB();
         $sql = "UPDATE assignments
                 LEFT JOIN conversations ON (assignments.conversations_id = conversations.id)
-                SET assignments.status = 'EXPIRED', conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING')
+                SET assignments.status = 'EXPIRED', 
+                    conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING'),
+                    assignments.date_finished = '" . \Epoch\RecordList::escapeString(\UNL\VisitorChat\Controller::epochToDateTime()) . "'
                 WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
                     AND assignments.status = 'PENDING'";
         

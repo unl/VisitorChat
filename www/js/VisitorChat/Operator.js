@@ -46,39 +46,39 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   showBrightBox: function() {
     var mouse_is_inside = false;
-  
-      //Navigation needs to be under back-drop
-      WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
+    
+    //Navigation needs to be under back-drop
+    WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': '1'});
+    
+    //Add in the back-drop and show brightBox
+    WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
+    WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
+    
+    //Track mouse position
+    WDN.jQuery('#visitorChat_brightBox').hover(function() {
+      mouse_is_inside = true;
+    }, function() {
+      mouse_is_inside = false;
+    });
       
-      //Add in the back-drop and show brightBox
-      WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
-      WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
-
-      //Track mouse position
-      WDN.jQuery('#visitorChat_brightBox').hover(function() {
-        mouse_is_inside = true;
-      }, function() {
-        mouse_is_inside = false;
-      });
-      
-      //Click outside container to close
-      WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
-        if (!mouse_is_inside) {
-          WDN.jQuery("#visitorChat_backDrop").remove();
-          WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
-          WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
-        }
+    //Click outside container to close
+    WDN.jQuery("#visitorChat_backDrop").mouseup(function() {
+      if (!mouse_is_inside) {
+        WDN.jQuery("#visitorChat_backDrop").remove();
+        WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
+        WDN.jQuery("#wdn_navigation_wrapper").css({'z-index': 'auto'});
+      }
     });
   },
   
   initWatchers: function() {
     //Remove old elvent handlers
-    WDN.jQuery('.conversationLink, .closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
-  
+    WDN.jQuery('.conversationLink, #closeConversation, #shareConversation, #visitorChat_operatorInvite > li').unbind();
+    
     //Watch coversation link clicks.  Loads up the conversation all ajaxy
     WDN.jQuery('.conversationLink').click(function(){
       //Empty out the current chat.
-    VisitorChat.clearChat();
+      VisitorChat.clearChat();
       
       //reset the chat status.
       VisitorChat.chatStatus = false;
@@ -112,6 +112,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery('#clientChat').empty();
     WDN.jQuery('#clientChat_Invitations').empty();
     this.invitationsHTML = "";
+    this.latestMessageId = 0;
   },
   
   init: function()
@@ -419,58 +420,46 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   
   onConversationStatus_Chatting: function(data)
   {
-    if (data['html'] == undefined) {
+    if (this.latestMessageId == 0) {
+      if (data['html'] == undefined) {
+        alert('Expected html, but did not recieve any');
+      }
+      
+      this.updateChatContainerWithHTML("#clientChat", data['html']);
+    }
+
+    if (data['messages'] == undefined) {
       return true;
     }
     
-    //Does the message box current exist?  If it does, only replace the message list.
-    if (WDN.jQuery("#visitorChat_chatBox").length !== 0) {
-        //Replace the header
-       this.updateChatContainerWithHTML("#visitorChat_conversation_header", WDN.jQuery(data['html']).find("#visitorChat_conversation_header").html());
-        
-        //Replace conversation.
-        this.updateChatContainerWithHTML("#visitorChat_chatBox", WDN.jQuery(data['html']).find("#visitorChat_chatBox").html());
-        
-        //remove the loading class.
-        WDN.jQuery("#visitorChat_chatBox").removeClass('visitorChat_loading');
-    } else {
-        //Load all of it.
-        this.updateChatContainerWithHTML("#clientChat", data['html']);
-    }
+    this.appendMessages(data['messages']);
   },
   
   onConversationStatus_Closed: function(data) {
-	    //Disable the input message input.
-	    WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
-	    
-	    //Display a closed message.
-	    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
-	    html = WDN.jQuery("#visterChat_conversation").prepend(html);
-	    this.updateChatContainerWithHTML("#clientChat", html);
-	    
-	    //Fade out everything BUT closed message
-
-			//loop through all the children in #items		 
-				//set the opacity of all siblings
-				WDN.jQuery('#visitorChat_closed').siblings().css({'opacity': '0.1'})
-				//set the opacity of current item to full, and add the effect class
-				WDN.jQuery('#visitorChat_closed').css({'opacity': '1.0'});   
-			 
-				//reset all the opacity to full and remove effect class
-				//WDN.jQuery(this).removeClass('effect');
-				//WDN.jQuery(this).siblings().fadeTo('fast', '1.0')  
-	  },
+    //Disable the input message input.
+    WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
+    
+    //Display a closed message.
+    var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
+    html = WDN.jQuery("#visterChat_conversation").prepend(html);
+    this.updateChatContainerWithHTML("#clientChat", html);
+    
+    //set the opacity of all siblings
+    WDN.jQuery('#visitorChat_closed').siblings().css({'opacity': '0.1'})
+    //set the opacity of current item to full, and add the effect class
+    WDN.jQuery('#visitorChat_closed').css({'opacity': '1.0'});
+  },
   
   updateConversationList: function() {
     //Update the Client List
     WDN.jQuery.ajax({
       url: this.serverURL + "conversations?format=partial",
       xhrFields: {
-          withCredentials: true
+        withCredentials: true
       },
       success: WDN.jQuery.proxy(function(data) {
-          WDN.jQuery("#clientList").html(data);
-          this.initWatchers();
+        WDN.jQuery("#clientList").html(data);
+        this.initWatchers();
       }, this)
     });
   },
@@ -554,6 +543,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 	  $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
 	  
 	if (newStatus == 'BUSY') {
+    	var formatStatus = 'Busy';
+	} 
+	
+    if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
       WDN.jQuery("#toggleOperatorStatus").removeClass("open");
     } else {

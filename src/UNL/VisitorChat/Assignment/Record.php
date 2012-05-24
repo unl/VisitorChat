@@ -11,6 +11,8 @@ class Record extends \Epoch\Record
     public $date_updated;
     public $answering_site;
     public $invitations_id;
+    public $date_finished;
+    public $date_accepted;
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -67,6 +69,16 @@ class Record extends \Epoch\Record
     public function updateStatus($status)
     {
         $this->status = $status;
+        
+        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED'))) {
+            $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
+        }
+        
+        if ($status == 'ACCEPTED') {
+            $this->getInvitation()->complete();
+            $this->date_accepted = \UNL\VisitorChat\Controller::epochToDateTime();
+        }
+        
         return $this->save();
     }
     
@@ -84,7 +96,7 @@ class Record extends \Epoch\Record
         $sql = "SELECT * FROM assignments 
                 WHERE status = 'PENDING' 
                     AND users_id = " . (int)$userID . "
-                    ORDER BY date_created DESC
+                    ORDER BY date_created ASC
                     LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -108,7 +120,33 @@ class Record extends \Epoch\Record
         
         $sql = "SELECT * FROM assignments 
                 WHERE invitations_id = " . (int)$invitionID . "
-                ORDER BY date_created ASC
+                ORDER BY date_created DESC
+                LIMIT 1";
+        
+        if (!$result = $db->query($sql)) {
+            return false;
+        }
+        
+        if ($result->num_rows == 0) {
+            return false;
+        }
+        
+        $record = new self();
+        
+        $record->synchronizeWithArray($result->fetch_assoc());
+        
+        return $record;
+    }
+    
+    public static function getLatestByStatusForUserAndConversation($status, $userID, $conversationID)
+    {
+        $db = \UNL\VisitorChat\Controller::getDB();
+        
+        $sql = "SELECT * FROM assignments 
+                WHERE status = '" . \Epoch\RecordList::escapeString($status) . "'
+                    AND users_id = " . (int)$userID . "
+                    AND conversations_id = " . (int)$conversationID . "
+                ORDER BY date_created DESC
                 LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -153,15 +191,12 @@ class Record extends \Epoch\Record
     
     public function accept()
     {
-        $this->status = "ACCEPTED";
-        $this->getInvitation()->complete();
-        return $this->save();
+        return $this->updateStatus('ACCEPTED');
     }
     
     public function reject()
     {
-        $this->status = "REJECTED";
-        return $this->save();
+        return $this->updateStatus('REJECTED');
     }
     
     public function getUser()

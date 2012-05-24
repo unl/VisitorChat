@@ -28,6 +28,10 @@ class RecordList extends \Epoch\RecordList
         $options['sql'] = "SELECT id FROM messages WHERE conversations_id = " . (int)$conversationID . " AND date_created > " . (int)$time . " ORDER BY date_created ASC";
         return self::getBySql($options);
     }
+    
+    public static function getMessagesAfterIDForConversation($conversationID, $messageID, $options = array()) {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id FROM messages WHERE conversations_id = " . (int)$conversationID . " AND id > " . (int)$messageID . " ORDER BY date_created ASC";
+        return self::getBySql($options);
+    }
 }
-
-
