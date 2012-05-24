@@ -537,15 +537,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   updateOperatorStatus: function(newStatus) {
-	  var formatStatus = 'Busy';
+	  var formatStatus = 'Available';
 	  
 	  $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
 	  
 	if (newStatus == 'BUSY') {
-    	var formatStatus = 'Busy';
+    	formatStatus = 'Busy';
 	} 
-	
-    var formatStatus = 'Busy';
     
     if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
