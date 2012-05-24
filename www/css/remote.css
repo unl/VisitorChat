@@ -238,7 +238,6 @@
     background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif");
     background-repeat: no-repeat;
     background-position: 50% 70%;
-    width: 100%;
     min-height: 50px;
 }
 

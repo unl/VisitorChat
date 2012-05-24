@@ -18,6 +18,26 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return false;
     });
     
+	//For status toggle useability
+	WDN.jQuery('#toggleOperatorStatus').hover(function() {
+		var isOpen = WDN.jQuery(this).hasClass('open');
+		
+		if (isOpen) {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Go offline?");
+		} else {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Go online?");
+		}
+		
+	}, function() {
+		var isOpen = WDN.jQuery(this).hasClass('open');
+		
+		if (isOpen) {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Available");
+		} else {
+			WDN.jQuery(this).children('#currentOperatorStatus').html("Busy");
+		}
+	});
+	
     this._super();
   },
   
@@ -264,9 +284,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   handleUserDataResponse: function(data) {
-      this.operatorStatus = data['userStatus'];
       
-      this.updateOperatorStatus(this.operatorStatus);
+      this.updateOperatorStatus(data['userStatus']);
       
       this._super(data);
       
@@ -516,7 +535,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   },
   
   updateOperatorStatus: function(newStatus) {
-    var formatStatus = 'Busy';
+    var formatStatus = 'Available';
+      
+    $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
+    
+    if (newStatus == 'BUSY') {
+       formatStatus = 'Busy';
+    }
     
     if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
@@ -527,9 +552,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       formatStatus = 'Available';
     }
     
-    WDN.jQuery("#currentOperatorStatus").html(formatStatus);
-    
+	//Don't call this if its the same status
+	if (newStatus !== this.operatorStatus) {
+      WDN.jQuery("#currentOperatorStatus").html(formatStatus);
+	}
+	
     this.operatorStatus = newStatus;
+		
   }
   
 });
