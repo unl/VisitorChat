@@ -40,7 +40,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 	});
 	
 	
-
     this._super();
   },
   
@@ -546,6 +545,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     	var formatStatus = 'Busy';
 	} 
 	
+    var formatStatus = 'Busy';
+    
     if (newStatus == 'BUSY') {
       WDN.jQuery("#toggleOperatorStatus").addClass("closed");
       WDN.jQuery("#toggleOperatorStatus").removeClass("open");
