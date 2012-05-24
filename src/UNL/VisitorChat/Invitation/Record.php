@@ -10,6 +10,7 @@ class Record extends \Epoch\Record
     public $status;
     public $date_created;
     public $date_updated;
+    public $date_finished;
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -116,13 +117,15 @@ class Record extends \Epoch\Record
     
     public function complete()
     {
-        $this->status = "COMPLETED";
+        $this->status        = "COMPLETED";
+        $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
         $this->save();
     }
     
     public function fail()
     {
-        $this->status = "FAILED";
+        $this->status        = "FAILED";
+        $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
         
         if (!$this->save()) {
             return false;

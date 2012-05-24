@@ -11,6 +11,8 @@ class Record extends \Epoch\Record
     public $date_updated;
     public $answering_site;
     public $invitations_id;
+    public $date_finished;
+    public $date_accepted;
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -67,6 +69,16 @@ class Record extends \Epoch\Record
     public function updateStatus($status)
     {
         $this->status = $status;
+        
+        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED'))) {
+            $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
+        }
+        
+        if ($status == 'ACCEPTED') {
+            $this->getInvitation()->complete();
+            $this->date_accepted = \UNL\VisitorChat\Controller::epochToDateTime();
+        }
+        
         return $this->save();
     }
     
@@ -179,15 +191,12 @@ class Record extends \Epoch\Record
     
     public function accept()
     {
-        $this->status = "ACCEPTED";
-        $this->getInvitation()->complete();
-        return $this->save();
+        return $this->updateStatus('ACCEPTED');
     }
     
     public function reject()
     {
-        $this->status = "REJECTED";
-        return $this->save();
+        return $this->updateStatus('REJECTED');
     }
     
     public function getUser()
