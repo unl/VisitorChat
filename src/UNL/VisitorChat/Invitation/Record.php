@@ -119,7 +119,8 @@ class Record extends \Epoch\Record
     {
         $this->status        = "COMPLETED";
         $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
-        $this->save();
+        
+        return $this->save();
     }
     
     public function fail()

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2012 at 10:07 AM
+-- Generation Time: May 24, 2012 at 01:13 PM
 -- Server version: 5.1.50
--- PHP Version: 5.3.8
+-- PHP Version: 5.3.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `visitorchatapp`
+-- Database: `visitorchattest`
 --
 
 -- --------------------------------------------------------
@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `assignments` (
   `date_updated` datetime DEFAULT NULL,
   `answering_site` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The site that is answering the chat.',
   `invitations_id` int(11) NOT NULL,
+  `date_finished` datetime,
+  `date_accepted` datetime,
   PRIMARY KEY (`id`),
   KEY `fk_assignments_users1` (`users_id`),
   KEY `fk_assignments_conversations1` (`conversations_id`),
@@ -87,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `invitations` (
   `date_created` datetime NOT NULL COMMENT 'the date the invitation was created',
   `date_updated` datetime NOT NULL,
   `users_id` int(11) NOT NULL COMMENT 'The id of the user that created the invitation (if applicable)',
+  `date_finished` datetime,
   PRIMARY KEY (`id`),
   KEY `fk_Invitations_conversations1` (`conversations_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -156,9 +159,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `ip`, `date_created`, `date_updated`
 -- Constraints for table `assignments`
 --
 ALTER TABLE `assignments`
-  ADD CONSTRAINT `fk_assignments_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_assignments_conversations1` FOREIGN KEY (`conversations_id`) REFERENCES `conversations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_assignments_Invitations1` FOREIGN KEY (`invitations_id`) REFERENCES `invitations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_assignments_Invitations1` FOREIGN KEY (`invitations_id`) REFERENCES `invitations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_assignments_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `conversations`
