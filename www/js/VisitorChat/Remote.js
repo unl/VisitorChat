@@ -176,6 +176,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorChat_messageBox").keyup(function(){
         WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast");
     });
+    
+    //set the for_url
+    WDN.jQuery('#initial_url').val(document.URL);
+    WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
   },
   
   onLogin: function()
@@ -238,10 +242,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
       this.loginHTML = data['loginHTML'];
       WDN.jQuery("#wdn_feedback_comments").replaceWith(this.loginHTML);
       this.initWatchers();
-      
-      //set the for_url
-      WDN.jQuery('#initial_url').val(document.URL);
-      WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
     }
     
     this.displaySiteAvailability();
