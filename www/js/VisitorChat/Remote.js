@@ -226,50 +226,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     });
   },
   
-  onLogin: function()
-  {
-    this._super();
-    
-    //Record a start event cookie (for analytics)
-    if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
-      //Set a cookie.
-      date = new Date();
-      WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime()/1000)), {domain: '.unl.edu'});
-      
-      //Send analytics data
-      _gaq.push(['wdn._setCustomVar',
-                 1,                   
-                 'WDN Chat',
-                 'Yes',
-                 2
-              ]);
-      
-      //Mark as started
-      WDN.analytics.callTrackEvent('WDN Chat', 'Started');
-    }
-  },
-  
-  onConversationStatus_Chatting: function(data)
-  {
-    this._super(data);
-    
-    //Minimize header function while chatting
-    WDN.jQuery('#visitorChat_header').click(function(){
-      if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-          WDN.jQuery("#visitorChat_header").animate({'width': '60px'}, 280);
-      } else {
-          WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 280);
-      }
-    });
-    
-    //Logout option now visible
-    WDN.jQuery("#visitorChat_header").hover(function () {
-        WDN.jQuery("#visitorChat_logout").css({'display': 'inline-block'});
-      }, function () {
-        WDN.jQuery("#visitorChat_logout").css({'display': 'none'});
-    });
-  },
-  
   handleUserDataResponse: function(data) {
     this.conversationID  = data['conversationID'];
     
