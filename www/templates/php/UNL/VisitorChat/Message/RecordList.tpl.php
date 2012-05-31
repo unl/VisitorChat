@@ -1,4 +1,8 @@
 <?php
+function makeClickableLinks($text) {
+  return preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank">$1</a>', $text);
+}
+
 $messages = array();
 foreach ($context as $message) {
     $conversation = false;
@@ -20,7 +24,7 @@ foreach ($context as $message) {
     }
 
     
-    $messages[$message->id]['message'] = str_replace("&lt;br /&gt;", "<br />", $message->message);
+    $messages[$message->id]['message'] = str_replace("&lt;br /&gt;", "<br />", makeClickableLinks($message->message));
     $messages[$message->id]['date'] =  date("g:i:s A", strtotime($message->date_created));
     $messages[$message->id]['class'] = $class;
     $messages[$message->id]['poster']['name'] =  $poster->name;

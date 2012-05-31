@@ -59,7 +59,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
     
     WDN.jQuery("#visitorChat_header").animate({'width': '204px'}, 200);
-    WDN.jQuery("#visitorChat_container").delay(10).slideDown(320);  
+    WDN.jQuery("#visitorChat_container").delay(10).slideDown(320);
   },
   
   confirmClose: function(id) {
@@ -232,16 +232,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     //Call the parent logic.
     this._super(data);
     
-    //Handle the rest of the data.
-    if (data['conversationID']) {
-      this.startChat(true);
-      
-    }
-    
     if (data['loginHTML'] !== undefined && data['loginHTML']) {
       this.loginHTML = data['loginHTML'];
       WDN.jQuery("#wdn_feedback_comments").replaceWith(this.loginHTML);
       this.initWatchers();
+    }
+    
+    //Handle the rest of the data.
+    if (data['conversationID']) {
+      this.startChat(true);
+      
     }
     
     this.displaySiteAvailability();
