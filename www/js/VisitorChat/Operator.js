@@ -53,10 +53,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
 
         //Track mouse position
-        WDN.jQuery('#visitorChat_brightBox').hover(function () {
-            mouse_is_inside = true;
-        }, function () {
+        WDN.jQuery('#visitorChat_brightBox').mouseleave(function () {
             mouse_is_inside = false;
+        });
+
+        WDN.jQuery('#visitorChat_brightBox').mouseenter(function () {
+            mouse_is_inside = true;
         });
 
         //Click outside container to close
@@ -167,37 +169,27 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 //start a new dialog box.
             }, this),
         });
+
+        WDN.jQuery('#visitorChat_brightBox').height('350px');
     },
 
     loadShareWatchers:function () {
-        WDN.jQuery('.visitorChat_shareList_userList li').click(function () {
-            WDN.jQuery(this).children('input').attr('checked', 'checked');
+        WDN.jQuery(".chzn-select").chosen({no_results_text: "No results matched", max_selected_options: 5});
 
+        WDN.jQuery("#shareForm").submit(function() {
             VisitorChat.confirmShare();
-        });
-        WDN.jQuery('#shareForm input[type="radio"][name="to"]').change(WDN.jQuery.proxy(function () {
-            this.confirmShare();
-        }, this));
-
-        WDN.jQuery(".visitorChat_shareList > li").hover(function () {
-            WDN.jQuery(this).children(".dropArrow").hover(function () {
-                WDN.jQuery(this).siblings(".visitorChat_shareList_userList").slideDown("fast", function () {
-                    WDN.jQuery(this).siblings(".dropArrow").addClass("rotate");
-                });
-            }, function () {
-                WDN.jQuery(this).siblings(".visitorChat_shareList_userList").show();
-            });
-
-        }, function () {
-            WDN.jQuery(this).children(".visitorChat_shareList_userList").slideUp("fast", function () {
-                WDN.jQuery(this).siblings().removeClass("rotate");
-            });
+            return false;
         });
     },
 
     confirmShare:function () {
-        var toHTML = WDN.jQuery('input[name=to]:checked', '#shareForm').parent().text();
-        var to = WDN.jQuery('input[name=to]:checked', '#shareForm').val();
+        var to = WDN.jQuery('#share_to').val();
+        var toHTML = WDN.jQuery('option[value="'+to+'"]').text();
+
+        if (to == 'default') {
+            alert('Please select person or a team');
+            return false;
+        }
 
         //Clean to as it may contain lots of whitepsace
         toHTML = WDN.jQuery.trim(toHTML);

@@ -10,16 +10,6 @@
     <fieldset>
         <legend>Select who you want to share with</legend>
         <fieldset>
-            <legend>Your sites</legend>
-            <?php 
-            //Display a list of your sites first.
-            $list = \UNL\VisitorChat\Controller::$registryService->getSitesForUser(\UNL\VisitorChat\User\Service::getCurrentUser()->uid);
-            echo \Epoch\Controller::$templater->render($list, 'UNL/Visitorchat/Conversation/ShareList.tpl.php');
-            ?>
-        </fieldset>
-        
-        <fieldset>
-            <legend>All sites</legend>
             <?php 
             //Display a list of all sites next.
             $list = \UNL\VisitorChat\Controller::$registryService->getAllSites();

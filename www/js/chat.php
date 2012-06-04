@@ -35,6 +35,7 @@ require_once(dirname(__FILE__) . "/VisitorChat/ChatBase.js");
 
 switch($for) {
     case 'operator':
+        require_once(dirname(__FILE__) . "/chosen.min.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Operator.js");
         ?>
         //start the chat
