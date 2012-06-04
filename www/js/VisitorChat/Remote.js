@@ -83,7 +83,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_logout, ' +
             '#visitorChat_login_submit, ' +
             '#visitorChat_header, ' +
-            '#visitorChat_chatBox > ul > li').unbind();
+            '#visitorChat_chatBox > ul > li,' +
+            '#visitorChat_messageBox,' +
+            '#visitorChat_email,' +
+            '#visitorChat_name,').unbind();
 
         //Reveal timestamp
         WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
@@ -146,21 +149,23 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return false;
         }, this));
 
-        //Field watermarks
-        WDN.jQuery("#visitorChat_name").watermark("Name (Optional)");
-        WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
-        WDN.jQuery("#visitorChat_messageBox").watermark("Question or comment?");
+        if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
+            //Field watermarks
+            WDN.jQuery("#visitorChat_name").watermark("Name (Optional)");
+            WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
+            WDN.jQuery("#visitorChat_messageBox").watermark("Question or comment?");
 
-        //if email_fallback is checked, make sure that the email is required.
-        WDN.jQuery("#visitorChat_email_fallback").click(function () {
-            if (WDN.jQuery(this).is(":checked")) {
-                WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
-                WDN.jQuery('#visitorChat_email').addClass('required-entry');
-            } else {
-                WDN.jQuery("#visitorChat_email").watermark("Email (Optional)");
-                WDN.jQuery('#visitorChat_email').removeClass('required-entry');
-            }
-        });
+            //if email_fallback is checked, make sure that the email is required.
+            WDN.jQuery("#visitorChat_email_fallback").click(function () {
+                if (WDN.jQuery(this).is(":checked")) {
+                    WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
+                    WDN.jQuery('#visitorChat_email').addClass('required-entry');
+                } else {
+                    WDN.jQuery("#visitorChat_email").watermark("Email (Optional)");
+                    WDN.jQuery('#visitorChat_email').removeClass('required-entry');
+                }
+            });
+        }
 
         WDN.jQuery("#visitorChat_container").ready(function () {
             //Are there no operators available?  If not, make email_fallback checked by default.
