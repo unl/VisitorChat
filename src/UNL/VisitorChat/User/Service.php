@@ -13,7 +13,7 @@ class Service
         
         if (!self::$user) {
             if (!self::$user = Record::getByID($_SESSION['id'])) {
-                throw new \Exception('Could not find the current user', 500);
+                return false;
             }
         }
         
