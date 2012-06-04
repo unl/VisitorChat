@@ -10,7 +10,6 @@
     <fieldset>
         <legend>Select who you want to share with</legend>
         <fieldset>
-            <legend>All sites</legend>
             <?php 
             //Display a list of all sites next.
             $list = \UNL\VisitorChat\Controller::$registryService->getAllSites();
