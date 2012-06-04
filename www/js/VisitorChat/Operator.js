@@ -170,6 +170,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     loadShareWatchers:function () {
+        WDN.jQuery('.visitorChat_shareList li').each(function(index) {
+            WDN.jQuery(this).removeClass('visitorchat_sharList_first');
+            WDN.jQuery(this).removeClass('visitorchat_sharList_last');
+        });
+
+        WDN.jQuery('.visitorChat_shareList li:visible').eq(0).addClass('visitorchat_sharList_first');
+        WDN.jQuery('.visitorChat_shareList li:visible').eq(-1).addClass('visitorchat_sharList_last');
+
         WDN.jQuery('.visitorChat_shareList_userList li').click(function () {
             WDN.jQuery(this).children('input').attr('checked', 'checked');
 

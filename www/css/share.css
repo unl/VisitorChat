@@ -45,19 +45,19 @@
     color: #222;
     cursor: pointer;
 }
-.visitorChat_shareList > li:first-child {
+.visitorchat_sharList_first {
   -webkit-border-radius: 5px 5px 0 0;
   -moz-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
   
 }
-.visitorChat_shareList > li:last-child {
+.visitorchat_sharList_last {
   -webkit-border-radius: 0 0 5px 5px;
   -moz-border-radius: 0 0 5px 5px;
   border-radius: 0 0 5px 5px;
   border-bottom: 1px solid #CCC;
 }
-.visitorChat_shareList > li:last-child:hover {
+.visitorchat_sharList_last:hover {
   border-bottom: 1px solid #BBB;
 }
 #visitorChat_brightBox .visitorChat_shareList_userList {
