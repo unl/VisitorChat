@@ -36,6 +36,13 @@ require_once(dirname(__FILE__) . "/VisitorChat/ChatBase.js");
 switch($for) {
     case 'operator':
         require_once(dirname(__FILE__) . "/VisitorChat/Operator.js");
+        ?>
+        //start the chat
+        WDN.jQuery(function(){
+            VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+            VisitorChat.start();
+        });
+        <?php
         break;
     case 'client':
     default:
@@ -43,6 +50,14 @@ switch($for) {
         require_once(dirname(__FILE__) . "/jquery.watermark.min.js");
         require_once(dirname(__FILE__) . "/jquery.backgroundPosition.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Remote.js");
+        ?>
+        //Start the chat
+        WDN.jQuery(function(){
+            WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
+                VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+            });
+        });
+        <?php
 }
 
 $js = ob_get_contents();

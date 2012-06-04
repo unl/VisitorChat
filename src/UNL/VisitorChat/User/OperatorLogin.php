@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace UNL\VisitorChat\User;
 
 class OperatorLogin
@@ -6,17 +6,17 @@ class OperatorLogin
     function __construct()
     {
         self::authenticate();
-        
+
         \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url . "manage");
     }
-    
+
     public static function authenticate($logoutonly = false)
     {
         if (isset($_GET['logout'])) {
             $auth = \UNL_Auth::factory('SimpleCAS');
             $auth->logout();
         }
-        
+
         if ($logoutonly) {
             return true;
         }
@@ -28,7 +28,7 @@ class OperatorLogin
             throw new \Exception('You must log in to view this resource!');
             exit();
         }
-        
+
         //check if we have a user or need to make a new one.
         if (!$user = \UNL\VisitorChat\User\Record::getByUID($auth->getUser())) {
             $user               = new \UNL\VisitorChat\User\Record();
@@ -37,22 +37,31 @@ class OperatorLogin
             $user->type         = 'operator';
             $user->max_chats    = 3;
             $user->uid          = $auth->getUser();
-            
+
             if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $auth->getUser() . "&format=json")) {
                 if ($data = json_decode($json, true)) {
-                    $user->name  = $data['displayName'][0];
+                    //Default to an unknown name
+                    $user->name = "Unknown";
+
+                    //Try to get the name (displayName might be null or just 1 space)
+                    if (isset($data['displayName'][0]) && $data['displayName'][0] !== " ") {
+                        $user->name = $data['displayName'][0];
+                    } else if (isset($data['givenName'][0], $data['sn'][0])) {
+                        $user->name = $data['givenName'][0] . " " . $data['sn'][0];
+                    }
+
                     $user->email = $data['mail'][0];
                 }
             }
         }
-        
+
         $user->status = "BUSY";
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         $user->save();
-        
+
         $_SESSION['id'] = $user->id;
-        
+
         return $user;
-        
+
     }
 }
