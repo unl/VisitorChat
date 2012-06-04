@@ -265,14 +265,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this._super();
   },
   
-  init: function() {
+  init: function(serverURL, refreshRate) {
     //Handle cookies. (IE session handling);
     var phpsessid = WDN.jQuery.cookies.get('UNL_Visitorchat_Session');
     if (phpsessid != null) {
       this.phpsessid = phpsessid;
     }
     
-    this._super();
+    this._super(serverURL, refreshRate);
   },
   
   stop: function() {
@@ -316,10 +316,4 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     	WDN.jQuery("#visitorChat_header").css({'display': 'none'});
     }
   }
-});
-
-WDN.jQuery(function(){
-  WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
-    VisitorChat = new VisitorChat_Chat();
-  });
 });

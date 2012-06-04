@@ -13,12 +13,12 @@ var VisitorChat_ChatBase = Class.extend({
   
   //The current chat status, ie: login, searching, chatting, closed.
   chatStatus         : false,
-  
+
   //The chat sever url.
-  serverURL          : "<?php echo \UNL\VisitorChat\Controller::$url;?>",
+  serverURL          : false,
   
   //The refresh rate of the chat.
-  refreshRate        : <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>,
+  refreshRate        : 2000,
   
   //The original site title of the current web page.
   siteTitle          : document.title,
@@ -62,7 +62,12 @@ var VisitorChat_ChatBase = Class.extend({
   /**
    * Constructor function.
    */
-  init: function() {
+  init: function(serverURL, refreshRate) {
+    //set vars
+    this.serverURL = serverURL;
+    this.refreshRate = refreshRate;
+
+    //Start the chat
     this.initWindow();
     this.updateUserInfo();
     this.loadStyles();

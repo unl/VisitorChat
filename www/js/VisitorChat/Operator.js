@@ -1,6 +1,7 @@
 //TODO:  Simply attach the getUserData function to the end of the loop function.
 var VisitorChat_Chat = VisitorChat_ChatBase.extend({
   currentRequest    : false,  //The current request ID.
+  requestTimeout    : false,  //Life of a in-coming chat request
   requestLoopID     : false,
   operatorStatus    : false,
   unreadMessages    : new Array(), //The total number of messages for all open conversations
@@ -112,8 +113,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.latestMessageId = 0;
   },
   
-  init: function()
-  {
+  init: function(serverURL, refreshRate, requestTimeout) {
+    //set vars
+    this.serverURL = serverURL;
+    this.refreshRate = refreshRate;
+    this.requestTimeout = requestTimeout;
+
     this.loadStyles();
     this.initWindow();
     this.initWatchers();
@@ -360,7 +365,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     var offset  = currentDate - serverTime;
     var startDate = startDate + offset;
     
-    this.requestExpireDate[id] = new Date(startDate + <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+    this.requestExpireDate[id] = new Date(startDate + this.requestTimeout);
     
     this.requestLoop(id);
   },
@@ -560,10 +565,4 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     this.operatorStatus = newStatus;
 		
   }
-  
-});
-
-WDN.jQuery(function(){
-  VisitorChat = new VisitorChat_Chat();
-  VisitorChat.start();
 });
