@@ -40,7 +40,11 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php"></script>
+<script type="text/javascript">
+    if (WDN.jQuery) {
+        WDN.loadJS("<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php");
+    }
+</script>
 <style type="text/css">
 #maincontent .grid1, #maincontent  .grid2, #maincontent  .grid3, #maincontent  .grid4, #maincontent  .grid5, #maincontent  .grid6, #maincontent  .grid7, #maincontent  .grid8, #maincontent  .grid9, #maincontent  .grid10, #maincontent  .grid11, #maincontent  .grid12 {
     margin-bottom: 15px;
@@ -179,13 +183,5 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
             </div>
         </footer>
     </div>
-    <div id='visitorChat'>
-      <div id='visitorChat_header'><span id="visitorChat_header_text">Chat</span><div id="visitorChat_logout"><a href="#">close</a></div></div>
-      <div id='visitorChat_sound_container'>
-        <audio id='visitorChat_sound'></audio></div>
-      </div>
-
-    </div>
-    
 </body>
 <!-- InstanceEnd --></html>
