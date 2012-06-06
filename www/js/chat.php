@@ -52,7 +52,6 @@ switch($for) {
         require_once(dirname(__FILE__) . "/jquery.backgroundPosition.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Remote.js");
         ?>
-        //Start the chat
         WDN.jQuery(function(){
             WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
                 VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
