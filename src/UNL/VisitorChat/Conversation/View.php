@@ -56,14 +56,14 @@ class View
                 $this->operators[] = $operator->name;
             }
         }
-        
-        //The rest of the logic only applies if we are currently chatting.
-        if ($this->conversation->status !== 'CHATTING') {
-            return;
-        }
-        
+
         if (isset($options['last'])) {
             $this->request_id = $options['last'];
+        }
+
+        //The rest of the logic only applies if we are currently chatting.
+        if ($this->conversation->status !== 'CHATTING' && !($this->conversation->status == 'CLOSED' && $this->request_id == 0)) {
+            return;
         }
         
         $this->messages = \UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id);
