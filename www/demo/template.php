@@ -42,7 +42,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 <!-- Place optional header elements here -->
 <script type="text/javascript">
     if (WDN.jQuery) {
-        WDN.loadJS("<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php");
+        WDN.loadJS("<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?version=3.1");
     }
 </script>
 <style type="text/css">
