@@ -526,10 +526,6 @@ var VisitorChat_ChatBase = Class.extend({
 
         //bind form using 'ajaxForm'
         WDN.jQuery('.unl_visitorchat_form').ajaxForm(options);
-
-        if (this.windowVisible) {
-            WDN.jQuery('#visitorChat_messageBox').focus();
-        }
     },
 
     onLogin:function () {
