@@ -439,6 +439,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorChat_closed').siblings().css({'opacity':'0.1'})
         //set the opacity of current item to full, and add the effect class
         WDN.jQuery('#visitorChat_closed').css({'opacity':'1.0'});
+
+        if (data['messages'] == undefined) {
+            return true;
+        }
+
+        this.appendMessages(data['messages']);
     },
 
     updateConversationList:function () {
