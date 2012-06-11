@@ -383,9 +383,21 @@ var VisitorChat_ChatBase = Class.extend({
      * from their end or the current operator logs out.
      */
     onConversationStatus_Closed:function (data) {
+        if (data['html'] != undefined) {
+            this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+            WDN.jQuery("#visterChat_conversation").append("<div class='visitorChat_center'></div>");
+        }
+
         clearTimeout(VisitorChat.loopID);
+
         var html = '<div class="chat_notify" id="visitorChat_closed">This conversation has ended.</div>';
         this.updateChatContainerWithHTML(".visitorChat_center", html);
+
+        if (data['messages'] == undefined) {
+            return true;
+        }
+
+        this.appendMessages(data['messages']);
     },
 
     /**
