@@ -67,7 +67,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->College of Agricultural Sciences &amp; Natural Resources <span>A division of the College of Arts &amp; Sciences</span><!-- InstanceEndEditable --></span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Visitor Chat System<!-- InstanceEndEditable --></span>
             <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/idm.html'; ?>
             <?php include dirname(__DIR__) . '/../../wdn/templates_3.1/includes/wdnTools.html'; ?>
         </header>

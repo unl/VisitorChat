@@ -30,7 +30,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         }
         
         if (!isset($post['name']) || empty($post['name'])) {
-            $post['name'] = "Anonymous";
+            $post['name'] = "Guest";
         }
         
         if (!isset($post['message']) || empty($post['message'])) {
