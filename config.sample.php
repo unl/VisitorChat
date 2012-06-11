@@ -38,7 +38,7 @@ error_reporting(E_ALL);
 \Epoch\Controller::$url = 'http://ucommfairchild.unl.edu/visitorchat/www/';
 
 //Current environment of the chat service (PRODUCTION, PHPT, DEV).
-\Epoch\Controller::$environment = "PRODUCTION";
+\UNL\VisitorChat\Controller::$environment = "PRODUCTION";
 
 //How often javascript clients should refresh (both operator and client)
 \UNL\VisitorChat\Controller::$refreshRate = 2000;  //(every 2 seconds)
