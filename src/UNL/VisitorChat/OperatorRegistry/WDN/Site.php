@@ -13,7 +13,7 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     function __construct($url, $data)
     {
-        $this->url   = $url;
+        $this->url = $url;
         
         if (isset($data['title'])) {
             $this->title = $data['title'];
@@ -56,6 +56,9 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     function getTitle()
     {
+        if ($this->title == "") {
+            return $this->url;
+        }
         return $this->title;
     }
 }
