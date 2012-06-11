@@ -7,7 +7,6 @@ class Routes extends \RegExpRouter\RoutesInterface
     {
         return array('/^conversation$/i'  => 'View',
                      '/^history\/(?P<conversation_id>[\d]+)$/i' => 'Archived',
-                     '/^$/i'              => 'View',
                      '/^conversations$/i' => 'RecordList',
                      '/^history$/i'       => 'History\User',
                      '/^history\/sites$/i'  => 'History\SiteList',
