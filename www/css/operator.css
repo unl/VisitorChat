@@ -22,6 +22,18 @@
     display: none;
 }
 
+#share_to_chzn {
+    width: 320px !important;
+}
+
+.chzn-drop {
+    width: 318px !important;
+}
+
+#share_to_chzn input {
+    width: 270px !important;
+}
+
 #visitorChat_header {
 	display: inline;
 	font-family: Helvetica,Arial,sans-serif;
