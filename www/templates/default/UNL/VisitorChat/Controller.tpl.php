@@ -140,7 +140,9 @@
                 <!-- InstanceEndEditable --></div>
             <div class="footer_col" id="wdn_footer_contact">
                 <!-- InstanceBeginEditable name="contactinfo" -->
-                
+                <h3>Contact Info</h3>
+                E-mail <a href="mailto:s-mfairch4@unl.edu">Michael Fairchild</a> for questions, comments or bugs found in this system. <br />
+                Visit the project on <a href="http://github.com/unl/VisitorChat">github</a>.
                 <!-- InstanceEndEditable --></div>
             <div class="footer_col" id="wdn_footer_share">
                 <?php include dirname(__DIR__) . '/../../../../../wdn/templates_3.1/includes/socialmediashare.html'; ?>
