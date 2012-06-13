@@ -36,7 +36,14 @@ class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
     
     function getCachePath($url)
     {
-        return sys_get_temp_dir() . "unl_visitorchat_wdn_" . md5($url);
+        $path = sys_get_temp_dir();
+
+        //Some paths may not have a trailing separator.  Other may?  weird.
+        if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
+            $path = $path . DIRECTORY_SEPARATOR;
+        }
+
+        return $path . "unl_visitorchat_wdn_" . md5($url);
     }
     
     function getCache($path)
