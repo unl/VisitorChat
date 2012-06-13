@@ -13,7 +13,8 @@
             <?php 
             //Display a list of all sites next.
             $list = \UNL\VisitorChat\Controller::$registryService->getAllSites();
-            echo \Epoch\Controller::$templater->render($list, 'UNL/Visitorchat/Conversation/ShareList.tpl.php');
+
+            echo $savvy->render($list, 'UNL/VisitorChat/Conversation/ShareList.tpl.php');
             ?>
         </fieldset>
     </fieldset>
