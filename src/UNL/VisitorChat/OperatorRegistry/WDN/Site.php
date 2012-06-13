@@ -43,9 +43,9 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
         if ($this->email !== null) {
             return $this->email;
         }
-        
+
+        $email = "";
         foreach ($this->getMembers() as $person) {
-            $email = "";
             if ($mail = $person->getEmail()) {
                 $email .= $mail . ', ';
             }
