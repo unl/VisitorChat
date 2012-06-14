@@ -11,7 +11,7 @@
                 <input type="text" name="email" class="validate-email" id="visitorChat_email"/>
             </li>
             <li class="visitorChat_info">
-                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
+                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="0" />
                 <span id="visitorChat_email_fallback_text">I would like a response via email.</span>
             </li>
             <li class="visitorChat_center">

@@ -335,3 +335,8 @@
 	padding-bottom: 25px;
 	text-shadow: 0 1px #fff;
 }
+
+/* hide all email related settings for now */
+#visitorChat_email_fallback, #visitorChat_email_fallback_text {
+    display: none;
+}
