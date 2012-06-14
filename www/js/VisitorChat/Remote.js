@@ -1,5 +1,7 @@
 var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     loginHTML:false,
+    clientName: false,
+    initialMessage: false,
 
     startEmail:function () {
         this.launchChatContainer();
@@ -86,6 +88,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_chatBox > ul > li,' +
             '#visitorChat_messageBox,' +
             '#visitorChat_email,' +
+            '#visitorChat_failedOptions_yes,' +
+            '#visitorChat_failedOptions_yes,' +
             '#visitorChat_name,').unbind();
 
         //Reveal timestamp
@@ -169,7 +173,28 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         //This will slide down the Name and Email fields, plus the Ask button
         WDN.jQuery("#visitorChat_messageBox").keyup(function () {
-            WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast");
+            WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
+                if (VisitorChat.initialMessage) {
+                    WDN.jQuery("#visitorChat_email").focus();
+                }
+            });
+        });
+
+        WDN.jQuery("#visitorChat_failedOptions_yes").click(function() {
+            VisitorChat.stop(function(){
+                WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                WDN.jQuery("#visitorChat_messageBox").focus();
+                WDN.jQuery("#visitorChat_messageBox").keyup();
+            });
+
+            return true;
+        });
+
+        WDN.jQuery("#visitorChat_failedOptions_no").click(function() {
+            VisitorChat.stop();
+
+            return true;
         });
 
         //set the for_url
@@ -178,6 +203,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     onLogin:function () {
+        this.clientName = WDN.jQuery("#visitorChat_name").val();
+        this.initialMessage = WDN.jQuery("#visitorChat_messageBox").val();
+
         this._super();
 
         //Record a start event cookie (for analytics)
@@ -240,6 +268,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.displaySiteAvailability();
     },
 
+    onConversationStatus_Emailed:function (data) {
+        this.onConversationStatus_OperatorLookupFailed(data);
+    },
+
+    onConversationStatus_OperatorLookupFailed:function (data) {
+        clearTimeout(VisitorChat.loopID);
+        var html = '<div class="chat_notify">Unfortunately all of our operators are currently busy.  Would you like to send an email instead?' +
+            '<div id="visitorChat_failedOptions"><a id="visitorChat_failedOptions_yes" href="#">Yes</a> <a id="visitorChat_failedOptions_no" href="#">No</a></div></div>';
+        this.updateChatContainerWithHTML("#visitorChat_container", html);
+    },
+
     updatePHPSESSID:function (phpsessid) {
         this.phpsessid = phpsessid;
 
@@ -277,10 +316,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this._super(serverURL, refreshRate);
     },
 
-    stop:function () {
+    stop:function (callback) {
+        callbackSet = false;
         if (WDN.jQuery('#visitorChat_container').is(":visible")) {
+            callbackSet = true;
             WDN.jQuery("#visitorChat_container").slideUp(400, WDN.jQuery.proxy(function () {
-                this.stop();
+                if (callback) {
+                    callback();
+                }
             }, this));
         }
 
@@ -305,10 +348,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
         WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
 
-        //Reset email-fallback text
-        WDN.jQuery("#email-fallback-text").html('I would like a response via email.');
-
         this.initWatchers();
+
+        if (callback && !callbackSet) {
+            callback();
+        }
     },
 
     displaySiteAvailability:function () {
