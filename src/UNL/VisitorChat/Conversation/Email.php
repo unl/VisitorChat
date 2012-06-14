@@ -30,15 +30,16 @@ class Email
     
     function setReplyTo($replyTo = "") {
         if (!$replyTo == "") {
-            $this->replyTo = $replyTo;
+            $this->reply_to = $replyTo;
             
             return true;
         }
         
         $client = $this->conversation->getClient();
-        
+
         if (\Validate::email($client->email)) {
-            $this->replyTo = $client->email;
+            $this->reply_to = $client->email;
+
         }
         
         return true;
@@ -112,8 +113,8 @@ class Email
     public function generateHeaders()
     {
         return array(
-          'From'     => $this->reply_to,
-          'Reply-To' => $this->from,
+          'From'     => $this->from,
+          'Reply-To' => $this->reply_to,
           'To'       => $this->generateToString(),
           'Subject'  => $this->subject);
     }
