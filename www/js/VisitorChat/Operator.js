@@ -8,6 +8,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     requestExpireDate:new Array(),
     invitationsHTML:false, //Holds a copy of the latest invitations html
     operators:new Array(), //An array of operators currently in the chat
+    idleWatchLoopID: false, //the idle watch loop id
+    lastActiveTime: new Date(), //The exact date that the operator was last active
+    idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
+    idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -39,7 +43,33 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             }
         });
 
+        //Every time the mouse moves, update the last active time
+        WDN.jQuery('body').mousemove(function(){
+            VisitorChat.lastActiveTime = new Date();
+        });
+
+        VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
+
         this._super();
+    },
+
+    idleWatch: function() {
+        //Return early if we are already busy
+        if (this.operatorStatus != 'AVAILABLE') {
+            VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
+            return true;
+        }
+
+        currentDate = new Date();
+
+        diff = currentDate.getTime() - this.lastActiveTime.getTime();
+
+        if (diff >= this.idleTimeout && this.operatorStatus == 'AVAILABLE') {
+            this.toggleOperatorStatus();
+            alert('You have been automatically set to busy for inactivity');
+        }
+
+        VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
     },
 
     showBrightBox:function () {
