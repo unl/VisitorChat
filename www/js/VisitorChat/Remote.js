@@ -298,14 +298,18 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     init:function (serverURL, refreshRate) {
-        html = "<div id='visitorChat'>" +
-            "<div id='visitorChat_header'><span id='visitorChat_header_text'>Chat</span><div id='visitorChat_logout'><a href='#'>close</a></div></div>" +
-            "<div id='visitorChat_sound_container'>" +
-            "<audio id='visitorChat_sound'></audio></div>" +
-            "</div>" +
-            "</div>";
-
-        WDN.jQuery("body").append(html);
+        WDN.jQuery("body").append("" + 
+            "<div id='visitorChat'>" +
+                "<div id='visitorChat_header'>" +
+                    "<span id='visitorChat_header_text'>Chat</span>" +
+                    "<div id='visitorChat_logout'>" +
+                        "<a href='#'>close</a>" +
+                    "</div>" +
+                "</div>" +
+                "<div id='visitorChat_sound_container'>" +
+                    "<audio id='visitorChat_sound'></audio>" +
+                "</div>" +
+            "</div>")
 
         //Handle cookies. (IE session handling);
         var phpsessid = WDN.jQuery.cookies.get('UNL_Visitorchat_Session');
