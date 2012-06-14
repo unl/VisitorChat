@@ -16,7 +16,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
-
+        WDN.jQuery("#visitorChat_email").hide();
         WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
 
         this.start();
@@ -151,8 +151,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
             //Field watermarks
-            WDN.jQuery("#visitorChat_name").watermark("Name (Optional)");
-            WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
+            WDN.jQuery("#visitorChat_name").watermark("Name (optional)");
+            WDN.jQuery("#visitorChat_email").watermark("Email (optional)");
             WDN.jQuery("#visitorChat_messageBox").watermark("Question or comment?");
 
             //if email_fallback is checked, make sure that the email is required.
@@ -166,14 +166,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 }
             });
         }
-
-        WDN.jQuery("#visitorChat_container").ready(function () {
-            //Are there no operators available?  If not, make email_fallback checked by default.
-            if (!this.operatorsAvailable) {
-                WDN.jQuery('#visitorChat_email_fallback').prop("checked", true);
-                WDN.jQuery('#visitorChat_email').addClass('required-entry');
-            }
-        });
 
         //This will slide down the Name and Email fields, plus the Ask button
         WDN.jQuery("#visitorChat_messageBox").keyup(function () {
