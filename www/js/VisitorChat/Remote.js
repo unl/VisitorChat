@@ -174,7 +174,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         //This will slide down the Name and Email fields, plus the Ask button
         WDN.jQuery("#visitorChat_messageBox").keyup(function () {
             WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
-                if (VisitorChat.initialMessage) {
+                if (VisitorChat.initialMessage && !WDN.jQuery("#visitorChat_messageBox").is(":focus")) {
                     WDN.jQuery("#visitorChat_email").focus();
                 }
             });
@@ -184,7 +184,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             VisitorChat.stop(function(){
                 WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
                 WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
-                WDN.jQuery("#visitorChat_messageBox").focus();
+                WDN.jQuery("#visitorChat_email").focus();
                 WDN.jQuery("#visitorChat_messageBox").keyup();
             });
 
