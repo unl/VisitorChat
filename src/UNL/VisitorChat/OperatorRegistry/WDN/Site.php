@@ -23,8 +23,8 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
             $this->members = $data['members'];
         }
         
-        if (isset($data['email'])) {
-            $this->email = $data['email'];
+        if (isset($data['support_email'])) {
+            $this->email = $data['support_email'];
         }
     }
     
