@@ -39,6 +39,6 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
     
     function getPagerURL()
     {
-        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/site/' . $this->url);
+        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $this->url);
     }
 }
