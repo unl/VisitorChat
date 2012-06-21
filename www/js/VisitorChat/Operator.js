@@ -191,6 +191,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             xhrFields:{
                 withCredentials:true
             },
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             success:WDN.jQuery.proxy(function (data) {
 
                 WDN.jQuery("#visitorChat_brightBox").html(data);
@@ -236,6 +242,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/share?format=json",
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             data:"method=" + method + "&to=" + to
         }).error(function (msg) {
                 alert('There was an error sharing, please try back later.');
@@ -246,6 +258,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/leave?format=json",
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             data:"confirm=1"
         }).error(function (msg) {
                 alert('There was an error leaving, please try back later.');
@@ -309,6 +327,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     handleUserDataResponse:function (data) {
+        //Were we logged out?
+        if (!data['userID']) {
+            window.location.reload(); //reload the page
+        }
 
         this.updateOperatorStatus(data['userStatus']);
 
@@ -369,6 +391,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.ajax({
             type:"POST",
             url:this.serverURL + "assignment/" + id + "/edit?format=json&PHPSESSID=" + this.phpsessid,
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             data:"status=" + response
         }).done(function (msg) {
                 if (response == "REJECTED") {
@@ -484,6 +512,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             xhrFields:{
                 withCredentials:true
             },
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             success:WDN.jQuery.proxy(function (data) {
                 WDN.jQuery("#clientList").html(data);
                 this.initWatchers();
@@ -557,6 +591,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             type:"POST",
             url:this.serverURL + "users/" + this.userID + "/edit?format=json",
             data:"status=" + status,
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             success:WDN.jQuery.proxy(function (data) {
                 this.updateOperatorStatus(status);
             }, this)
@@ -587,6 +627,5 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         this.operatorStatus = newStatus;
-
     }
 });

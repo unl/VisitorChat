@@ -31,7 +31,7 @@ class Share extends \UNL\VisitorChat\Conversation\Record
     function handlePost($post = array())
     {
         if (!$this->canShare($_SESSION['id'])) {
-            throw new \Exception("you do not have permission to share this conversation.", 401);
+            throw new \Exception("you do not have permission to share this conversation.", 403);
         }
         
         if (!isset($post['method']) || !in_array($post['method'], array('invite'))) {
