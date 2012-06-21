@@ -14,8 +14,12 @@ class Edit extends \UNL\VisitorChat\User\Record
     
     function handlePost($post = array())
     {
+        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
+            throw new \Exception("You must be logged in to do this.", 401);
+        }
+
         if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->id) {
-            throw new \Exception("you do not have permission to edit this.", 401);
+            throw new \Exception("you do not have permission to edit this.", 403);
         }
         
         //Handle status changes.
