@@ -21,7 +21,7 @@ class Leave extends \UNL\VisitorChat\Conversation\Edit
     function handlePost($post = array())
     {
         if (!$this->canEdit($_SESSION['id'])) {
-            throw new \Exception("you do not have permission to edit this conversation.", 401);
+            throw new \Exception("you do not have permission to edit this conversation.", 403);
         }
         
         if (!isset($post['confirm'])) {
@@ -29,7 +29,7 @@ class Leave extends \UNL\VisitorChat\Conversation\Edit
         }
         
         if ($this->getAcceptedAssignments()->count() < 2) {
-            throw new \Exception("You can not leave the conversation if you are the only current operator", 401);
+            throw new \Exception("You can not leave the conversation if you are the only current operator", 400);
         }
         
         //Get the assignment for the current user
