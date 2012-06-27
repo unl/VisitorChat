@@ -20,6 +20,8 @@ class View
     public $containsOperatorResponse = false;
     
     public $containsClientResponse = false;
+
+    public
     
     function __construct($options = array())
     {
