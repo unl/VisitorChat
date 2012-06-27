@@ -60,7 +60,7 @@ class Record extends \Epoch\Record
         //Set the date_sent field
         $this->date_sent = \UNL\VisitorChat\Controller::epochToDateTime();
 
-        parent::insert();
+        return parent::insert();
     }
 
     public static function recordSentEmail($to, $from, $replyTo, $subject, $userId, $conversationId)
