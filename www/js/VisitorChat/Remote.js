@@ -93,6 +93,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_confiramtionEmail,' +
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_failedOptions_yes,' +
+            '#visitorChat_sendAnotherConfirmation,' +
             '#visitorChat_name,').unbind();
 
         //Reveal timestamp
@@ -124,7 +125,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery('#visitorChat_confirmationEamilForm').bind('validate-form', function (event, result) {
             if (result) {
-                WDN.jQuery("#visitorChat_confirmationContainer").html("<h2>Confirmation Email has been sent.</h2>");
+                WDN.jQuery('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + WDN.jQuery('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
+
+                WDN.jQuery().unbind('#visitorChat_sendAnotherConfirmation');
+
+                WDN.jQuery('#visitorChat_sendAnotherConfirmation').click(function(){
+                    WDN.jQuery('#visitorChat_confirmationContainer').html(WDN.jQuery(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html());
+                    return false;
+                });
             }
 
             return true;

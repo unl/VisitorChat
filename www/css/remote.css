@@ -68,12 +68,16 @@
     width: 180px;
 }
 
+#visitorChat_confirmationContainer {
+    font-size: .9em;
+}
+
 #visitorChat_confirmationEamilForm legend {
     display: none;
 }
 
 #visitorChat h2 {
-     font-size: 10px;
+     font-size: 1.1em;
      font-weight: bold;
 }
 

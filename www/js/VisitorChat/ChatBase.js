@@ -390,7 +390,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         clearTimeout(VisitorChat.loopID);
 
-        var html = '<div class="chat_notify" id="visitorChat_closed">This conversation has ended.</div>';
+        var html = '<div class="chat_notify" id="visitorChat_closed"><h2>This conversation has ended.</h2></div>';
         this.updateChatContainerWithHTML(".visitorChat_center", html);
 
         if (data['messages'] == undefined) {

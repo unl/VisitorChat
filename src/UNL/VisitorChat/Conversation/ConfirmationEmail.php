@@ -23,7 +23,7 @@ class ConfirmationEmail extends Email
         
         $email = new $class($conversation, $to, $fromId, $options);
         
-        $email->subject = "UNL VisitorChat System: Confirmation";
+        $email->subject = "UNL VisitorChat System: Transcript (" . $conversation->id . ")";
 
         return $email->send();
     }
