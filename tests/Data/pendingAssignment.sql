@@ -166,12 +166,12 @@ CREATE  TABLE IF NOT EXISTS `emails` (
   INDEX `fk_emails_users1` (`users_id` ASC) ,
   CONSTRAINT `fk_emails_conversations1`
     FOREIGN KEY (`conversations_id` )
-    REFERENCES `visitorchatapp`.`conversations` (`id` )
+    REFERENCES `conversations` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_emails_users1`
     FOREIGN KEY (`users_id` )
-    REFERENCES `visitorchatapp`.`users` (`id` )
+    REFERENCES `users` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
