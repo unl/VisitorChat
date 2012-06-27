@@ -25,6 +25,7 @@ class Info
             
             //For now we need to include the login html (until rollout is complete).
             $login = new \stdClass();
+
             $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
         }
         

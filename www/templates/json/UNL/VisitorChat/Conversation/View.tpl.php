@@ -44,4 +44,19 @@ if ($context->invitations) {
     \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 }
 
+if ($context->conversation->status == 'CLOSED') {
+    //Save the current template path.
+    $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
+
+    $confirmation = new UNL\VisitorChat\Conversation\ConfirmationEmail($context->conversation->getRawObject());
+
+    //Set the path to the html directory.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/default/"));
+
+    $data['confirmationHTML'] = \UNL\VisitorChat\Controller::$templater->render($confirmation, 'UNL/VisitorChat/Conversation/Email/ConfirmationEmail.tpl.php');
+
+    //Return to the original template path.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
+}
+
 echo json_encode($data, true);

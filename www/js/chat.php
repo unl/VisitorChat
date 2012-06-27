@@ -51,6 +51,7 @@ switch($for) {
         require_once(dirname(__FILE__) . "/jquery.watermark.min.js");
         require_once(dirname(__FILE__) . "/jquery.backgroundPosition.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Remote.js");
+
         ?>
         WDN.jQuery(function(){
             WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
