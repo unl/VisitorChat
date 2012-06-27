@@ -17,7 +17,9 @@ class Routes extends \RegExpRouter\RoutesInterface
     {
         return array('/^conversation\/(?P<id>[\d]+)\/edit$/i' => 'Edit',
                      '/^conversation\/(?P<id>[\d]+)\/share$/i' => 'Share',
-                     '/^conversation\/(?P<id>[\d]+)\/leave$/i' => 'Leave');
+                     '/^conversation\/(?P<id>[\d]+)\/leave$/i' => 'Leave',
+                     '/^conversation\/(?P<id>[\d]+)\/sendConfirmEmail$/i' => 'Email\ConfirmationEmail'
+        );
     }
     
     public static function getDeleteRoutes()

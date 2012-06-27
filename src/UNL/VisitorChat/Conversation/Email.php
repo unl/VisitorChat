@@ -16,8 +16,10 @@ class Email
     public $reply_to     = "unlwdn@gmail.com";
     
     public $subject      = "UNL VisitorChat System";
+
+    public $fromId       = 1;  //The id of the user sending the email
     
-    function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $options = array())
+    function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
         //Set the path to the email directory.
         \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/email/"));
@@ -25,6 +27,7 @@ class Email
         $this->conversation = $conversation;
         $this->messages     = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
         $this->subject      = 'UNL VisitorChat System ' . $this->conversation->id;
+        $this->fromId       = $fromId;
         $this->setTo($to);
     }
     
@@ -98,10 +101,10 @@ class Email
         return trim($to_address, ", ");
     }
     
-    public static function sendConversation(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $options = array())
+    public static function sendConversation(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
         $class = get_called_class();
-        $email = new $class($conversation, $to, $options);
+        $email = new $class($conversation, $to, $fromId, $options);
         return $email->send();
     }
     
@@ -130,9 +133,13 @@ class Email
         $mime = new \Mail_mime("\n");
         $mime->setHTMLBody($this->render());
         
-        $body = $mime->get();
-        $hdrs = $mime->headers($this->generateHeaders());
-        
-        return \UNL\VisitorChat\Controller::$mailService->send($this->generateToString(), $hdrs, $body);
+        $body    = $mime->get();
+        $headers = $mime->headers($this->generateHeaders());
+
+        if (\UNL\VisitorChat\Controller::$mailService->send($this->generateToString(), $headers, $body)) {
+            return Email\Record::recordSentEmail($headers['To'], $headers['From'], $headers['Reply-To'], $headers['Subject'], $this->fromId, $this->conversation->id);
+        }
+
+        return false;
     }
 }

@@ -537,7 +537,9 @@ var VisitorChat_ChatBase = Class.extend({
         if (VisitorChat.chatStatus == 'LOGIN') {
             VisitorChat.onLogin();
         } else {
-            WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
+            if (VisitorChat.chatStatus != 'CLOSED') {
+                WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
+            }
         }
 
         return true;

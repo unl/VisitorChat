@@ -139,6 +139,34 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`assignments` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `visitorchatapp`.`emails`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`emails` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `to` VARCHAR(255) NOT NULL ,
+  `from` VARCHAR(255) NOT NULL ,
+  `subject` TEXT NOT NULL ,
+  `date_sent` DATETIME NOT NULL ,
+  `conversations_id` INT NOT NULL ,
+  `reply_to` VARCHAR(255) NOT NULL ,
+  `users_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_emails_conversations1` (`conversations_id` ASC) ,
+  INDEX `fk_emails_users1` (`users_id` ASC) ,
+  CONSTRAINT `fk_emails_conversations1`
+    FOREIGN KEY (`conversations_id` )
+    REFERENCES `visitorchatapp`.`conversations` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_emails_users1`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `visitorchatapp`.`users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
