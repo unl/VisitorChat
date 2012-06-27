@@ -64,20 +64,20 @@
                     <h3 class="wdn_list_descriptor hidden">Navigation</h3>
                     <!-- InstanceBeginEditable name="navlinks" -->
                     <ul>
-                      <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('manage');?>">Dashboard</a></li>
-                      <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">History</a>
+                      <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('manage');?>">Dashboard</a></li>
+                      <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history');?>">History</a>
                             <ul>
-                              <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history');?>">My History</a></li>
-                              <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('history/sites');?>">Managed Site History</a></li>
+                              <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history');?>">My History</a></li>
+                              <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites');?>">Managed Site History</a></li>
                             </ul>
                         </li>
                         <?php 
                         if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
                         ?>
                         <li>
-                            <a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name;?></a>
+                            <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name;?></a>
                             <ul>
-                                <li><a href="<?php echo \UNL\Visitorchat\Controller::$URLService->generateSiteURL('user/settings');?>">Settings</a></li>
+                                <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('user/settings');?>">Settings</a></li>
                                 <li><a href="<?php echo \UNL\VisitorChat\Controller::$url?>logout" title="Log Out">Logout</a></li>
                             </ul>
                         </li>
