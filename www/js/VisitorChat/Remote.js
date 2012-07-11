@@ -3,6 +3,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     clientName: false,
     initialMessage: false,
     confirmationHTML: false,
+    userType: 'client',
 
     startEmail:function () {
         this.launchChatContainer();
@@ -17,7 +18,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return this.start();
         }
 
-        this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
+        //Always show the chat if we are logged in as an operator.  Otherwise only show if someone is available.
+        if (this.userType == 'operator') {
+            html = "<div class='chat_notify'>You are currently logged in as an operator and can not start a client conversation from this browser.  If you want to start a conversation, please either log out or do so in another web browser.</div>";
+            WDN.jQuery("#visitorChat_container").html(html);
+        } else {
+            this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
+        }
+
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
         WDN.jQuery("#visitorChat_email").hide();
         WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
@@ -147,6 +155,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 WDN.jQuery("#visitorChat_container").slideDown(320);
             } else {
                 WDN.jQuery("#visitorChat_container").slideUp(320);
+
+                if (VisitorChat.chatStatus == "LOGIN") {
+                    VisitorChat.stop();
+                    return false;
+                }
             }
 
             if (VisitorChat.chatOpened) {
@@ -317,6 +330,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     handleUserDataResponse:function (data) {
         this.conversationID = data['conversationID'];
 
+        this.userType = data['userType'];
+
         //Call the parent logic.
         this._super(data);
 
@@ -434,9 +449,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     displaySiteAvailability:function () {
         if (this.operatorsAvailable || this.chatOpened) {
-            WDN.jQuery("#visitorChat_header").css({'display':'block'});
+            WDN.jQuery("#visitorChat_header").show();
         } else {
-            WDN.jQuery("#visitorChat_header").css({'display':'none'});
+            WDN.jQuery("#visitorChat_header").hide();
         }
     }
 });
