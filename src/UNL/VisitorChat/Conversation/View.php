@@ -17,12 +17,6 @@ class View
     
     public $operators = array();
     
-    public $containsOperatorResponse = false;
-    
-    public $containsClientResponse = false;
-
-    public
-    
     function __construct($options = array())
     {
         //Always require that someone is logged in
