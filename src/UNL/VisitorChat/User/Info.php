@@ -13,6 +13,7 @@ class Info
     public $serverTime         = 0;
     public $operatorsAvailable = null;
     public $loginHTML          = false;
+    public $userType           = false;
     
     function __construct($options = array())
     {
@@ -32,8 +33,11 @@ class Info
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             return;
         }
+
+        $this->userType = $user->type;
         
         $this->userID = $user->id;
+
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
         }
