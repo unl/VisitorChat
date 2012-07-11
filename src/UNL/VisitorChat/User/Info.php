@@ -13,6 +13,7 @@ class Info
     public $serverTime         = 0;
     public $operatorsAvailable = null;
     public $loginHTML          = false;
+    public $userType           = false;
     
     function __construct($options = array())
     {
@@ -20,20 +21,25 @@ class Info
         
         $this->serverTime = date('r');
         
-        if (isset($options['checkOperators']) && (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client')) {
+        if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
-            
-            //For now we need to include the login html (until rollout is complete).
-            $login = new \stdClass();
 
-            $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
+            if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {
+                //For now we need to include the login html (until rollout is complete).
+                $login = new \stdClass();
+
+                $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
+            }
         }
         
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             return;
         }
+
+        $this->userType = $user->type;
         
         $this->userID = $user->id;
+
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
         }
