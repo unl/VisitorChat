@@ -409,6 +409,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     stop:function (callback) {
+        if (this.userType == 'operator') {
+            this.closeChatContainer();
+            return true;
+        }
+
         callbackSet = false;
         if (WDN.jQuery('#visitorChat_container').is(":visible")) {
             callbackSet = true;
@@ -421,11 +426,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         this._super();
 
-        WDN.jQuery("#visitorChat_logout").css({'display':'none'});
-        WDN.jQuery("#visitorChat_header").animate({'width':'60px'}, 200);
-
-        WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
-        WDN.jQuery("#visitorChat_footerHeader").css({'display':'block'});
+        this.closeChatContainer();
 
         if (WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
             date = new Date();
@@ -445,6 +446,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (callback && !callbackSet) {
             callback();
         }
+    },
+
+    closeChatContainer: function() {
+        WDN.jQuery("#visitorChat_logout").css({'display':'none'});
+        WDN.jQuery("#visitorChat_header").animate({'width':'60px'}, 200);
+
+        WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
+        WDN.jQuery("#visitorChat_footerHeader").css({'display':'block'});
     },
 
     displaySiteAvailability:function () {
