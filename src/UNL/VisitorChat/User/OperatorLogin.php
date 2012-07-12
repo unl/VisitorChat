@@ -3,11 +3,15 @@ namespace UNL\VisitorChat\User;
 
 class OperatorLogin
 {
-    function __construct()
+    function __construct($options = array())
     {
         self::authenticate();
 
-        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url . "manage");
+        if (!isset($options['redirect']) || empty($options['redirect'])) {
+            \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$url . "manage");
+        }
+
+        \Epoch\Controller::redirect($options['redirect']);
     }
 
     public static function authenticate($logoutonly = false)

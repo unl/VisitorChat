@@ -76,18 +76,45 @@ class Controller extends \Epoch\Controller
         //4. Move along...
         parent::__construct($options);
     }
-    
+
+    /**
+     * Requires a client login.
+     *
+     * @static
+     */
     public static function requireClientLogin()
     {
         if (!isset($_SESSION['id'])) {
             self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("clientLogin", true, true));
         }
     }
-    
+
+    /**
+     * Requires a basic login (either client or operator).
+     *
+     * Used for views that are accessible by both clients and operators.
+     *
+     * For now it will have an operator log in as clients can not log back in after they log out.
+     *
+     * @static
+     */
+    public static function requireLogin()
+    {
+        if (!isset($_SESSION['id'])) {
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+        }
+    }
+
+    /**
+     * requires an operator login.
+     *
+     * @static
+     * @throws \Exception
+     */
     public static function requireOperatorLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin", true, true));
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
         }
         
         if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {
