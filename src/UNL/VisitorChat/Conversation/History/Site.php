@@ -6,6 +6,9 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
     
     function __construct($options = array())
     {
+        //require that an operator is logged in.
+        \UNL\VisitorChat\Controller::requireOperatorLogin();
+
         if (!isset($options['site_url'])) {
             throw new \Exception('no site url given', 400);
         }
