@@ -25,7 +25,9 @@ if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($filename)) {
 
 ob_start();
 ?>
-var VisitorChat = false;
+if (VisitorChat == undefined) {
+    var VisitorChat = false;
+}
 <?php
 
 //Include the required things:
@@ -55,7 +57,9 @@ switch($for) {
         ?>
         WDN.jQuery(function(){
             WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
-                VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+                if (VisitorChat == false) {
+                    VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+                }
             });
         });
         <?php
