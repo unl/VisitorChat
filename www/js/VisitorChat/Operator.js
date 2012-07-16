@@ -11,7 +11,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     idleWatchLoopID: false, //the idle watch loop id
     lastActiveTime: new Date(), //The exact date that the operator was last active
     idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
-    idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
+    idleTimeout: 500,  //time of being inactive before going idle (default to 7200000 or 2 hours)
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -48,6 +48,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             VisitorChat.lastActiveTime = new Date();
         });
 
+        WDN.jQuery(window).scroll(function(){
+            VisitorChat.lastActiveTime = new Date();
+        });
+
         VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
 
         this._super();
@@ -66,7 +70,25 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         if (diff >= this.idleTimeout && this.operatorStatus == 'AVAILABLE') {
             this.toggleOperatorStatus();
-            alert('You have been automatically set to busy for inactivity');
+
+            this.alert('idle');
+
+            //Create a new dialog to tell the operator that they missed a chat request.
+            WDN.jQuery("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
+            WDN.jQuery("#alert").dialog({
+                resizable:false,
+                height:180,
+                modal:true,
+                buttons:{
+                    "Okay":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                    }, this),
+                    "Go back online":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                        this.toggleOperatorStatus();
+                    }, this)
+                }
+            });
         }
 
         VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
