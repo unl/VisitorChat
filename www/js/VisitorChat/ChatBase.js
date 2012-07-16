@@ -571,9 +571,11 @@ var VisitorChat_ChatBase = Class.extend({
                 case 'assignment':
                     message = "New assignment! ";
                     break;
+                case 'idle':
+                    message = "Idle!";
             }
 
-            document.title = message + VisitorChat.siteTitle;
+            document.title = message + " " + VisitorChat.siteTitle;
         } else {
             document.title = VisitorChat.siteTitle;
         }
@@ -585,7 +587,7 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //3. flash the document title.
-        VisitorChat.alertID = setTimeout('VisitorChat.alert()', 2000);
+        VisitorChat.alertID = setTimeout("VisitorChat.alert('"+ alertType +"')", 2000);
     },
 
     showNotification:function (alertType) {
@@ -607,6 +609,8 @@ var VisitorChat_ChatBase = Class.extend({
             case 'assignment':
                 message = "You have a new pending assignment!";
                 break;
+            case 'idle':
+                message = "You have been set to Idle!";
         }
 
         notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
@@ -642,6 +646,9 @@ var VisitorChat_ChatBase = Class.extend({
                 break;
             case 'newMessage':
                 file = 'message.wav';
+                break;
+            case 'idle':
+                file = 'alert.wav';
                 break;
         }
 
