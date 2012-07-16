@@ -11,7 +11,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     idleWatchLoopID: false, //the idle watch loop id
     lastActiveTime: new Date(), //The exact date that the operator was last active
     idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
-    idleTimeout: 500,  //time of being inactive before going idle (default to 7200000 or 2 hours)
+    idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
