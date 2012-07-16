@@ -427,6 +427,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             WDN.jQuery("#chatRequest").dialog("close"); //Remove the dialog box.
             clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
             this.clearAlert();
+            return false;
         }
 
         VisitorChat.requestLoopID = setTimeout("VisitorChat.requestLoop(" + id + ")", 1000);
