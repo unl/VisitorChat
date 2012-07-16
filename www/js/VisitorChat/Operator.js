@@ -48,6 +48,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             VisitorChat.lastActiveTime = new Date();
         });
 
+        WDN.jQuery(window).scroll(function(){
+            VisitorChat.lastActiveTime = new Date();
+        });
+
         VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
 
         this._super();
@@ -66,7 +70,25 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         if (diff >= this.idleTimeout && this.operatorStatus == 'AVAILABLE') {
             this.toggleOperatorStatus();
-            alert('You have been automatically set to busy for inactivity');
+
+            this.alert('idle');
+
+            //Create a new dialog to tell the operator that they missed a chat request.
+            WDN.jQuery("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
+            WDN.jQuery("#alert").dialog({
+                resizable:false,
+                height:180,
+                modal:true,
+                buttons:{
+                    "Okay":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                    }, this),
+                    "Go back online":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                        this.toggleOperatorStatus();
+                    }, this)
+                }
+            });
         }
 
         VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
@@ -424,12 +446,40 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#chatRequestCountDown").html(difference);
 
         if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
-            WDN.jQuery("#chatRequest").dialog("close"); //Remove the dialog box.
-            clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
-            this.clearAlert();
+            this.onRequestExpired();
+            return false;
         }
 
         VisitorChat.requestLoopID = setTimeout("VisitorChat.requestLoop(" + id + ")", 1000);
+    },
+
+    /**
+     * Called when a pending chat request expires.
+     *
+     * Tell the user that they missed a chat request and they have been set to 'busy'.
+     */
+    onRequestExpired:function () {
+        //Close the current request dialog.
+        WDN.jQuery("#chatRequest").dialog("close"); //Remove the dialog box.
+        clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
+        this.clearAlert();
+
+        //Create a new dialog to tell the operator that they missed a chat request.
+        WDN.jQuery("#alert").html("You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.");
+        WDN.jQuery("#alert").dialog({
+            resizable:false,
+            height:180,
+            modal:true,
+            buttons:{
+                "Okay":WDN.jQuery.proxy(function () {
+                    WDN.jQuery("#alert").dialog("close");
+                }, this),
+                "Go back online":WDN.jQuery.proxy(function () {
+                    WDN.jQuery("#alert").dialog("close");
+                    this.toggleOperatorStatus();
+                }, this)
+            }
+        });
     },
 
     updateChat:function (url) {

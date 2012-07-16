@@ -59,7 +59,7 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="document" -->
 </head>
-<body class="fixed">
+<body class="fixed" data-version="3.1">
     <nav class="skipnav">
         <a class="skipnav" href="#maincontent">Skip Navigation</a>
     </nav>
