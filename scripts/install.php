@@ -45,6 +45,8 @@ $sql .= file_get_contents(dirname(dirname(__FILE__)) . "/data/database.sql");
 
 exec_sql($db, $sql, 'updatating database');
 
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.last_active.sql"), 'adding user.last_active');
+
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser = new \UNL\VisitorChat\User\Record();
