@@ -65,6 +65,8 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `status` enum('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'SEARCHING',
   `emailed` int(1) DEFAULT NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.',
   `email_fallback` int(1) DEFAULT NULL,
+  `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
+  `closer_id` INT NULL ,
   `method` enum('CHAT','EMAIL') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.',
   PRIMARY KEY (`id`),
   KEY `fk_conversations_users` (`users_id`)
@@ -139,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `max_chats` int(11) NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.',
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
   `Invitations_id` int(11) DEFAULT NULL,
+  `last_active` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`),
   KEY `fk_users_Invitations1` (`Invitations_id`)
@@ -194,7 +197,8 @@ ALTER TABLE `assignments`
 -- Constraints for table `conversations`
 --
 ALTER TABLE `conversations`
-  ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `visitorchatapp`.`users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `invitations`
