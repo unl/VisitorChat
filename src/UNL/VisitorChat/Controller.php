@@ -13,6 +13,8 @@ class Controller extends \Epoch\Controller
     
     //Should the sysem compress and cache JS output?
     public static $cacheJS = true;
+
+    public static $conversationTTL = 30;  //minutes
     
     /**
      * An array of possible roles.

@@ -304,6 +304,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }, function () {
             WDN.jQuery("#visitorChat_logout").css({'display':'none'});
         });
+
+        this.scroll();
     },
 
     onConversationStatus_Chatting:function (data) {

@@ -25,6 +25,10 @@ class Record extends \Epoch\Record
     public $initial_pagetitle;
     
     public $emailed;  //Was an email sent for a fallback?
+
+    public $close_status;  //The reason for closing the chat ('operator', 'client', 'unknown', 'idle').
+
+    public $closer_id; //The id of the user closing the chat.
     
     /* Does the client want a response via email if
      * we can't find an available operator
@@ -255,18 +259,43 @@ class Record extends \Epoch\Record
         
         return $row['unread'];
     }
-    
+
+    function idle()
+    {
+        //Create a new message
+        $message = new \UNL\VisitorChat\Message\Record();
+        $message->users_id = 1; //system
+        $message->conversations_id = $this->id;
+        $message->message = "This conversation has had no activity for " . \UNL\VisitorChat\Controller::$conversationTTL . " minutes and has been closed.";
+        $message->save();
+
+        return $this->close('IDLE', 1);
+    }
+
     /**
      * Closes the conversation and marks all currently accepted assignments
      * for the conversation as completed.
      * 
      * @return null
      */
-    function close()
+    function close($closeStatus = false, $closerID = false)
     {
+        if (!$closerID) {
+            $closerID = \UNL\VisitorChat\User\Service::getCurrentUser()->id;
+        }
+
+        if (!$closeStatus) {
+            $closeStatus = "CLIENT";
+            if (\UNL\VisitorChat\User\Service::getCurrentUser()->type == 'operator') {
+                $closeStatus = "OPERATOR";
+            }
+        }
+
         //Update the chat and mark it as closed.
         $this->date_closed = \UNL\VisitorChat\Controller::epochToDateTime();
-        $this->status = "CLOSED";
+        $this->status       = "CLOSED";
+        $this->close_status = $closeStatus;
+        $this->closer_id    = $closerID;
         $this->save();
         
         //Complete all assignments.
