@@ -19,6 +19,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
   `uid` VARCHAR(45) NULL COMMENT 'UNL id to associate accounts' ,
   `max_chats` INT NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.' ,
   `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
+  `last_active` DATETIME NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `uid_UNIQUE` (`uid` ASC) )
 ENGINE = InnoDB;
