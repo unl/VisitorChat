@@ -41,13 +41,21 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`conversations` (
   `emailed` INT(1) NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.' ,
   `email_fallback` INT(1) NULL ,
   `method` ENUM('CHAT', 'EMAIL') NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.' ,
+  `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
+  `closer_id` INT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_conversations_users` (`users_id` ASC) ,
+  INDEX `fk_conversations_users1` (`closer_id` ASC) ,
   CONSTRAINT `fk_conversations_users`
     FOREIGN KEY (`users_id` )
     REFERENCES `visitorchatapp`.`users` (`id` )
     ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_conversations_users1`
+    FOREIGN KEY (`closer_id` )
+    REFERENCES `visitorchatapp`.`users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

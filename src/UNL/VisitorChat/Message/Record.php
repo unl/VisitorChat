@@ -16,6 +16,8 @@ class Record extends \Epoch\Record
 
     function insert()
     {
+        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+
         return parent::insert();
     }
     
