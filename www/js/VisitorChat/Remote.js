@@ -68,7 +68,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
 
         WDN.jQuery("#visitorChat_header").animate({'width':'204px'}, 200);
-        WDN.jQuery("#visitorChat_container").delay(10).slideDown(320);
+
+        //Display and set the name (if found).
+        WDN.jQuery("#visitorChat_container").delay(10).slideDown(320, function(){
+            WDN.jQuery("#visitorChat_name").val(WDN.idm.displayName());
+        });
     },
 
     confirmClose:function (id) {
