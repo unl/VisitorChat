@@ -65,7 +65,11 @@ class Info
     function areOperatorsAvaiable($url)
     {
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
-        
+
+        if (empty($sites)) {
+            return false;
+        }
+
         return \UNL\VisitorChat\User\Service::areUsersAvaiable($sites->current()->getMembers());
     }
 }
