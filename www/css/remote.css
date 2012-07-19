@@ -338,10 +338,6 @@
 	text-align: center;
 }
 
-#wdn_footer_feedback form {
-    display: block;
-}
-
 #visitorChat_footercontainer {
 	background: #E3E3E3;
 	-webkit-border-radius: 5px 5px 5px 5px;
@@ -364,4 +360,14 @@
 /* hide all email related settings for now */
 #visitorChat_email_fallback, #visitorChat_email_fallback_text {
     display: none;
+}
+@media (min-width: 1040px) {
+    #wdn_footer_feedback form {
+        display: block;
+    }
+}
+
+/* IE tweaks */
+.ie8 #wdn_footer_feedback form {
+    display: block;
 }

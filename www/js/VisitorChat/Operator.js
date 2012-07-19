@@ -37,9 +37,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             var isOpen = WDN.jQuery(this).hasClass('open');
 
             if (isOpen) {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("Available");
+                WDN.jQuery(this).children('#currentOperatorStatus').html("You are available");
             } else {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("Busy");
+                WDN.jQuery(this).children('#currentOperatorStatus').html("You are unavailable");
             }
         });
 
@@ -659,7 +659,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
 
         if (newStatus == 'BUSY') {
-            formatStatus = 'Busy';
+            formatStatus = 'You are unavailable';
         }
 
         if (newStatus == 'BUSY') {
@@ -668,7 +668,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         } else {
             WDN.jQuery("#toggleOperatorStatus").addClass("open");
             WDN.jQuery("#toggleOperatorStatus").removeClass("closed");
-            formatStatus = 'Available';
+            formatStatus = 'You are available';
         }
 
         //Don't call this if its the same status
