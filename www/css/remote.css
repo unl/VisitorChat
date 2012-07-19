@@ -110,6 +110,7 @@
 }
 
 #visitorChat_container {
+	background: #F8F8F8;
     background: -moz-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%, rgba(255,255,255,0.85) 100%);
 	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(244,244,244,1)), color-stop(100%,rgba(255,255,255,0.85)));
 	background: -webkit-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
