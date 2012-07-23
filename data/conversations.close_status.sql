@@ -1,1 +1,1 @@
-ALTER TABLE `conversations` ADD `close_status` enum('CLIENT', 'OPERATOR', 'IDLE') NULL;
+ALTER TABLE `conversations` ADD `close_status` enum('CLIENT', 'OPERATOR', 'IDLE', 'LOG_IN', 'LOG_OUT') NULL;

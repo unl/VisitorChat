@@ -15,7 +15,8 @@ class Logout
             $conversation->close();
         }
         
-        $user->status = "BUSY";
+        $user->status        = "BUSY";
+        $user->status_reason = "LOG_OUT";
         $user->save();
         
         session_destroy();
