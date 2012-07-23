@@ -157,6 +157,7 @@ class Service
                 ON (assignments.conversations_id = conversations.id AND users.id = assignments.users_id)
                 SET assignments.status = 'EXPIRED',
                     users.status = 'BUSY',
+                    users.status_reason = 'EXPIRED_REQUEST',
                     conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING'),
                     assignments.date_finished = '" . \Epoch\RecordList::escapeString(\UNL\VisitorChat\Controller::epochToDateTime()) . "'
                 WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)

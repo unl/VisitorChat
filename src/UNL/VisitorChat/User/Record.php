@@ -13,6 +13,7 @@ class Record extends \Epoch\Record
     public $type; //Client or Operator
     public $max_chats;
     public $status;
+    public $status_reason;
     public $last_active;
     
     public static function getByID($id)

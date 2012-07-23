@@ -14,6 +14,7 @@ class Info
     public $operatorsAvailable = null;
     public $loginHTML          = false;
     public $userType           = false;
+    public $userStatusReason   = false;
     
     function __construct($options = array())
     {
@@ -43,8 +44,10 @@ class Info
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
         }
-        
-        $this->userStatus = $user->status;
+
+        //Send the current user status;
+        $this->userStatus       = $user->status;
+        $this->userStatusReason = $user->status_reason;
         
         if ($user->type == "operator") {
             //Update the last time the user was active.

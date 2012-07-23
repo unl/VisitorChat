@@ -26,13 +26,24 @@ class Edit extends \UNL\VisitorChat\User\Record
         
         //Handle status changes.
         if (isset($post['status']) && !empty($post['status'])) {
+            $reason = "USER";
+
+            if (isset($post['reason']) && !empty($post['reason'])) {
+                $reason = strtoupper($post['reason']);
+            }
+
+            if (!in_array($post['reason'], array('CLIENT_IDLE', 'USER'))) {
+                throw new \Exception("invalid status.", 400);
+            }
+
             $accepted = array("BUSY", "AVAILABLE");
             
             if (!in_array($post['status'], $accepted)) {
                 throw new \Exception("invalid status.", 400);
             }
             
-            $this->status = $post['status'];
+            $this->status        = $post['status'];
+            $this->status_reason = $reason;
         }
         
         if (isset($post['max_chats'])) {

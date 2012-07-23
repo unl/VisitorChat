@@ -18,7 +18,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             if (VisitorChat.operatorStatus == 'AVAILABLE') {
                 VisitorChat.checkOperatorCountBeforeStatusChange();
             } else {
-                VisitorChat.toggleOperatorStatus();
+                VisitorChat.toggleOperatorStatus('USER');
             }
             return false;
         });
@@ -69,7 +69,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         diff = currentDate.getTime() - this.lastActiveTime.getTime();
 
         if (diff >= this.idleTimeout && this.operatorStatus == 'AVAILABLE') {
-            this.toggleOperatorStatus();
+            this.toggleOperatorStatus('CLIENT_IDLE');
 
             this.alert('idle');
 
@@ -85,7 +85,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                     }, this),
                     "Go back online":WDN.jQuery.proxy(function () {
                         WDN.jQuery("#alert").dialog("close");
-                        this.toggleOperatorStatus();
+                        this.toggleOperatorStatus('USER');
                     }, this)
                 }
             });
@@ -354,6 +354,26 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             window.location.reload(); //reload the page
         }
 
+        //Alert the user if the server set them to busy.
+        if (data['userStatus'] != this.operatorStatus && data['userStatusReason'] == 'SERVER_IDLE') {
+            this.alert('idle');
+            WDN.jQuery("#alert").html("Due to inactivity with the server, you have been set to 'busy'.  This usually happens when you forget to change your status to 'unavailable' before you close the browser or after your computer has lost connection with the server.");
+            WDN.jQuery("#alert").dialog({
+                resizable:false,
+                height:180,
+                modal:true,
+                buttons:{
+                    "Okay":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                    }, this),
+                    "Go back online":WDN.jQuery.proxy(function () {
+                        WDN.jQuery("#alert").dialog("close");
+                        this.toggleOperatorStatus('USER');
+                    }, this)
+                }
+            });
+        }
+
         this.updateOperatorStatus(data['userStatus']);
 
         this._super(data);
@@ -476,7 +496,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 }, this),
                 "Go back online":WDN.jQuery.proxy(function () {
                     WDN.jQuery("#alert").dialog("close");
-                    this.toggleOperatorStatus();
+                    this.toggleOperatorStatus('USER');
                 }, this)
             }
         });
@@ -594,7 +614,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
             }, this),
             error:WDN.jQuery.proxy(function (data) {
-                this.toggleOperatorStatus();
+                this.toggleOperatorStatus('CLIENT_IDLE');
             }, this)
         });
     },
@@ -617,7 +637,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             buttons:{
                 "Go Offline Anyway":WDN.jQuery.proxy(function () {
                     WDN.jQuery("#alert").dialog("close");
-                    this.toggleOperatorStatus();
+                    this.toggleOperatorStatus('USER');
                 }, this),
                 "Nevermind":WDN.jQuery.proxy(function () {
                     WDN.jQuery("#alert").dialog("close");
@@ -626,7 +646,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         });
     },
 
-    toggleOperatorStatus:function () {
+    toggleOperatorStatus:function (reason) {
         var status = "BUSY";
 
         if (this.operatorStatus == "BUSY") {
@@ -640,7 +660,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.ajax({
             type:"POST",
             url:this.serverURL + "users/" + this.userID + "/edit?format=json",
-            data:"status=" + status,
+            data:"status=" + status + "&reason=" + reason,
             statusCode: {
                 //Did our session expire?
                 401: function() {
