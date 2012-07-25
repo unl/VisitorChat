@@ -38,6 +38,10 @@ class Archived
     function canView()
     {
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
+
+        if ($user->isAdmin()) {
+            return true;
+        }
         
         //Is the client viewing it?
         if ($this->conversation->users_id == $user->id) {
