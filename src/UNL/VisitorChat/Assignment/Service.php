@@ -51,7 +51,7 @@ class Service
             $sql .= " OR users1.uid = '" . mysql_escape_string($operator) . "'";
         }
         
-        $sql .= ") LIMIT 1";
+        $sql .= ") GROUP BY users1.uid";
         
         if (!$result = $db->query($sql)) {
             return false;
@@ -61,9 +61,14 @@ class Service
             return false;
         }
         
-        $row = $result->fetch_assoc();
+        $operators = array();
         
-        return $row['id'];
+        while ($row = $result->fetch_assoc()) {
+            $operators[] = $row['id'];
+        }
+        
+        //Select a random operator
+        return $operators[rand(0,count($operators)-1)];
     }
     
     /* Finds an online operator and assigns them to this a chat/invitation.
