@@ -58,6 +58,8 @@ error_reporting(E_ALL);
 //To cache and minimize or not to cache and minimize javascrip.  That is the question.
 \UNL\VisitorChat\Controller::$cacheJS = false;
 
+//A list of admins (UIDs). Admins are able to view all past conversations.
+\UNL\VisitorChat\Controller::$admins = array('s-mfairch4');
 /**********************************************************************************************************************
  * Operator Registry settings
  */

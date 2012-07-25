@@ -46,6 +46,15 @@ class Record extends \Epoch\Record
         return 'users';
     }
     
+    public function isAdmin()
+    {
+        if (in_array($this->uid, \UNL\VisitorChat\Controller::$admins)) {
+            return true;
+        }
+        
+        return false;
+    }
+    
     public function update()
     {
         parent::update();

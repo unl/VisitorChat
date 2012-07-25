@@ -27,6 +27,10 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
             }
         }
         
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
+            $canView = true;
+        }
+        
         if (!$canView) {
             throw new \Exception("You do not have permission to view this site.", 400);
         }
