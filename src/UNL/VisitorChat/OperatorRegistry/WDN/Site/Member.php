@@ -20,7 +20,7 @@ class Member extends \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
     {
         $data_url = 'http://directory.unl.edu/?uid='.urlencode($this->uid).'&format=json';
         
-        if (!(($person = file_get_contents($data_url)) && $details = json_decode($person, true))) {
+        if (!(($person = @file_get_contents($data_url)) && $details = json_decode($person, true))) {
             return false;
         }
         
