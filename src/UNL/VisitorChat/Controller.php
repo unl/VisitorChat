@@ -26,6 +26,12 @@ class Controller extends \Epoch\Controller
     public static $roles = array('other', 'operator', 'operator1', 'operator2', 'manager');
     
     /**
+     * uids of admins for the chat system.
+     * @var array
+     */
+    public static $admins = array();
+    
+    /**
      * an array of default operators.  Must be the UIDs
      * of the operators.  When no operators for a site
      * are found, these operators will be used.
