@@ -53,7 +53,11 @@ class Record extends \Epoch\Record
      */
     public function markAsCompleted()
     {
-        return $this->updateStatus('COMPLETED');
+        if ($this->status == 'ACCEPTED') {
+            return $this->updateStatus('COMPLETED');
+        }
+        
+        return true;
     }
     
     /**
