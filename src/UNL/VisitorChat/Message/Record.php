@@ -53,6 +53,28 @@ class Record extends \Epoch\Record
         
         return \UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id . $last, true, true);
     }
+
+    /**
+     * determine the css class to use for this message.
+     * This will help aid in the user quickly figuring out
+     * who said what message.
+     * 
+     * @return string
+     */
+    function getDisplayClass()
+    {
+        $class = 'visitorChat_them';
+
+        if ($this->users_id == $this->getConversation()->users_id) {
+            $class = 'visitorChat_client';
+        }
+
+        if ($this->users_id == \UNL\VisitorChat\User\Service::getCurrentUser()->id) {
+            $class = 'visitorChat_me';
+        }
+        
+        return $class;
+    }
     
     function save()
     {

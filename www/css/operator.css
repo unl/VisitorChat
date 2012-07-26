@@ -387,7 +387,8 @@
 #toggleOperatorStatus {
 	color: white !important;
 	display: block;
-	margin-left: 800px;
+	margin-left: 766px;
+    width: 190px;
 }
 
 .closed {

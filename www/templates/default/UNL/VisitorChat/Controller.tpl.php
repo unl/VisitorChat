@@ -30,6 +30,12 @@
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/wdn/templates_3.1/scripts/plugins/ui/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo \UNL\VisitorChat\Controller::$url;?>css/operator.css" />
+<?php
+    //load model-specific css.
+    if (file_exists(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/" . str_replace("\\", "/", $context->options['model']) . ".css")) {
+         echo "<link rel='stylesheet' type='text/css' media='screen' href='" . \UNL\VisitorChat\Controller::$url . "css/" . str_replace("\\", "/", $context->options['model']) . ".css' />";
+    }
+?>
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
 <script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?for=<?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->type;?>"></script>
 
