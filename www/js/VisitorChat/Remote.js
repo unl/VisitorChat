@@ -473,10 +473,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     displaySiteAvailability:function () {
-        if (this.operatorsAvailable || this.chatOpened) {
+        if (this.chatOpened) {
+            return true;
+        }
+        
+        if (this.operatorsAvailable) {
             WDN.jQuery("#visitorChat_header").show();
         } else {
             WDN.jQuery("#visitorChat_header").hide();
         }
+        
+        return true;
     }
 });
