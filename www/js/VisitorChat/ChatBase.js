@@ -68,10 +68,14 @@ var VisitorChat_ChatBase = Class.extend({
         this.refreshRate = refreshRate;
 
         //Start the chat
-        this.initWindow();
-        this.updateUserInfo();
         this.loadStyles();
-        this.initWatchers();
+        this.initWindow();
+
+        WDN.jQuery(document).ready(WDN.jQuery.proxy(function(){
+            this.updateUserInfo();
+            this.initWatchers();
+        }, this));
+        
     },
 
     /**
@@ -472,13 +476,17 @@ var VisitorChat_ChatBase = Class.extend({
     initWatchers:function () {
         //Remove old elvent handlers
         WDN.jQuery('#visitorChat_messageBox').unbind();
-
+        
         WDN.jQuery('#visitorChat_messageBox').keypress(function (e) {
+            if (VisitorChat.chatStatus == false) {
+                return true;
+            }
+            
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
                     WDN.jQuery('#visitorchat_clientLogin').submit();
-                } else {
+                } else if(VisitorChat.chatStatus != false) {
                     WDN.jQuery('#visitorChat_messageForm').submit();
                     WDN.jQuery('#visitorChat_messageBox').val('');
                 }
