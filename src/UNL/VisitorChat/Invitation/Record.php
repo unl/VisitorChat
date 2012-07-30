@@ -140,10 +140,12 @@ class Record extends \Epoch\Record
             $conversation->status = "OPERATOR_LOOKUP_FAILED";
             
             //Try to send an email to the team.
+            /* For now only send an email to the team if the user asks the system to.
             if (\UNL\VisitorChat\Conversation\FallbackEmail::sendConversation($conversation)) {
                 $conversation->status  = "EMAILED";
                 $conversation->emailed = 1;
             }
+            */
             
             $conversation->save();
         }

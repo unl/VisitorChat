@@ -710,11 +710,11 @@ var VisitorChat_ChatBase = Class.extend({
 
         //3. logout
         WDN.jQuery.ajax({
-            url:this.serverURL + "logout" + "?PHPSESSID=" + this.phpsessid,
+            url:this.serverURL + "logout" + "?format=json&PHPSESSID=" + this.phpsessid,
             xhrFields:{
                 withCredentials:true
             },
-            dataType:"html",
+            dataType:"json",
             complete:function (jqXHR, textStatus) {
             }
         });
