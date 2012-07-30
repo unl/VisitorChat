@@ -68,10 +68,14 @@ var VisitorChat_ChatBase = Class.extend({
         this.refreshRate = refreshRate;
 
         //Start the chat
-        this.initWindow();
-        this.updateUserInfo();
         this.loadStyles();
-        this.initWatchers();
+        this.initWindow();
+
+        WDN.jQuery(document).ready(WDN.jQuery.proxy(function(){
+            this.updateUserInfo();
+            this.initWatchers();
+        }, this));
+        
     },
 
     /**
