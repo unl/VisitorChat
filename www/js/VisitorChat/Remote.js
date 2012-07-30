@@ -180,7 +180,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         //Logout function
         WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function () {
-            if (!VisitorChat.confirmClose()) {
+            if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
                 return false;
             }
 
@@ -302,14 +302,20 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.initWatchers();
 
         WDN.jQuery().unbind('visitorChat_header');
+        
         //Logout option now visible
+        this.displayLogoutButton();
+
+        this.scroll();
+    },
+    
+    displayLogoutButton: function() {
+        WDN.jQuery("#visitorChat_logout").show();
         WDN.jQuery("#visitorChat_header").hover(function () {
             WDN.jQuery("#visitorChat_logout").css({'display':'inline-block'});
         }, function () {
             WDN.jQuery("#visitorChat_logout").css({'display':'none'});
         });
-
-        this.scroll();
     },
 
     onConversationStatus_Chatting:function (data) {
@@ -357,10 +363,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     onConversationStatus_Emailed:function (data) {
-        this.onConversationStatus_OperatorLookupFailed(data);
+        this.displayLogoutButton();
+        clearTimeout(VisitorChat.loopID);
+        var html = '<div class="chat_notify">Thank you, an email has been sent!</div>';
+        this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
     onConversationStatus_OperatorLookupFailed:function (data) {
+        this.displayLogoutButton();
         clearTimeout(VisitorChat.loopID);
         var html = '<div class="chat_notify">Unfortunately all of our operators are currently busy.  Would you like to send an email instead?' +
             '<div id="visitorChat_failedOptions"><a id="visitorChat_failedOptions_yes" href="#">Yes</a> <a id="visitorChat_failedOptions_no" href="#">No</a></div></div>';

@@ -35,7 +35,7 @@ if (isset($result['phpssid'])) {
 ?>
 ===DONE===
 --EXPECT--
-status: EMAILED
+status: OPERATOR_LOOKUP_FAILED
 conversation_id: 1
 phpssid: 1
 ===DONE===
