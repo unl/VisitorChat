@@ -15,6 +15,7 @@
     border-radius: 3px;
     max-height: 450px;
     z-index: 1000;
+    dispaly: none;
 }
 
 #visitorChat_header {
@@ -175,7 +176,9 @@
     overflow-y: hidden;
     padding: 2px;
     resize: none;
-    width: 198px;
+    min-width: 100px;
+    max-width: 198px;
+    
 }
 
 .visitorChat_center {
@@ -343,6 +346,7 @@
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
+    display: none;
 }
 
 #visitorChat_closed {
@@ -361,8 +365,9 @@
 #visitorChat_email_fallback, #visitorChat_email_fallback_text {
     display: none;
 }
-@media (min-width: 1040px) {
-    #wdn_footer_feedback form {
+
+@media (min-width: 600px) {
+    #visitorChat_footercontainer {
         display: block;
     }
 }
