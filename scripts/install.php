@@ -45,6 +45,12 @@ $sql .= file_get_contents(dirname(dirname(__FILE__)) . "/data/database.sql");
 
 exec_sql($db, $sql, 'updatating database');
 
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.last_active.sql"), 'adding user.last_active');
+
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.close_status.sql"), 'adding conversations.close_status');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.closer_id.sql"), 'adding conversations.closer_id');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.status_reason.sql"), 'adding users.status_reason');
+
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser = new \UNL\VisitorChat\User\Record();

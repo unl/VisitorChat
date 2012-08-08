@@ -24,8 +24,6 @@ $result = $app->render();
 
 $result = json_decode($result, true);
 
-echo "latest_message_id: " . $result['latest_message_id'] . PHP_EOL;
-
 echo "status: " . $result['status'] . PHP_EOL;
 
 echo "conversation_id: " . $result['conversation_id'] . PHP_EOL;
@@ -37,8 +35,7 @@ if (isset($result['phpssid'])) {
 ?>
 ===DONE===
 --EXPECT--
-latest_message_id: 0
-status: EMAILED
+status: OPERATOR_LOOKUP_FAILED
 conversation_id: 1
 phpssid: 1
 ===DONE===

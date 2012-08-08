@@ -3,24 +3,28 @@ namespace UNL\VisitorChat\Conversation;
 
 class ConfirmationEmail extends Email
 {
-    public static function sendConversation(\UNL\VisitorChat\Conversation\Record $conversation, $options = array())
+    public static function sendConversation(\UNL\VisitorChat\Conversation\Record $conversation, $fromId = 1, $email = false, $options = array())
     {
         $class = get_called_class();
         
         $to = array();
         $client = $conversation->getClient();
-        
-        //Do we have an email address to send this to?
-        if (!isset($client->email) || empty($client->email)) {
-            return false;
+
+        if ($email) {
+            $to[] = $email;
+        } else {
+            //Do we have an email address to send this to?
+            if (!isset($client->email) || empty($client->email)) {
+                return false;
+            }
+
+            $to[] = $client->email;
         }
         
-        $to[] = $client->email;
+        $email = new $class($conversation, $to, $fromId, $options);
         
-        $email = new $class($conversation, $to, $options);
-        
-        $email->subject = "UNL VisitorChat System: Confirmation";
-        
+        $email->subject = "UNL VisitorChat System: Transcript (" . $conversation->id . ")";
+
         return $email->send();
     }
 }

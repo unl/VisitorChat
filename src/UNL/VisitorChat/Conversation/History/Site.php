@@ -6,6 +6,9 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
     
     function __construct($options = array())
     {
+        //require that an operator is logged in.
+        \UNL\VisitorChat\Controller::requireOperatorLogin();
+
         if (!isset($options['site_url'])) {
             throw new \Exception('no site url given', 400);
         }
@@ -24,6 +27,10 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
             }
         }
         
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
+            $canView = true;
+        }
+        
         if (!$canView) {
             throw new \Exception("You do not have permission to view this site.", 400);
         }
@@ -39,6 +46,6 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
     
     function getPagerURL()
     {
-        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/site/' . $this->url);
+        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $this->url);
     }
 }

@@ -13,6 +13,8 @@ class Controller extends \Epoch\Controller
     
     //Should the sysem compress and cache JS output?
     public static $cacheJS = true;
+
+    public static $conversationTTL = 30;  //minutes
     
     /**
      * An array of possible roles.
@@ -22,6 +24,12 @@ class Controller extends \Epoch\Controller
      * @var array
      */
     public static $roles = array('other', 'operator', 'operator1', 'operator2', 'manager');
+    
+    /**
+     * uids of admins for the chat system.
+     * @var array
+     */
+    public static $admins = array();
     
     /**
      * an array of default operators.  Must be the UIDs
@@ -76,18 +84,45 @@ class Controller extends \Epoch\Controller
         //4. Move along...
         parent::__construct($options);
     }
-    
+
+    /**
+     * Requires a client login.
+     *
+     * @static
+     */
     public static function requireClientLogin()
     {
         if (!isset($_SESSION['id'])) {
             self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("clientLogin", true, true));
         }
     }
-    
+
+    /**
+     * Requires a basic login (either client or operator).
+     *
+     * Used for views that are accessible by both clients and operators.
+     *
+     * For now it will have an operator log in as clients can not log back in after they log out.
+     *
+     * @static
+     */
+    public static function requireLogin()
+    {
+        if (!isset($_SESSION['id'])) {
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+        }
+    }
+
+    /**
+     * requires an operator login.
+     *
+     * @static
+     * @throws \Exception
+     */
     public static function requireOperatorLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin", true, true));
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
         }
         
         if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {

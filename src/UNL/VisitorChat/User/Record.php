@@ -13,6 +13,8 @@ class Record extends \Epoch\Record
     public $type; //Client or Operator
     public $max_chats;
     public $status;
+    public $status_reason;
+    public $last_active;
     
     public static function getByID($id)
     {
@@ -42,6 +44,15 @@ class Record extends \Epoch\Record
     public static function getTable()
     {
         return 'users';
+    }
+    
+    public function isAdmin()
+    {
+        if (in_array($this->uid, \UNL\VisitorChat\Controller::$admins)) {
+            return true;
+        }
+        
+        return false;
     }
     
     public function update()

@@ -11,6 +11,7 @@ class DBHelper
                  DROP TABLE IF EXISTS invitations;
                  DROP TABLE IF EXISTS messages;
                  DROP TABLE IF EXISTS assignments;
+                 DROP TABLE IF EXISTS emails;
                  SET FOREIGN_KEY_CHECKS=1;";
         
         return self::query($sql);
