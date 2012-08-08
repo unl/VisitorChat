@@ -369,6 +369,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
+    onConversationStatus_Captcha:function (data) {
+        this.displayLogoutButton();
+        if (WDN.jQuery('#visitorChat_captchaForm').length != 0) {
+            return;
+        }
+        
+        script = WDN.jQuery(data['html']).next('script').attr('src');
+        WDN.loadJS(script);
+        this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+    },
+
     onConversationStatus_OperatorLookupFailed:function (data) {
         this.displayLogoutButton();
         clearTimeout(VisitorChat.loopID);
@@ -398,7 +409,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     init:function (serverURL, refreshRate) {
         WDN.jQuery("body").append("" + 
             "<div id='visitorChat'>" +
-                "<div id='visitorChat_header'>" +
+                 "<div id='visitorChat_header'>" +
                     "<span id='visitorChat_header_text'>Chat</span>" +
                     "<div id='visitorChat_logout'>" +
                         "<a href='#'>close</a>" +

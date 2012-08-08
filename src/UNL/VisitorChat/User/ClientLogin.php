@@ -68,17 +68,26 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             $user->save();
         }
         
+        //Check if this may be spam...
+        $status = "SEARCHING";
+        $spam   = 0;
+        if (\UNL\VisitorChat\Captcha\Service::isSpam($user, $post['message'])) {
+            $status = "CAPTCHA";
+            $spam   = true;
+        }
+        
         //Start up a new conversation for the user.
         $conversation = new \UNL\VisitorChat\Conversation\Record();
         $conversation->users_id          = $user->id;
         $conversation->method            = $method;
         $conversation->initial_url       = $post['initial_url'];
         $conversation->initial_pagetitle = $post['initial_pagetitle'];
-        $conversation->status            = "SEARCHING";
+        $conversation->status            = $status;
         $conversation->email_fallback    = $fallback;
+        $conversation->auto_spam         = $spam;
         
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
+            $conversation->user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
         
         $conversation->save();

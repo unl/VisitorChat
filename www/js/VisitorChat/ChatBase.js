@@ -252,6 +252,9 @@ var VisitorChat_ChatBase = Class.extend({
             case 'EMAILED':
                 this.onConversationStatus_Emailed(data);
                 break;
+            case 'CAPTCHA':
+                this.onConversationStatus_Captcha(data);
+                break;
         }
 
         return true;
@@ -277,6 +280,9 @@ var VisitorChat_ChatBase = Class.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
+    onConversationStatus_Captcha:function (data) {
+    },
+    
     /**
      * onConversationStatus_Emailed
      * Related status code: EMAILED
