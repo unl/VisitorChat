@@ -176,9 +176,7 @@
     overflow-y: hidden;
     padding: 2px;
     resize: none;
-    min-width: 100px;
-    max-width: 198px;
-    
+    width: 95%;
 }
 
 .visitorChat_center {
@@ -188,13 +186,12 @@
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
 	margin-top: 6px;
-	width: 198px;
+	width: 95%;
 }
 
 .visitorChat_info {
 	display: none;
 	border-bottom: transparent !important;
-	width: 204px;
 }
 
 #visitorChat_login_submit {
