@@ -16,6 +16,8 @@ class Record extends \Epoch\Record
 
     function insert()
     {
+        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+
         return parent::insert();
     }
     
@@ -42,7 +44,36 @@ class Record extends \Epoch\Record
             $conversation_id = "?conversation_id=" . $_GET['conversation_id'];
         }
         
-        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id, true, true);
+        $last = "?";
+        if (!empty($conversation_id)) {
+            $last = "&";
+        }
+        
+        $last = $last . "last=0";
+        
+        return \UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation" . $conversation_id . $last, true, true);
+    }
+
+    /**
+     * determine the css class to use for this message.
+     * This will help aid in the user quickly figuring out
+     * who said what message.
+     * 
+     * @return string
+     */
+    function getDisplayClass()
+    {
+        $class = 'visitorChat_them';
+
+        if ($this->users_id == $this->getConversation()->users_id) {
+            $class = 'visitorChat_client';
+        }
+
+        if ($this->users_id == \UNL\VisitorChat\User\Service::getCurrentUser()->id) {
+            $class = 'visitorChat_me';
+        }
+        
+        return $class;
     }
     
     function save()

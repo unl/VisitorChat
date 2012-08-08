@@ -21,7 +21,7 @@ class Edit extends \UNL\VisitorChat\Assignment\Record
         }
         
         if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->users_id) {
-            throw new \Exception("you do not have permission to edit this.", 401);
+            throw new \Exception("you do not have permission to edit this.", 403);
         }
         
         if (!isset($post['status']) || empty($post['status'])) {

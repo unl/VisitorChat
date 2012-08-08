@@ -5,8 +5,9 @@ class Routes extends \RegExpRouter\RoutesInterface
 {
     public static function getGetRoutes()
     {
-        return array('/^manage$/i' => 'View',
-                     '/^operator\/$/i' => 'View',);
+        return array('/^manage$/i'     => 'View',
+                     '/^operator\/$/i' => 'View',
+                     '/^$/i'           => 'View',);
     }
     
     public static function getPostRoutes() 

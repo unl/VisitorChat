@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2012 at 02:58 PM
+-- Generation Time: May 24, 2012 at 01:10 PM
 -- Server version: 5.1.50
--- PHP Version: 5.3.8
+-- PHP Version: 5.3.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `visitorchatapp`
+-- Database: `visitorchattest`
 --
 
 -- --------------------------------------------------------
@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `assignments` (
   `date_updated` datetime DEFAULT NULL,
   `answering_site` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The site that is answering the chat.',
   `invitations_id` int(11) NOT NULL,
+  `date_finished` datetime,
+  `date_accepted` datetime,
   PRIMARY KEY (`id`),
   KEY `fk_assignments_users1` (`users_id`),
   KEY `fk_assignments_conversations1` (`conversations_id`),
@@ -44,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 -- Dumping data for table `assignments`
 --
 
-INSERT INTO `assignments` (`id`, `conversations_id`, `users_id`, `date_created`, `status`, `date_updated`, `answering_site`, `invitations_id`) VALUES
-(1, 1, 2, 'NOW()', 'PENDING', NOW(), 'unl.edu', 1);
+INSERT INTO `assignments` (`id`, `conversations_id`, `users_id`, `date_created`, `status`, `date_updated`, `answering_site`, `invitations_id`, `date_finished`, `date_accepted`) VALUES
+(1, 1, 2, '0000-00-00 00:00:00', 'PENDING', '2012-05-24 13:09:43', 'unl.edu', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -65,10 +67,12 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `status` enum('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'SEARCHING',
   `emailed` int(1) DEFAULT NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.',
   `email_fallback` int(1) DEFAULT NULL,
+  `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
+  `closer_id` INT NULL ,
   `method` enum('CHAT','EMAIL') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.',
   PRIMARY KEY (`id`),
   KEY `fk_conversations_users` (`users_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `conversations`
@@ -91,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `invitations` (
   `date_created` datetime NOT NULL COMMENT 'the date the invitation was created',
   `date_updated` datetime NOT NULL,
   `users_id` int(11) NOT NULL COMMENT 'The id of the user that created the invitation (if applicable)',
+  `date_finished` datetime,
   PRIMARY KEY (`id`),
   KEY `fk_Invitations_conversations1` (`conversations_id`),
   KEY `fk_invitations_users1` (`users_id`)
@@ -100,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `invitations` (
 -- Dumping data for table `invitations`
 --
 
-INSERT INTO `invitations` (`id`, `conversations_id`, `invitee`, `status`, `date_created`, `date_updated`, `users_id`) VALUES
-(1, 1, 'test_operator', 'SEARCHING', NOW(), NOW(), 1);
+INSERT INTO `invitations` (`id`, `conversations_id`, `invitee`, `status`, `date_created`, `date_updated`, `users_id`, `date_finished`) VALUES
+(1, 1, 'test_operator', 'SEARCHING', '2012-05-24 13:09:43', '2012-05-24 13:09:43', 1, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -139,12 +144,43 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
   `type` enum('operator','client') COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Must be either client or operator',
+  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT 'USER' ,
   `uid` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'UNL id to associate accounts',
   `max_chats` int(11) NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.',
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
+  `Invitations_id` int(11) DEFAULT NULL,
+  `last_active` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+  UNIQUE KEY `uid_UNIQUE` (`uid`),
+  KEY `fk_users_Invitations1` (`Invitations_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+-- -----------------------------------------------------
+-- Table `emails`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `emails` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `to` VARCHAR(255) NOT NULL ,
+  `from` VARCHAR(255) NOT NULL ,
+  `subject` TEXT NOT NULL ,
+  `date_sent` DATETIME NOT NULL ,
+  `conversations_id` INT NOT NULL ,
+  `reply_to` VARCHAR(255) NOT NULL ,
+  `users_id` INT NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_emails_conversations1` (`conversations_id` ASC) ,
+  INDEX `fk_emails_users1` (`users_id` ASC) ,
+  CONSTRAINT `fk_emails_conversations1`
+    FOREIGN KEY (`conversations_id` )
+    REFERENCES `conversations` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_emails_users1`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `users` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 --
 -- Dumping data for table `users`
@@ -163,15 +199,16 @@ INSERT INTO `users` (`id`, `name`, `email`, `ip`, `date_created`, `date_updated`
 -- Constraints for table `assignments`
 --
 ALTER TABLE `assignments`
-  ADD CONSTRAINT `fk_assignments_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_assignments_conversations1` FOREIGN KEY (`conversations_id`) REFERENCES `conversations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_assignments_Invitations1` FOREIGN KEY (`invitations_id`) REFERENCES `invitations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_assignments_Invitations1` FOREIGN KEY (`invitations_id`) REFERENCES `invitations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_assignments_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `conversations`
 --
 ALTER TABLE `conversations`
-  ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `visitorchatapp`.`users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `invitations`

@@ -14,13 +14,23 @@ foreach ($context as $invitation) {
         $name = $account->name;
     }
     
-    echo "<li><ul class='$class'>";
+    echo "<li class='$class'>
+              <span style='font-weight:bold;'>$name</span>
+			  <span style='display: block;font-size: 0.8em;'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."
+			  <span style='float:right;'>" .
+			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
+				
+			"</span>
+              
+              <ul>";
     foreach ($invitation->getAssignments() as $assignment) {
-        //$class = strtolower($assignment->status);
-        echo "<li>" . $assignment->getUser()->name . "<span class='userAddress'>" . $name
-        . "<span class='timestamp'>" . date("g:i:s A", strtotime($invitation->date_created)) . "</span></li></span>";
+        $class = strtolower($assignment->status);
+        echo "<li class='$class'>
+                  " . $assignment->getUser()->name .
+                  /*"<span class='timestamp'>" . date("g:i:s A", strtotime($assignment->date_created)) . "</span>*/
+              "</li>";
     }
-    echo "</li></ul>";
+    echo "</ul></li>";
 }
 ?>
 </ul>

@@ -30,7 +30,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         }
         
         if (!isset($post['name']) || empty($post['name'])) {
-            $post['name'] = "Anonymous";
+            $post['name'] = "Guest";
         }
         
         if (!isset($post['message']) || empty($post['message'])) {
@@ -62,8 +62,8 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         
         $user->save();
         
-        //Append a unique ID to the end of an annon user's name
-        if ($user->name == "Anonymous") {
+        //Append a unique ID to the end of an guest's user's name
+        if ($user->name == "Guest") {
             $user->name = $user->name . $user->id;
             $user->save();
         }

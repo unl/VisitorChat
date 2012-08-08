@@ -1,0 +1,24 @@
+#clientChat {
+    width: 710px;
+}
+
+#clientChatContainer {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
+}
+
+#clientChatInfoContainer {
+    margin-top: 0px;
+}
+
+#visitorChat_chatBox {
+    overflow: visible;
+    height: 100%;
+}
+
+#visterChat_conversation {
+    box-shadow: 28px 0 20px -31px rgba(0, 0, 0, 0.5);
+}

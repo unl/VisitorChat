@@ -10,7 +10,7 @@ function get_var($var, $context) {
 
 <h2>Settings</h2>
 
-<form id='visitorchat_maxChats' class='unl_visitorchat_form' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
+<form id='visitorchat_maxChats' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
     <fieldset>
         <ul>
             <li>

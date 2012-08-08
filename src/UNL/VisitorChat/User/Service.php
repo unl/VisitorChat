@@ -12,7 +12,9 @@ class Service
         }
         
         if (!self::$user) {
-            self::$user = Record::getByID($_SESSION['id']);
+            if (!self::$user = Record::getByID($_SESSION['id'])) {
+                return false;
+            }
         }
         
         if (self::$user->id !== $_SESSION['id']) {
