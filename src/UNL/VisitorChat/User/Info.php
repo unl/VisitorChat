@@ -12,6 +12,9 @@ class Info
     public $unreadMessages     = array(); //The total number of messages for all open conversations
     public $serverTime         = 0;
     public $operatorsAvailable = null;
+    public $loginHTML          = false;
+    public $userType           = false;
+    public $userStatusReason   = false;
     
     function __construct($options = array())
     {
@@ -21,20 +24,36 @@ class Info
         
         if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
+
+            if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {
+                //For now we need to include the login html (until rollout is complete).
+                $login = new \stdClass();
+
+                $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
+            }
         }
         
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             return;
         }
+
+        $this->userType = $user->type;
         
         $this->userID = $user->id;
+
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
         }
-        
-        $this->userStatus = $user->status;
+
+        //Send the current user status;
+        $this->userStatus       = $user->status;
+        $this->userStatusReason = $user->status_reason;
         
         if ($user->type == "operator") {
+            //Update the last time the user was active.
+            $user->last_active = \UNL\VisitorChat\Controller::epochToDateTime();
+            $user->save();
+
             //If the user is avaiable, proccess pending assignments.
             if ($user->status == "AVAILABLE" && $assignment = \UNL\VisitorChat\Assignment\Record::getOldestPendingRequestForUser($user->id)) {
                 $this->pendingAssignment = $assignment->id;
@@ -49,7 +68,11 @@ class Info
     function areOperatorsAvaiable($url)
     {
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
-        
+
+        if (empty($sites)) {
+            return false;
+        }
+
         return \UNL\VisitorChat\User\Service::areUsersAvaiable($sites->current()->getMembers());
     }
 }

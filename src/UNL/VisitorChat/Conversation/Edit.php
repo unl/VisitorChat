@@ -31,7 +31,7 @@ class Edit extends \UNL\VisitorChat\Conversation\Record
     function handlePost($post = array())
     {
         if (!$this->canEdit($_SESSION['id'])) {
-            throw new \Exception("you do not have permission to edit this.", 401);
+            throw new \Exception("you do not have permission to edit this.", 403);
         }
         
         //Handle status changes.

@@ -13,7 +13,7 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     function __construct($url, $data)
     {
-        $this->url   = $url;
+        $this->url = $url;
         
         if (isset($data['title'])) {
             $this->title = $data['title'];
@@ -23,8 +23,8 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
             $this->members = $data['members'];
         }
         
-        if (isset($data['email'])) {
-            $this->email = $data['email'];
+        if (isset($data['support_email'])) {
+            $this->email = $data['support_email'];
         }
     }
     
@@ -43,9 +43,9 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
         if ($this->email !== null) {
             return $this->email;
         }
-        
+
+        $email = "";
         foreach ($this->getMembers() as $person) {
-            $email = "";
             if ($mail = $person->getEmail()) {
                 $email .= $mail . ', ';
             }
@@ -56,6 +56,9 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     function getTitle()
     {
+        if ($this->title == "") {
+            return $this->url;
+        }
         return $this->title;
     }
 }

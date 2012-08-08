@@ -11,11 +11,11 @@ class View
     
     public $request_id = 0;
     
-    public $latest_message_id = 0;
-    
     public $invitations = false;
     
     public $sendHTML = false;
+    
+    public $operators = array();
     
     function __construct($options = array())
     {
@@ -45,27 +45,22 @@ class View
         
         //Handle assignments for the conversation.
         $invitationService = new \UNL\VisitorChat\Invitation\Service();
-        $invitationService->handleInvitations($this->conversation);
+        $this->conversation = $invitationService->handleInvitations($this->conversation);
         
-        //The rest of the logic only applies if we are currently chatting.
-        if ($this->conversation->status !== 'CHATTING') {
-            return;
+        foreach ($this->conversation->getAcceptedAssignments() as $assignment) {
+            if ($operator = $assignment->getUser()) {
+                $this->operators[] = $operator->name;
+            }
         }
-        
+
         if (isset($options['last'])) {
             $this->request_id = $options['last'];
         }
         
-        if ($message = $this->conversation->getLastMessage()) {
-            $this->latest_message_id = $message->id;
-        }
-        
-        if ($this->latest_message_id > $this->request_id) {
-            $this->messages = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
-        }
+        $this->messages = \UNL\VisitorChat\Message\RecordList::getMessagesAfterIDForConversation($this->conversation_id, $this->request_id);
         
         //Only send html output if we have to (to reduce size of response).
-        if (($this->latest_message_id > $this->request_id) || ($this->latest_message_id == 0)) {
+        if ($this->request_id == 0) {
             $this->sendHTML = true;
         }
         

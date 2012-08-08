@@ -25,7 +25,9 @@ if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($filename)) {
 
 ob_start();
 ?>
-var VisitorChat = false;
+if (VisitorChat == undefined) {
+    var VisitorChat = false;
+}
 <?php
 
 //Include the required things:
@@ -35,7 +37,15 @@ require_once(dirname(__FILE__) . "/VisitorChat/ChatBase.js");
 
 switch($for) {
     case 'operator':
+        require_once(dirname(__FILE__) . "/chosen.min.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Operator.js");
+        ?>
+        //start the chat
+        WDN.jQuery(function(){
+            VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+            VisitorChat.start();
+        });
+        <?php
         break;
     case 'client':
     default:
@@ -43,6 +53,16 @@ switch($for) {
         require_once(dirname(__FILE__) . "/jquery.watermark.min.js");
         require_once(dirname(__FILE__) . "/jquery.backgroundPosition.js");
         require_once(dirname(__FILE__) . "/VisitorChat/Remote.js");
+
+        ?>
+        WDN.jQuery(function(){
+            WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
+                if (VisitorChat == false) {
+                    VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+                }
+            });
+        });
+        <?php
 }
 
 $js = ob_get_contents();

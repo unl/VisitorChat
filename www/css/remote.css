@@ -15,6 +15,7 @@
     border-radius: 3px;
     max-height: 450px;
     z-index: 1000;
+    dispaly: none;
 }
 
 #visitorChat_header {
@@ -54,7 +55,7 @@
     opacity: 0;
 }
 
-#visitorChat_logout {
+#visitorChat_logout, #visitorChat_end {
 	background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/close.png') no-repeat 0 0;
 	bottom: 2px;
 	display: none;
@@ -64,7 +65,29 @@
 	width: 20px;
 }
 
-#visitorChat_logout a {
+#visitorChat_confiramtionEmail {
+    width: 180px;
+}
+
+#visitorChat_confirmationContainer {
+    font-size: .9em;
+}
+
+#visitorChat_confirmationEamilForm legend {
+    display: none;
+}
+
+#visitorChat h2 {
+     font-size: 1.1em;
+     font-weight: bold;
+}
+
+#visitorChat h3 {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+#visitorChat_logout a, #visitorChat_end a {
 	background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/close.png') no-repeat 0 -20px;
 	display: inline-block;
 	height: 20px;
@@ -81,11 +104,14 @@
 }
 
 #visitorChat_logout a:hover, 
-#visitorChat_logout a:focus { 
+#visitorChat_logout a:focus,
+#visitorChat_end a:hover,
+#visitorChat_end a:focus {
 	opacity: 1; 
 }
 
 #visitorChat_container {
+	background: #F8F8F8;
     background: -moz-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%, rgba(255,255,255,0.85) 100%);
 	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(244,244,244,1)), color-stop(100%,rgba(255,255,255,0.85)));
 	background: -webkit-radial-gradient(center, ellipse cover,  rgba(244,244,244,1) 0%,rgba(255,255,255,0.85) 100%);
@@ -150,7 +176,7 @@
     overflow-y: hidden;
     padding: 2px;
     resize: none;
-    width: 198px;
+    width: 95%;
 }
 
 .visitorChat_center {
@@ -160,13 +186,12 @@
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
 	margin-top: 6px;
-	width: 198px;
+	width: 95%;
 }
 
 .visitorChat_info {
 	display: none;
 	border-bottom: transparent !important;
-	width: 204px;
 }
 
 #visitorChat_login_submit {
@@ -238,12 +263,11 @@
     background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif");
     background-repeat: no-repeat;
     background-position: 50% 70%;
-    width: 100%;
     min-height: 50px;
 }
 
 .chat_notify {
-	padding: 40px 5px;
+	padding: 20px 5px;
 	text-align: center;
 }
 
@@ -314,15 +338,12 @@
 	text-align: center;
 }
 
-#wdn_footer_feedback form {
-    display: block;
-}
-
 #visitorChat_footercontainer {
 	background: #E3E3E3;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	border-radius: 5px 5px 5px 5px;
+    display: none;
 }
 
 #visitorChat_closed {
@@ -333,6 +354,22 @@
 	background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
 	background: linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0.25) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#59000000',GradientType=0 );
-	padding-bottom: 25px;
+	padding-bottom: 15px;
 	text-shadow: 0 1px #fff;
+}
+
+/* hide all email related settings for now */
+#visitorChat_email_fallback, #visitorChat_email_fallback_text {
+    display: none;
+}
+
+@media (min-width: 600px) {
+    #visitorChat_footercontainer {
+        display: block;
+    }
+}
+
+/* IE tweaks */
+.ie8 #wdn_footer_feedback form {
+    display: block;
 }

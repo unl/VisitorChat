@@ -1,26 +1,17 @@
-<?php 
-function get_var($var, $context) {
-    if (isset($context->$var)) {
-        return $context->$var;
-    }
-    
-    return null;
-}
-?>
-<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo $context->getEditURL(); ?>" >
-    
-    <fieldset><legend>Comments for us</legend>
+<div id="visitorChat_footercontainer">
+<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
+    <fieldset><legend id="visitorChat_footerHeader">Comments for this page</legend>
         <ul>
             <li class="visitorChat_info">
                 <label for="visitorChat_name"></label>
-                <input type="text" name="name" id="visitorChat_name" value="<?php echo get_var('name', $context);?>"/>
+                <input type="text" name="name" id="visitorChat_name"/>
             </li>
             <li class="visitorChat_info">
                 <label for="visitorChat_email"></label>
-                <input type="text" name="email" class="validate-email" id="visitorChat_email" value="<?php echo get_var('email', $context);?>"/>
+                <input type="text" name="email" class="validate-email" id="visitorChat_email"/>
             </li>
             <li class="visitorChat_info">
-                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="1" />
+                <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="0" />
                 <span id="visitorChat_email_fallback_text">I would like a response via email.</span>
             </li>
             <li class="visitorChat_center">
@@ -30,7 +21,8 @@ function get_var($var, $context) {
         </ul>
     </fieldset>
     <input type="hidden" name="initial_url" id="initial_url" value=""/>
-    <input type="hidden" name="id" value='<?php echo $context->id;?>'/>
-    <input type="hidden" name="_class" value='<?php echo get_class($context->getRawObject()); ?>'/>
-    <input id="visitorChat_login_sumbit" type="submit" value="Submit" name="visitorChat_login_sumbit" />
+    <input type="hidden" name="initial_pagetitle" id="initial_pagetitle" value=""/>
+    <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
+    <input id='visitorChat_login_submit' type="submit" value="Submit" name="visitorChat_login_submit" />
 </form>
+</div>

@@ -44,14 +44,14 @@ class Service
                                    FROM assignments
                                    LEFT JOIN conversations conv1 ON (conv1.id = assignments.conversations_id)
                                    WHERE assignments.users_id = users1.id
-                                         AND assignments.conversations_id = " . (int)$invitation->conversations_id .")
+                                         AND assignments.invitations_id = " . (int)$invitation->id .")
                             = 0
                          AND (false";
         foreach ($operators as $operator) {
             $sql .= " OR users1.uid = '" . mysql_escape_string($operator) . "'";
         }
         
-        $sql .= ") LIMIT 1";
+        $sql .= ") GROUP BY users1.uid";
         
         if (!$result = $db->query($sql)) {
             return false;
@@ -61,9 +61,14 @@ class Service
             return false;
         }
         
-        $row = $result->fetch_assoc();
+        $operators = array();
         
-        return $row['id'];
+        while ($row = $result->fetch_assoc()) {
+            $operators[] = $row['id'];
+        }
+        
+        //Select a random operator
+        return $operators[rand(0,count($operators)-1)];
     }
     
     /* Finds an online operator and assigns them to this a chat/invitation.
@@ -153,11 +158,16 @@ class Service
     {
         $db = \UNL\VisitorChat\Controller::getDB();
         $sql = "UPDATE assignments
-                LEFT JOIN conversations ON (assignments.conversations_id = conversations.id)
-                SET assignments.status = 'EXPIRED', conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING')
+                LEFT JOIN (conversations, users)
+                ON (assignments.conversations_id = conversations.id AND users.id = assignments.users_id)
+                SET assignments.status = 'EXPIRED',
+                    users.status = 'BUSY',
+                    users.status_reason = 'EXPIRED_REQUEST',
+                    conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING'),
+                    assignments.date_finished = '" . \Epoch\RecordList::escapeString(\UNL\VisitorChat\Controller::epochToDateTime()) . "'
                 WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
                     AND assignments.status = 'PENDING'";
-        
+
         if ($db->query($sql)) {
             return true;
         }

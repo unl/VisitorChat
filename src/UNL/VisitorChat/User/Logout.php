@@ -8,14 +8,15 @@ class Logout
         
         if (!$user) {
             // Short-circuit, no one is logged in
-            return session_destroy();;
+            return session_destroy();
         }
         
         if ($conversation = $user->getConversation()) {
             $conversation->close();
         }
         
-        $user->status = "BUSY";
+        $user->status        = "BUSY";
+        $user->status_reason = "LOG_OUT";
         $user->save();
         
         session_destroy();

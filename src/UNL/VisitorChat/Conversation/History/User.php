@@ -4,6 +4,9 @@ class User extends \UNL\VisitorChat\Conversation\RecordList
 {
     function __construct($options = array())
     {
+        //Require a login.
+        \UNL\VisitorChat\Controller::requireLogin();
+
         $options['returnArray'] = true;
         
         $options['limit'] = 10;
