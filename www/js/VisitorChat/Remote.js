@@ -21,9 +21,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         //Always show the chat if we are logged in as an operator.  Otherwise only show if someone is available.
         if (this.userType == 'operator') {
             html = "<div class='chat_notify'>You are currently logged in as an operator and can not start a client conversation from this browser.  If you want to start a conversation, please either log out or do so in another web browser.</div>";
-            WDN.jQuery("#visitorChat_container").html(html);
+            this.updateChatContainerWithHTML("#visitorChat_container", html, false);
         } else {
-            this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML);
+            this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
         }
 
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
@@ -399,6 +399,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + this.serverURL + "css/remote.php' type='text/css' media='screen' />"));
         }
 
+        WDN.jQuery(window).load(function () {
+            VisitorChat.displaySiteAvailability();
+        });
+
         this._super();
     },
 
@@ -481,6 +485,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     displaySiteAvailability:function () {
         if (this.chatOpened) {
+            WDN.jQuery("#visitorChat_header").show();
             return true;
         }
         
