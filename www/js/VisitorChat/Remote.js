@@ -399,6 +399,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + this.serverURL + "css/remote.php' type='text/css' media='screen' />"));
         }
 
+        WDN.jQuery(window).load(function () {
+            VisitorChat.displaySiteAvailability();
+        });
+
         this._super();
     },
 
@@ -481,6 +485,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     displaySiteAvailability:function () {
         if (this.chatOpened) {
+            WDN.jQuery("#visitorChat_header").show();
             return true;
         }
         
