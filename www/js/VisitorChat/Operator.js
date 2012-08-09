@@ -556,7 +556,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     onConversationStatus_Closed:function (data) {
         //Disable the input message input.
-        WDN.jQuery("visitorChat_messageBox").attr("disabled", "disabled");
+        WDN.jQuery("#visitorChat_messageBox").attr("disabled", "disabled");
+        
+        //Don't let the operator share or close (because it is already closed).
+        WDN.jQuery("#shareConversation").remove();
+        WDN.jQuery("#closeConversation").remove();
 
         //Display a closed message.
         var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
