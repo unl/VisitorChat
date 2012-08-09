@@ -450,9 +450,9 @@ var VisitorChat_ChatBase = Class.extend({
      * with html and then scroll that container and initalize any watcher
      * functions.
      */
-    updateChatContainerWithHTML:function (selector, html) {
+    updateChatContainerWithHTML:function (selector, html, sendAlerts) {
         //Should we alert the user?
-        if (WDN.jQuery(selector).html() !== html) {
+        if (sendAlerts != false && WDN.jQuery(selector).html() !== html) {
             this.clearAlert();
             this.alert();
         }
