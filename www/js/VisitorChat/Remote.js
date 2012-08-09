@@ -143,6 +143,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
                 WDN.jQuery('#visitorChat_sendAnotherConfirmation').click(function(){
                     WDN.jQuery('#visitorChat_confirmationContainer').html(WDN.jQuery(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html());
+                    VisitorChat.initWatchers();
                     return false;
                 });
             }
