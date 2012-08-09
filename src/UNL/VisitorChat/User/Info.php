@@ -34,6 +34,20 @@ class Info
         }
         
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
+            //Hide Operator Info
+            unset($this->pendingAssignment);
+            unset($this->unreadMessages);
+            unset($this->pendingDate);
+            unset($this->userStatus);
+            unset($this->userStatusReason);
+
+            //Hide client Info
+            unset($this->conversationID);
+            unset($this->userID);
+            unset($this->serverTime);
+            unset($this->userType);
+            
+            //Don't continue
             return;
         }
 
@@ -44,12 +58,12 @@ class Info
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
         }
-
-        //Send the current user status;
-        $this->userStatus       = $user->status;
-        $this->userStatusReason = $user->status_reason;
         
         if ($user->type == "operator") {
+            //Send the current user status;
+            $this->userStatus       = $user->status;
+            $this->userStatusReason = $user->status_reason;
+            
             //Update the last time the user was active.
             $user->last_active = \UNL\VisitorChat\Controller::epochToDateTime();
             $user->save();
@@ -62,6 +76,13 @@ class Info
             
             //send the total message count.
             $this->unreadMessages = $user->getCurrentUnreadMessageCounts();
+        } else {
+            //Hide Operator Info
+            unset($this->pendingAssignment);
+            unset($this->unreadMessages);
+            unset($this->pendingDate);
+            unset($this->userStatus);
+            unset($this->userStatusReason);
         }
     }
     
