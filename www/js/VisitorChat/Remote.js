@@ -350,14 +350,20 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         if (data['loginHTML'] !== undefined && data['loginHTML']) {
             this.loginHTML = data['loginHTML'];
+            
             WDN.jQuery("#wdn_feedback_comments").replaceWith(this.loginHTML);
+            
+            //media queries are not supported in ie8, so show the footer container by default.
+            if (WDN.jQuery("html").hasClass('ie8')) {
+                WDN.jQuery("#visitorChat_footercontainer").show();
+            }
+            
             this.initWatchers();
         }
 
         //Handle the rest of the data.
         if (data['conversationID']) {
             this.startChat(true);
-
         }
 
         this.displaySiteAvailability();
