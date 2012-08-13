@@ -260,14 +260,21 @@ class Record extends \Epoch\Record
         return $row['unread'];
     }
 
+    /**
+     * Set the conversation as idle, and close it.
+     * 
+     * @return null
+     */
     function idle()
     {
-        //Create a new message
-        $message = new \UNL\VisitorChat\Message\Record();
-        $message->users_id = 1; //system
-        $message->conversations_id = $this->id;
-        $message->message = "This conversation has had no activity for " . \UNL\VisitorChat\Controller::$conversationTTL . " minutes and has been closed.";
-        $message->save();
+        if ($this->status == "CHATTING") {
+            //Create a new message
+            $message = new \UNL\VisitorChat\Message\Record();
+            $message->users_id = 1; //system
+            $message->conversations_id = $this->id;
+            $message->message = "This conversation has had no activity for " . \UNL\VisitorChat\Controller::$conversationTTL . " minutes and has been closed.";
+            $message->save();
+        }
 
         return $this->close('IDLE', 1);
     }
