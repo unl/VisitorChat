@@ -128,4 +128,11 @@ class Record extends \Epoch\Record
         
         return $sites;
     }
+    
+    function getFirstName()
+    {
+        $names = explode(" ", $this->name);
+        
+        return $names[0];
+    }
 }
