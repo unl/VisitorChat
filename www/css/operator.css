@@ -317,7 +317,9 @@
     display: block;
     margin: 0 9px;
     padding: 2px;
+    overflow-y: auto;
     resize: none;
+    height: 61px;
     width: 456px;
 }
 

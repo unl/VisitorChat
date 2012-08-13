@@ -173,9 +173,10 @@
 #visitorChat_messageBox {
     border: 1px solid #CCCCCC;
     margin: 5px auto;
-    overflow-y: hidden;
     padding: 2px;
+    overflow-y: auto;
     resize: none;
+    height: 61px;
     width: 95%;
 }
 
