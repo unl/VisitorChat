@@ -622,6 +622,12 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
+        notification.onclick = function() {
+            //Focus the window.
+            window.focus();
+            
+            this.cancel();
+        };
         notification.show();
         this.notifications.push(notification);
     },
