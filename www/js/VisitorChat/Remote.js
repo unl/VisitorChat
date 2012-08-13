@@ -87,6 +87,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return false;
     },
 
+    ajaxBeforeSubmit:function (arr, $form, options) {
+        //Start an email convo now if need be.
+        for (key in arr) {
+            if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
+                VisitorChat.startEmail();
+            }
+        }
+        
+        return this._super(arr, $form, options);
+    },
+
     initWatchers:function () {
         /* This method is called several times thoughout
          * executation.  Thus in order to stop the stacking
@@ -129,9 +140,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
 
         WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
-            if (result) {
-                VisitorChat.startEmail();
-            }
             return true;
         });
 
