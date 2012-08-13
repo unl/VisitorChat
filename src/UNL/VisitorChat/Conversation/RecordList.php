@@ -60,7 +60,7 @@ class RecordList extends \Epoch\RecordList
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
                            WHERE (SELECT id FROM messages WHERE conversations_id = conversations.id ORDER BY date_created DESC LIMIT 1) = messages.id
                                AND messages.date_created < now() + INTERVAL -" . (int)\UNL\VisitorChat\Controller::$conversationTTL . " MINUTE
-                               AND conversations.status = 'CHATTING'";
+                               AND (conversations.status == 'CHATTING' OR conversations.status == 'SEARCHING')";
 
         return self::getBySql($options);
     }
