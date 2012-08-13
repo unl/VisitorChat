@@ -1,6 +1,6 @@
-#footer .footer_col ul li {
-	margin: 0;
-	border-bottom: 0;
+#footer #visitorChat_footercontainer ul li {
+    margin: 0;
+    border-bottom: 0;
 }
 
 #visitorChat {
@@ -173,9 +173,10 @@
 #visitorChat_messageBox {
     border: 1px solid #CCCCCC;
     margin: 5px auto;
-    overflow-y: hidden;
     padding: 2px;
+    overflow-y: auto;
     resize: none;
+    height: 61px;
     width: 95%;
 }
 
