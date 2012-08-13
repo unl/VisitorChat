@@ -625,8 +625,7 @@ var VisitorChat_ChatBase = Class.extend({
         notification.onclick = function() {
             //Focus the window.
             window.focus();
-            
-            this.cancel();
+            VisitorChat.clearAlert();
         };
         notification.show();
         this.notifications.push(notification);
