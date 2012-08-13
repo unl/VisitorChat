@@ -635,6 +635,9 @@ var VisitorChat_ChatBase = Class.extend({
         if (VisitorChat.alertID) {
             clearTimeout(VisitorChat.alertID);
         }
+        
+        document.title = VisitorChat.siteTitle;
+        
         //Set the alertID to false so that we no there are no current alerts.
         VisitorChat.alertID = false;
 
