@@ -489,6 +489,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'block'});
+
+        if (!this.operatorsAvailable) {
+            WDN.jQuery('#visitorChat_header').hide();
+        }
     },
 
     displaySiteAvailability:function () {
