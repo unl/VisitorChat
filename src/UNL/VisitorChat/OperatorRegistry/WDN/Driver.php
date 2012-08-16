@@ -1,7 +1,7 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
-class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
+class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
 {
     public static $baseURI      = "http://www1.unl.edu/wdn/registry/";
     
@@ -34,30 +34,9 @@ class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
         return new SiteList($sites);
     }
     
-    function getCachePath($url)
+    function getCacheTitle()
     {
-        $path = sys_get_temp_dir();
-
-        //Some paths may not have a trailing separator.  Other may?  weird.
-        if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
-            $path = $path . DIRECTORY_SEPARATOR;
-        }
-
-        return $path . "unl_visitorchat_wdn_" . md5($url);
-    }
-    
-    function getCache($path)
-    {
-        if (file_exists($path) && (filemtime($path) + self::$cacheTimeout > time())) {
-            return unserialize(file_get_contents($path));
-        }
-        
-        return false;
-    }
-    
-    function setCache($path, $data)
-    {
-        file_put_contents($path, serialize($data));
+        return "unl_visitorchat_wdn_";
     }
     
     function getSitesByURL($site)
