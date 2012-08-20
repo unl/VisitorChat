@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `email_fallback` int(1) DEFAULT NULL,
   `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
   `closer_id` INT NULL ,
+  `ip_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `method` enum('CHAT','EMAIL') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.',
   PRIMARY KEY (`id`),
   KEY `fk_conversations_users` (`users_id`)
@@ -133,7 +134,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT '',
   `email` varchar(45) COLLATE utf8_unicode_ci DEFAULT '',
-  `ip` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
   `type` enum('operator','client') COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Must be either client or operator',
