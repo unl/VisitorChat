@@ -506,6 +506,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (this.conversationID == false && url == undefined) {
             return false;
         }
+        
+        if (this.chatStatus == false) {
+            url = url + "&clientInfo=true";
+        }
 
         this._super(url);
     },
@@ -513,6 +517,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     updateChatWithData:function (data) {
         if (data['invitations_html'] !== undefined && data['invitations_html']) {
             this.updateInvitationsListWithHTML(data['invitations_html']);
+        }
+
+        if (data['client_html'] !== undefined && data['client_html']) {
+            WDN.jQuery('#clientInfo').html(data['client_html']);
         }
 
         if (data['operators'] !== undefined) {

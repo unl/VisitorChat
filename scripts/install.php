@@ -9,6 +9,7 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
 {
     echo $message.'&hellip;'.PHP_EOL;
     try {
+        $result = true;
         if ($db->multi_query($sql)) {
             do {
                 /* store first result set */
@@ -18,12 +19,14 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
             } while ($db->next_result());
         }
     } catch (Exception $e) {
+        $result = false;
         if (!$fail_ok) {
             echo 'The query failed:'.$result->errorInfo();
             exit();
         }
     }
     echo 'finished.<br />'.PHP_EOL;
+    return $result;
 }
 
 $db = \UNL\VisitorChat\Controller::getDB();
@@ -50,6 +53,7 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.last_a
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.close_status.sql"), 'adding conversations.close_status');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.closer_id.sql"), 'adding conversations.closer_id');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.status_reason.sql"), 'adding users.status_reason');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.ip_address.sql"), 'adding the ip address to the conversations table.');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {

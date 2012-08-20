@@ -9,7 +9,6 @@ class Record extends \Epoch\Record
     public $email;
     public $date_created;
     public $date_updated;
-    public $ip;
     public $type; //Client or Operator
     public $max_chats;
     public $status;

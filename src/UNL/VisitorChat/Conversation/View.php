@@ -13,6 +13,8 @@ class View
     
     public $invitations = false;
     
+    public $clientInfo = false;
+    
     public $sendHTML = false;
     
     public $operators = array();
@@ -32,6 +34,10 @@ class View
             //get the latest conversation.
             if (!$this->conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversation_id)) {
                 throw new \Exception("No conversation was found!", 500);
+            }
+
+            if (isset($options['clientInfo'])) {
+                $this->clientInfo = \UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($this->conversation);
             }
             
             $this->invitations = $this->conversation->getInvitations();
