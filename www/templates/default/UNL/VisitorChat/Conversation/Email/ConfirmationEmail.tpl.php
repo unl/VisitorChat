@@ -5,7 +5,7 @@
             <legend>Email Address</legend>
             <ul>
                 <li class='visitorChat_center'>
-                    <input type='text' id='visitorChat_confiramtionEmail' class='validate-email' name='email' />
+                    <input type='text' id='visitorChat_confiramtionEmail' class='validate-email required-entry' name='email' />
                 </li>
             </ul>
         </fieldset>

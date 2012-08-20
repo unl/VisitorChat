@@ -156,7 +156,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 });
             }
 
-            return true;
+            return false;
         });
 
         //Call the parent
