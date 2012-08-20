@@ -11,7 +11,7 @@
         }
         ?>
         Message from <?php echo $client->name ?><br />
-        IP: <?php echo $client->ip ?><br />
+        IP: <?php echo $context->conversation->ip_address ?><br />
         <?php
         if (!empty($client->email)) {
             echo "Email: " . $client->email . " <br />";

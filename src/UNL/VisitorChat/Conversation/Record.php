@@ -56,6 +56,8 @@ class Record extends \Epoch\Record
     //the user_agent of the client.
     public $user_agent;
     
+    public $ip_address;
+    
     /**
      * Returns a conversation record by ID.
      * 
@@ -344,5 +346,25 @@ class Record extends \Epoch\Record
     function getInvitations()
     {
         return \UNL\VisitorChat\Invitation\RecordList::getAllForConversation($this->id);
+    }
+    
+    function ParseUserAgent() {
+        require_once 'UaParser/UAParser.php';
+        $ua = new \UA();
+        return $ua->parse($this->user_agent);
+    }
+
+    /**
+     * returns the total amount of time spent from conversation creation to end in seconds.
+     * 
+     * @return bool|int
+     */
+    function getDuration()
+    {
+        if (empty($this->date_closed)) {
+            return false;
+        }
+        
+        return strtotime($this->date_closed) - strtotime($this->date_created);
     }
 }
