@@ -61,6 +61,18 @@ error_reporting(E_ALL);
 //A list of admins (UIDs). Admins are able to view all past conversations.
 \UNL\VisitorChat\Controller::$admins = array('s-mfairch4');
 /**********************************************************************************************************************
+ * Email settings
+ */
+//List of email address to fall back to if no emails can be found for a url.
+\UNL\VisitorChat\Conversation\Email::$fallbackEmails   = array();
+//Default from address
+\UNL\VisitorChat\Conversation\Email::$default_from     = 'unlwdn@gmail.com';
+//Default reply_to address
+\UNL\VisitorChat\Conversation\Email::$default_reply_to = 'unlwdn@gmail.com';
+//Default subject
+\UNL\VisitorChat\Conversation\Email::$default_subject  = 'UNL Visitor Chat System';
+
+/**********************************************************************************************************************
  * Operator Registry settings
  */
 //Uncomment to set the registry service to something other than the default.

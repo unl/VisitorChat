@@ -11,13 +11,25 @@ class Email
     
     public $to_group     = "GENERAL";
     
-    public $from         = "unlwdn@gmail.com";
+    //An array of email address to send the conversation to in the event that no address can be found.
+    public static $fallbackEmails = array();
     
-    public $reply_to     = "unlwdn@gmail.com";
+    //The from email address
+    public static $default_from = "";
     
-    public $subject      = "UNL VisitorChat System";
+    public $from;
+    
+    //The reply-to email address
+    public static $default_reply_to = "";
+    
+    public $reply_to;
+    
+    //The default subject of the email
+    public static $default_subject = "";
+    
+    public $subject;
 
-    public $fromId       = 1;  //The id of the user sending the email
+    public $fromId = 1;  //The id of the user sending the email
     
     function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
@@ -26,7 +38,7 @@ class Email
         
         $this->conversation = $conversation;
         $this->messages     = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
-        $this->subject      = 'UNL VisitorChat System ' . $this->conversation->id;
+        $this->subject      = self::$default_subject . ' ' . $this->conversation->id;
         $this->fromId       = $fromId;
         $this->setTo($to);
     }
@@ -54,7 +66,9 @@ class Email
         if (empty($to)) {
             $this->to_group = "SITE";
             
-            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url);
+            if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url)) {
+                return false;
+            }
             
             //Get only site members for the top level site.
             $emails = $sites->current()->getEmail();
@@ -72,7 +86,6 @@ class Email
         if (empty($to)) {
             $this->to_group = "ADMINS";
             
-            //TODO: Remove reference to this class and isntead call the registry driver for the site email.
             foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
                 $sites = \UNL\VisitorChat\Controller::$registryService->getByURL($url);
                 
@@ -115,6 +128,14 @@ class Email
     
     public function generateHeaders()
     {
+        if (empty($this->from)) {
+            $this->from = self::$default_from;
+        }
+
+        if (empty($this->reply_to)) {
+            $this->reply_to = self::$default_reply_to;
+        }
+        
         return array(
           'From'     => $this->from,
           'Reply-To' => $this->reply_to,
@@ -126,8 +147,12 @@ class Email
     {
         //can we send to anyone?
         if (empty($this->to_emails)) {
-            //Nope.  Don't send emails, return false.
-            return false;
+            //Nope.  Can't find anyone to send emails to... so send to the fallback list otherwise return false
+            if (empty(self::$fallbackEmails) || !is_array(self::$fallbackEmails)) {
+                return false;
+            }
+            
+            $this->setTo(self::$fallbackEmails);
         }
         
         $mime = new \Mail_mime("\n");
