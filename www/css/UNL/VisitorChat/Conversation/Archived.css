@@ -13,6 +13,8 @@
 #clientChatInfoContainer {
     margin-top: 0px;
     height: 100%;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 #visitorChat_chatBox {
@@ -20,6 +22,6 @@
     height: 100%;
 }
 
-#visterChat_conversation {
-    box-shadow: 28px 0 20px -31px rgba(0, 0, 0, 0.5);
+#clientInfo {
+    margin-top: 5px;
 }

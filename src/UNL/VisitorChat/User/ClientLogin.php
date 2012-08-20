@@ -56,10 +56,6 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $user->status       = 'BUSY';
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         
-        if (isset($_SERVER['REMOTE_ADDR'])) {
-            $user->ip           = $_SERVER['REMOTE_ADDR'];
-        }
-        
         $user->save();
         
         //Append a unique ID to the end of an guest's user's name
@@ -77,8 +73,12 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $conversation->status            = "SEARCHING";
         $conversation->email_fallback    = $fallback;
         
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $conversation->ip_address = $_SERVER['REMOTE_ADDR'];
+        }
+
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
+            $conversation->user_agent = $_SERVER['HTTP_USER_AGENT'];
         }
         
         $conversation->save();

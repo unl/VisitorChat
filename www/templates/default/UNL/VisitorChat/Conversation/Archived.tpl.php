@@ -20,18 +20,50 @@
     </div>
     <div id="clientChatInfoContainer">
         <div id="clientChat_GeneralInformation">
-            <h2>General Information</h2>
+            <h2>Details</h2>
             <?php
+            //Determine who closed the conversation.
             $name = "Unknown";
             if (!empty($context->conversation->closer_id)) {
                 $name = \UNL\VisitorChat\User\Record::getByID($context->conversation->closer_id)->name;
             }
             
-            echo "Closed By: " . $name;
+            $duration = "Unknown";
+            if ($duration = $context->conversation->getDuration()) {
+                $duration = round($duration/60) . " min";
+            }
+            
             ?>
+            <table class='zentable neutral'>
+                <thead>
+                    <tr>
+                        <th colspan="2">Chat Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chat Status:</td>
+                        <td><?php echo $context->conversation->status; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Method:</td>
+                        <td><?php echo $context->conversation->method; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Closed By:</td>
+                        <td><?php echo $name; ?></td>
+                    </tr>
+                    <tr>
+                        <td>Duration:</td>
+                        <td><?php echo $duration; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id='clientInfo'>
+                <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject()));?>
+            </div>
         </div>
         <div id="clientChat_Invitations">
-            <h2>Invitations</h2>
             <?php echo \Epoch\Controller::$templater->render($context->conversation->getInvitations())?>
         </div>
     </div>

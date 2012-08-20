@@ -1,3 +1,4 @@
+<h2>Invitations</h2>
 <ul id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {

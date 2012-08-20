@@ -11,7 +11,10 @@
     <div id="clientChat">
     </div>
     <div id="clientChatInfoContainer">
+        <div id='clientInfo'>
+        </div>
         <div id="clientChat_Invitations">
         </div>
     </div>
+    <div style='clear:both'></div>
 </div>

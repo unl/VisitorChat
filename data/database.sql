@@ -12,7 +12,6 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL DEFAULT '' ,
   `email` VARCHAR(45) NULL DEFAULT '' ,
-  `ip` VARCHAR(45) NULL ,
   `date_created` DATETIME NULL ,
   `date_updated` DATETIME NULL ,
   `type` ENUM('operator','client') NULL COMMENT 'Must be either client or operator' ,
