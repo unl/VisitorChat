@@ -549,7 +549,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     onConversationStatus_Chatting:function (data) {
         if (this.latestMessageId == 0) {
             if (data['html'] == undefined) {
-                alert('Expected html, but did not recieve any');
+                return false;
             }
 
             this.updateChatContainerWithHTML("#clientChat", data['html']);

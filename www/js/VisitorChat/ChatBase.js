@@ -205,6 +205,9 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             },
             dataType:"json",
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('test: ' + textStatus);
+            },
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
                 this.pendingChatAJAX = false;
@@ -300,7 +303,7 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Chatting:function (data) {
         if (this.latestMessageId == 0) {
             if (data['html'] == undefined) {
-                alert('Expected html, but did not recieve any');
+                return false;
             }
 
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
@@ -316,7 +319,7 @@ var VisitorChat_ChatBase = Class.extend({
     /**
      * onOperatorMessage
      *
-     * Fired when a message by an operator is recieved.
+     * Fired when a message by an operator is received.
      */
     onOperatorMessage:function (message) {
     },
@@ -324,7 +327,7 @@ var VisitorChat_ChatBase = Class.extend({
     /**
      * onClientMessage
      *
-     * Fired when a message by a client is recieved.
+     * Fired when a message by a client is received.
      */
     onClientMessage:function (message) {
     },
@@ -609,7 +612,7 @@ var VisitorChat_ChatBase = Class.extend({
             return false;
         }
 
-        var message = "You recieved a new Alert";
+        var message = "You received a new Alert";
         switch (alertType) {
             case 'newMessage':
                 message = "You have new messages!";
