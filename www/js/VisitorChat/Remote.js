@@ -117,7 +117,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_sendAnotherConfirmation,' +
-            '#visitorChat_name,').unbind();
+            '#visitorChat_name').unbind();
 
         //Reveal timestamp
         WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
