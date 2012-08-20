@@ -106,7 +106,11 @@ class Controller
         }
         
         //Do the routing.
-        $this->options = $this->router->route($_SERVER['REQUEST_URI'], $this->options);
+        $url = "";
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $url = $_SERVER['REQUEST_URI'];
+        }
+        $this->options = $this->router->route($url, $this->options);
     }
 
     public static function setDbSettings($settings = array())

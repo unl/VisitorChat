@@ -109,7 +109,12 @@ class Controller extends \Epoch\Controller
     public static function requireLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+            $url = "";
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $url = $_SERVER['REQUEST_URI'];
+            }
+            
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, true));
         }
     }
 
@@ -122,7 +127,12 @@ class Controller extends \Epoch\Controller
     public static function requireOperatorLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+            $url = "";
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $url = $_SERVER['REQUEST_URI'];
+            }
+            
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, true));
         }
         
         if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {
@@ -272,7 +282,7 @@ class Controller extends \Epoch\Controller
     
     public static function redirect($url, $exit = true)
     {
-        if (self::$environment == "PHPT") {
+        if (self::$environment == "PHPT" || self::$environment == "CLI") {
             echo "Location: " . $url  . PHP_EOL;
             return true;
         }
