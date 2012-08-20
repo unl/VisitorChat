@@ -349,7 +349,7 @@ class Record extends \Epoch\Record
     }
     
     function ParseUserAgent() {
-        require_once 'UaParser/UAParser.php';
+        require_once 'UAParser/UAParser.php';
         $ua = new \UA();
         return $ua->parse($this->user_agent);
     }
