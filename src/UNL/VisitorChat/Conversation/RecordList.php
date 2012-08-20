@@ -59,8 +59,31 @@ class RecordList extends \Epoch\RecordList
                            FROM conversations
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
                            WHERE (SELECT id FROM messages WHERE conversations_id = conversations.id ORDER BY date_created DESC LIMIT 1) = messages.id
+                               AND conversation.method = 'CHAT'
                                AND messages.date_created < now() + INTERVAL -" . (int)\UNL\VisitorChat\Controller::$conversationTTL . " MINUTE
-                               AND (conversations.status == 'CHATTING' OR conversations.status == 'SEARCHING')";
+                               AND (conversations.status = 'CHATTING' OR conversations.status = 'SEARCHING')";
+
+        return self::getBySql($options);
+    }
+
+    /**
+     * Gets a list of all idle conversations.  A conversation is considered idle based on the time of the last message posted
+     * and the conversationTTL setting in the controller.
+     *
+     * @static
+     * @param array $options
+     * @return mixed
+     */
+    public static function getAllSearchingEmailConversations($options = array()) {
+        //Build the list
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT conversations.id, message
+                           FROM conversations
+                           LEFT JOIN messages ON (conversations.id = messages.conversations_id)
+                           WHERE (SELECT id FROM messages WHERE conversations_id = conversations.id ORDER BY date_created DESC LIMIT 1) = messages.id
+                               AND conversation.method = 'EMAIL'
+                               AND messages.date_created < now() + INTERVAL -" . (int)\UNL\VisitorChat\Controller::$conversationTTL . " MINUTE
+                               AND (conversations.status = 'CHATTING' OR conversations.status = 'SEARCHING')";
 
         return self::getBySql($options);
     }
