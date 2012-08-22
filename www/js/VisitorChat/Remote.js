@@ -29,7 +29,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
         WDN.jQuery("#visitorChat_email").hide();
         WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
-
+        WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
         this.start();
     },
 
