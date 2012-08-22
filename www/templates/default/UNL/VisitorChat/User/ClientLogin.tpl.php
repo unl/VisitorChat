@@ -4,18 +4,18 @@
         <ul>
             <li class="visitorChat_info">
                 <label for="visitorChat_name"></label>
-                <input type="text" name="name" id="visitorChat_name"/>
+                <input type="text" name="name" id="visitorChat_name" placeholder="Name (optional)"/>
             </li>
             <li class="visitorChat_info">
                 <label for="visitorChat_email"></label>
-                <input type="text" name="email" class="validate-email" id="visitorChat_email"/>
+                <input type="text" name="email" class="validate-email" id="visitorChat_email" placeholder="Email (optional)"/>
             </li>
             <li class="visitorChat_info">
                 <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="0" />
                 <span id="visitorChat_email_fallback_text">I would like a response via email.</span>
             </li>
             <li class="visitorChat_center">
-                <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message"></textarea>
+                <textarea rows="3" cols="25" class="required-entry" id='visitorChat_messageBox' name="message" placeholder="Question or comment?"></textarea>
             </li>
             
         </ul>
