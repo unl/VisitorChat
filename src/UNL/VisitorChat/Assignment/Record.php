@@ -193,8 +193,27 @@ class Record extends \Epoch\Record
         return $assignment->save();
     }
     
+    public function getConversation()
+    {
+        return \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
+    }
+    
     public function accept()
     {
+        $conversation = $this->getConversation();
+        
+        if ($conversation->getAcceptedAssignments()->count() == 0) {
+            $messageText = "Hello, my name is " . $this->getUser()->getFirstName() . ".  Please wait while I review your message so that I can assist you.";
+            
+            //Create a new message.
+            $message = new \UNL\VisitorChat\Message\Record();
+            $message->users_id         = $this->users_id;
+            $message->date_created     = \UNL\VisitorChat\Controller::epochToDateTime();
+            $message->conversations_id = $this->conversations_id;
+            $message->message          = $messageText;
+            $message->save();
+        }
+        
         return $this->updateStatus('ACCEPTED');
     }
     
