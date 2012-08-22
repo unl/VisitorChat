@@ -333,7 +333,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         //Minimize header function while chatting
         WDN.jQuery('#visitorChat_header').click(function () {
             if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-                WDN.jQuery("#visitorChat_header").animate({'width':'60px'}, 280);
+                WDN.jQuery("#visitorChat_header").animate({'width':'105px'}, 280);
             } else {
                 WDN.jQuery("#visitorChat_header").animate({'width':'204px'}, 280);
             }
@@ -418,7 +418,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("body").append("" + 
             "<div id='visitorChat'>" +
                 "<div id='visitorChat_header'>" +
-                    "<span id='visitorChat_header_text'>Chat</span>" +
+                    "<span id='visitorChat_header_text'>Live Chat</span>" +
                     "<div id='visitorChat_logout'>" +
                         "<a href='#'>close</a>" +
                     "</div>" +
@@ -485,7 +485,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     closeChatContainer: function() {
         WDN.jQuery("#visitorChat_logout").css({'display':'none'});
-        WDN.jQuery("#visitorChat_header").animate({'width':'60px'}, 200);
+        WDN.jQuery("#visitorChat_header").animate({'width':'105px'}, 200);
 
         WDN.jQuery("#visitorChat_footercontainer").html(this.loginHTML);
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'block'});
