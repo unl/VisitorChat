@@ -307,9 +307,9 @@ class Record extends \Epoch\Record
         $this->closer_id    = $closerID;
         $this->save();
         
-        //Complete all assignments.
-        foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($this->id) as $assignment) {
-            $assignment->markAsCompleted();
+        //Close all searching invitations
+        foreach(\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($this->id) as $invitation) {
+            $invitation->fail();
         }
         
         //Send a confirnation email to the client.

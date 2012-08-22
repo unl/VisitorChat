@@ -135,6 +135,11 @@ class Record extends \Epoch\Record
         //Update the conversation status if needed.
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
         
+        //Make sure that all assignments for this invitation are marked as completed.
+        foreach (\UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForInvitation($this->id) as $assignment) {
+            $assignment->markAsFailed();
+        }
+        
         //Was this invitation sent by the system?  if so, that means we need to fall though to email.
         if ($this->users_id == 1) {
             $conversation->status = "OPERATOR_LOOKUP_FAILED";

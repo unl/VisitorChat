@@ -54,6 +54,7 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversation
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.closer_id.sql"), 'adding conversations.closer_id');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.status_reason.sql"), 'adding users.status_reason');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.ip_address.sql"), 'adding the ip address to the conversations table.');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.status_failed.sql"), 'adding the failed status to the assignments table');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {

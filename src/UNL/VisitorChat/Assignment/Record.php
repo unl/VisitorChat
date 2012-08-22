@@ -1,6 +1,17 @@
 <?php
 namespace UNL\VisitorChat\Assignment;
 
+/**
+ * Status Definitions
+ * 'PENDING' -> pending operator response
+ * 'REJECTED' -> rejected by operator
+ * 'ACCEPTED' -> accepted by operator
+ * 'EXPIRED' -> timed out (no response by operator)
+ * 'COMPLETED' -> accepted and completed.  This status is only reached when the conversation is closed.
+ * 'LEFT' -> left the conversation before it was completed
+ * 'FAILED' -> assignment failed, probably due to the invitation failing prematurely.
+ */
+
 class Record extends \Epoch\Record
 {
     public $id;
@@ -53,11 +64,26 @@ class Record extends \Epoch\Record
      */
     public function markAsCompleted()
     {
+        //set all accepted or pending assignments as completed.
         if ($this->status == 'ACCEPTED') {
             return $this->updateStatus('COMPLETED');
         }
-        
+
+        if ($this->status == 'PENDING') {
+            return $this->updateStatus('FAILED');
+        }
+
         return true;
+    }
+
+    /**
+     * Mark this assignment as completed.
+     *
+     * @return bool
+     */
+    public function markAsFailed()
+    {
+        return $this->updateStatus('FAILED');
     }
     
     /**
@@ -74,7 +100,7 @@ class Record extends \Epoch\Record
     {
         $this->status = $status;
         
-        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED'))) {
+        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED', 'FAILED'))) {
             $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
         }
         
@@ -91,7 +117,7 @@ class Record extends \Epoch\Record
      * 
      * @param int $userID
      * 
-     * @return VisitorChat\Assignment\Record
+     * @return bool | \UNL\VisitorChat\Assignment\Record
      */
     public static function getOldestPendingRequestForUser($userID)
     {
