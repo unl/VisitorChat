@@ -70,8 +70,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_header").animate({'width':'204px'}, 200);
 
         //Display and set the name (if found).
-        WDN.jQuery("#visitorChat_container").delay(10).slideDown(320, function(){
-            WDN.jQuery("#visitorChat_name").val(WDN.idm.displayName());
+        WDN.jQuery("#visitorChat_container").delay(10).slideDown(320, function() {
+            if (WDN.idm.displayName() != undefined) {
+                WDN.jQuery("#visitorChat_name").val(WDN.idm.displayName());
+            }
         });
     },
 
@@ -210,25 +212,23 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }, this));
 
         if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
-            //Field watermarks
-            WDN.jQuery("#visitorChat_name").watermark("Name (optional)");
-            WDN.jQuery("#visitorChat_email").watermark("Email (optional)");
-            WDN.jQuery("#visitorChat_messageBox").watermark("Question or comment?");
-
             //if email_fallback is checked, make sure that the email is required.
             WDN.jQuery("#visitorChat_email_fallback").click(function () {
                 if (WDN.jQuery(this).is(":checked")) {
-                    WDN.jQuery("#visitorChat_email").watermark("Email (Required)");
+                    WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Required)");
                     WDN.jQuery('#visitorChat_email').addClass('required-entry');
                 } else {
-                    WDN.jQuery("#visitorChat_email").watermark("Email (Optional)");
+                    WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Optional)");
                     WDN.jQuery('#visitorChat_email').removeClass('required-entry');
                 }
             });
         }
-
-        if (VisitorChat.chatStatus == 'CLOSED') {
-            WDN.jQuery("#visitorChat_confiramtionEmail").watermark("Email Address");
+        
+        //Load placeholders if not supported.
+        if (WDN.hasDocumentClass('no-placeholder')) {
+            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
+                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
+            });
         }
 
         //This will slide down the Name and Email fields, plus the Ask button
