@@ -29,7 +29,8 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             $post['email'] = null;
         }
         
-        if (!isset($post['name']) || empty($post['name'])) {
+        //no name? (check if name (optional) due to bug in <= ie9)
+        if (!isset($post['name']) || empty($post['name']) || strtolower($post['name']) == "name (optional)") {
             $post['name'] = "Guest";
         }
         
