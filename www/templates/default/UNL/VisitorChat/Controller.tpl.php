@@ -124,11 +124,6 @@
                 <div id='visitorChat_sound_container'>
                     <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url ?>audio/message.wav'></audio>
                 </div>
-                
-                <div id="notificationOptions">
-                    <a href="#" id="requestNotifications">Show Desktop Notifications</a>
-                </div>
-                
                 <div id="visitorChat_brightBox">
                   <p>Hello all!</p>
                 </div>
