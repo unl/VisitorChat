@@ -37,7 +37,18 @@
     }
 ?>
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?for=<?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->type;?>"></script>
+<?php
+    if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
+        echo '<script type="text/javascript" src="' . \UNL\VisitorChat\Controller::$url . 'js/chat.php?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '"></script>';
+    } else {
+        ?>
+        <script type="text/javascript">
+            //Don't load the visitor chat js...
+            VisitorChat = true;
+        </script>
+        <?php
+    }
+?>
 
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="document" -->
@@ -90,6 +101,9 @@
                         <?php 
                         }
                         ?>
+                        <li>
+                            <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('faq');?>">FAQ</a>
+                        </li>
                     </ul>
                     <!-- InstanceEndEditable -->
                 </nav>
