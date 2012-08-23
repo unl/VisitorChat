@@ -1,7 +1,7 @@
 <h2>FAQ</h2>
 <ul>
     <li><a href='#howtoadd'>How to I add my site to the chat system?</a></li>
-    <li><a href='#shownicon'>Why does my site show up have chat enabled and I have not set it up?</a></li>
+    <li><a href='#shownicon'>Why does my site have chat enabled but I have not set it up?</a></li>
     <li><a href='#features'>What are some features of the chat system?</a></li>
     <li><a href='#cost'>How much does the chat system cost?</a></li>
     <li><a href='#notifications'>How do I turn on notifications?</a></li>
@@ -21,9 +21,9 @@
         <p>We are working on automating this setup process, however that work is not yet completed.</p>
     </dd>
     
-    <dt id='shownicon'>Why does my site show up have chat enabled and I have not set it up?</dt>
-    <dd><p>Chances are your site isn't defined in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a> yet.
-        Please visit the registry to ensure that your site is defined.  Please note that any changes made in the registry can take up to 24 hours to take effect in the chat system.</p></dd>
+    <dt id='shownicon'>Why does my site have chat enabled but I have not set it up?</dt>
+    <dd><p>Chances are your site is not defined in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a> yet.
+        Please visit the registry to ensure that your site is defined.  Note that any changes made in the registry can take up to 24 hours to take effect in the chat system.</p></dd>
     
     <dt id='features'>What are some features of the chat system?</dt>
     <dd>
@@ -36,7 +36,7 @@
                 <li>Operators can view past conversations that they have taken part in.</li>
                 <li>Managers can view all conversations for their site.</li>
                 <li>Conversations are routed intelligently, so that if all operators for the site fail to answer the conversation, the next nearest site will be asked to answer the conversation instead.</li>
-                <li>Operators can configure how many conversations they can handle at any given time.</li>
+                <li>Operators can configure the number of conversations they can handle at any given time.</li>
             </ul>
     </dd>
     
