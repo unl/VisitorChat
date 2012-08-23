@@ -181,6 +181,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             WDN.jQuery('#notificationOptions').show();
         }
 
+        WDN.jQuery('#testNotifications').click(function () {
+            VisitorChat.alert('test', true);
+        });
+        
         //Request permission for notifications.
         WDN.jQuery('#requestNotifications').click(function () {
             if (!window.webkitNotifications) {
