@@ -274,11 +274,11 @@
 
 /* Validation Stylings */
 
-.validation-advice {
+#visitorChat_footercontainer .validation-advice, #visitorChat .validation-advice {
 	border-top: transparent !important;
 }
 
-.validation-advice li {
+#visitorChat_footercontainer .validation-advice li, #visitorChat .validation-advice li {
 	background: rgb(251,236,93); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(251,236,93,1) 33%, rgba(252,209,22,1) 99%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(33%,rgba(251,236,93,1)), color-stop(99%,rgba(252,209,22,1))); /* Chrome,Safari4+ */
@@ -304,7 +304,7 @@
 	filter: dropshadow(color=rgba(255, 255, 255, 0.85), offx=0, offy=1);
 }
 
-.advice-validate-email::after {
+#visitorChat_footercontainer .advice-validate-email::after, #visitorChat .advice-validate-email::after {
 	bottom: 2.95em;
 	right: 10px;
 	border-width: 0 10px 10px;
@@ -316,7 +316,7 @@
 	width: 0;
 }
 
-.advice-required-entry::after {
+#visitorChat_footercontainer .advice-required-entry::after, #visitorChat .advice-required-entry::after {
 	bottom: 15px;
 	right: 130px;
 	border-width: 0 10px 10px;
