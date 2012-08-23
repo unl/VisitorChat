@@ -561,9 +561,9 @@ var VisitorChat_ChatBase = Class.extend({
      * when the window containing the chat is not in focus.  By default it will
      * just flash the page title.
      */
-    alert:function (alertType) {
+    alert:function (alertType, force) {
         //1. do not continue if the window is currently focued.
-        if (this.windowVisible) {
+        if (this.windowVisible && force == undefined) {
             return false;
         }
 

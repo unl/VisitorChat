@@ -8,9 +8,17 @@ function get_var($var, $context) {
 }
 ?>
 
-<h2>Settings</h2>
+<script type="text/javascript">
+    //<![CDATA[
+    WDN.jQuery(document).ready(function(){
+        WDN.initializePlugin('zenform');
+    });
+    //]]>
+</script>
 
-<form id='visitorchat_maxChats' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
+<h2>Settings</h2>
+<h3 class='zenform'>User settings</h3>
+<form id='visitorchat_maxChats' class='zenform' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
     <fieldset>
         <ul>
             <li>
@@ -21,3 +29,12 @@ function get_var($var, $context) {
     </fieldset>
     <input id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
 </form>
+
+<div>
+    <h3>Notification settings</h3>
+    <div id="notificationOptions">
+        <a href="#" id="requestNotifications">Show Desktop Notifications</a>
+    </div>
+    
+    <a href="#" id="testNotifications">Test Notifications</a>
+</div>
