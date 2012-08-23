@@ -620,3 +620,14 @@
 #visitorChat_brightBox ul li {
 	list-style-type: none;
 }
+
+.faq dt {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.faq dd {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background-color: #EEE;
+}
