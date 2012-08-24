@@ -45,7 +45,7 @@ class OperatorLogin
             if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $auth->getUser() . "&format=json")) {
                 if ($data = json_decode($json, true)) {
                     //Default to an unknown name
-                    $user->name = "Unknown";
+                    $user->name = $auth->getUser();
 
                     //Try to get the name (displayName might be null or just 1 space)
                     if (isset($data['displayName'][0]) && $data['displayName'][0] !== " ") {
