@@ -121,6 +121,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_sendAnotherConfirmation,' +
             '#visitorChat_name').unbind();
 
+        //Load placeholders if not supported.
+        if (WDN.hasDocumentClass('no-placeholder')) {
+            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
+                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
+            });
+        }
+        
         //Reveal timestamp
         WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
             function () {
@@ -224,13 +231,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             });
         }
         
-        //Load placeholders if not supported.
-        if (WDN.hasDocumentClass('no-placeholder')) {
-            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
-                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-            });
-        }
-
         //This will slide down the Name and Email fields, plus the Ask button
         WDN.jQuery("#visitorChat_messageBox").keyup(function () {
             WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
