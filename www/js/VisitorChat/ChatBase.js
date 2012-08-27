@@ -641,10 +641,19 @@ var VisitorChat_ChatBase = Class.extend({
         };
         
         notification.show();
+
+        notifyWindow = undefined;
         
         if (this.popupNotifications) {
             //Create a notification window.
             notifyWindow = window.open(this.serverURL + 'notifications/notification.php?message='+message,'_blank','width=850,height=650,menubar=no,location=no')
+            notifyWindow.focus();
+            var timer = setInterval(function() {
+                if(notifyWindow.closed) {
+                    clearInterval(timer);
+                    window.focus();
+                }
+            }, 50);
         }
         
         item = new Array();
