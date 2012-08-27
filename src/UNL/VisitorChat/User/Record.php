@@ -14,6 +14,7 @@ class Record extends \Epoch\Record
     public $status;
     public $status_reason;
     public $last_active;
+    public $popup_notifications; //1=show, 2=no show
     
     public static function getByID($id)
     {

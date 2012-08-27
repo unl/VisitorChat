@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `popup_notifications` int(1) NULL default 0;

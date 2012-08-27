@@ -23,7 +23,7 @@ function get_var($var, $context) {
         <ul>
             <li>
                 <label for="visitorchat_maxChats">Max Chats</label>
-                <input type="text" name="max_chats" id="visitorchat_maxChats" value="<?php echo get_var('max_chats', $context);?>"/>
+                <input type="text" name="max_chats" id="max_chats" value="<?php echo get_var('max_chats', $context);?>"/>
             </li>
         </ul>
     </fieldset>
@@ -31,7 +31,22 @@ function get_var($var, $context) {
 </form>
 
 <div>
-    <h3>Notification settings</h3>
+    <h3 class='zenform'>Notification settings</h3>
+    <form id='visitorchat_notifications' class='zenform' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
+    <fieldset>
+        <ul>
+            <li>
+                <label for="visitorchat_maxChats">Max Chats</label>
+                <select name="popup_notifications" id="popup_notifications">
+                    <option value="1" <?php echo (get_var('popup_notifications', $context)==1)?'selected="selected"':'';?>>On</option>
+                    <option value="0" <?php echo (get_var('popup_notifications', $context)==0)?'selected="selected"':'';?>>Off</option>
+                </select> 
+            </li>
+        </ul>
+    </fieldset>
+    <input type="submit" value="Submit" name="visitorChat_login_sumbit" />
+</form>
+    
     <div id="notificationOptions">
         <a href="#" id="requestNotifications">Show Desktop Notifications</a>
     </div>

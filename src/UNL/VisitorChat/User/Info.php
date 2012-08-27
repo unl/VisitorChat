@@ -15,12 +15,15 @@ class Info
     public $loginHTML          = false;
     public $userType           = false;
     public $userStatusReason   = false;
+    public $popupNotifications = false;
     
     function __construct($options = array())
     {
         $this->phpssid = session_id();
         
         $this->serverTime = date('r');
+        
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
@@ -31,15 +34,25 @@ class Info
 
                 $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
             }
+            
+            if ($user) {
+                $this->popupNotifications = \UNL\VisitorChat\User\Service::getCurrentUser()->popup_notifications;
+                if ($this->popupNotifications == null) {
+                    $this->popupNotifications = 0;
+                }
+            }
+        } else {
+            unset($this->popupNotifications);
         }
-        
-        if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
+
+        if (!$user) {
             //Hide Operator Info
             unset($this->pendingAssignment);
             unset($this->unreadMessages);
             unset($this->pendingDate);
             unset($this->userStatus);
             unset($this->userStatusReason);
+            unset($this->popupNotifications);
 
             //Hide client Info
             unset($this->conversationID);
@@ -83,6 +96,7 @@ class Info
             unset($this->pendingDate);
             unset($this->userStatus);
             unset($this->userStatusReason);
+            unset($this->popupNotifications);
         }
     }
     
