@@ -23,6 +23,8 @@ class Info
         
         $this->serverTime = date('r');
         
+        $user = \UNL\VisitorChat\User\Service::getCurrentUser();
+        
         if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
 
@@ -33,13 +35,17 @@ class Info
                 $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
             }
             
-            $this->popupNotifications = \UNL\VisitorChat\User\Service::getCurrentUser()->popup_notifications;
-            if ($this->popupNotifications == null) {
-                $this->popupNotifications = 0;
+            if ($user) {
+                $this->popupNotifications = \UNL\VisitorChat\User\Service::getCurrentUser()->popup_notifications;
+                if ($this->popupNotifications == null) {
+                    $this->popupNotifications = 0;
+                }
             }
+        } else {
+            unset($this->popupNotifications);
         }
 
-        if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
+        if (!$user) {
             //Hide Operator Info
             unset($this->pendingAssignment);
             unset($this->unreadMessages);
