@@ -15,6 +15,7 @@ class Info
     public $loginHTML          = false;
     public $userType           = false;
     public $userStatusReason   = false;
+    public $popupNotifications = false;
     
     function __construct($options = array())
     {
@@ -31,8 +32,13 @@ class Info
 
                 $this->loginHTML = \UNL\VisitorChat\Controller::$templater->render($login, 'UNL/VisitorChat/User/ClientLogin.tpl.php');
             }
+            
+            $this->popupNotifications = \UNL\VisitorChat\User\Service::getCurrentUser()->popup_notifications;
+            if ($this->popupNotifications == null) {
+                $this->popupNotifications = 0;
+            }
         }
-        
+
         if (!$user = \UNL\VisitorChat\User\Service::getCurrentUser()) {
             //Hide Operator Info
             unset($this->pendingAssignment);
@@ -40,6 +46,7 @@ class Info
             unset($this->pendingDate);
             unset($this->userStatus);
             unset($this->userStatusReason);
+            unset($this->popupNotifications);
 
             //Hide client Info
             unset($this->conversationID);
@@ -83,6 +90,7 @@ class Info
             unset($this->pendingDate);
             unset($this->userStatus);
             unset($this->userStatusReason);
+            unset($this->popupNotifications);
         }
     }
     

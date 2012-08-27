@@ -33,12 +33,19 @@ if (isset($_GET['message'])) {
         
         #notification {
             background-color: rgba(255,255,255,0.7);
-            width: 260px;
-            height: 130px;
+            width: 400px;
+            height: 200px;
             margin-left: auto;
             margin-right: auto;
             border-radius: 15px;
             border: 2px solid black;
+            margin-top: 200px;
+        }
+        
+        #container {
+            width: 800px;
+            height: 400px;
+            text-align: center;
         }
         
         #details {
@@ -67,11 +74,10 @@ if (isset($_GET['message'])) {
     </script>
 </head>
 <body>
-<div id='notification'>
-    <h2>UNL Chat System</h2>
-    <h3><h3><?php echo $message ?></h3></h3>
-    <div id='details'>
-        (Click this notification to take you to the chat system)
+<div id='container'>
+    <div id='notification'>
+        <h2>UNL Chat System</h2>
+        <h3><h3><?php echo $message ?></h3></h3>
     </div>
 </div>
 </body>

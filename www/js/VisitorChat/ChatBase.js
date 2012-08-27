@@ -58,6 +58,9 @@ var VisitorChat_ChatBase = Class.extend({
 
     //true if there are any pending updateUserInfo Ajax connections
     pendingUserAJAX:false,
+    
+    //Should large popup windows be displayed for notifications?
+    popupNotifications:false,
 
     /**
      * Constructor function.
@@ -166,7 +169,12 @@ var VisitorChat_ChatBase = Class.extend({
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
         }
+        
         this.operatorsChecked = true;
+        
+        if (data['popupNotifications'] != undefined) {
+            this.popupNotifications = data['popupNotifications'];
+        }
     },
 
     updatePHPSESSID:function (phpsessid) {
@@ -633,7 +641,16 @@ var VisitorChat_ChatBase = Class.extend({
         };
         
         notification.show();
-        this.notifications.push(notification);
+        
+        if (this.popupNotifications) {
+            //Create a notification window.
+            notifyWindow = window.open(this.serverURL + 'notifications/notification.php?message='+message,'_blank','width=850,height=650,menubar=no,location=no')
+        }
+        
+        item = new Array();
+        item['notification'] = notification;
+        item['window']       = notifyWindow;
+        this.notifications.push(item);
     },
 
     clearAlert:function () {
@@ -646,9 +663,15 @@ var VisitorChat_ChatBase = Class.extend({
         //Set the alertID to false so that we no there are no current alerts.
         VisitorChat.alertID = false;
 
+        for (id in this.notifications) {
+            if (this.notifications[id]['window'] != undefined) {
+                this.notifications[id]['window'].close();
+            }
+        }
+
         if (window.webkitNotifications) {
             for (id in this.notifications) {
-                this.notifications[id].cancel();
+                this.notifications[id]['notification'].cancel();
             }
         }
     },
