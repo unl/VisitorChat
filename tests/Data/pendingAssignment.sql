@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
   `Invitations_id` int(11) DEFAULT NULL,
   `last_active` datetime DEFAULT NULL,
+  `popup_notifications` int(1) NULL default 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`),
   KEY `fk_users_Invitations1` (`Invitations_id`)
