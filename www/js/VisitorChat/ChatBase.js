@@ -624,7 +624,7 @@ var VisitorChat_ChatBase = Class.extend({
                 message = "You have been set to Idle!";
         }
 
-        notification = window.webkitNotifications.createHTMLNotification(this.serverURL + 'notifications/notification.php?message=' + message);
+        notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
         
         notification.onclick = function() {
             //Focus the window.
