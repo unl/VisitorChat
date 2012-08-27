@@ -485,9 +485,6 @@ var VisitorChat_ChatBase = Class.extend({
      * add a new watcher.
      */
     initWatchers:function () {
-        //Remove old elvent handlers
-        WDN.jQuery('#visitorChat_messageBox').unbind();
-        
         WDN.jQuery('#visitorChat_messageBox').keypress(function (e) {
             if (VisitorChat.chatStatus == false) {
                 return true;
