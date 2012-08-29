@@ -86,6 +86,23 @@ class Controller extends \Epoch\Controller
     }
 
     /**
+     * @static
+     * @param $url A full URL including protocol and trailing /
+     * 
+     * This function will set the url for the server.  If the request protocol is https,
+     * this function will attempt to convert the url to https.
+     */
+    public static function setURL($url)
+    {
+        //If we are requesting via https, change to https.
+        if (strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5)) == 'https') {
+            $url = str_replace('http://', 'https://', $url);
+        }
+        
+        self::$url = $url;
+    }
+
+    /**
      * Requires a client login.
      *
      * @static
