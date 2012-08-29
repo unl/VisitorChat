@@ -35,7 +35,7 @@ error_reporting(E_ALL);
  * General settings
  */
 //Change this to the full base url of this instance.
-\Epoch\Controller::$url = 'http://ucommfairchild.unl.edu/visitorchat/www/';
+\UNL\VisitorChat\Controller::setURL('http://ucommfairchild.unl.edu/visitorchat/www/');
 
 //Current environment of the chat service (PRODUCTION, PHPT, DEV).
 \UNL\VisitorChat\Controller::$environment = "PRODUCTION";
