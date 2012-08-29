@@ -108,6 +108,8 @@ var VisitorChat_ChatBase = Class.extend({
      * flow of the chat.
      */
     start:function () {
+        this.initWatchers();
+        
         this.chatOpened = true;
 
         clearTimeout(VisitorChat.loopID);
