@@ -95,7 +95,9 @@ class Controller extends \Epoch\Controller
     public static function setURL($url)
     {
         //If we are requesting via https, change to https.
-        if (strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5)) == 'https') {
+        if ((isset($_SERVER["SERVER_PROTOCOL"]) && strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5)) == 'https')
+            //OR check to see if we are using HTTPS by checking Apache Env Variables
+            || (isset($_SERVER['USING_HTTPS']) && $_SERVER['USING_HTTPS'] == 1)) {
             $url = str_replace('http://', 'https://', $url);
         }
         
