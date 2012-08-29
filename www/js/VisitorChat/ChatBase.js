@@ -68,6 +68,12 @@ var VisitorChat_ChatBase = Class.extend({
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
+        
+        //Change to https if we need to.
+        if ('https:' == document.location.protocol) {
+            this.serverURL = serverURL.replace('http://', 'https://');
+        }
+
         this.refreshRate = refreshRate;
 
         //Start the chat
