@@ -29,6 +29,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
         WDN.jQuery("#visitorChat_email").hide();
         WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
+        
+        //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
+        if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
+            WDN.jQuery("#visitorChat_messageBox").val('');
+        }
+        
         WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
         this.start();
     },
@@ -243,6 +249,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("#visitorChat_failedOptions_yes").click(function() {
             VisitorChat.stop(function(){
                 WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                
                 WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
                 WDN.jQuery("#visitorChat_email").focus();
                 WDN.jQuery("#visitorChat_messageBox").keyup();
