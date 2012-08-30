@@ -6,7 +6,7 @@
         <param name="movie" value="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.swf?bgcol=#ffffff&amp;icon_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/images/audio_icon.png&amp;audio_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.php" />
     </object>
     
-    <a tabindex="-1" style="border-style: none;" href="#" title="Refresh Image" onclick="document.getElementById('siimage').src = '<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_show.php?sid=' + Math.random(); this.blur(); return false"><img class='VisitorChat_captcha_supportImg' height="15" width="15" src="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/images/refresh.png" alt="Reload Image" onclick="this.blur()" align="bottom" border="0"></a><br />
+    <a tabindex="-1" style="border-style: none;" href="#" title="Refresh Image" onclick="document.getElementById('VisitorChat_captcha_img').src = '<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_show.php?sid=' + Math.random(); this.blur(); return false"><img class='VisitorChat_captcha_supportImg' height="15" width="15" src="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/images/refresh.png" alt="Reload Image" onclick="this.blur()" align="bottom" border="0"></a><br />
     <strong>Enter Code*:</strong><br />
     <input type="text" name="code" size="12" maxlength="8" />
     <input type="submit"  value='submit'/>
