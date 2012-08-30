@@ -16,7 +16,7 @@ class Service
     function handleInvitations(\UNL\VisitorChat\Conversation\Record $conversation)
     {
         //Determin if we need to handle assignments. If they are currently chatting however, we will check to see if their operator left and assign them a new one.
-        if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED'))) {
+        if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED', 'CAPTCHA'))) {
             //We don't need to continue.
             return $conversation;
         }

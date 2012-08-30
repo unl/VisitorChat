@@ -374,3 +374,19 @@
 .ie8 #wdn_footer_feedback form {
     display: block;
 }
+
+
+#VisitorChat_captcha_container {
+    padding: 5px;
+}
+
+#VisitorChat_captcha_img {
+    width: 175px;
+    height: 75px;
+    border: 1px solid #000;
+    margin-right: 5px
+}
+.VisitorChat_captcha_supportImg {
+    width: 15px;
+    height: 15px;
+}
