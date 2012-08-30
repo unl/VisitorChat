@@ -10,7 +10,7 @@ class Routes extends \RegExpRouter\RoutesInterface
 
     public static function getPostRoutes()
     {
-        return array('/^captcha\/edit/i' => 'edit');
+        return array('/^captcha\/edit/i' => 'Edit');
     }
 
     public static function getDeleteRoutes()
