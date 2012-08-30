@@ -30,6 +30,8 @@ class Record extends \Epoch\Record
 
     public $closer_id; //The id of the user closing the chat.
     
+    public $auto_spam; //Did the system detect that this may be spam?
+    
     /* Does the client want a response via email if
      * we can't find an available operator
      * 

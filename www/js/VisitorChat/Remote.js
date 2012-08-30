@@ -391,6 +391,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
+    onConversationStatus_Captcha:function (data) {
+        this.displayLogoutButton();
+        
+        this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+    },
+
     onConversationStatus_OperatorLookupFailed:function (data) {
         this.displayLogoutButton();
         clearTimeout(VisitorChat.loopID);
