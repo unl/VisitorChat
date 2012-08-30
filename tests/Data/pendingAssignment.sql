@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `status` enum('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'SEARCHING',
   `emailed` int(1) DEFAULT NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.',
   `email_fallback` int(1) DEFAULT NULL,
+  `auto_spam` int(1) DEFAULT 0,
   `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
   `closer_id` INT NULL ,
   `ip_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,

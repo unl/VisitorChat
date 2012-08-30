@@ -30,6 +30,22 @@ if ($context->sendHTML) {
     \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 }
 
+if ($data['status'] == 'CAPTCHA') {
+    //Save the current template path.
+    $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
+
+    //Set the path to the html directory.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/default/"));
+
+    $captcha = new \UNL\VisitorChat\Captcha\Edit();
+    
+    //Render the conversation as html.
+    $data['html'] = \UNL\VisitorChat\Controller::$templater->render($captcha, 'UNL/VisitorChat/Captcha/Edit.tpl.php');
+
+    //Return to the original template path.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
+}
+
 if ($context->invitations) {
     //Save the current template path.
     $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();

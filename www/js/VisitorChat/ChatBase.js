@@ -202,6 +202,7 @@ var VisitorChat_ChatBase = Class.extend({
             || this.chatStatus == 'CLOSED'
             || this.chatStatus == 'OPERATOR_LOOKUP_FAILED'
             || this.chatStatus == 'EMAILED'
+            || this.chatStatus == 'CAPTCHA'
             || this.chatOpened == false
             || this.phpsessid == false
             || this.pendingChatAJAX == true)
@@ -271,6 +272,9 @@ var VisitorChat_ChatBase = Class.extend({
             case 'EMAILED':
                 this.onConversationStatus_Emailed(data);
                 break;
+            case 'CAPTCHA':
+                this.onConversationStatus_Captcha(data);
+                break;
         }
 
         return true;
@@ -296,6 +300,9 @@ var VisitorChat_ChatBase = Class.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
+    onConversationStatus_Captcha:function (data) {
+    },
+    
     /**
      * onConversationStatus_Emailed
      * Related status code: EMAILED
