@@ -37,6 +37,9 @@ error_reporting(E_ALL);
 //Change this to the full base url of this instance.
 \UNL\VisitorChat\Controller::setURL('http://ucommfairchild.unl.edu/visitorchat/www/');
 
+//Configure the allowed domains
+\UNL\VisitorChat\Controller::$allowedDomains = array('unl.edu', 'throughtheeyes.org', 'quiltstudy.org', 'digital-community.com', 'huskeralum.org');
+
 //Current environment of the chat service (PRODUCTION, PHPT, DEV).
 \UNL\VisitorChat\Controller::$environment = "PRODUCTION";
 

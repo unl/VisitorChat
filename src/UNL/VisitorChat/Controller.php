@@ -31,6 +31,8 @@ class Controller extends \Epoch\Controller
      */
     public static $admins = array();
     
+    public static $allowedDomains = array();
+    
     /**
      * an array of default operators.  Must be the UIDs
      * of the operators.  When no operators for a site

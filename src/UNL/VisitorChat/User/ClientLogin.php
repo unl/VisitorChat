@@ -20,6 +20,19 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         if (!isset($post['initial_url']) || empty($post['initial_url'])) {
             throw new \Exception("No initial url was found", 400);
         }
+
+        //Check the domain.
+        $regex = "";
+        foreach (\UNL\VisitorChat\Controller::$allowedDomains as $domain) {
+            $regex .= addcslashes($domain, ".-/") . "|";
+        }
+        
+        //Check for allowed domains
+        $regex = trim($regex, "|")  ;
+        if (!preg_match("/" . $regex . "/", $post['initial_url'])) {
+            // Silently fail
+            throw new \Exception("This chat system can not run on the given domain.", 400);
+        }
         
         if (!isset($post['initial_pagetitle']) || empty($post['initial_pagetitle'])) {
             throw new \Exception("No initial pagetitle url was found", 400);
