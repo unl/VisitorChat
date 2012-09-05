@@ -81,7 +81,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         //Check if this may be spam...
         $status = "SEARCHING";
         $spam   = 0;
-        if (\UNL\VisitorChat\Captcha\Service::isSpam($user, $post['message'])) {
+        if (\UNL\VisitorChat\Captcha\Service::isSpam($post['initial_url'], $post['message'], $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])) {
             $status = "CAPTCHA";
             $spam   = true;
         }
