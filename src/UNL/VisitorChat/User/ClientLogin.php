@@ -77,11 +77,22 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             $user->name = $user->name . $user->id;
             $user->save();
         }
+
+        //The remote_addr server var is not always set, so default to an empty ip.
+        $ip = "";
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        
+        $ua = "";
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $ua = $_SERVER['HTTP_USER_AGENT'];
+        }
         
         //Check if this may be spam...
         $status = "SEARCHING";
         $spam   = 0;
-        if (\UNL\VisitorChat\Captcha\Service::isSpam($post['initial_url'], $post['message'], $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'])) {
+        if (\UNL\VisitorChat\Captcha\Service::isSpam($post['initial_url'], $post['message'], $ip, $ua)) {
             $status = "CAPTCHA";
             $spam   = true;
         }
@@ -95,14 +106,8 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $conversation->status            = $status;
         $conversation->email_fallback    = $fallback;
         $conversation->auto_spam         = $spam;
-        
-        if (isset($_SERVER['REMOTE_ADDR'])) {
-            $conversation->ip_address = $_SERVER['REMOTE_ADDR'];
-        }
-
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $conversation->user_agent = $_SERVER['HTTP_USER_AGENT'];
-        }
+        $conversation->ip_address        = $ip;
+        $conversation->user_agent        = $ua;
         
         $conversation->save();
         
