@@ -4,3 +4,4 @@ www/.htaccess
 /.project
 /.settings/org.eclipse.php.core.prefs
 /.idea
+/spamRules.inc.php
