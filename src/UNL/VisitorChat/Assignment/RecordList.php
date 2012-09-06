@@ -88,4 +88,29 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+    
+    public static function getAssignmentsForSite($url = false, $days = false, $status = false, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        
+        //Build sql
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE true ";
+        if ($url) {
+            $options['sql'] .= "AND answering_site = '" . self::escapeString($url) . "' ";
+        }
+
+        if ($days) {
+            $options['sql'] .= "AND DATE_SUB(CURDATE(),INTERVAL " . $days . " DAY) <= date_created ";
+        }
+
+        if ($status) {
+            $options['sql'] .= "AND status = '" . self::escapeString($status) . "' ";
+        }
+        
+        $options['sql'] .= "ORDER BY date_created ASC";
+        
+        return self::getBySql($options);
+    }
 }

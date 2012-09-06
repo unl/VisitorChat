@@ -313,6 +313,11 @@ class Record extends \Epoch\Record
         foreach(\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($this->id) as $invitation) {
             $invitation->fail();
         }
+
+        //complete all accepted assignments
+        foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($this->id) as $assignment) {
+            $assignment->markAsCompleted();
+        }
         
         //Send a confirnation email to the client.
         \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
