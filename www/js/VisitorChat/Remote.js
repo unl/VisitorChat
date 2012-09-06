@@ -77,7 +77,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         //Display and set the name (if found).
         WDN.jQuery("#visitorChat_container").delay(10).slideDown(320, function() {
-            if (WDN.idm.displayName() != undefined) {
+            if (typeof WDN.idm.displayName == 'function' && WDN.idm.displayName() != undefined) {
                 WDN.jQuery("#visitorChat_name").val(WDN.idm.displayName());
             }
         });
