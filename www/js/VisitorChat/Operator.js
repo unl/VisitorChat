@@ -3,6 +3,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     currentRequest:false, //The current request ID.
     requestTimeout:false, //Life of a in-coming chat request
     requestLoopID:false,
+    overlayLoopID:false,
     operatorStatus:false,
     unreadMessages:new Array(), //The total number of messages for all open conversations
     requestExpireDate:new Array(),
@@ -22,6 +23,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             }
             return false;
         });
+
+        //Flash the overlay to make notifications more visible.
+        this.flashOverlay();
 
         //For status toggle useability
         WDN.jQuery('#toggleOperatorStatus').hover(function () {
@@ -416,13 +420,39 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                         this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
                         clearTimeout(VisitorChat.requestLoopID);
                         this.clearAlert();
-                    }, this),
+                    }, this)
                 }
             });
 
             this.currentRequest = data['pendingAssignment'];
             this.startRequestLoop(data['pendingAssignment'], data['pendingDate'], data['serverTime']);
         }
+    },
+    
+    flashOverlay: function(color) {
+        if (color == undefined) {
+            color = '#aaa';
+        } else if (color == '#aaa') {
+            color = '#C40302';
+        } else {
+            color = '#aaa';
+        }
+        
+        //switch to a new color
+        WDN.jQuery(".ui-widget-overlay").css('background', color);
+        WDN.jQuery(".ui-widget-overlay").css('opacity', .5);
+        
+        //Google chrome has issues with clearing the timeout.  Work around it...
+        if (VisitorChat.overlayLoopID == -1) {
+            return;
+        }
+        
+        VisitorChat.overlayLoopID = setTimeout("VisitorChat.flashOverlay('" + color +"')", 1000);
+    },
+    
+    stopFlashingOverlay: function() {
+        clearTimeout(VisitorChat.overlayLoopID);
+        VisitorChat.overlayLoopID = -1;
     },
 
     generateChatURL:function () {
@@ -473,7 +503,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             this.onRequestExpired();
             return false;
         }
-
+        
         VisitorChat.requestLoopID = setTimeout("VisitorChat.requestLoop(" + id + ")", 1000);
     },
 
