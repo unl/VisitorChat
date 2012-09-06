@@ -108,4 +108,59 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+    
+    public static function getAllConversationsWithStatus($status, $options = array())
+    {
+        //Build the list
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT conversations.id
+                           FROM conversations
+                           WHERE status = '" . self::escapeString($status) ."'
+                           ORDER BY conversations.date_created ASC";
+
+        return self::getBySql($options);
+    }
+
+    public static function getCompletedConversationsForSite($url = false, $days = false, $result = false, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+
+        //Build sql
+        $options['sql'] = "SELECT conv1.id
+                           FROM conversations as conv1
+                           LEFT JOIN assignments ON (conv1.id = assignments.conversations_id)
+                           WHERE conv1.status = 'CLOSED'
+                                 AND method = 'CHAT' ";
+        
+        if ($url) {
+            $options['sql'] .= "AND answering_site = '" . self::escapeString($url) . "' ";
+        }
+
+        if ($days) {
+            $options['sql'] .= "AND DATE_SUB(CURDATE(),INTERVAL " . $days . " DAY) <= conv1.date_created ";
+        }
+        
+        if ($result) {
+            switch ($result) {
+                case 'ANSWERED':
+                    $options['sql'] .= "AND (SELECT COUNT(assign2.id)
+                                        FROM assignments as assign2
+                                        WHERE assign2.conversations_id = conv1.id
+                                            AND assign2.status = 'COMPLETED')
+                                        > 0 ";
+                    break;
+                case 'UNANSWERED':
+                    $options['sql'] .= "AND (SELECT COUNT(assign2.id)
+                                        FROM assignments as assign2
+                                        WHERE assign2.conversations_id = conv1.id
+                                            AND assign2.status = 'COMPLETED')
+                                        = 0 ";
+                    break;
+            }
+        }
+        
+        $options['sql'] .= "ORDER BY conv1.date_created ASC";
+        
+        return self::getBySql($options);
+    }
 }
