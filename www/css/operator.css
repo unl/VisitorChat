@@ -623,11 +623,16 @@
 
 .faq dt {
     font-weight: bold;
-    font-size: 18px;
+	font-size: 18px;
+	letter-spacing: -0.06em;
+	text-shadow: 1px 1px white, 2px 1px 2px rgba(183, 3, 2, 0.4);
 }
 
 .faq dd {
-    margin-bottom: 10px;
-    border-radius: 15px;
-    background-color: #EEE;
+    background-color: whiteSmoke;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	margin: 0.8em 0 1.6em;
+	padding: 0.5em 1.6em 0 !important;
+	text-shadow: 0 1px white;
 }
