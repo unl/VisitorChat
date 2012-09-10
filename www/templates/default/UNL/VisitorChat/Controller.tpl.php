@@ -23,7 +23,7 @@
 -->
 <?php virtual("/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>UNL | Visitor Chat</title>
+<title>UNL | UNLchat</title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="head" -->
 <!-- Place optional header elements here -->
@@ -61,7 +61,7 @@
         <header id="header" role="banner">
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Visitor Chat System<!-- InstanceEndEditable --></span>
+            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->UNLchat<!-- InstanceEndEditable --></span>
             <?php virtual("/wdn/templates_3.1/includes/idm.html"); ?>
             <?php virtual("/wdn/templates_3.1/includes/wdnTools.html"); ?>
         </header>
@@ -112,7 +112,7 @@
         <div id="wdn_content_wrapper">
             <div id="pagetitle">
                 <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1>UNL Visitor Chat</h1>
+                <h1>UNLchat</h1>
                 <!-- InstanceEndEditable -->
             </div>
             <div id="maincontent" role="main">
