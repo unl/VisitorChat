@@ -1,13 +1,23 @@
 <h2>FAQ</h2>
 <ul>
+    <li><a href='#howtouse'>How do I use the chat system?</a></li>
     <li><a href='#howtoadd'>How to I add my site to the chat system?</a></li>
     <li><a href='#shownicon'>Why does my site have chat enabled but I have not set it up?</a></li>
     <li><a href='#features'>What are some features of the chat system?</a></li>
     <li><a href='#cost'>How much does the chat system cost?</a></li>
     <li><a href='#notifications'>How do I turn on notifications?</a></li>
 </ul>
-   
+
 <dl class='faq'>
+    <dt id='howtouse'>How do I use the chat system?</dt>
+    <dd>
+        <p>We have some videos to show you how to use the the chat system.
+        </p>
+            <ul>
+                <li><a href='http://go.unl.edu/unlchat_visitor'>Visitor Tutorial</a></li>
+                <li><a href='http://go.unl.edu/unlchat_operator'>Operator Tutorial</a></li>
+            </ul>
+    </dd>
     <dt id='howtoadd'>How to I add my site to the chat system?</dt>
     <dd>
         <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:s-mfairch4@gmail.com'>Michael Fairchild</a>.
