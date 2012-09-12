@@ -79,7 +79,7 @@ error_reporting(E_ALL);
  * Operator Registry settings
  */
 //Uncomment to set the registry service to something other than the default.
-#\UNL\VisitorChat\Controller::$mailService = new MockRegistryDriver();;
+#\UNL\VisitorChat\Controller::$registryService = new MockRegistryDriver();;
 
 //WDN Registry service url.
 \UNL\VisitorChat\OperatorRegistry\WDN\Driver::$baseURI = "http://www1.unl.edu/wdn/registry/";
