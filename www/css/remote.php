@@ -1,6 +1,6 @@
 <?php 
 /**
- * First thigns first.  This script needs to be configurable (url to server, etc.)
+ * First things first.  This script needs to be configurable (url to server, etc.)
  * To do this, we will use PHP to render the javascript.
  */
 if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {

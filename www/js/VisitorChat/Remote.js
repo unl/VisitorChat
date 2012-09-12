@@ -65,6 +65,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 "</div>"
         );
 
+		//Set header_text to visible
+		WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
+		
         WDN.jQuery("#visitorChat_header").show();
 
         this.chatStatus = "LOGIN";
@@ -431,7 +434,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery("body").append("" + 
             "<div id='visitorChat'>" +
                 "<div id='visitorChat_header'>" +
-                    "<span id='visitorChat_header_text'>Live Chat</span>" +
+                    "<span style='display:none;' id='visitorChat_header_text'>Live Chat</span>" +
                     "<div id='visitorChat_logout'>" +
                         "<a href='#'>close</a>" +
                     "</div>" +
