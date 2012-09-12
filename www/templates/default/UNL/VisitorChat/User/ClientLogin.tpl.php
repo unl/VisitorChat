@@ -1,4 +1,3 @@
-<div id="visitorChat_footercontainer">
 <form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
     <fieldset><legend id="visitorChat_footerHeader">Comments for this page</legend>
         <ul>
@@ -25,4 +24,3 @@
     <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
     <input id='visitorChat_login_submit' type="submit" value="Submit" name="visitorChat_login_submit" />
 </form>
-</div>
