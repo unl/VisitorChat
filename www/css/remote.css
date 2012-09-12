@@ -279,7 +279,9 @@
 	border-top: transparent !important;
 }
 
-#visitorChat_footercontainer .validation-advice li, #visitorChat .validation-advice li {
+
+
+#visitorChat_footercontainer .validation-advice li, #visitorChat .validation-advice li, #visitorchat_clientLogin_anonwaning {
 	background: rgb(251,236,93); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(251,236,93,1) 33%, rgba(252,209,22,1) 99%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(33%,rgba(251,236,93,1)), color-stop(99%,rgba(252,209,22,1))); /* Chrome,Safari4+ */

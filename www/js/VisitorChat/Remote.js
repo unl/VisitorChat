@@ -98,11 +98,40 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         return false;
     },
 
+    //Require confirmation that a comment is to be submitted anon.
+    confirmAnonSubmit: function() {
+        var email = WDN.jQuery('#visitorChat_email').val();
+        
+        //If the email is empty, don't submit and append a warning to the form, otherwise continue on.
+        if (email != '') {
+            return true;
+        }
+        
+        //Check if they are confirming anon...
+        if (WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, no response needed') {
+            //Reset to say 'submit'.
+            WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+            return true;
+        }
+        
+        //Display error and request confirmation before continuing.
+        var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK?</div>";
+        
+        WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
+        WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
+        
+        return false;
+    },
+
     ajaxBeforeSubmit:function (arr, $form, options) {
         //Start an email convo now if need be.
         for (key in arr) {
             if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
-                VisitorChat.startEmail();
+                if (this.confirmAnonSubmit()) {
+                    this.startEmail();
+                } else {
+                    return false;
+                }
             }
         }
         
@@ -158,6 +187,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
 
         WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
+            WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
+            
+            if (WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, no response needed'
+                && WDN.jQuery('#visitorChat_email').val() != '') {
+                WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+            }
+            
             return true;
         });
 
