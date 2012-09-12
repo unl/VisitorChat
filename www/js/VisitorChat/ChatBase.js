@@ -113,7 +113,7 @@ var VisitorChat_ChatBase = Class.extend({
         this.chatOpened = true;
 
         clearTimeout(VisitorChat.loopID);
-
+        
         VisitorChat_Timer_ID = VisitorChat.loop();
     },
 
@@ -770,10 +770,7 @@ var VisitorChat_ChatBase = Class.extend({
         clearTimeout(VisitorChat.loopID);
         this.chatOpened = false;
 
-        //2. Close the chatbox.
-        WDN.jQuery("#visitorChat_container").remove();
-
-        //3. logout
+        //2. logout
         WDN.jQuery.ajax({
             url:this.serverURL + "logout" + "?format=json&PHPSESSID=" + this.phpsessid,
             xhrFields:{
@@ -784,7 +781,7 @@ var VisitorChat_ChatBase = Class.extend({
             }
         });
 
-        //4. clear vars.
+        //3. clear vars.
         this.latestMessageId = 0;
         this.chatStatus = false;
     },
