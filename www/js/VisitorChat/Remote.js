@@ -160,6 +160,24 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         
         return this._super(arr, $form, options);
     },
+    
+    initValidation: function() {
+        //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
+        WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
+        WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
+
+        //Validator
+        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+    },
+    
+    initPlaceHolders: function() {
+        //Load placeholders if not supported.
+        if (WDN.hasDocumentClass('no-placeholder')) {
+            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
+                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
+            });
+        }
+    },
 
     initWatchers:function () {
         /* This method is called several times thoughout
@@ -186,17 +204,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '.unl_visitorchat_form,' +
             '#visitorChat_confirmationEamilForm').unbind();
         
-        //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
-        WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
-        WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
-
-        //Load placeholders if not supported.
-        if (WDN.hasDocumentClass('no-placeholder')) {
-            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
-                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-            });
-        }
+        this.initPlaceHolders();
         
+        this.initValidation();
+
         //Reveal timestamp
         WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
             function () {
@@ -214,8 +225,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         //Make sure the chat input is only submitting as chat.
         WDN.jQuery("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
 
-        //Validator
-        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+        WDN.jQuery('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
+            if (!result) {
+                VisitorChat.initPlaceHolders();
+            }
+        });
 
         WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
             WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
