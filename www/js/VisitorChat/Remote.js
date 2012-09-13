@@ -145,6 +145,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
         
         this.initWatchers();
+
+        //remove the warning if they start to enter an email
+        WDN.jQuery("#visitorChat_email").keyup(function () {
+            WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
+            WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+        });
         
         return false;
     },
