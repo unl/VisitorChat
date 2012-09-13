@@ -135,6 +135,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
         
+        this.initWatchers();
+
+        //remove the warning if they start to enter an email
+        WDN.jQuery("#visitorChat_email").keyup(function () {
+            WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
+            WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+        });
+        
         return false;
     },
 
@@ -151,6 +159,24 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         
         return this._super(arr, $form, options);
+    },
+    
+    initValidation: function() {
+        //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
+        WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
+        WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
+
+        //Validator
+        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+    },
+    
+    initPlaceHolders: function() {
+        //Load placeholders if not supported.
+        if (WDN.hasDocumentClass('no-placeholder')) {
+            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
+                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
+            });
+        }
     },
 
     initWatchers:function () {
@@ -172,15 +198,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_sendAnotherConfirmation,' +
-            '#visitorChat_name').unbind();
-
-        //Load placeholders if not supported.
-        if (WDN.hasDocumentClass('no-placeholder')) {
-            WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
-                WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-            });
-        }
+            '#visitorChat_name,' +
+            '#visitorChat_footercontainer #visitorchat_clientLogin,' +
+            '#visitorchat_clientLogin,' +
+            '.unl_visitorchat_form,' +
+            '#visitorChat_confirmationEamilForm').unbind();
         
+        this.initPlaceHolders();
+        
+        this.initValidation();
+
         //Reveal timestamp
         WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
             function () {
@@ -198,8 +225,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         //Make sure the chat input is only submitting as chat.
         WDN.jQuery("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
 
-        //Validator
-        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+        WDN.jQuery('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
+            if (!result) {
+                VisitorChat.initPlaceHolders();
+            }
+        });
 
         WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
             WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
@@ -261,7 +291,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
                 return false;
             }
-
+            
+            //change the method to chat, so that the chat window will close.
+            //it MIGHT be open due to captcha.  
+            this.method = 'chat';
+            
             VisitorChat.stop();
 
             return false;
@@ -454,6 +488,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     onConversationStatus_Captcha:function (data) {
+        if (this.method == 'email') {
+            this.launchChatContainer();
+        }
+        
         this.displayLogoutButton();
         
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);

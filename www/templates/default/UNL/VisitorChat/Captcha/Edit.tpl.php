@@ -6,7 +6,7 @@
              src="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_visitorchat.php?sid=<?php echo md5(uniqid()) ?>"
              alt="CAPTCHA Image" align="left"/>
         <object class='VisitorChat_captcha_supportImg' type="application/x-shockwave-flash"
-                data="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.swf?bgcol=#ffffff&amp;icon_file=./images/audio_icon.png&amp;audio_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.php"
+                data="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.swf?bgcol=#ffffff&amp;icon_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/images/audio_icon.png&amp;audio_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.php"
                 height="15" width="15">
         <param name="movie"
                value="<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.swf?bgcol=#ffffff&amp;icon_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/images/audio_icon.png&amp;audio_file=<?php echo \UNL\VisitorChat\Controller::$url?>/captcha/securimage_play.php"/>
