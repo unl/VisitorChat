@@ -410,6 +410,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return false;
         }
 
+        WDN.jQuery('#visitorChat_end').hide();
+
         this._super(data);
 
         this.confirmationHTML = data['confirmationHTML'];
