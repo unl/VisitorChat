@@ -291,7 +291,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
                 return false;
             }
-
+            
+            //change the method to chat, so that the chat window will close.
+            //it MIGHT be open due to captcha.  
+            this.method = 'chat';
+            
             VisitorChat.stop();
 
             return false;
@@ -484,6 +488,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     onConversationStatus_Captcha:function (data) {
+        if (this.method == 'email') {
+            this.launchChatContainer();
+        }
+        
         this.displayLogoutButton();
         
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
