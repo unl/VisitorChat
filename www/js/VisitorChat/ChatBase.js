@@ -651,6 +651,12 @@ var VisitorChat_ChatBase = Class.extend({
             window.focus();
             VisitorChat.clearAlert();
         };
+
+        notification.onclose = function() {
+            //Focus the window.
+            window.focus();
+            VisitorChat.clearAlert();
+        };
         
         notification.show();
 
@@ -664,6 +670,7 @@ var VisitorChat_ChatBase = Class.extend({
                 if(notifyWindow.closed) {
                     clearInterval(timer);
                     window.focus();
+                    VisitorChat.clearAlert();
                 }
             }, 50);
         }
