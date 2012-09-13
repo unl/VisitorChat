@@ -37,8 +37,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
             WDN.jQuery("#visitorChat_messageBox").val('');
         }
+
+        if (WDN.jQuery("#visitorChat_name").val() == WDN.jQuery("#visitorChat_name").attr("placeholder")) {
+            WDN.jQuery("#visitorChat_name").val('');
+        }
+
+        if (WDN.jQuery("#visitorChat_email").val() == WDN.jQuery("#visitorChat_email").attr("placeholder")) {
+            WDN.jQuery("#visitorChat_email").val('');
+        }
         
         WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
+        
         this.start();
     },
 
@@ -134,6 +143,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
+        
+        this.initWatchers();
         
         return false;
     },
