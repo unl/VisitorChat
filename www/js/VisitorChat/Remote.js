@@ -37,17 +37,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
             WDN.jQuery("#visitorChat_messageBox").val('');
         }
-
-        if (WDN.jQuery("#visitorChat_name").val() == WDN.jQuery("#visitorChat_name").attr("placeholder")) {
-            WDN.jQuery("#visitorChat_name").val('');
-        }
-
-        if (WDN.jQuery("#visitorChat_email").val() == WDN.jQuery("#visitorChat_email").attr("placeholder")) {
-            WDN.jQuery("#visitorChat_email").val('');
-        }
         
         WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
-        
         this.start();
     },
 
@@ -189,7 +180,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_failedOptions_yes,' +
             '#visitorChat_sendAnotherConfirmation,' +
-            '#visitorChat_name').unbind();
+            '#visitorChat_name,' +
+            '#visitorChat_footercontainer #visitorchat_clientLogin,' +
+            '#visitorchat_clientLogin,' +
+            '.unl_visitorchat_form,' +
+            '#visitorChat_confirmationEamilForm').unbind();
+        
+        //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
+        WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
+        WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
 
         //Load placeholders if not supported.
         if (WDN.hasDocumentClass('no-placeholder')) {
