@@ -25,7 +25,7 @@
         </p>
             <ul>
                 <li>The URL of the site that you want to set up.</li>
-                <li>Names of personal that will be answering chats.</li>
+                <li>Names of personnel that will be answering chats.</li>
                 <li>The role for each person.  Possible chat roles include Operator (can only answer chats) and Manager (can answer chats and view site history)</li>
             </ul>
         <p>We are working on automating this setup process, however that work is not yet completed.</p>
@@ -38,7 +38,7 @@
     <dt id='features'>What are some features of the chat system?</dt>
     <dd>
         <p>
-            The chat system allows visitors to UNL templated web pages to chat with site personal as defined in the WDN Registry.  Some features include:</p>
+            The chat system allows visitors to UNL templated web pages to chat with site personnel as defined in the WDN Registry.  Some features include:</p>
             <ul>
                 <li>Once a visitor starts a conversation, it will follow them to any UNL templated web page.</li>
                 <li>New conversations will be routed to an operator that can help with the site that client started the conversation on.</li>
