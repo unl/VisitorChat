@@ -20,7 +20,7 @@
     </dd>
     <dt id='howtoadd'>How to I add my site to the chat system?</dt>
     <dd>
-        <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:s-mfairch4@gmail.com'>Michael Fairchild</a>.
+        <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:s-mfairch4@unl.edu'>Michael Fairchild</a>.
             The email should contain the following information.
         </p>
             <ul>
