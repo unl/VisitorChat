@@ -63,6 +63,8 @@ error_reporting(E_ALL);
 
 //A list of admins (UIDs). Admins are able to view all past conversations.
 \UNL\VisitorChat\Controller::$admins = array('s-mfairch4');
+
+\UNL\VisitorChat\CacheableURL::$tmpDir = dirname(__FILE__) . "/tmp/";
 /**********************************************************************************************************************
  * Email settings
  */
