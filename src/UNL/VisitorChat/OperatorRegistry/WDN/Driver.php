@@ -7,13 +7,13 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
     
     public static $cacheTimeout = 18000;  //seconds (5 hours)
     
-    function query($query)
+    function query($query, $doNotCache = false)
     {
         $url       = self::$baseURI . "?u=" . urlencode($query) . "&output=json";
         $cachePath = $this->getCachePath($url);
         
         //See if the query is cached, if it is, return it.
-        if ($sites = $this->getCache($cachePath)) {
+        if (!$doNotCache && $sites = $this->getCache($cachePath)) {
             return new SiteList($sites);
         }
         
@@ -28,8 +28,10 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
             return false;
         }
         
-        //Set the cache.
-        $this->setCache($cachePath, $sites);
+        if (!$doNotCache) {
+            //Set the cache.
+            $this->setCache($cachePath, $sites);
+        }
         
         return new SiteList($sites);
     }
