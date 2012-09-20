@@ -17,7 +17,8 @@ if (isset($_GET['for'])) {
     $for = $_GET['for'];
 }
 
-$filename = sys_get_temp_dir() . "/VisitorChatJS_" . md5(\UNL\VisitorChat\Controller::$url . $for) . ".php";
+$filename = \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_js_" . md5(\UNL\VisitorChat\Controller::$url . $for);
+
 if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($filename)) {
     echo file_get_contents($filename);
     exit();
