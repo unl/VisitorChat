@@ -5,11 +5,17 @@ abstract class CacheableURL
 {
     public static $cacheTimeout = 18000;  //seconds (5 hours)
     
+    public static $tmpDir       = "";
+    
     abstract function getCacheTitle();
     
     protected function getCachePath($url)
     {
-        $path = sys_get_temp_dir();
+        if (empty(self::$tmpDir)) {
+            throw new Exception('Cache temp directory not defined.');
+        }
+        
+        $path = self::$tmpDir;
 
         //Some paths may not have a trailing separator.  Other may?  weird.
         if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
