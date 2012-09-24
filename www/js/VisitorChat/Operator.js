@@ -648,14 +648,19 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             success:WDN.jQuery.proxy(function (data) {
                 var offline = new Array();
 
+                i = 0;
                 for (url in data) {
                     if ((data[url]['total_available'] - 1) < 1) {
-                        offline[url] = data[url]['title'];
+                        offline[i] = data[url]['title'];
                     }
+                    
+                    i++;
                 }
-
-                if (offline.length == 0) {
+                
+                if (offline.length > 0) {
                     this.displayStatusChangeAlert(offline);
+                } else {
+                    this.toggleOperatorStatus('USER');
                 }
 
             }, this),
