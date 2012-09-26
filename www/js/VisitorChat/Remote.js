@@ -162,9 +162,23 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
     
     initValidation: function() {
+        WDN.jQuery.validation.addMethod('validate-require-if-question',
+            'An email address is required if you ask a question so that we can respond.',
+            function(value, object) {
+                var message = WDN.jQuery('#visitorChat_messageBox').val();
+                if (message.indexOf("?") != -1 && value == "") {
+                    return false;
+                }
+                
+                return true;
+            });
+        
         //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
         WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
         WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
+        
+        //Require email for questions submitted via the footer comment form.
+        WDN.jQuery('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
 
         //Validator
         WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
