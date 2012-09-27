@@ -65,11 +65,9 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         //Create an array of all sites that need to be removed.
         $unsets = array();
         foreach ($sites as $index=>$site) {
-            echo $index . " : " . $site->getTitle() . PHP_EOL;
             foreach ($site->getMembers() as $member) {
                 if ($member->getUID() == \UNL\VisitorChat\User\Service::getCurrentUser()->uid) {
                     //Remove this site from the site list IF the user is not a chat user.
-                    echo $site->getTitle() . "  " . $member->getRole() . PHP_EOL;
                     if ($member->getRole() == 'other') {
                         $unsets[] = $index;
                         continue 2;
