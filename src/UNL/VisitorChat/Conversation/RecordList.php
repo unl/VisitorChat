@@ -37,7 +37,7 @@ class RecordList extends \Epoch\RecordList
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
-                           WHERE assignments.answering_site LIKE '%" . self::escapeString($url) . "%'
+                           WHERE assignments.answering_site = '" . self::escapeString($url) . "'
                            GROUP BY conversations.id
                            ORDER BY conversations.date_created ASC";
         
