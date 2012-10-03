@@ -12,7 +12,7 @@ abstract class CacheableURL
     protected function getCachePath($url)
     {
         if (empty(self::$tmpDir)) {
-            throw new Exception('Cache temp directory not defined.');
+            throw new \Exception('Cache temp directory not defined.');
         }
         
         $path = self::$tmpDir;
