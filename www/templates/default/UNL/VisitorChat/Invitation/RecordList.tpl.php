@@ -21,17 +21,37 @@ foreach ($context as $invitation) {
 			  <span style='float:right;'>" .
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
-			"</span>
+			"</span>";
               
-              <ul>";
+    $answeringSite = "";
     foreach ($invitation->getAssignments() as $assignment) {
-        $class = strtolower($assignment->status);
-        echo "<li class='$class'>
+        if ($answeringSite != $assignment->answering_site){
+            if (!empty($answeringSite)) {
+                echo "</ul></li></ul>";
+            }
+            
+            $answeringSite = $assignment->answering_site;
+            $site = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($answeringSite);
+            $site = $site->current();
+            echo "<ul class='answeringSites'>";
+            echo "<li class='answeringSite $class'> <strong>Answering Site</strong>: " . $site->getTitle();
+            echo "<ul class='assignments'>";
+            
+        }
+
+        $assignmentClass = strtolower($assignment->status);
+        echo "<li class='$assignmentClass'>
                   " . $assignment->getUser()->name .
-                  /*"<span class='timestamp'>" . date("g:i:s A", strtotime($assignment->date_created)) . "</span>*/
-              "</li>";
+                  //"<span class='timestamp'>" . date("g:i:s A", strtotime($assignment->date_created)) . "</span>" .
+                  
+            "</li>";
     }
-    echo "</ul></li>";
+    
+    if (!empty($answeringSite)) {
+        echo "</ul></li></ul>";
+    }
+    
+    echo "</li>";
 }
 ?>
 </ul>
