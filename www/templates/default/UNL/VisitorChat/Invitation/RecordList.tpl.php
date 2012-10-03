@@ -16,42 +16,26 @@ foreach ($context as $invitation) {
     }
     
     echo "<li class='$class'>
-              <span style='font-weight:bold;'>$name</span>
-			  <span style='display: block;font-size: 0.8em;'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."
+              <span class='name'>$name</span>
+			  <span class='sub'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."
 			  <span style='float:right;'>" .
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
 			"</span>";
+	echo "<ul>";
               
-    $answeringSite = "";
     foreach ($invitation->getAssignments() as $assignment) {
-        if ($answeringSite != $assignment->answering_site){
-            if (!empty($answeringSite)) {
-                echo "</ul></li></ul>";
-            }
-            
-            $answeringSite = $assignment->answering_site;
-            $site = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($answeringSite);
-            $site = $site->current();
-            echo "<ul class='answeringSites'>";
-            echo "<li class='answeringSite $class'> <strong>Answering Site</strong>: " . $site->getTitle();
-            echo "<ul class='assignments'>";
-            
-        }
-
+  		$answeringSite = $assignment->answering_site;
+		$site = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($answeringSite);
+		$site = $site->current();
+	
         $assignmentClass = strtolower($assignment->status);
-        echo "<li class='$assignmentClass'>
-                  " . $assignment->getUser()->name .
-                  //"<span class='timestamp'>" . date("g:i:s A", strtotime($assignment->date_created)) . "</span>" .
-                  
+        echo "<li class='$assignmentClass'>" .
+                  "<span class='name'>" . $assignment->getUser()->name . "</span>" .
+                  "<span class='sub'>" . $site->getTitle() . "</span>" .
             "</li>";
     }
-    
-    if (!empty($answeringSite)) {
-        echo "</ul></li></ul>";
-    }
-    
-    echo "</li>";
+	echo "</ul>";
 }
 ?>
 </ul>
