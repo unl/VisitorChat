@@ -127,10 +127,20 @@
 #maincontent
 #visitorChat_InvitationList > li {
 	box-shadow: 0px 3px 18px -7px black;
-	margin: 0 8px 8px;
+	margin: 0 9px 9px;
 	padding: 2px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+}
+
+#visitorChat_InvitationList li .name {
+	font-weight: bold;
+}
+
+#visitorChat_InvitationList li .sub {
+	display: block;
+	font-weight: normal;
+	font-size: 0.85em;
 }
 
 #visitorChat_InvitationList .completed {
