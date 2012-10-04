@@ -4,7 +4,7 @@
             <div id='visitorChat_conversation_header'>
                 <div id='visitorChat_url'>
                     <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span> <?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?><br />
-                    on <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
+                    on <a class='visitorChat_topicPage' href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
                 </div>
             </div>
             <div id='visitorChat_chatBox'>
