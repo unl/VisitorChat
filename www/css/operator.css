@@ -397,8 +397,12 @@
 }
 
 #visitorChat_url {
-	display: inline;
-	float: left;
+    display: block;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 580px;
 }
 
 #maincontent
