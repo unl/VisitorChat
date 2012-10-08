@@ -86,7 +86,7 @@ class Record extends \Epoch\Record
     {
         $invitee = $this->getInvitee();
         
-        return $invitee[0];
+        return urldecode($invitee[0]);
     }
     
     function getInvitee()
