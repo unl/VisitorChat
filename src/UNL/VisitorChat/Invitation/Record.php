@@ -75,7 +75,7 @@ class Record extends \Epoch\Record
      */
     function isForSite()
     {
-        if (filter_var($this->invitee, FILTER_VALIDATE_URL)) {
+        if (count($this->getInvitee()) == 1) {
             return true;
         }
         
@@ -84,9 +84,14 @@ class Record extends \Epoch\Record
     
     function getSiteURL()
     {
-        $data = explode('::', $this->invitee);
+        $invitee = $this->getInvitee();
         
-        return $data[0];
+        return $invitee[0];
+    }
+    
+    function getInvitee()
+    {
+        return explode("::", $this->invitee);
     }
     
     function getAccountUID()
@@ -95,7 +100,7 @@ class Record extends \Epoch\Record
             return false;
         }
         
-        $data = explode('::', $this->invitee);
+        $data = $this->getInvitee();
         
         if (!isset($data[1])) {
             return false;
@@ -104,7 +109,7 @@ class Record extends \Epoch\Record
         return $data[1];
     }
     
-    public static function createNewInvitation($conversationID, $invitee, $inviter = 1)
+    public static function  createNewInvitation($conversationID, $invitee, $inviter = 1)
     {
         $invitation = new self();
         $invitation->conversations_id = $conversationID;
