@@ -16,9 +16,10 @@ foreach ($context as $invitation) {
     }
     
     echo "<li class='$class'>
-              <span class='name'>$name</span>
-			  <span class='sub'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."
-			  <span style='float:right;'>" .
+              <span class='name tooltip' title='This is the invited-server'>$name</span>
+			  <span class='sub'>
+			  <span class='source tooltip' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
+			  <span class='time tooltip' style='float:right;' title='Time the invitation was sent'>" .
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
 			"</span>";
@@ -31,8 +32,8 @@ foreach ($context as $invitation) {
 	
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
-                  "<span class='name'>" . $assignment->getUser()->name . "</span>" .
-                  "<span class='sub'>" . $site->getTitle() . "</span>" .
+                  "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
+                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $site->getTitle() . "</span></span>" .
             "</li>";
     }
 	echo "</ul>";
