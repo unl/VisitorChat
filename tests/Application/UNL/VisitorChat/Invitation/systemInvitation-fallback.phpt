@@ -4,7 +4,7 @@ APPLICATION TEST - SystemInvitation - fallback support
 <?php
 require_once dirname(dirname(dirname(dirname(dirname(__FILE__))))) . '/loadConfig.php';
 
-$DBHelper->installDB("freshDB.sql");
+$DBHelper->installDB("FreshDB.sql");
 
 $conversation = new \UNL\VisitorChat\Conversation\Record();
 $conversation->initial_pagetitle = "Test";
