@@ -36,7 +36,7 @@ class RecordList extends \Epoch\RecordList
         $options['sql'] = "SELECT id
                            FROM invitations
                            WHERE conversations_id = " . (int)$conversationID . "
-                           ORDER BY date_created ASC";
+                           ORDER BY date_created DESC";
         
         return self::getBySql($options);
     }
