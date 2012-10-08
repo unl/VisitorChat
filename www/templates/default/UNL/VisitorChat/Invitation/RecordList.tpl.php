@@ -16,7 +16,7 @@ foreach ($context as $invitation) {
     }
     
     echo "<li class='$class'>
-              <span class='name tooltip' title='This is the invited-server'>$name</span>
+              <span class='name tooltip' title='This is who the invitation was sent to (can be either a site or a person)'>$name</span>
 			  <span class='sub'>
 			  <span class='source tooltip' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
 			  <span class='time tooltip' style='float:right;' title='Time the invitation was sent'>" .
