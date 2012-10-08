@@ -66,7 +66,7 @@ class Service
         
         //Create a new invitation if there are no operators, we are searching and the last invitation was not created by the system.
         if (!$currentOperators && $conversation->status == 'SEARCHING' && $autoinvite) {
-            Record::createNewInvitation($conversation->id, $conversation->initial_url);
+            Record::createNewInvitation($conversation->id, urlencode($conversation->initial_url));
         }
         
         //Load the assignment service.

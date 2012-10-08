@@ -81,23 +81,29 @@ class Service
      * 
      * @return bool
      */
-    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation)
+    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation, $operatorID = 0)
     {
-        if (filter_var($invitation->invitee, FILTER_VALIDATE_URL)) {
-            //search for a url
-            if (!$operator = $this->findAvaiableOperatorForURL($invitation->invitee, $invitation)) {
+        if (!$operatorID) {
+            if ($invitation->isForSite()) {
+                //search for a url
+                if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
+                    return false;
+                }
+            } else if ($to = $invitation->getAccountUID()) {
+                //get a specific operator
+                if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
+                    return false;
+                }
+                
+                //We expect to proceed with an array containing an operatorID and the responding site.
+                $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
+            } else {
                 return false;
             }
-        } else if ($to = $invitation->getAccountUID()) {
-            //get a specific operator
-            if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
-                return false;
-            }
-            
-            //We expect to proceed with an array containing an operatorID and the responding site.
-            $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
         } else {
-            return false;
+            $operator = array();
+            $operator['operatorID']  = $operatorID;
+            $operator['site']        = $invitation->getSiteURL();
         }
         
         //Create a new assignment.
@@ -113,13 +119,21 @@ class Service
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
         
         //Loop though those sites until am avaiable member can be found.
+        $totalSearched = 0;
         foreach ($sites as $site) {
+            //For personal assignments, do not fall back. (only allow system assignments to fall back).
+            if ($totalSearched == 1 && $invitation->users_id != 1) {
+                return false;
+            }
+            
             $operators = $this->generateOperatorsArrayForSite($site);
             
             //Break out of the loop once we find someone.
             if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
                 return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
             }
+
+            $totalSearched++;
         }
         
         //Try to find an avaiable operator though other channels as a last resort.
