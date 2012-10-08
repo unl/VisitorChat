@@ -113,13 +113,21 @@ class Service
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
         
         //Loop though those sites until am avaiable member can be found.
+        $totalSearched = 0;
         foreach ($sites as $site) {
+            //For personal assignments, do not fall back. (only allow system assignments to fall back).
+            if ($totalSearched == 1 && $invitation->users_id !== 1) {
+                return false;
+            }
+            
             $operators = $this->generateOperatorsArrayForSite($site);
             
             //Break out of the loop once we find someone.
             if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
                 return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
             }
+
+            $totalSearched++;
         }
         
         //Try to find an avaiable operator though other channels as a last resort.
