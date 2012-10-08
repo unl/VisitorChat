@@ -81,23 +81,29 @@ class Service
      * 
      * @return bool
      */
-    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation)
+    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation, $operatorID = 0)
     {
-        if ($invitation->isForSite()) {
-            //search for a url
-            if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
+        if (!$operatorID) {
+            if ($invitation->isForSite()) {
+                //search for a url
+                if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
+                    return false;
+                }
+            } else if ($to = $invitation->getAccountUID()) {
+                //get a specific operator
+                if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
+                    return false;
+                }
+                
+                //We expect to proceed with an array containing an operatorID and the responding site.
+                $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
+            } else {
                 return false;
             }
-        } else if ($to = $invitation->getAccountUID()) {
-            //get a specific operator
-            if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
-                return false;
-            }
-            
-            //We expect to proceed with an array containing an operatorID and the responding site.
-            $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
         } else {
-            return false;
+            $operator = array();
+            $operator['operatorID']  = $operatorID;
+            $operator['site']        = $invitation->getSiteURL();
         }
         
         //Create a new assignment.
