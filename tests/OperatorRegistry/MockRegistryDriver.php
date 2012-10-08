@@ -113,10 +113,10 @@ class MockSites extends ArrayIterator implements OperatorRegistry\SitesIterator
                                                                     'title'=>'Test-test',
                                                                     'members'=>array('OP1'=>array('roles' => array('operator')),
                                                                                      'OP2'=>array('roles' => array('manager')))),
-                                                                    'http://www.test.com/' => array('support_email'=>'test@test.com',
-                                                                                                    'title'=>'Test',
-                                                                                                    'members'=>array('OP3'=>array('roles' => array('operator')),
-                                                                                                                     'OP4'=>array('roles' => array('manager')))),);
+                               'http://www.test.com/' => array('support_email'=>'test@test.com',
+                                                               'title'=>'Test',
+                                                               'members'=>array('OP3'=>array('roles' => array('operator')),
+                                                                                'OP4'=>array('roles' => array('manager')))),);
                 break;
             case "http://www.test.com/":
                 $sites = array('http://www.test.com/' => array('support_email'=>'test@test.com',
