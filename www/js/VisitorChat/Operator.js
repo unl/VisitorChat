@@ -46,7 +46,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 WDN.jQuery(this).children('#currentOperatorStatus').html("You are unavailable");
             }
         });
-
+		
         //Every time the mouse moves, update the last active time
         WDN.jQuery('body').mousemove(function(){
             VisitorChat.lastActiveTime = new Date();
@@ -55,6 +55,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery(window).scroll(function(){
             VisitorChat.lastActiveTime = new Date();
         });
+		
+		// Initialize Tooltip for stuff!
+		WDN.initializePlugin('tooltip');
 
         VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
 
@@ -160,6 +163,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 VisitorChat.leaveConversation();
             }
         });
+		
+		if (WDN.jQuery().qtip !== undefined) {
+			var elems = WDN.jQuery('#visitorChat_InvitationList .tooltip[title]');
+
+			WDN.tooltip.addTooltip(elems);
+			
+			elems.trigger('mouseover');
+		}
+		
 
         this._super();
     },
