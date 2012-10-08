@@ -9,7 +9,7 @@
             }
             ?>
             <optgroup label='<?php echo $site->getTitle();?>' <?php echo $disabled?>>
-                <option value='<?php echo $site->getURL();?>'>All Operators for <?php echo $site->getTitle();?></option>
+                <option value='<?php echo urlencode($site->getURL());?>'>All Operators for <?php echo $site->getTitle();?></option>
                 <?php
                 foreach ($site->getMembers() as $member) {
                     if (!$account = $member->getAccount()) {
@@ -26,7 +26,7 @@
                         $disabled = "";
                     }
 
-                    echo "<option value='" . $site->getURL() . "::" . $account->uid . "' " . $disabled . ">" . $account->name . "</option>";
+                    echo "<option value='" . urlencode($site->getURL()) . "::" . $account->uid . "' " . $disabled . ">" . $account->name . "</option>";
                 }
                 ?>
                 </ul>

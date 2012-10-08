@@ -138,16 +138,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
   `type` enum('operator','client') COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Must be either client or operator',
-  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT "USER" ,
   `uid` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'UNL id to associate accounts',
   `max_chats` int(11) NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.',
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
-  `Invitations_id` int(11) DEFAULT NULL,
   `last_active` datetime DEFAULT NULL,
+  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT "USER",
   `popup_notifications` int(1) NULL default 0,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`),
-  KEY `fk_users_Invitations1` (`Invitations_id`)
+  UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 -- -----------------------------------------------------
@@ -181,8 +179,13 @@ ENGINE = InnoDB;
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `ip`, `date_created`, `date_updated`, `type`, `uid`, `max_chats`, `status`, `Invitations_id`) VALUES
-(1, 'System', NULL, NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', NULL, 0, 'BUSY', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `date_created`, `date_updated`, `type`, `uid`, `max_chats`, `status`, `last_active`, `status_reason`, `popup_notifications`) VALUES
+(1, 'System', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', NULL, 0, 'BUSY', null, 'USER', 0),
+(2, 'Operator1', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', 'OP1', 2, 'AVAILABLE', null, 'USER', 0),
+(3, 'Operator2', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', 'OP2', 2, 'AVAILABLE', null, 'USER', 0),
+(4, 'Operator3', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', 'OP3', 2, 'AVAILABLE', null, 'USER', 0),
+(5, 'Operator4', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'operator', 'OP4', 2, 'AVAILABLE', null, 'USER', 0),
+(6, 'Client1', NULL, '2012-05-10 10:06:40', '2012-05-10 10:06:40', 'client', NULL, 0, 'BUSY', null, 'USER', 0);
 
 --
 -- Constraints for dumped tables
@@ -215,9 +218,3 @@ ALTER TABLE `invitations`
 ALTER TABLE `messages`
   ADD CONSTRAINT `fk_messages_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_messages_conversations1` FOREIGN KEY (`conversations_id`) REFERENCES `conversations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `fk_users_Invitations1` FOREIGN KEY (`Invitations_id`) REFERENCES `invitations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
