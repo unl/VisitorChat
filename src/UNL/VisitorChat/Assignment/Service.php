@@ -116,7 +116,7 @@ class Service
         $totalSearched = 0;
         foreach ($sites as $site) {
             //For personal assignments, do not fall back. (only allow system assignments to fall back).
-            if ($totalSearched == 1 && $invitation->users_id !== 1) {
+            if ($totalSearched == 1 && $invitation->users_id != 1) {
                 return false;
             }
             
