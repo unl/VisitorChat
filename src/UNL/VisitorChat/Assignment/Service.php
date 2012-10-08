@@ -85,7 +85,7 @@ class Service
     {
         if ($invitation->isForSite()) {
             //search for a url
-            if (!$operator = $this->findAvaiableOperatorForURL($invitation->invitee, $invitation)) {
+            if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
                 return false;
             }
         } else if ($to = $invitation->getAccountUID()) {
