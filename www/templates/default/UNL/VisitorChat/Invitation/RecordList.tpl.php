@@ -6,12 +6,12 @@ foreach ($context as $invitation) {
     $class = strtolower($invitation->status);
     
     if ($invitation->isForSite()) {
-        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($invitation->invitee);
+        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($invitation->getSiteURL());
         
         if ($site = $sites->current()) {
             $name = $site->getTitle();
         }
-    } else if ($account = \UNL\VisitorChat\User\Record::getByUID($invitation->invitee)) {
+    } else if ($account = \UNL\VisitorChat\User\Record::getByUID($invitation->getAccountUID())) {
         $name = $account->name;
     }
     
