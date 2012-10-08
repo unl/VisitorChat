@@ -83,7 +83,7 @@ class Service
      */
     function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation)
     {
-        if (filter_var($invitation->invitee, FILTER_VALIDATE_URL)) {
+        if ($invitation->isForSite()) {
             //search for a url
             if (!$operator = $this->findAvaiableOperatorForURL($invitation->invitee, $invitation)) {
                 return false;
