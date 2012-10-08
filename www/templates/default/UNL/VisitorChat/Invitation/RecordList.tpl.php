@@ -16,11 +16,11 @@ foreach ($context as $invitation) {
     }
     
     echo "<li class='$class'>
-              <a class='name tooltip' title='This is the invited-server' href='#'>$name</a>
+              <span class='name tooltip' title='This is the invited-server'>$name</span>
 			  <span class='sub'>
-			  <a class='source tooltip' title='Who called the invitation' href='#'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</a>
-			  <a class='time tooltip' style='float:right;' title='Time the invitation was sent' href='#'>" .
-			    date("g:i:s A", strtotime($invitation->date_created)) . "</a>" .
+			  <span class='source tooltip' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
+			  <span class='time tooltip' style='float:right;' title='Time the invitation was sent'>" .
+			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
 			"</span>";
 	echo "<ul>";
@@ -32,8 +32,8 @@ foreach ($context as $invitation) {
 	
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
-                  "<a class='name tooltip' title='The person invited' href='#'>" . $assignment->getUser()->name . "</a>" .
-                  "<span class='sub'><a class='source tooltip' title='The site they are from' href=#'>" . $site->getTitle() . "</a></span>" .
+                  "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
+                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $site->getTitle() . "</span></span>" .
             "</li>";
     }
 	echo "</ul>";

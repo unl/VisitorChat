@@ -165,18 +165,18 @@
 }
 
 #maincontent
-#visitorChat_InvitationList .completed a.name,
+#visitorChat_InvitationList .name,
 #maincontent
-#visitorChat_InvitationList .completed a.source,
+#visitorChat_InvitationList .source,
 #maincontent
-#visitorChat_InvitationList .completed a.time { color:#0A7561; }
+#visitorChat_InvitationList .time { cursor: default; }
 
 #maincontent
-#visitorChat_InvitationList .completed a.name:hover,
+#visitorChat_InvitationList .name:hover,
 #maincontent
-#visitorChat_InvitationList .completed a.source:hover,
+#visitorChat_InvitationList .source:hover,
 #maincontent
-#visitorChat_InvitationList .completed a.time:hover { text-decoration: underline; }
+#visitorChat_InvitationList .time:hover { text-decoration: underline; }
 
 #maincontent
 #visitorChat_InvitationList .searching,
@@ -268,17 +268,17 @@
 }
 
 .visitorChat_client {
-	border-left: 4px solid #76CC52;
+	border-left: 2px solid #76CC52;
 	font-weight: bold;
 }
 
 .visitorChat_me {
 	background-color: #f8f8f8;
-	border-left: 4px solid #fff;
+	border-left: 2px solid #fff;
 }
 
 .visitorChat_them {
-	border-left: 4px solid #e0e0e0;
+	border-left: 2px solid #e0e0e0;
 }
 
 #visitorChat_chatBox ul li .stamp {
