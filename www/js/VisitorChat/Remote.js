@@ -339,7 +339,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
         
         //This will slide down the Name and Email fields, plus the Ask button
-        WDN.jQuery("#visitorChat_messageBox").keyup(function () {
+        WDN.jQuery("#visitorChat_messageBox").one("keyup", function () {
             if (typeof WDN.idm.displayName == 'function' && WDN.idm.displayName() != undefined) {
                 WDN.jQuery("#visitorChat_name").val(WDN.idm.displayName());
             }
