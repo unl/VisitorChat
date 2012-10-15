@@ -635,3 +635,7 @@
 	padding: 0.5em 1.6em 0 !important;
 	text-shadow: 0 1px white;
 }
+
+#visitorchat_clientLogin label {
+    display: hidden;
+}
