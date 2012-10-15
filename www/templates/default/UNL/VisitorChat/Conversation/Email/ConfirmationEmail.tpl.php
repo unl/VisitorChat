@@ -5,6 +5,7 @@
             <legend>Email Address</legend>
             <ul>
                 <li class='visitorChat_center'>
+                    <label for="visitorChat_confiramtionEmail">Your Eamil to send the transcript to</label>
                     <input type='text' id='visitorChat_confiramtionEmail' class='validate-email required-entry' name='email' placeholder='Email Address' />
                 </li>
             </ul>
