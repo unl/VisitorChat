@@ -1,5 +1,6 @@
 <ul>
     <li>Name: <?php echo $context->name; ?></li>
+    <li>Alias: <?php echo $context->getAlias(); ?></li>
 </ul>
 
 <h3>Sites</h3>

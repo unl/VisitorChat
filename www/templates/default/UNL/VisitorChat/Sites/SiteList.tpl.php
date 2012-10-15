@@ -14,7 +14,7 @@
         echo "<li>" . $site->getURL() . "
                  <ul>
                     <li>Your chat role: " . $role . "</li>
-                    <li><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('site/' . $site->getURL()) . "'>View Details</a></li>
+                    <li><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/' . $site->getURL()) . "'>View Details</a></li>
                  </ul>
              </li>";
     }
