@@ -21,7 +21,7 @@ function get_var($var, $context) {
     <fieldset>
         <ul>
             <li>
-                <label for="visitorchat_maxChats">Max Chats</label>
+                <label for="max_chats">Max Chats</label>
                 <input type="text" name="max_chats" id="max_chats" value="<?php echo get_var('max_chats', $context);?>"/>
             </li>
             <li>
