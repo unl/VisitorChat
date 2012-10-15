@@ -1,5 +1,3 @@
-<h2>Chats for <?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name?></h2>
-
 <ul class="historyList">
     <?php 
     foreach ($context as $conversation) {

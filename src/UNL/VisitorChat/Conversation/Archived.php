@@ -7,6 +7,8 @@ class Archived
     
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "History - Conversation";
+        
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
         //Get and set the conversation for viewing.

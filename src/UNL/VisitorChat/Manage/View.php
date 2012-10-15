@@ -7,6 +7,8 @@ class View
     
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "Dashboard";
+        
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
         $this->conversations = \UNL\VisitorChat\Conversation\RecordList::getOpenConversations(\UNL\VisitorChat\User\Service::getCurrentUser()->id);

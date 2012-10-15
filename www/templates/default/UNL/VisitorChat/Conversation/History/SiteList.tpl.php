@@ -1,5 +1,3 @@
-<h2>My Managed Sites</h2>
-
 <ul>
 <?php 
 foreach ($context as $site) {

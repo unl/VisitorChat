@@ -6,6 +6,8 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
     
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "Site history";
+        
         //require that an operator is logged in.
         \UNL\VisitorChat\Controller::requireOperatorLogin();
 
@@ -18,6 +20,8 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             throw new \Exception('not a valid url', 400);
         }
+
+        \UNL\VisitorChat\Controller::$pagetitle = "Site history for " . $this->url;
         
         //Check if the current user has permission to view the site.
         $canView = false;

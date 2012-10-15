@@ -52,6 +52,8 @@ class Controller extends \Epoch\Controller
     
     public static $environment = "PRODUCTION";
     
+    public static $pagetitle = "UNLchat";
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.

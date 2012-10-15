@@ -16,7 +16,6 @@ function get_var($var, $context) {
     //]]>
 </script>
 
-<h2>Settings</h2>
 <h3 class='zenform'>User settings</h3>
 <form id='visitorchat_maxChats' class='zenform' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
     <fieldset>
