@@ -136,4 +136,13 @@ class Record extends \Epoch\Record
         
         return $names[0];
     }
+    
+    function getAlias()
+    {
+        if (!empty($this->alias)) {
+            return $this->alias;
+        }
+        
+        return $this->getFirstName();
+    }
 }
