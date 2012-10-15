@@ -1,4 +1,3 @@
-<h2>FAQ</h2>
 <ul>
     <li><a href='#howtouse'>How do I use the chat system?</a></li>
     <li><a href='#howtoadd'>How to I add my site to the chat system?</a></li>

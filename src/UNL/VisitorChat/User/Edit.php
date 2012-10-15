@@ -5,6 +5,8 @@ class Edit extends \UNL\VisitorChat\User\Record
 {
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "User Settings";
+        
         \UNL\VisitorChat\Controller::requireLogin();
 
         if (isset($options['id']) && $object = \UNL\VisitorChat\User\Record::getByID($options['id'])) {
