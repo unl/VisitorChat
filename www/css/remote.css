@@ -408,7 +408,7 @@
 /*
   Labels for WCAG 2.0 validation (hide them because we provide them inline).
 */
-#visitorchat_clientLogin label, #visitorChat_messageForm label {
+#visitorchat_clientLogin label, #visitorChat_messageForm label, #visitorChat_confirmationEamilForm label {
     line-height: 0;
     position: absolute;
     text-indent: -99999em;
