@@ -639,6 +639,8 @@
 /*
   Labels for WCAG 2.0 validation (hide them because we provide them inline).
 */
-#visitorchat_clientLogin label, #visitorChat_messageForm label {
-    display: hidden;
+#visitorchat_clientLogin label, #visitorChat_messageForm label, #visitorChat_shareList label {
+    line-height: 0;
+    position: absolute;
+    text-indent: -99999em;
 }

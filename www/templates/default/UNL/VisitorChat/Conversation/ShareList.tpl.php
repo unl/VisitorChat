@@ -1,4 +1,5 @@
 <div id='visitorChat_shareList'>
+    <label for="share_to">Select who you want to share with</label>
     <select id='share_to' name='to' data-placeholder='Select a team or group' class='chzn-select'>
         <option value='default'></option>
         <?php
