@@ -636,6 +636,9 @@
 	text-shadow: 0 1px white;
 }
 
-#visitorchat_clientLogin label {
+/*
+  Labels for WCAG 2.0 validation (hide them because we provide them inline).
+*/
+#visitorchat_clientLogin label, #visitorChat_messageForm label {
     display: hidden;
 }
