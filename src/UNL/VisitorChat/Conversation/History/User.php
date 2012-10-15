@@ -4,6 +4,8 @@ class User extends \UNL\VisitorChat\Conversation\RecordList
 {
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "History for " . \UNL\VisitorChat\User\Service::getCurrentUser()->name;
+        
         //Require a login.
         \UNL\VisitorChat\Controller::requireLogin();
 

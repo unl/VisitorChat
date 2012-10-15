@@ -112,7 +112,7 @@
         <div id="wdn_content_wrapper">
             <div id="pagetitle">
                 <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1>UNLchat</h1>
+                <h1><?php echo \UNL\VisitorChat\Controller::$pagetitle; ?></h1>
                 <!-- InstanceEndEditable -->
             </div>
             <div id="maincontent" role="main">
