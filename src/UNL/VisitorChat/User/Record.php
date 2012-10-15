@@ -15,6 +15,7 @@ class Record extends \Epoch\Record
     public $status_reason;
     public $last_active;
     public $popup_notifications; //1=show, 2=no show
+    public $alias; //custom name to be shown to clients
     
     public static function getByID($id)
     {
