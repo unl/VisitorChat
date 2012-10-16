@@ -11,6 +11,6 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
 //Set up the controller.
 $controller = new \UNL\VisitorChat\Controller();
 
-foreach (\UNL\VisitorChat\Conversation\RecordList::getAllConversationsWithStatus('chatting') as $conversation) {
+foreach (\UNL\VisitorChat\Conversation\RecordList::getAllIdleConversations() as $conversation) {
     $conversation->idle();
 }
