@@ -1,3 +1,4 @@
+<ul>
     <?php
     foreach ($context->sites as $site) {
         $role = "none";
@@ -9,11 +10,12 @@
             
             $role = $member->getRole();
         }
-        echo "<div class='zenbox primary grid4'>" .
+        echo "<li><div class='zenbox primary grid4'>" .
          "<h3><a href='" . $site->getURL() . "'>" . $site->getTitle() . "</a>".
 		 "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/' . $site->getURL()) . "'>View Details</a></h3>
                  <ul>
                     <li>Your chat role: " . $role . "</li>" .
-                 "</ul></div>";
+                 "</ul></div></li>";
     }
     ?>
+</ul>
