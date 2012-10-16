@@ -250,6 +250,11 @@ class Controller extends \Epoch\Controller
     
     function run()
     {
+         //Don't try to run if we are running in cli.
+         if (self::$environment == "CLI") {
+             return false;
+         }
+         
          if (!isset($this->options['model'])) {
              throw new \Exception('Un-registered view', 404);
          }
