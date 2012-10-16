@@ -2,7 +2,11 @@
     <li>Title: <?php echo $context->site->getTitle();?></li>
     <li>URL: <?php echo $context->site->getURL();?></li>
     <li>Support Email: <?php echo $context->site->getEmail();?></li>
-    <li><a href='<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $context->site->getURL()); ?>'>History</a></li>
+    <?php
+    if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
+        echo "<li><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $context->site->getURL()) . "'>History</a></li>";
+    }
+    ?>
 </ul>
 
 <h3>Members</h3>
