@@ -7,7 +7,7 @@
     ?></h3>
 
 <ul>
-    <li>Support Email: <?php echo $context->site->getEmail();?></li>
+    <li>Support Email: <a href='mailto:<?php echo $context->site->getEmail();?>'><?php echo $context->site->getEmail();?></a></li>
 </ul>
 
 <h4>Members</h4>
