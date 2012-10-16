@@ -105,10 +105,19 @@ class Record extends \Epoch\Record
         return $totals;
     }
     
+    function getSites()
+    {
+        if (empty($this->uid)) {
+            return array();
+        }
+        
+        return \UNL\VisitorChat\Controller::$registryService->getSitesForUser($this->uid);
+    }
+    
     function getManagedSites()
     {
         if (empty($this->uid)) {
-            return false;
+            return array();
         }
         
         $sites = array();
