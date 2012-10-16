@@ -40,7 +40,6 @@
 	font-size: 18px;
 	letter-spacing: -0.04em;
     background-color: #B70302;
-    border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     color: #fff;
     height:20px;
@@ -54,7 +53,6 @@
     width: 723px;
     min-height: 485px;
     border-left: 5px solid #eee;
-    border-right: 5px solid #eee;
     margin-top: 5px;    /* Same number as first value in header padding */
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -76,9 +74,6 @@
     padding-bottom: 5px;
     margin-left: 10px;
     margin-top: 64px;
-    min-height: 200px;
-    
-    border-left: 3px solid #eee;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-bottomleft: 10px;
     -webkit-border-radius: 10px 0px 0px 10px;
@@ -264,7 +259,7 @@
 	text-shadow: 0 1px white;
 	line-height: 130%;
 	list-style: none;
-	margin-bottom: 1px;
+	margin-bottom: 2px;
 }
 
 .visitorChat_client {
@@ -274,7 +269,8 @@
 
 .visitorChat_me {
 	background-color: #f8f8f8;
-	border-left: 2px solid #fff;
+	border-left: 2px solid transparent;
+	border-radius: 10px;
 }
 
 .visitorChat_them {
@@ -319,6 +315,7 @@
 
 #visitorChat_messageBox {
 	border-color: #CdCdCd;
+	border-radius: 3px;
     display: block;
     margin: 0 9px;
     padding: 2px;
