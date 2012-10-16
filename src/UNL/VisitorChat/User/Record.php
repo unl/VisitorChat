@@ -15,6 +15,7 @@ class Record extends \Epoch\Record
     public $status_reason;
     public $last_active;
     public $popup_notifications; //1=show, 2=no show
+    public $alias; //custom name to be shown to clients
     
     public static function getByID($id)
     {
@@ -104,10 +105,19 @@ class Record extends \Epoch\Record
         return $totals;
     }
     
+    function getSites()
+    {
+        if (empty($this->uid)) {
+            return array();
+        }
+        
+        return \UNL\VisitorChat\Controller::$registryService->getSitesForUser($this->uid);
+    }
+    
     function getManagedSites()
     {
         if (empty($this->uid)) {
-            return false;
+            return array();
         }
         
         $sites = array();
@@ -134,5 +144,29 @@ class Record extends \Epoch\Record
         $names = explode(" ", $this->name);
         
         return $names[0];
+    }
+    
+    function getAlias()
+    {
+        if (!empty($this->alias)) {
+            return $this->alias;
+        }
+        
+        return $this->getFirstName();
+    }
+    
+    /*
+     * Checks to see if this user is a manager for a given site.
+     */
+    function managesSite($url)
+    {
+        //Check if the current user has permission to view the site.
+        foreach ($this->getManagedSites() as $site) {
+            if ($site->getURL() == $url) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

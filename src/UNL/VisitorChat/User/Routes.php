@@ -7,7 +7,8 @@ class Routes extends \RegExpRouter\RoutesInterface
     {
         return array('/^logout$/i' => 'Logout',
                      '/^user\/sites$/i' => 'SiteList',
-                     '/^user\/info$/i' => 'Info');
+                     '/^user\/info$/i' => 'Info',
+                    '/^users\/(?P<id>[\d]+)$/i' => 'View');
     }
     
     public static function getPostRoutes() 
