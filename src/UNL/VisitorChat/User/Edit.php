@@ -56,6 +56,10 @@ class Edit extends \UNL\VisitorChat\User\Record
             $this->max_chats = $post['max_chats'];
         }
 
+        if (isset($post['alias'])) {
+            $this->alias = $post['alias'];
+        }
+
         if (isset($post['popup_notifications'])) {
             if (!in_array($post['popup_notifications'], array('1', '0'))) {
                 throw new \Exception("Values for popup_notifications can be either 1 or 0", 400);

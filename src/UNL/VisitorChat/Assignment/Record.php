@@ -229,7 +229,7 @@ class Record extends \Epoch\Record
         $conversation = $this->getConversation();
         
         if ($conversation->getAcceptedAssignments()->count() == 0) {
-            $messageText = "Hello, my name is " . $this->getUser()->getFirstName() . ".  Please wait while I review your message so that I can assist you.";
+            $messageText = "Hello, my name is " . $this->getUser()->getAlias() . ".  Please wait while I review your message so that I can assist you.";
             
             //Create a new message.
             $message = new \UNL\VisitorChat\Message\Record();

@@ -57,6 +57,7 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversation
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.status_failed.sql"), 'adding the failed status to the assignments table');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.popup_notifications.sql"), 'adding the popup_notifcations to the users table');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/spam.sql"), 'adding spam info');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.alias.sql"), 'adding user alias');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {

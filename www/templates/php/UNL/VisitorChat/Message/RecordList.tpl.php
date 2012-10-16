@@ -5,7 +5,7 @@ foreach ($context as $message) {
     
     $name = $poster->name;
     if ($poster->type == 'operator') {
-        $name = $poster->getFirstName();
+        $name = $poster->getAlias();
     }
     
     $messages[$message->id]['message']        = str_replace("&lt;br /&gt;", "<br />", \UNL\VisitorChat\Controller::makeClickableLinks($message->message));

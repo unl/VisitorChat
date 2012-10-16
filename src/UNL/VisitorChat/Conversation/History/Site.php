@@ -25,10 +25,8 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
         
         //Check if the current user has permission to view the site.
         $canView = false;
-        foreach (\UNL\VisitorChat\User\Service::getCurrentUser()->getManagedSites() as $site) {
-            if ($site->getURL() == $this->url) {
-                $canView = true;
-            }
+        if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($this->url)) {
+            $canView = true;
         }
         
         if (\UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
