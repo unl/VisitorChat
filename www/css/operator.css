@@ -644,3 +644,21 @@
     position: absolute;
     text-indent: -99999em;
 }
+
+/* Site List styles */
+
+#visitorChat_container .zenbox h3 a {text-decoration: none;}
+#visitorChat_container .zenbox h3 a:hover {text-decoration: underline;}
+
+.zenbox h3 .zen-header-link {
+	float:right;
+	font-weight:normal;
+	font-size:0.9em;
+}
+
+p.sub-head {
+	font-size: 1.4em;
+	position: relative;
+	top: -1em;
+	color: #999;
+}

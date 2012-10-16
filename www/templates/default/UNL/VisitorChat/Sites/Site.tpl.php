@@ -1,15 +1,16 @@
-<ul>
-    <li>Title: <?php echo $context->site->getTitle();?></li>
-    <li>URL: <?php echo $context->site->getURL();?></li>
-    <li>Support Email: <?php echo $context->site->getEmail();?></li>
-    <?php
+<div class="zenbox primary grid6">
+<h3><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getTitle();?></a>
+<?php
     if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
-        echo "<li><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $context->site->getURL()) . "'>History</a></li>";
+        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $context->site->getURL()) . "'>History</a>";
     }
-    ?>
+    ?></h3>
+
+<ul>
+    <li>Support Email: <?php echo $context->site->getEmail();?></li>
 </ul>
 
-<h3>Members</h3>
+<h4>Members</h4>
 <ul>
     <?php 
         foreach ($context->site->getMembers() as $member) {
@@ -27,3 +28,4 @@
         }
     ?>
 </ul>
+</div>

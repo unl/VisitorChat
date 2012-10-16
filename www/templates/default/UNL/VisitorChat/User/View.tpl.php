@@ -1,8 +1,6 @@
-<ul>
-    <li>Name: <?php echo $context->name; ?></li>
-    <li>Alias: <?php echo $context->getAlias(); ?></li>
-</ul>
+<p class="sub-head">Alias: <?php echo $context->getAlias(); ?></p>
 
+<div class="zenbox primary grid4">
 <h3>Sites</h3>
 <ul>
     <?php
@@ -21,3 +19,4 @@
         }
     ?>
 </ul>
+</div>
