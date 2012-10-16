@@ -5,6 +5,12 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
     require dirname(dirname(__FILE__)) . '/config.sample.php';
 }
 
-foreach (\UNL\VisitorChat\Conversation\RecordList::getAllIdleConversations() as $conversation) {
+//We are running in CLI here.
+\UNL\VisitorChat\Controller::$environment = "CLI";
+
+//Set up the controller.
+$controller = new \UNL\VisitorChat\Controller();
+
+foreach (\UNL\VisitorChat\Conversation\RecordList::getAllConversationsWithStatus('chatting') as $conversation) {
     $conversation->idle();
 }
