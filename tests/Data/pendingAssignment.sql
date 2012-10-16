@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Invitations_id` int(11) DEFAULT NULL,
   `last_active` datetime DEFAULT NULL,
   `popup_notifications` int(1) NULL default 0,
+  `alias` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`),
   KEY `fk_users_Invitations1` (`Invitations_id`)
