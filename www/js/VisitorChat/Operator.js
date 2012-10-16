@@ -144,6 +144,43 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
             //Load the chat.
             VisitorChat.updateChat(this);
+			
+			//Add selected class for active client
+			var isSelected = WDN.jQuery(this).hasClass('selected');
+		
+			if (!isSelected) {
+		
+				var prevSelected = WDN.jQuery('#visitorChat_clients').find('.selected');
+				var nowSelected = WDN.jQuery(this);
+				var clientName = nowSelected.children('span').text();
+				//var clientInfo = prevSelected.children('.clientInfo');
+		
+				// Close 'clientInfo'
+				//clientInfo.fadeOut('fast', function() {
+				//	$(this).remove();
+				//});
+		
+				// Slide <span> back
+				prevSelected.children('span').animate({
+					paddingLeft: "5px"
+				}, 250);
+		
+				// Find 'selected, remove class'
+				prevSelected.removeClass('selected');
+		
+				// Slide out new client
+				nowSelected.children().animate({
+					paddingLeft: "15px"
+				}, 250);
+		
+				// Add 'selected' class
+				nowSelected.addClass('selected');
+		
+				// Bring up clientInfo
+				//nowSelected.add('.clientInfo');
+				//nowSelected.children('.clientInfo').fadeIn(500);
+			}
+			
 
             return false;
         });

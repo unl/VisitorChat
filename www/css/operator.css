@@ -59,21 +59,6 @@
 
 #clientChat {
     height: 100%;
-	background: #eeeeee;
-	background: -moz-linear-gradient(top,  #eeeeee 20%, #ffffff 20%);
-	
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#eeeeee), color-stop(20%,#ffffff));
-	
-	background: -webkit-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
-	
-	background: -o-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
-	
-	background: -ms-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
-	
-	background: linear-gradient(to bottom,  #eeeeee 20%,#ffffff 20%);
-	
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
-	border-left: 2px solid #EEE;
 	margin-left: -10px;
 	margin-right: 2px;
 }
@@ -89,8 +74,15 @@
     overflow: auto;
     height: 350px; 
 	background: white;
+	border-left: 2px solid #EEE;
 	border-radius: 10px 0 0 0;
 	padding-left: 10px;
+	position: relative;
+    z-index: 10;
+}
+
+#visitorChat_chatBox ul {
+	padding: 5px 0 !important;
 }
 
 #operatorOptions {
@@ -365,11 +357,11 @@
 	padding: 5px;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
-	-webkit-transition: all 0.1s ease-in-out;
-	-moz-transition: all 0.1s ease-in-out;
-	-ms-transition: all 0.1s ease-in-out;
-	-o-transition: all 0.1s ease-in-out;
-	transition: all 0.1s ease-in-out;
+	-webkit-transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out;
+	-ms-transition: all 0.25s ease-in-out;
+	-o-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
 	position: relative;
 	margin: 0 -5px;
 }
@@ -390,6 +382,36 @@
 #clientList ul li .conversationLink:active {
 	-webkit-box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
     box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+}
+
+#clientList ul li .conversationLink.selected {
+    background: #7abcff;
+    background: -moz-linear-gradient(top,  #7abcff 0%, #60abf8 44%, #4096ee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7abcff), color-stop(44%,#60abf8), color-stop(100%,#4096ee));
+    background: -webkit-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: -o-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: -ms-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: linear-gradient(to bottom,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 );
+    color: #fff;
+    border-top: 1px solid #4096EE;
+    border-bottom: 1px solid #4096EE;
+    text-shadow: 0 -1px 2px #0F529B;
+}
+
+#clientList ul li .conversationLink.selected:hover {
+    background: #7abcff;
+    background: -moz-linear-gradient(top,  #7abcff 0%, #60abf8 44%, #4096ee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7abcff), color-stop(44%,#60abf8), color-stop(100%,#4096ee));
+    background: -webkit-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: -o-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: -ms-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    background: linear-gradient(to bottom,  #7abcff 0%,#60abf8 44%,#4096ee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7abcff', endColorstr='#4096ee',GradientType=0 );
+    color: #fff;
+    border-top: 1px solid #4096EE;
+    border-bottom: 1px solid #4096EE;
+    text-shadow: 0 -1px 2px #0F529B;
 }
 
 #clientList .unread_message {
@@ -435,15 +457,34 @@
 
 #visitorChat_conversation_header {
 	height: 40px;
+	padding-bottom: 10px;
     border-bottom: 2px solid #eee;
 }
 
 #visitorChat_url {
     display: block;
     float: left;
-    overflow: hidden;
+    /*overflow: hidden; So we can round-out url corner */
     text-overflow: ellipsis;
     white-space: nowrap;
+	background: #EEE;
+	position: absolute;
+	z-index: 1;
+	padding: 5px 10px 30px 10px;
+	border-radius: 10px 10px 0 0;
+}
+
+#visitorChat_url::after {
+	position: absolute;
+	bottom: 20px;
+	width: 10px;
+	height: 10px;
+	content: " ";
+	border: 1px solid #EEE;
+	right: -10px;
+	border-radius: 0 10px 0 10px;
+	border-width: 0 0 1px 1px;
+	box-shadow: -2px 4px 0px #EEE;
 }
 
 #toggleOperatorStatus {
