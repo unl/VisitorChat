@@ -147,6 +147,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
             return false;
         });
+		
+		//Put selected client jQuery (ADD TO UNBIND)
 
         WDN.jQuery('#closeConversation').click(function () {
             if (confirm("Are you sure you want to end the conversation?")) {
@@ -319,7 +321,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             if (this.unreadMessages[conversation]) {
                 html = this.unreadMessages[conversation];
             }
-            WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
+            
+			// Don't display if '0' unread messages
+			if (html == '0') {
+				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).hide();
+			} else {
+				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
+			}
         }
     },
 
@@ -618,8 +626,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         //Display a closed message.
         var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
-        html = WDN.jQuery("#visterChat_conversation").prepend(html);
-        this.updateChatContainerWithHTML("#clientChat", html);
+        html = WDN.jQuery("#clientChat").prepend(html);
+        //this.updateChatContainerWithHTML("#clientChat", html);
 
         //set the opacity of all siblings
         WDN.jQuery('#visitorChat_closed').siblings().css({'opacity':'0.1'})

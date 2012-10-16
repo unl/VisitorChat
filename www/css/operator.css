@@ -50,44 +50,47 @@
 }
 
 #clientChatContainer {
-    width: 723px;
     min-height: 485px;
-    border-left: 5px solid #eee;
-    margin-top: 5px;    /* Same number as first value in header padding */
+    /*border-left: 5px solid #eee;*/
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    padding: 5px;
 }
 
 #clientChat {
-    float:left;
-    width:485px;
     height: 100%;
+	background: #eeeeee;
+	background: -moz-linear-gradient(top,  #eeeeee 20%, #ffffff 20%);
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(20%,#eeeeee), color-stop(20%,#ffffff));
+	
+	background: -webkit-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
+	
+	background: -o-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
+	
+	background: -ms-linear-gradient(top,  #eeeeee 20%,#ffffff 20%);
+	
+	background: linear-gradient(to bottom,  #eeeeee 20%,#ffffff 20%);
+	
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+	border-left: 2px solid #EEE;
+	margin-left: -10px;
+	margin-right: 2px;
 }
 
 #clientChatInfoContainer {
-    float:left;
-    width:220px;
-    padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-left: 10px;
-    margin-top: 64px;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-bottomleft: 10px;
     -webkit-border-radius: 10px 0px 0px 10px;
     border-radius: 10px 0px 0px 10px;
-    
 }
 
 #visitorChat_chatBox {
-	margin: 5px 0;
-	margin-top: -10px;
-	padding: 0 5px;
     overflow: auto;
-    height: 350px;
-    
+    height: 350px; 
+	background: white;
+	border-radius: 10px 0 0 0;
+	padding-left: 10px;
 }
 
 #operatorOptions {
@@ -270,7 +273,7 @@
 .visitorChat_me {
 	background-color: #f8f8f8;
 	border-left: 2px solid transparent;
-	border-radius: 10px;
+	border-radius: 4px;
 }
 
 .visitorChat_them {
@@ -329,28 +332,90 @@
 	/*display: inline;*/
 }
 
-#visitorChat_rightSide {
-    width: 190px;
-    height: 492px;
-    border-left: 3px solid #eee;
-    float: right;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	-webkit-border-radius: 10px 0px 0px 10px;
-	border-radius: 10px 0px 0px 10px;
-	padding: 4px 10px;
+#visitorChat_clients {
+    height: 350px;
+	background: #FFF9EA;
+	border: 1px solid #BBAD8C;
+	width: 138px !important; /* For border to fit grid */
+	overflow: auto;
+	text-shadow: 0 1px white;
+	border-radius: 10px;
+	box-shadow: inset 0 2px 5px -2px #B1A078;
 }
 
-#visitorChat_rightSide h2 {
-	padding-top: 2px;
+#visitorChat_clients h2 {
+	font-size: 1.5em;
+	color: #664F1E !important;
+	padding: 0.4em 5px;
 }
 
 #clientList {
-
+	padding: 0 5px;
 }
 
 #clientList ul li {
+	color: #664F1E;
 	margin-bottom: 0.35em;
+	position: relative;
+}
+
+#clientList ul li .conversationLink {
+	display: block;
+	color: #664F1E;
+	padding: 5px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	-webkit-transition: all 0.1s ease-in-out;
+	-moz-transition: all 0.1s ease-in-out;
+	-ms-transition: all 0.1s ease-in-out;
+	-o-transition: all 0.1s ease-in-out;
+	transition: all 0.1s ease-in-out;
+	position: relative;
+	margin: 0 -5px;
+}
+
+#clientList ul li .conversationLink:hover {
+	background-color: #FFF9EA;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFF9EA), color-stop(100%, #DDD2B7));
+    background-image: -webkit-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -moz-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -ms-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -o-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: linear-gradient(top, #FFF9EA, #DDD2B7);
+}
+
+#clientList ul li .conversationLink:active {
+	-webkit-box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+}
+
+#clientList .unread_message {
+	color: white;
+	background: #F02E2E;
+	padding: 1px 3px;
+	border-radius: 3px;
+	box-shadow: inset 0 6px 5px -5px white;
+	border: 1px solid #F02E2E;
+	text-shadow: 0 1px 2px #D30000;
+	margin-left: 0.2em;
+	position: absolute;
+	top: 0.4em;
+	right: 0;
+}
+
+#clientList .unread_message::after {
+	width: 0;
+	height: 0;
+	border-bottom: 5px solid transparent;
+	border-top: 5px solid transparent;
+	border-right: 5px solid #F02E2E;
+	content: "";
+	position: absolute;
+	left: -0.4em;
+	top: 0.3em;
 }
 
 #chatRequestCountDown {
@@ -369,11 +434,7 @@
 }
 
 #visitorChat_conversation_header {
-	width: 705px;
 	height: 40px;
-	margin-left: 5px;
-    margin-bottom: 23px;
-	padding: 4px;
     border-bottom: 2px solid #eee;
 }
 
@@ -383,15 +444,18 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 580px;
 }
 
-#maincontent
 #toggleOperatorStatus {
-	color: white !important;
 	display: block;
-	margin-left: 766px;
+	position: absolute;
+    top: -3.5em;
+	right: 0;
     width: 190px;
+}
+
+#currentOperatorStatus {
+	color: white !important;
 }
 
 .closed {
@@ -461,6 +525,8 @@
     -moz-box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
     box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
     font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	color: white;
+	text-decoration: none;
     line-height: 1;
     padding: 7px 0 8px 0;
     text-align: center;
