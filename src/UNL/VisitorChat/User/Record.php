@@ -154,4 +154,19 @@ class Record extends \Epoch\Record
         
         return $this->getFirstName();
     }
+    
+    /*
+     * Checks to see if this user is a manager for a given site.
+     */
+    function managesSite($url)
+    {
+        //Check if the current user has permission to view the site.
+        foreach ($this->getManagedSites() as $site) {
+            if ($site->getURL() == $url) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
