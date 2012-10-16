@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_active` datetime DEFAULT NULL,
   `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT "USER",
   `popup_notifications` int(1) NULL default 0,
+  `alias` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
