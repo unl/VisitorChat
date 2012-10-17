@@ -376,7 +376,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             }
             
 			// Don't display if '0' unread messages
-			if (html == '0') {
+			if (html === '0' || html === '') {
 				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).hide();
 			} else {
 				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
