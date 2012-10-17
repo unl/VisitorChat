@@ -90,6 +90,8 @@
 	margin-bottom: 5px;
 }
 
+#clientChat_Invitations h2 { opacity: 0; }
+
 #maincontent
 #visitorChat_InvitationList,
 #maincontent
@@ -338,10 +340,12 @@
 #visitorChat_clients h2 {
 	font-size: 1.5em;
 	color: #664F1E !important;
-	padding: 0.4em 5px;
+	padding: 0.4em 5px 0 5px;
+	display: none;
 }
 
 #clientList {
+	margin-top: 10px;
 	padding: 0 5px;
 }
 
@@ -632,6 +636,9 @@
 #visitorChat_url_title {
 	color: #535353;
 	display: inline-block;
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	font-size: 1.35em;
 	font-weight: bold;
 	margin-bottom: 0.3em;
@@ -704,6 +711,10 @@
 
 #maincontent
 .visitorChat_topicPage {
+	display: inline-block;
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	background-color: #C50202;
 	color: white;
 	padding: 1px 3px;

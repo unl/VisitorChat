@@ -132,7 +132,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #visitorChat_clients, #clientChat_Invitations').unbind();
 
         //Watch coversation link clicks.  Loads up the conversation all ajaxy
         WDN.jQuery('.conversationLink').click(function () {
@@ -185,7 +185,23 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return false;
         });
 		
-		//Put selected client jQuery (ADD TO UNBIND)
+		//Header on Hover
+		WDN.jQuery('#visitorChat_clients').hover(
+		function(){ // When hovering
+			WDN.jQuery(this).children('h2').slideDown(250);
+			
+		}, function(){ // When hover-out
+			WDN.jQuery(this).children('h2').slideUp(250);
+		});
+		
+		WDN.jQuery('#clientChat_Invitations').hover(
+		function(){ // When hovering
+			WDN.jQuery(this).children('h2').animate({opacity: 1}, 250);
+			
+		}, function(){ // When hover-out
+			WDN.jQuery(this).children('h2').animate({opacity: 0}, 250);
+		});
+	
 
         WDN.jQuery('#closeConversation').click(function () {
             if (confirm("Are you sure you want to end the conversation?")) {
