@@ -170,7 +170,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 		
 				// Slide out new client
 				nowSelected.children().animate({
-					paddingLeft: "15px"
+					paddingLeft: "20px"
 				}, 250);
 		
 				// Add 'selected' class
@@ -186,21 +186,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         });
 		
 		//Header on Hover
-		WDN.jQuery('#visitorChat_clients').hover(
-		function(){ // When hovering
-			WDN.jQuery(this).children('h2').slideDown(250);
-			
-		}, function(){ // When hover-out
-			WDN.jQuery(this).children('h2').slideUp(250);
-		});
-		
-		WDN.jQuery('#clientChat_Invitations').hover(
-		function(){ // When hovering
-			WDN.jQuery(this).children('h2').animate({opacity: 1}, 250);
-			
-		}, function(){ // When hover-out
-			WDN.jQuery(this).children('h2').animate({opacity: 0}, 250);
-		});
+	
 	
 
         WDN.jQuery('#closeConversation').click(function () {

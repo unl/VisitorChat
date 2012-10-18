@@ -61,6 +61,17 @@
     height: 100%;
 	margin-left: -10px;
 	margin-right: 2px;
+	box-shadow: -11px 0 0px -10px #4096EE;
+}
+
+#clientChat::after {
+	content: " ";
+	height: 83px;
+	width: 8px;
+	background: white;
+	position: absolute;
+	bottom: 0;
+	left: 150px;
 }
 
 #clientChatInfoContainer {
@@ -79,7 +90,6 @@
 	padding-left: 10px;
 	position: relative;
     z-index: 10;
-	box-shadow: -11px 0px 0 -10px #4096EE;
 }
 
 #visitorChat_chatBox ul {
@@ -90,8 +100,6 @@
 	display: block;
 	margin-bottom: 5px;
 }
-
-#clientChat_Invitations h2 { opacity: 0; }
 
 #maincontent
 #visitorChat_InvitationList,
@@ -342,7 +350,6 @@
 	font-size: 1.5em;
 	color: #664F1E !important;
 	padding: 0.4em 5px 0 5px;
-	display: none;
 }
 
 #clientList {
@@ -392,12 +399,14 @@
 #clientList ul li .conversationLink.selected {
     background: #7abcff;
     color: #fff;
-    border-top: 1px solid #4096EE;
-    border-bottom: 1px solid #4096EE;
+    border: 1px solid #4096EE;
+    border-right: none;
     text-shadow: 0 -1px 2px #0F529B;
 	margin-right: -20px;
 	position: relative;
 	z-index: 100;
+	border-radius: 5px 0 0 0;
+	margin-left: -12px;
 }
 
 #clientList ul li .conversationLink.selected:hover {
@@ -406,6 +415,18 @@
     border-top: 1px solid #4096EE;
     border-bottom: 1px solid #4096EE;
     text-shadow: 0 -1px 2px #0F529B;
+}
+
+#clientList ul li .conversationLink.selected::before {
+	content: " ";
+	position: absolute;
+	left: -1px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 6px 7px 0;
+	border-color: transparent #4096EE transparent transparent;
+	bottom: -8px;
 }
 
 .conversationLink span {
@@ -481,7 +502,7 @@
 
 #visitorChat_url::after {
 	position: absolute;
-	bottom: 23px;
+	bottom: 24px;
 	width: 10px;
 	height: 10px;
 	content: " ";
@@ -635,8 +656,8 @@
 }
 
 #visitorChat_url_title {
+	display: block;
 	color: #fff;
-	display: inline-block;
 	max-width: 350px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -712,7 +733,7 @@
 
 #maincontent
 .visitorChat_topicPage {
-	display: inline-block;
+	display: block;
 	max-width: 350px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -721,8 +742,16 @@
 }
 
 #maincontent
-.visitorChat_topicPage:hover {
+.visitorChat_topicPage a:link,
+#maincontent
+.visitorChat_topicPage a:active,
+#maincontent
+.visitorChat_topicPage a:visited {
 	color: white;
+}
+
+#maincontent
+.visitorChat_topicPage a:hover {
 	text-decoration: underline;
 }
 
