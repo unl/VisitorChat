@@ -1,5 +1,5 @@
-<div id='clientChatContainer'>
-    <div id="clientChat">
+<div class="grid9 first" id='clientChatContainer'>
+    <div id="clientChat" style="margin:0">
         <div id='visterChat_conversation'>
             <div id='visitorChat_conversation_header'>
                 <div id='visitorChat_url'>
@@ -18,7 +18,8 @@
             </div>
         </div>
     </div>
-    <div id="clientChatInfoContainer">
+</div>
+<div class="grid3" id="clientChatInfoContainer">
         <div id="clientChat_GeneralInformation">
             <h2>Details</h2>
             <?php
@@ -59,7 +60,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div id='clientInfo'>
+            <div id='clientInfo' style="position:static">
                 <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject()));?>
             </div>
         </div>
@@ -67,5 +68,4 @@
             <?php echo \Epoch\Controller::$templater->render($context->conversation->getInvitations())?>
         </div>
     </div>
-</div>
-<div style="clear:both"></div>
+<!--<div style="clear:both"></div>-->

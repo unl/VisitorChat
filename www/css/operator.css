@@ -401,6 +401,7 @@
     color: #fff;
     border: 1px solid #4096EE;
     border-right: none;
+	box-shadow: inset 5px 0 10px -5px white;
     text-shadow: 0 -1px 2px #0F529B;
 	margin-right: -20px;
 	position: relative;
@@ -477,6 +478,51 @@
     width: 100%;
 }
 
+#clientInfo {
+	display: none;
+	background: white;
+	position: absolute;
+	z-index: 20;
+	top: 0;
+	left: 13.7em;
+	border-radius: 5px 25px 5px 25px;
+	border: 1px solid #7ABCFF;
+	color: #858585;
+	padding: 5px;
+	border-top: none; /* Border compensation */
+	box-shadow: rgba(0, 0, 0, 0.5) 6px 6px 15px 0px;
+}
+
+#clientInfo > span {
+	display: block;
+	cursor: default;
+	font-size: 1.35em;
+	color: #0F529B;
+	font-weight: bold;
+	margin-bottom: 5px;
+	text-shadow: 1px 1px 0px white, 2px 2px 0px rgba(0, 0, 0, 0.15);
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#clientInfo p {
+	margin-bottom: 5px;
+	font-size: 0.95em;
+}
+
+#clientInfo p.address {
+	text-align: center;
+	font-size: 0.8em;
+	margin-bottom: 0;
+	color: #BBB;
+}
+
+#clientInfo p > strong {
+	text-shadow: 1px 1px 0px white, 2px 2px 0px rgba(0, 0, 0, 0.15);
+	color: #666;
+}
+
 #visitorChat_conversation_header {
 	height: 40px;
 	padding-bottom: 10px;
@@ -502,7 +548,7 @@
 
 #visitorChat_url::after {
 	position: absolute;
-	bottom: 24px;
+	bottom: 2.08em;
 	width: 10px;
 	height: 10px;
 	content: " ";
@@ -657,6 +703,7 @@
 
 #visitorChat_url_title {
 	display: block;
+	cursor: default;
 	color: #fff;
 	max-width: 350px;
 	overflow: hidden;

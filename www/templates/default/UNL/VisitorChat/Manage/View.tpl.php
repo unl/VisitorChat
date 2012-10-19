@@ -13,8 +13,4 @@
 <div class="grid3" id="clientChatInfoContainer">
 	<div id="clientChat_Invitations">
 	</div>
-    
-    <div id='clientInfo' style="opacity:0.1;">
-	</div>
 </div>
-

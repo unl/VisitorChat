@@ -13,6 +13,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     lastActiveTime: new Date(), //The exact date that the operator was last active
     idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
     idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
+	clientInfo: "",
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -132,7 +133,18 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #visitorChat_clients, #clientChat_Invitations').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #visitorChat_clients, #clientChat_Invitations, #clientInfo').unbind();
+		
+		// Hover for Client Info
+		WDN.jQuery('#visitorChat_url_title > span').mouseover(function(){
+			WDN.jQuery('#clientInfo').fadeIn('fast', function(){
+				WDN.jQuery(this).hover(function(){
+					WDN.jQuery(this).show();
+				}, function(){
+					WDN.jQuery(this).fadeOut('fast');
+				});
+			});
+		});
 
         //Watch coversation link clicks.  Loads up the conversation all ajaxy
         WDN.jQuery('.conversationLink').click(function () {
@@ -185,8 +197,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return false;
         });
 		
-		//Header on Hover
-	
 	
 
         WDN.jQuery('#closeConversation').click(function () {
@@ -613,7 +623,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         if (data['client_html'] !== undefined && data['client_html']) {
-            WDN.jQuery('#clientInfo').html(data['client_html']);
+			//alert('here');
+			this.clientInfo = data['client_html'];
+            //WDN.jQuery('#clientInfo').html(data['client_html']);
         }
 
         if (data['operators'] !== undefined) {
