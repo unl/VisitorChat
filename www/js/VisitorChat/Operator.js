@@ -165,12 +165,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 				var prevSelected = WDN.jQuery('#visitorChat_clients').find('.selected');
 				var nowSelected = WDN.jQuery(this);
 				var clientName = nowSelected.children('span').text();
-				//var clientInfo = prevSelected.children('.clientInfo');
-		
-				// Close 'clientInfo'
-				//clientInfo.fadeOut('fast', function() {
-				//	$(this).remove();
-				//});
 		
 				// Slide <span> back
 				prevSelected.children('span').animate({
@@ -187,10 +181,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 		
 				// Add 'selected' class
 				nowSelected.addClass('selected');
-		
-				// Bring up clientInfo
-				//nowSelected.add('.clientInfo');
-				//nowSelected.children('.clientInfo').fadeIn(500);
 			}
 			
 
