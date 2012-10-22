@@ -6,8 +6,10 @@ class Edit extends \UNL\VisitorChat\User\Record
     function __construct($options = array())
     {
         \UNL\VisitorChat\Controller::$pagetitle = "User Settings";
-        
-        \UNL\VisitorChat\Controller::requireLogin();
+
+        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
+            throw new \Exception("You must be logged in to do this.", 401);
+        }
 
         if (isset($options['id']) && $object = \UNL\VisitorChat\User\Record::getByID($options['id'])) {
             $this->synchronizeWithArray($object->toArray());
@@ -18,10 +20,6 @@ class Edit extends \UNL\VisitorChat\User\Record
     
     function handlePost($post = array())
     {
-        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
-            throw new \Exception("You must be logged in to do this.", 401);
-        }
-
         if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->id) {
             throw new \Exception("you do not have permission to edit this.", 403);
         }
