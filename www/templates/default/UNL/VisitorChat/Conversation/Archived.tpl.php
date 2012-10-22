@@ -1,10 +1,14 @@
+<?php  $ua = $context->conversation->parseUserAgent(); ?>
 <div class="grid9 first" id='clientChatContainer'>
     <div id="clientChat" style="margin:0">
         <div id='visterChat_conversation'>
             <div id='visitorChat_conversation_header'>
                 <div id='visitorChat_url'>
-                    <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span> <?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?><br />
-                    on <a class='visitorChat_topicPage' href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
+                    <span id='visitorChat_url_title'>
+					<span><?php echo $context->conversation->getClient()->name;?></span>
+                    </span>
+                    <span class="visitorChat_topicPage">
+                    at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
                 </div>
             </div>
             <div id='visitorChat_chatBox'>
@@ -38,7 +42,7 @@
             <table class='zentable neutral'>
                 <thead>
                     <tr>
-                        <th colspan="2">Chat Information</th>
+                        <th colspan="2"><?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,11 +62,16 @@
                         <td>Duration:</td>
                         <td><?php echo $duration; ?></td>
                     </tr>
+                    <tr>
+                    	<td>Browser:</td>
+                        <td><?php echo $ua->browser;?></td>
+                    </tr>
+                    <tr>
+                        <td>OS:</td>
+                        <td><?php echo $ua->os;?></td>
+                    </tr>
                 </tbody>
             </table>
-            <div id='clientInfo' style="position:static">
-                <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject()));?>
-            </div>
         </div>
         <div id="clientChat_Invitations">
             <?php echo \Epoch\Controller::$templater->render($context->conversation->getInvitations())?>

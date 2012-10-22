@@ -133,7 +133,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #visitorChat_clients, #clientChat_Invitations, #clientInfo').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo').unbind();
 		
 		// Hover for Client Info
 		WDN.jQuery('#visitorChat_url_title > span').mouseover(function(){
@@ -158,16 +158,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             VisitorChat.updateChat(this);
 			
 			//Add selected class for active client
-			var isSelected = WDN.jQuery(this).hasClass('selected');
+			var isSelected = WDN.jQuery(this).parent().hasClass('selected');
 		
 			if (!isSelected) {
 		
-				var prevSelected = WDN.jQuery('#visitorChat_clients').find('.selected');
-				var nowSelected = WDN.jQuery(this);
-				var clientName = nowSelected.children('span').text();
+				var prevSelected = WDN.jQuery('#clientList').find('.selected');
+				var nowSelected = WDN.jQuery(this).parent();
+				var clientName = WDN.jQuery(this).children('span').text();
 		
 				// Slide <span> back
-				prevSelected.children('span').animate({
+				prevSelected.children().children('span').animate({
 					paddingLeft: "5px"
 				}, 250);
 		
@@ -175,7 +175,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 				prevSelected.removeClass('selected');
 		
 				// Slide out new client
-				nowSelected.children().animate({
+				nowSelected.children().children('span').animate({
 					paddingLeft: "20px"
 				}, 250);
 		

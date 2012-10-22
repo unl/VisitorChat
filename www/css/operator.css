@@ -67,7 +67,7 @@
 #clientChat::after {
 	content: " ";
 	height: 83px;
-	width: 8px;
+	width: 5px;
 	background: white;
 	position: absolute;
 	bottom: 0;
@@ -87,6 +87,7 @@
 	background: white;
 	border-left: 2px solid #7ABCFF;
 	border-radius: 10px 0 0 0;
+	margin-bottom: 5px;
 	padding-left: 10px;
 	position: relative;
     z-index: 10;
@@ -327,8 +328,8 @@
     padding: 2px;
     overflow-y: auto;
     resize: none;
-    height: 61px;
-    width: 456px;
+    height: 60px;
+    width: 98%;
 }
 
 #visitorChat_messageForm fieldset { /* For Sumbit button */
@@ -396,12 +397,16 @@
     box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
 }
 
-#clientList ul li .conversationLink.selected {
+#clientList ul li.selected {
+    box-shadow: 0px 2px 9px 1px rgba(0, 0, 0, 0.2);
+}
+
+#clientList ul li.selected .conversationLink {
     background: #7abcff;
     color: #fff;
     border: 1px solid #4096EE;
     border-right: none;
-	box-shadow: inset 5px 0 10px -5px white, 0px 3px 5px -3px rgba(0, 0, 0, 0.5);
+	box-shadow: inset 5px 0 10px -5px white;
     text-shadow: 0 -1px 2px #0F529B;
 	margin-right: -20px;
 	position: relative;
@@ -410,7 +415,7 @@
 	margin-left: -12px;
 }
 
-#clientList ul li .conversationLink.selected:hover {
+#clientList ul li.selected .conversationLink:hover {
     background: #7abcff;
     color: #fff;
     border-top: 1px solid #4096EE;
@@ -418,7 +423,7 @@
     text-shadow: 0 -1px 2px #0F529B;
 }
 
-#clientList ul li .conversationLink.selected::before {
+#clientList ul li.selected .conversationLink::before {
 	content: " ";
 	position: absolute;
 	left: -1px;
