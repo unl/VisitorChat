@@ -401,7 +401,7 @@
     color: #fff;
     border: 1px solid #4096EE;
     border-right: none;
-	box-shadow: inset 5px 0 10px -5px white;
+	box-shadow: inset 5px 0 10px -5px white, 0px 3px 5px -3px rgba(0, 0, 0, 0.5);
     text-shadow: 0 -1px 2px #0F529B;
 	margin-right: -20px;
 	position: relative;
@@ -484,7 +484,7 @@
 	position: absolute;
 	z-index: 20;
 	top: 0;
-	left: 13.7em;
+	left: 160px;
 	border-radius: 5px 25px 5px 25px;
 	border: 1px solid #7ABCFF;
 	color: #858585;
@@ -541,7 +541,7 @@
 	z-index: 1;
 	padding: 5px 10px 30px 10px;
 	border-radius: 10px 10px 0 0;
-	box-shadow: 0 0 0 1px #4096EE;
+	box-shadow: 0 0 0 1px #4096EE, inset 0px 5px 5px -5px white;
 	color: white;
 	text-shadow: 0 1px 2px #0F529B;
 }
@@ -714,8 +714,63 @@
 }
 
 #visitorChat_conversation_options {
-	display: inline;
+	display: inline-block;
 	float: right;
+	bottom: -17px;
+	position: relative;
+}
+
+#visitorChat_conversation_options ul li {
+    float: left;
+    margin-left: 10px;
+    padding: 2px 0 5px;
+	border: 1px solid transparent;
+	border-radius: 6px 6px 0px 0px;
+	-webkit-transition: all 0.15s ease-in-out;
+	   -moz-transition: all 0.15s ease-in-out;
+        -ms-transition: all 0.15s ease-in-out;
+         -o-transition: all 0.15s ease-in-out;
+		    transition: all 0.15s ease-in-out;
+}
+
+#visitorChat_conversation_options ul li:hover {
+    background: #7ABCFF;
+	border: 1px solid #4096EE;
+	border-bottom-color: #7ABCFF;
+	box-shadow: inset 0 5px 5px -5px white;
+}
+
+#visitorChat_conversation_options ul li a {
+    display: block;
+    height: 24px;
+}
+
+#leaveConversation {
+	display: none;
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat 0 0;
+    width: 35px;
+}
+
+#leaveConversation:hover {
+    background-position: 0 -24px;
+}
+
+#shareConversation {
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -36px 0;
+    width: 35px;
+}
+
+#shareConversation:hover {
+    background-position: -36px -24px;
+}
+
+#closeConversation {
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -71px 0;
+    width: 24px
+}
+
+#closeConversation:hover {
+    background-position: -71px -24px;
 }
 
 #visitorChat_sitesWarning {
