@@ -669,6 +669,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery.ajax({
             type:"GET",
             url:this.serverURL + "user/sites?format=json",
+            statusCode: {
+                //Did our session expire?
+                401: function() {
+                    window.location.reload(); //reload the page
+                }
+            },
             success:WDN.jQuery.proxy(function (data) {
                 var offline = new Array();
 

@@ -7,6 +7,10 @@ class SiteList
     
     function __construct($options = array())
     {
+        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
+            throw new \Exception("You must be logged in to do this.", 401);
+        }
+        
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
