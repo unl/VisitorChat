@@ -50,7 +50,8 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
                 $email .= $mail . ', ';
             }
         }
-        
+		
+        $email = trim($email, ", ");
         return $email;
     }
     
