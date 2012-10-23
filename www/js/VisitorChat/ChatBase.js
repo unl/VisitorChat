@@ -415,7 +415,7 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Closed:function (data) {
         if (data['html'] != undefined) {
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
-            WDN.jQuery("#visterChat_conversation").append("<div class='visitorChat_center'></div>");
+            WDN.jQuery("#clientChat").append("<div class='visitorChat_center'></div>");
         }
 
         clearTimeout(VisitorChat.loopID);

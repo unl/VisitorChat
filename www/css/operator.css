@@ -40,7 +40,6 @@
 	font-size: 18px;
 	letter-spacing: -0.04em;
     background-color: #B70302;
-    border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     color: #fff;
     height:20px;
@@ -51,48 +50,51 @@
 }
 
 #clientChatContainer {
-    width: 723px;
     min-height: 485px;
-    border-left: 5px solid #eee;
-    border-right: 5px solid #eee;
-    margin-top: 5px;    /* Same number as first value in header padding */
+    /*border-left: 5px solid #eee;*/
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    padding: 5px;
 }
 
 #clientChat {
-    float:left;
-    width:485px;
     height: 100%;
+	margin-left: -10px;
+	margin-right: 2px;
+	box-shadow: -11px 0 0px -10px #4096EE;
+}
+
+#clientChat::after {
+	content: " ";
+	height: 83px;
+	width: 5px;
+	background: white;
+	position: absolute;
+	bottom: 0;
+	left: 150px;
 }
 
 #clientChatInfoContainer {
-    float:left;
-    width:220px;
-    padding-left: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-left: 10px;
-    margin-top: 64px;
-    min-height: 200px;
-    
-    border-left: 3px solid #eee;
     -moz-border-radius-topleft: 10px;
     -moz-border-radius-bottomleft: 10px;
     -webkit-border-radius: 10px 0px 0px 10px;
     border-radius: 10px 0px 0px 10px;
-    
 }
 
 #visitorChat_chatBox {
-	margin: 5px 0;
-	margin-top: -10px;
-	padding: 0 5px;
     overflow: auto;
-    height: 350px;
-    
+    height: 350px; 
+	background: white;
+	border-left: 2px solid #7ABCFF;
+	border-radius: 10px 0 0 0;
+	margin-bottom: 5px;
+	padding-left: 10px;
+	position: relative;
+    z-index: 10;
+}
+
+#visitorChat_chatBox ul {
+	padding: 5px 0 !important;
 }
 
 #operatorOptions {
@@ -230,8 +232,8 @@
 	box-shadow: 0 1px 10px -4px black;
 	margin-bottom: 4px;
 	padding: 0 8px;
-	width: 200px;
-	margin-left: -11px;
+	width: 100%;
+	margin-left: -9px;
 }
 
 
@@ -264,7 +266,7 @@
 	text-shadow: 0 1px white;
 	line-height: 130%;
 	list-style: none;
-	margin-bottom: 1px;
+	margin-bottom: 2px;
 }
 
 .visitorChat_client {
@@ -274,7 +276,8 @@
 
 .visitorChat_me {
 	background-color: #f8f8f8;
-	border-left: 2px solid #fff;
+	border-left: 2px solid transparent;
+	border-radius: 4px;
 }
 
 .visitorChat_them {
@@ -319,41 +322,150 @@
 
 #visitorChat_messageBox {
 	border-color: #CdCdCd;
+	border-radius: 3px;
     display: block;
     margin: 0 9px;
     padding: 2px;
     overflow-y: auto;
     resize: none;
-    height: 61px;
-    width: 456px;
+    height: 60px;
+    width: 98%;
 }
 
 #visitorChat_messageForm fieldset { /* For Sumbit button */
 	/*display: inline;*/
 }
 
-#visitorChat_rightSide {
-    width: 190px;
-    height: 492px;
-    border-left: 3px solid #eee;
-    float: right;
-	-moz-border-radius-topleft: 10px;
-	-moz-border-radius-bottomleft: 10px;
-	-webkit-border-radius: 10px 0px 0px 10px;
-	border-radius: 10px 0px 0px 10px;
-	padding: 4px 10px;
+#visitorChat_clients {
+    height: 350px;
+	background: #FFF9EA;
+	border: 1px solid #BBAD8C;
+	width: 138px !important; /* For border to fit grid */
+	overflow-x: visible !important;
+	text-shadow: 0 1px white;
+	border-radius: 10px;
+	box-shadow: inset 0 2px 5px -2px #B1A078;
 }
 
-#visitorChat_rightSide h2 {
-	padding-top: 2px;
+#visitorChat_clients h2 {
+	font-size: 1.5em;
+	color: #664F1E !important;
+	padding: 0.4em 5px 0 5px;
 }
 
 #clientList {
-
+	margin-top: 10px;
+	padding: 0 5px;
 }
 
 #clientList ul li {
+	color: #664F1E;
 	margin-bottom: 0.35em;
+	position: relative;
+}
+
+#clientList ul li .conversationLink {
+	display: block;
+	color: #664F1E;
+	padding: 5px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	-webkit-transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out;
+	-ms-transition: all 0.25s ease-in-out;
+	-o-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
+	position: relative;
+	margin: 0 -5px;
+}
+
+#clientList ul li .conversationLink:hover {
+	background-color: #FFF9EA;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFF9EA), color-stop(100%, #DDD2B7));
+    background-image: -webkit-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -moz-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -ms-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -o-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: linear-gradient(top, #FFF9EA, #DDD2B7);
+}
+
+#clientList ul li .conversationLink:active {
+	-webkit-box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+}
+
+#clientList ul li.selected {
+    box-shadow: 0px 2px 9px 1px rgba(0, 0, 0, 0.2);
+}
+
+#clientList ul li.selected .conversationLink {
+    background: #7abcff;
+    color: #fff;
+    border: 1px solid #4096EE;
+    border-right: none;
+	box-shadow: inset 5px 0 10px -5px white;
+    text-shadow: 0 -1px 2px #0F529B;
+	margin-right: -20px;
+	position: relative;
+	z-index: 100;
+	border-radius: 5px 0 0 0;
+	margin-left: -12px;
+}
+
+#clientList ul li.selected .conversationLink:hover {
+    background: #7abcff;
+    color: #fff;
+    border-top: 1px solid #4096EE;
+    border-bottom: 1px solid #4096EE;
+    text-shadow: 0 -1px 2px #0F529B;
+}
+
+#clientList ul li.selected .conversationLink::before {
+	content: " ";
+	position: absolute;
+	left: -1px;
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 6px 7px 0;
+	border-color: transparent #4096EE transparent transparent;
+	bottom: -8px;
+}
+
+.conversationLink span {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 115px;
+}
+
+#clientList .unread_message {
+	color: white;
+	background: #F02E2E;
+	padding: 1px 3px;
+	border-radius: 3px;
+	box-shadow: inset 0 6px 5px -5px white;
+	border: 1px solid #F02E2E;
+	text-shadow: 0 1px 2px #D30000;
+	margin-left: 0.2em;
+	position: absolute;
+	top: 0.4em;
+	right: 0;
+}
+
+#clientList .unread_message::after {
+	width: 0;
+	height: 0;
+	border-bottom: 5px solid transparent;
+	border-top: 5px solid transparent;
+	border-right: 5px solid #F02E2E;
+	content: "";
+	position: absolute;
+	left: -0.4em;
+	top: 0.3em;
 }
 
 #chatRequestCountDown {
@@ -371,30 +483,97 @@
     width: 100%;
 }
 
+#clientInfo {
+	display: none;
+	background: white;
+	position: absolute;
+	z-index: 20;
+	top: 0;
+	left: 160px;
+	border-radius: 5px 25px 5px 25px;
+	border: 1px solid #7ABCFF;
+	color: #858585;
+	padding: 5px;
+	border-top: none; /* Border compensation */
+	box-shadow: rgba(0, 0, 0, 0.5) 6px 6px 15px 0px;
+}
+
+#clientInfo > span {
+	display: block;
+	cursor: default;
+	font-size: 1.35em;
+	color: #0F529B;
+	font-weight: bold;
+	margin-bottom: 5px;
+	text-shadow: 1px 1px 0px white, 2px 2px 0px rgba(0, 0, 0, 0.15);
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#clientInfo p {
+	margin-bottom: 5px;
+	font-size: 0.95em;
+}
+
+#clientInfo p.address {
+	text-align: center;
+	font-size: 0.8em;
+	margin-bottom: 0;
+	color: #BBB;
+}
+
+#clientInfo p > strong {
+	text-shadow: 1px 1px 0px white, 2px 2px 0px rgba(0, 0, 0, 0.15);
+	color: #666;
+}
+
 #visitorChat_conversation_header {
-	width: 705px;
 	height: 40px;
-	margin-left: 5px;
-    margin-bottom: 23px;
-	padding: 4px;
-    border-bottom: 2px solid #eee;
+	padding-bottom: 10px;
+    border-bottom: 2px solid #7ABCFF;
+	box-shadow: inset 0 -1px 0 0px #4096EE;
 }
 
 #visitorChat_url {
     display: block;
     float: left;
-    overflow: hidden;
+    /*overflow: hidden; So we can round-out url corner */
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 580px;
+	background: #7ABCFF;
+	position: absolute;
+	z-index: 1;
+	padding: 5px 10px 30px 10px;
+	border-radius: 10px 10px 0 0;
+	box-shadow: 0 0 0 1px #4096EE, inset 0px 5px 5px -5px white;
+	color: white;
+	text-shadow: 0 1px 2px #0F529B;
 }
 
-#maincontent
+#visitorChat_url::after {
+	position: absolute;
+	bottom: 2.08em;
+	width: 10px;
+	height: 10px;
+	content: " ";
+	border: 1px solid #4096EE;
+	right: -11px;
+	border-radius: 0 10px 0 10px;
+	border-width: 0 0 1px 1px;
+	box-shadow: -2px 4px 0px 2px #7ABCFF;
+}
+
 #toggleOperatorStatus {
-	color: white !important;
 	display: block;
-	margin-left: 766px;
+	position: absolute;
+    top: -3.5em;
+	right: 0;
     width: 190px;
+}
+
+#currentOperatorStatus {
+	color: white !important;
 }
 
 .closed {
@@ -464,6 +643,8 @@
     -moz-box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
     box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
     font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+	color: white;
+	text-decoration: none;
     line-height: 1;
     padding: 7px 0 8px 0;
     text-align: center;
@@ -526,16 +707,75 @@
 }
 
 #visitorChat_url_title {
-	color: #535353;
-	display: inline-block;
+	display: block;
+	cursor: default;
+	color: #fff;
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	font-size: 1.35em;
 	font-weight: bold;
 	margin-bottom: 0.3em;
 }
 
 #visitorChat_conversation_options {
-	display: inline;
+	display: inline-block;
 	float: right;
+	bottom: -17px;
+	position: relative;
+}
+
+#visitorChat_conversation_options ul li {
+    float: left;
+    margin-left: 10px;
+    padding: 2px 0 5px;
+	border: 1px solid transparent;
+	border-radius: 6px 6px 0px 0px;
+	-webkit-transition: all 0.15s ease-in-out;
+	   -moz-transition: all 0.15s ease-in-out;
+        -ms-transition: all 0.15s ease-in-out;
+         -o-transition: all 0.15s ease-in-out;
+		    transition: all 0.15s ease-in-out;
+}
+
+#visitorChat_conversation_options ul li:hover {
+    background: #7ABCFF;
+	border: 1px solid #4096EE;
+	border-bottom-color: #7ABCFF;
+	box-shadow: inset 0 5px 5px -5px white;
+}
+
+#visitorChat_conversation_options ul li a {
+    display: block;
+    height: 24px;
+}
+
+#leaveConversation {
+	display: none;
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat 0 0;
+    width: 35px;
+}
+
+#leaveConversation:hover {
+    background-position: 0 -24px;
+}
+
+#shareConversation {
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -36px 0;
+    width: 35px;
+}
+
+#shareConversation:hover {
+    background-position: -36px -24px;
+}
+
+#closeConversation {
+    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -71px 0;
+    width: 24px
+}
+
+#closeConversation:hover {
+    background-position: -71px -24px;
 }
 
 #visitorChat_sitesWarning {
@@ -600,19 +840,26 @@
 
 #maincontent
 .visitorChat_topicPage {
-	background-color: #C50202;
+	display: block;
+	max-width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	color: white;
 	padding: 1px 3px;
-	text-shadow: 0 1px 1px #8D0101;
-	border-radius: 3px;
-	box-shadow: inset 0px 5px 10px -4px #FECDCD;
 }
 
 #maincontent
-.visitorChat_topicPage:hover {
-	text-shadow: 0 -1px 1px #8D0101;
-	box-shadow: inset 0px -5px 10px -4px #FECDCD;
+.visitorChat_topicPage a:link,
+#maincontent
+.visitorChat_topicPage a:active,
+#maincontent
+.visitorChat_topicPage a:visited {
 	color: white;
+}
+
+#maincontent
+.visitorChat_topicPage a:hover {
+	text-decoration: underline;
 }
 
 #visitorChat_brightBox ul li {
