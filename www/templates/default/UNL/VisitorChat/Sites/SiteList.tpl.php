@@ -17,17 +17,19 @@ foreach ($context->sites as $site) {
     }
 	
 	if ($i == 1) {
-        echo "<div class='zenbox bright grid4 first'>";
+        echo "<section class='grid4 first'>";
     } else {
-		echo "<div class='zenbox bright grid4'>";
+		echo "<section class='grid4'>";
 	}
 				
-    echo "<h3><a href='" . $site->getURL() . "'>" . $site->getTitle() . "</a>".
-		 "<a class='zen-header-link' href='" .
-		 \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/' . $site->getURL()) . "'>View Details</a></h3>".
+    echo "<div class='zenbox bright'>
+	          <h3><a href='" . $site->getURL() . "'>" . $site->getTitle() . "</a>".
+		         "<a class='zen-header-link' href='" .
+		         \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/' . $site->getURL()) . "'>View Details</a>".
+			 "</h3>".
          "<ul>
              <li>Your chat role: <strong>" . $role . "</strong></li>" .
-         "</ul></div>";
+         "</ul></div></section>";
     $i++;
 }
 ?>
