@@ -1,3 +1,4 @@
+<div class="grid3 first">&nbsp;</div>
 <div class="zenbox primary grid6">
 <h3><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getTitle();?></a>
 <?php
