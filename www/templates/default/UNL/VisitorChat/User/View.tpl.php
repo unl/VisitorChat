@@ -1,6 +1,6 @@
 <p class="sub-head">Alias: <?php echo $context->getAlias(); ?></p>
-
-<div class="zenbox primary grid4">
+<div class="grid3 first">&nbsp;</div>
+<div class="zenbox cool grid6">
 <h3>Sites</h3>
 <ul>
     <?php
