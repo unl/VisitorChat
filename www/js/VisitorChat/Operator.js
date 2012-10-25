@@ -213,7 +213,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
             WDN.tooltip.addTooltip(elems);
 
-            elems.trigger('mouseover');
+            /**
+             * There is a bug with qTip.  If you apply qTips to elements that were dynamically loaded,
+             * they won't show their tool tip on the first 'hover'.  Below is a small hack to force loading
+             * of the tooltip.
+             */
+            if (WDN.jQuery('#ui-tooltip-0').length == 0) {
+                elems.trigger('mouseover');
+            }
         }
 
 
