@@ -5,6 +5,7 @@
     <li><a href='#features'>What are some features of the chat system?</a></li>
     <li><a href='#cost'>How much does the chat system cost?</a></li>
     <li><a href='#notifications'>How do I turn on notifications?</a></li>
+    <li><a href='#listsrv'>How can I be notified of issues or upgrades to the system?</a></li>
 </ul>
 
 <dl class='faq'>
@@ -62,6 +63,12 @@
         <p>
             Desktop notifications can only be used when the operator is using Google Chrome (currently the only browser that supports desktop notifications).
             If you are using google chrome, you can enable desktop notifications in the settings page.
+        </p>
+    </dd>
+    
+    <dt id='listsrv'>How can I be notified of issues or upgrades to the system?</dt>
+    <dd><p>We keep a listsrv where we send announcements regarding issues and/or upgrades to the system. <br />
+        <a href='http://listserv.unl.edu/signup-anon/?LISTNAME=unlchat'>Sign up for announcements now</a>!
         </p>
     </dd>
 </dl>
