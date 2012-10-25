@@ -750,31 +750,30 @@
     height: 24px;
 }
 
-#leaveConversation {
-	display: none;
+#leaveConversation a {
     background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat 0 0;
     width: 35px;
 }
 
-#leaveConversation:hover {
+#leaveConversation a:hover {
     background-position: 0 -24px;
 }
 
-#shareConversation {
+#shareConversation a{
     background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -36px 0;
     width: 35px;
 }
 
-#shareConversation:hover {
+#shareConversation a:hover {
     background-position: -36px -24px;
 }
 
-#closeConversation {
+#closeConversation a {
     background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -71px 0;
     width: 24px
 }
 
-#closeConversation:hover {
+#closeConversation a:hover {
     background-position: -71px -24px;
 }
 
