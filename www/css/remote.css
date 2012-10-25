@@ -413,3 +413,5 @@
     position: absolute;
     text-indent: -99999em;
 }
+
+#clientInfo { display: none; }
