@@ -370,13 +370,16 @@
 	padding: 5px;
 	border-top: 1px solid transparent;
 	border-bottom: 1px solid transparent;
+	position: relative;
+	margin: 0 -5px;
+}
+
+#clientList ul li .conversationLink.transition {
 	-webkit-transition: all 0.25s ease-in-out;
 	-moz-transition: all 0.25s ease-in-out;
 	-ms-transition: all 0.25s ease-in-out;
 	-o-transition: all 0.25s ease-in-out;
 	transition: all 0.25s ease-in-out;
-	position: relative;
-	margin: 0 -5px;
 }
 
 #clientList ul li .conversationLink:hover {

@@ -3,7 +3,7 @@
     foreach($context as $conversation)
     {
         $client = $conversation->getClient();
-        echo "<li><a href='" . \UNL\VisitorChat\Controller::$url . "conversation?conversation_id=" . $conversation->id . "&format=json' class='conversationLink'><span>" . $client->name . "</span></a>";
+        echo "<li id='conversationId_" . $conversation->id . "'><a href='" . \UNL\VisitorChat\Controller::$url . "conversation?conversation_id=" . $conversation->id . "&format=json' class='conversationLink'><span>" . $client->name . "</span></a>";
         
         $unread = $conversation->getUnreadMessageCount();
 		
