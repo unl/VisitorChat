@@ -32,7 +32,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo \UNL\VisitorChat\Controller::$url;?>css/operator.css" />
 <?php
     //load model-specific css.
-    if (file_exists(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/" . str_replace("\\", "/", $context->options['model']) . ".css")) {
+    if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/" . str_replace("\\", "/", $context->options['model']) . ".css")) {
          echo "<link rel='stylesheet' type='text/css' media='screen' href='" . \UNL\VisitorChat\Controller::$url . "css/" . str_replace("\\", "/", $context->options['model']) . ".css' />";
     }
 ?>
