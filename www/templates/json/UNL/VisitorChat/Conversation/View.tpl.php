@@ -56,10 +56,6 @@ if ($context->invitations) {
     //Render the conversation as html.
     $data['invitations_html'] = \UNL\VisitorChat\Controller::$templater->render($context->invitations, 'UNL/VisitorChat/Invitation/RecordList.tpl.php');
 
-    if ($context->clientInfo) {
-        $data['client_html'] = \UNL\VisitorChat\Controller::$templater->render($context->clientInfo, 'UNL/VisitorChat/Conversation/ClientInfo.tpl.php');
-    }
-    
     //Return to the original template path.
     \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 }
