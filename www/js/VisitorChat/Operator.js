@@ -168,13 +168,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 				var prevSelected = WDN.jQuery('#clientList').find('.selected');
 				var nowSelected = WDN.jQuery(this).parent();
 				var clientName = WDN.jQuery(this).children('span').text();
+				
+				// Add transitions to newly selected, take out from old.
+				prevSelected.children('a').removeClass('transition');
+				WDN.jQuery(this).addClass('transition');
 		
 				// Slide <span> back
 				prevSelected.children().children('span').animate({
 					paddingLeft: "5px"
 				}, 250);
 		
-				// Find 'selected, remove class'
+				// Find selected, remove class and transition
 				prevSelected.removeClass('selected');
 		
 				// Slide out new client
@@ -709,6 +713,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             },
             success:WDN.jQuery.proxy(function (data) {
                 WDN.jQuery("#clientList").html(data);
+				WDN.jQuery("#conversationId_" + this.conversationID).addClass('selected');
+				WDN.jQuery("#conversationId_" + this.conversationID).children().children('span').css({
+					paddingLeft: "20px"
+				});
                 this.initWatchers();
             }, this)
         });
