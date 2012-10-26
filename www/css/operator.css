@@ -445,6 +445,10 @@
 	max-width: 115px;
 }
 
+#clientList .unread_count {
+    display: none;
+}
+
 #clientList .unread_message {
 	color: white;
 	background: #F02E2E;
@@ -457,6 +461,7 @@
 	position: absolute;
 	top: 0.4em;
 	right: 0;
+    display: inline;
 }
 
 #clientList .unread_message::after {
