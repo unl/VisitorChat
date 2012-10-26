@@ -375,13 +375,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 html = this.unreadMessages[conversation];
             }
             
-			// Don't display if '0' unread messages
-			if (html === '0' || html === '') {
-				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).removeClass('unread_message');
-			} else {
-				WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
+            // Don't display if '0' unread messages
+            if (html === '0' || html === '') {
+                WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).removeClass('unread_message');
+            } else {
+                WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
                 WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).addClass('unread_message');
-			}
+            }
         }
     },
 
