@@ -13,7 +13,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     lastActiveTime: new Date(), //The exact date that the operator was last active
     idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
     idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
-	clientInfo: "",
+    clientInfo: "",
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -137,17 +137,17 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     initWatchers:function () {
         //Remove old elvent handlers
         WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo').unbind();
-		
-		// Hover for Client Info
-		WDN.jQuery('#visitorChat_url_title > span').mouseover(function(){
-			WDN.jQuery('#clientInfo').fadeIn('fast', function(){
-				WDN.jQuery(this).hover(function(){
-					WDN.jQuery(this).show();
-				}, function(){
-					WDN.jQuery(this).fadeOut('fast');
-				});
-			});
-		});
+
+        // Hover for Client Info
+        WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
+            WDN.jQuery('#clientInfo').fadeIn('fast', function () {
+                WDN.jQuery(this).hover(function () {
+                    WDN.jQuery(this).show();
+                }, function () {
+                    WDN.jQuery(this).fadeOut('fast');
+                });
+            });
+        });
 
         //Watch coversation link clicks.  Loads up the conversation all ajaxy
         WDN.jQuery('.conversationLink').click(function () {
@@ -159,42 +159,39 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
             //Load the chat.
             VisitorChat.updateChat(this);
-			
-			//Add selected class for active client
-			var isSelected = WDN.jQuery(this).parent().hasClass('selected');
-		
-			if (!isSelected) {
-		
-				var prevSelected = WDN.jQuery('#clientList').find('.selected');
-				var nowSelected = WDN.jQuery(this).parent();
-				var clientName = WDN.jQuery(this).children('span').text();
-				
-				// Add transitions to newly selected, take out from old.
-				prevSelected.children('a').removeClass('transition');
-				WDN.jQuery(this).addClass('transition');
-		
-				// Slide <span> back
-				prevSelected.children().children('span').animate({
-					paddingLeft: "5px"
-				}, 250);
-		
-				// Find selected, remove class and transition
-				prevSelected.removeClass('selected');
-		
-				// Slide out new client
-				nowSelected.children().children('span').animate({
-					paddingLeft: "20px"
-				}, 250);
-		
-				// Add 'selected' class
-				nowSelected.addClass('selected');
-			}
-			
+
+            //Add selected class for active client
+            var isSelected = WDN.jQuery(this).parent().hasClass('selected');
+
+            if (!isSelected) {
+
+                var prevSelected = WDN.jQuery('#clientList').find('.selected');
+                var nowSelected = WDN.jQuery(this).parent();
+                var clientName = WDN.jQuery(this).children('span').text();
+
+                // Add transitions to newly selected, take out from old.
+                prevSelected.children('a').removeClass('transition');
+                WDN.jQuery(this).addClass('transition');
+
+                // Slide <span> back
+                prevSelected.children().children('span').animate({
+                    paddingLeft:"5px"
+                }, 250);
+
+                // Find selected, remove class and transition
+                prevSelected.removeClass('selected');
+
+                // Slide out new client
+                nowSelected.children().children('span').animate({
+                    paddingLeft:"20px"
+                }, 250);
+
+                // Add 'selected' class
+                nowSelected.addClass('selected');
+            }
 
             return false;
         });
-		
-	
 
         WDN.jQuery('#closeConversation').click(function () {
             if (confirm("Are you sure you want to end the conversation?")) {
@@ -721,10 +718,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             },
             success:WDN.jQuery.proxy(function (data) {
                 WDN.jQuery("#clientList").html(data);
-				WDN.jQuery("#conversationId_" + this.conversationID).addClass('selected');
-				WDN.jQuery("#conversationId_" + this.conversationID).children().children('span').css({
-					paddingLeft: "20px"
-				});
+                WDN.jQuery("#conversationId_" + this.conversationID).addClass('selected');
+                WDN.jQuery("#conversationId_" + this.conversationID).children().children('span').css({
+                    paddingLeft:"20px"
+                });
                 this.initWatchers();
             }, this)
         });
