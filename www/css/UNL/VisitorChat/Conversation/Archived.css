@@ -1,5 +1,6 @@
-#clientChat {
-    width: 710px;
+#clientChat::after {
+	height: 0;
+	width: 0;
 }
 
 #clientChatContainer {
@@ -24,4 +25,35 @@
 
 #clientInfo {
     margin-top: 5px;
+}
+
+@media (min-width: 320px) {
+    #maincontent
+	#clientChatContainer {
+        width: 100%;
+    }
+	#maincontent
+	#clientChatInfoContainer {
+	    width: 98%;
+	}  
+}
+@media (min-width: 600px) {
+	#maincontent
+	#clientChatContainer {
+		width: 74.32%;
+	}
+	#maincontent
+	#clientChatInfoContainer {
+	    width: 23.08%;
+	}
+}
+@media (min-width: 1040px) {
+	#maincontent
+	#clientChatContainer {
+        width: 714px;
+    }
+	#maincontent
+	#clientChatInfoContainer {
+		width: 222px;
+	}
 }
