@@ -164,7 +164,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             var isSelected = WDN.jQuery(this).parent().hasClass('selected');
 
             if (!isSelected) {
-
                 var prevSelected = WDN.jQuery('#clientList').find('.selected');
                 var nowSelected = WDN.jQuery(this).parent();
                 var clientName = WDN.jQuery(this).children('span').text();
@@ -189,7 +188,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 // Add 'selected' class
                 nowSelected.addClass('selected');
             }
-
+            
             return false;
         });
 
@@ -722,6 +721,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 WDN.jQuery("#conversationId_" + this.conversationID).children().children('span').css({
                     paddingLeft:"20px"
                 });
+                this.updateConversationListWithUnreadMessages();
                 this.initWatchers();
             }, this)
         });
