@@ -896,7 +896,9 @@
 
 /* Site List styles */
 
+/*
 #visitorChat_container ul li {list-style: none;}
+*/
 
 #visitorChat_container .zenbox h3 a {text-decoration: none;}
 #visitorChat_container .zenbox h3 a:hover {text-decoration: underline;}
