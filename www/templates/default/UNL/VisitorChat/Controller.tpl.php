@@ -6,7 +6,7 @@
 <!--[if (gte IE 9)|(gt IEMobile 7) ]><html class="ie" lang="en"><![endif]-->
 <!--[if !(IEMobile) | !(IE)]><!--><html lang="en"><!-- InstanceBegin template="/Templates/fixed.dwt" codeOutsideHTMLIsLocked="false" --><!--<![endif]-->
 <head>
-<?php virtual("/wdn/templates_3.1/includes/metanfavico.html"); ?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/metanfavico.html"; ?>
 <!--
     Membership and regular participation in the UNL Web Developer Network
     is required to use the UNL templates. Visit the WDN site at 
@@ -21,7 +21,7 @@
     
     $Id: fixed.dwt | 1e98ba6f3cd3310802e61545987e6582d0abac6f | Wed Feb 15 11:42:58 2012 -0600 | Kevin Abel  $
 -->
-<?php virtual("/wdn/templates_3.1/includes/scriptsandstyles.html"); ?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/scriptsandstyles.html"; ?>
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>UNL | UNLchat</title>
 <!-- InstanceEndEditable -->
@@ -62,8 +62,8 @@
             <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
             <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
             <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->UNLchat<!-- InstanceEndEditable --></span>
-            <?php virtual("/wdn/templates_3.1/includes/idm.html"); ?>
-            <?php virtual("/wdn/templates_3.1/includes/wdnTools.html"); ?>
+            <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/idm.html"; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/wdnTools.html"; ?>
         </header>
         <div id="wdn_navigation_bar">
             <nav id="breadcrumbs">
@@ -155,14 +155,14 @@
                 </div>
                 <!-- TemplateEndEditable -->
                 <div class="clear"></div>
-               <?php virtual("/wdn/templates_3.1/includes/noscript.html"); ?>
+               <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/noscript.html"; ?>
                 <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
             </div>
         </div>
         <footer id="footer">
             <div id="footer_floater"></div>
             <div class="footer_col" id="wdn_footer_feedback">
-                <?php virtual("/wdn/templates_3.1/includes/feedback.html"); ?>
+                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/feedback.html"; ?>
             </div>
             <div class="footer_col" id="wdn_footer_related">
                 <!-- InstanceBeginEditable name="leftcollinks" -->
@@ -175,7 +175,7 @@
                 Visit the project on <a href="http://github.com/unl/VisitorChat">github</a>.
                 <!-- InstanceEndEditable --></div>
             <div class="footer_col" id="wdn_footer_share">
-                <?php virtual("/wdn/templates_3.1/includes/socialmediashare.html"); ?>
+                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/socialmediashare.html"; ?>
             </div>
             <!-- InstanceBeginEditable name="optionalfooter" -->
             <!-- InstanceEndEditable -->
@@ -183,9 +183,9 @@
                 <div>
                     <!-- InstanceBeginEditable name="footercontent" -->
                     <!-- InstanceEndEditable -->
-                   <?php virtual("/wdn/templates_3.1/includes/wdn.html"); ?>
+                   <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/wdn.html"; ?>
                 </div>
-                <?php virtual("/wdn/templates_3.1/includes/logos.html"); ?>
+                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/logos.html"; ?>
             </div>
         </footer>
     </div>
