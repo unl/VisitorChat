@@ -70,6 +70,10 @@
                         <td>OS:</td>
                         <td><?php echo $ua->os;?></td>
                     </tr>
+                    <tr>
+                        <td>IP address:</td>
+                        <td><?php echo $context->conversation->ip_address;?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
