@@ -5,7 +5,7 @@
             <div id='visitorChat_conversation_header'>
                 <div id='visitorChat_url'>
                     <span id='visitorChat_url_title'>
-					<span><?php echo $context->conversation->getClient()->name;?></span>
+                        <span><?php echo $context->conversation->getClient()->name;?></span>
                     </span>
                     <span class="visitorChat_topicPage">
                     at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
