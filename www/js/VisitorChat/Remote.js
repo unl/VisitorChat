@@ -348,9 +348,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery("#visitorChat_failedOptions_yes").click(function() {
             VisitorChat.stop(function(){
-                WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                if (VisitorChat.clientName) {
+                    WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                }
 
-                WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                if (VisitorChat.initialMessage) {
+                    WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                }
+                
                 WDN.jQuery("#visitorChat_email").focus();
                 WDN.jQuery("#visitorChat_messageBox").keyup();
             });
