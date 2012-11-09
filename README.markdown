@@ -1,7 +1,16 @@
-UNL VisitorChat
+UNLchat
 ---------------
 
-This app will be integrated into the UNL templates.  The goal is to allow end users to chat with site support for whatever site they are viewing.  The chat system is linked with the WDN Registry so that it knows who to route chat requests to.
+UNLchat is a custom live chat solution built for UNL.  It is designed to be work for a large organization with many sub-organizations such as a university.
+
+When a chat request comes in, the chat is routed to the operators of closest site (as defined by a registry service) from where the chat originated.
+For example, if a chat was started at http://www.unl.edu/WDN/index.php the chat would be routed to operators for http://www.unl.edu/WDN/
+
+Requirements
+------------
+ - PHP 5+
+ - MySQL 5+
+ - Apache
 
 Install
 -------

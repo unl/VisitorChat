@@ -208,7 +208,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_email,' +
             '#visitorChat_confiramtionEmail,' +
             '#visitorChat_failedOptions_yes,' +
-            '#visitorChat_failedOptions_yes,' +
+            '#visitorChat_failedOptions_no,' +
             '#visitorChat_sendAnotherConfirmation,' +
             '#visitorChat_name,' +
             '#visitorChat_footercontainer #visitorchat_clientLogin,' +
