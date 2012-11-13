@@ -43,7 +43,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     onOperatorMessage:function (message) {
         //Fire an analytics event on first response.  set cookie for cross domain.
-        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_FirstOperatorResponse')) {
+        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_FirstOperatorResponse') && WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
             start = WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
             date = new Date();
             date = Math.round(date.getTime() / 1000);
@@ -412,22 +412,22 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this._super();
 
         //Record a start event cookie (for analytics)
-        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
-            //Set a cookie.
-            date = new Date();
-            WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
+        VisitorChat.deleteAnalyticsCookies();
+        
+        //Set a cookie.
+        date = new Date();
+        WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
 
-            //Send analytics data
-            _gaq.push(['wdn._setCustomVar',
-                1,
-                'WDN Chat',
-                'Yes',
-                2
-            ]);
+        //Send analytics data
+        _gaq.push(['wdn._setCustomVar',
+            1,
+            'WDN Chat',
+            'Yes',
+            2
+        ]);
 
-            //Mark as started
-            WDN.analytics.callTrackEvent('WDN Chat', 'Started');
-        }
+        //Mark as started
+        WDN.analytics.callTrackEvent('WDN Chat', 'Started');
     },
 
     onConversationStatus_Closed:function (data) {
@@ -587,15 +587,21 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         //Delete the current cookie.
-        WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
-        WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
-        WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
+        VisitorChat.deleteAnalyticsCookies();
 
         this.initWatchers();
 
         if (callback && !callbackSet) {
             callback();
         }
+    },
+    
+    deleteAnalyticsCookies: function()
+    {
+        //Delete the current cookie.
+        WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
+        WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
+        WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
     },
 
     closeChatContainer: function() {
