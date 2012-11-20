@@ -424,6 +424,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (this.method == 'email') {
             this.stop();
         }
+        
+        //Make sure that the closed button is visible at this point.
+        this.chatStatus = 'emailed';
+        this.initWatchers();
     },
 
     onLogin:function () {
