@@ -391,6 +391,27 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     },
 
     /**
+     * onConversationStatus_Searching
+     * Related status code: SEARCHING
+     * Details: This function means that the client is waiting for
+     * the server to find an operator.  Please note that this status
+     * will hardly ever be returned. Most often we will either be pending
+     * approval during this stage.  Thus, OperatorPendingApproval and this
+     * function are closely related and could probably share the same logic.
+     */
+    onConversationStatus_Searching:function (data) {
+        if (this.method == 'chat') {
+            var html = '<div class="chat_notify visitorChat_loading">Please wait while we find someone to help you.</div>';
+            this.updateChatContainerWithHTML("#visitorChat_container", html);
+        } else {
+            var html = '<div class="chat_notify visitorChat_loading">Please wait while we process your request.</div>';
+            this.updateChatContainerWithHTML("#visitorChat_container", html);
+        }
+
+    },
+
+
+    /**
      * onConversationStatus_Emailed
      * Related status code: EMAILED
      * Details: This function will be called when a converstation
