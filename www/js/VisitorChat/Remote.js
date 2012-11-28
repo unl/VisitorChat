@@ -43,7 +43,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     onOperatorMessage:function (message) {
         //Fire an analytics event on first response.  set cookie for cross domain.
-        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_FirstOperatorResponse')) {
+        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_FirstOperatorResponse') && WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
             start = WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
             date = new Date();
             date = Math.round(date.getTime() / 1000);
@@ -201,7 +201,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         WDN.jQuery('#visitorChat_container, ' +
             '#visitorChat_email_fallback, ' +
             '#visitorChat_logout, ' +
-            '#visitorChat_end,' +
             '#visitorChat_login_submit, ' +
             '#visitorChat_header, ' +
             '#visitorChat_chatBox > ul > li,' +
@@ -209,7 +208,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             '#visitorChat_email,' +
             '#visitorChat_confiramtionEmail,' +
             '#visitorChat_failedOptions_yes,' +
-            '#visitorChat_failedOptions_yes,' +
+            '#visitorChat_failedOptions_no,' +
             '#visitorChat_sendAnotherConfirmation,' +
             '#visitorChat_name,' +
             '#visitorChat_footercontainer #visitorchat_clientLogin,' +
@@ -304,22 +303,16 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 return false;
             }
 
+            if (this.chatStatus == 'CHATTING') {
+                VisitorChat.changeConversationStatus("CLOSED");
+                return false;
+            }
+
             //change the method to chat, so that the chat window will close.
             //it MIGHT be open due to captcha.
             this.method = 'chat';
 
             VisitorChat.stop();
-
-            return false;
-        }, this));
-
-        //Allow the client to end the conversation
-        WDN.jQuery('#visitorChat_end').click(WDN.jQuery.proxy(function () {
-            if (!VisitorChat.confirmClose()) {
-                return false;
-            }
-
-            VisitorChat.changeConversationStatus("CLOSED");
 
             return false;
         }, this));
@@ -355,9 +348,14 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery("#visitorChat_failedOptions_yes").click(function() {
             VisitorChat.stop(function(){
-                WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                if (VisitorChat.clientName) {
+                    WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                }
 
-                WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                if (VisitorChat.initialMessage) {
+                    WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                }
+                
                 WDN.jQuery("#visitorChat_email").focus();
                 WDN.jQuery("#visitorChat_messageBox").keyup();
             });
@@ -379,10 +377,39 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return true;
         });
 
+        if (this.chatStatus) {
+            WDN.jQuery("#visitorChat_header").hover(function () {
+                WDN.jQuery("#visitorChat_logout").css({'display':'inline-block'});
+            }, function () {
+                WDN.jQuery("#visitorChat_logout").css({'display':'none'});
+            });
+        }
+
         //set the for_url
         WDN.jQuery('#initial_url').val(document.URL);
         WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
     },
+
+    /**
+     * onConversationStatus_Searching
+     * Related status code: SEARCHING
+     * Details: This function means that the client is waiting for
+     * the server to find an operator.  Please note that this status
+     * will hardly ever be returned. Most often we will either be pending
+     * approval during this stage.  Thus, OperatorPendingApproval and this
+     * function are closely related and could probably share the same logic.
+     */
+    onConversationStatus_Searching:function (data) {
+        if (this.method == 'chat') {
+            var html = '<div class="chat_notify visitorChat_loading">Please wait while we find someone to help you.</div>';
+            this.updateChatContainerWithHTML("#visitorChat_container", html);
+        } else {
+            var html = '<div class="chat_notify visitorChat_loading">Please wait while we process your request.</div>';
+            this.updateChatContainerWithHTML("#visitorChat_container", html);
+        }
+
+    },
+
 
     /**
      * onConversationStatus_Emailed
@@ -397,6 +424,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (this.method == 'email') {
             this.stop();
         }
+        
+        //Make sure that the closed button is visible at this point.
+        this.chatStatus = 'EMAILED';
+        this.initWatchers();
     },
 
     onLogin:function () {
@@ -406,30 +437,28 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this._super();
 
         //Record a start event cookie (for analytics)
-        if (!WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
-            //Set a cookie.
-            date = new Date();
-            WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
+        VisitorChat.deleteAnalyticsCookies();
+        
+        //Set a cookie.
+        date = new Date();
+        WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
 
-            //Send analytics data
-            _gaq.push(['wdn._setCustomVar',
-                1,
-                'WDN Chat',
-                'Yes',
-                2
-            ]);
+        //Send analytics data
+        _gaq.push(['wdn._setCustomVar',
+            1,
+            'WDN Chat',
+            'Yes',
+            2
+        ]);
 
-            //Mark as started
-            WDN.analytics.callTrackEvent('WDN Chat', 'Started');
-        }
+        //Mark as started
+        WDN.analytics.callTrackEvent('WDN Chat', 'Started');
     },
 
     onConversationStatus_Closed:function (data) {
         if (WDN.jQuery("#visitorChat_confirmationContainer").length != 0) {
             return false;
         }
-
-        WDN.jQuery('#visitorChat_end').hide();
 
         this._super(data);
 
@@ -443,19 +472,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery().unbind('visitorChat_header');
 
-        //Logout option now visible
-        this.displayLogoutButton();
-
         this.scroll();
-    },
-
-    displayLogoutButton: function() {
-        WDN.jQuery("#visitorChat_logout").show();
-        WDN.jQuery("#visitorChat_header").hover(function () {
-            WDN.jQuery("#visitorChat_logout").css({'display':'inline-block'});
-        }, function () {
-            WDN.jQuery("#visitorChat_logout").css({'display':'none'});
-        });
     },
 
     onConversationStatus_Chatting:function (data) {
@@ -471,12 +488,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         });
 
         WDN.jQuery().unbind('visitorChat_header');
-        //Logout option now visible
-        WDN.jQuery("#visitorChat_header").hover(function () {
-            WDN.jQuery("#visitorChat_end").css({'display':'inline-block'});
-        }, function () {
-            WDN.jQuery("#visitorChat_end").css({'display':'none'});
-        });
     },
 
     handleUserDataResponse:function (data) {
@@ -513,13 +524,10 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             this.launchChatContainer();
         }
 
-        this.displayLogoutButton();
-
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
     },
 
     onConversationStatus_OperatorLookupFailed:function (data) {
-        this.displayLogoutButton();
         clearTimeout(VisitorChat.loopID);
         var html = '<div class="chat_notify">Unfortunately all of our operators are currently busy.  Would you like to send an email instead?' +
             '<div id="visitorChat_failedOptions"><a id="visitorChat_failedOptions_yes" href="#">Yes</a> <a id="visitorChat_failedOptions_no" href="#">No</a></div></div>';
@@ -556,18 +564,12 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                     "<div id='visitorChat_logout'>" +
                         "<a href='#'>close</a>" +
                     "</div>" +
-                    "<div id='visitorChat_end'>" +
-                        "<a href='#'>end conversation</a>" +
-                    "</div>" +
                 "</div>" +
                 "<div id='visitorChat_sound_container'>" +
                     "<audio id='visitorChat_sound'></audio>" +
                 "</div>" +
-            "</div>")
-
-        WDN.jQuery("#visitorChat_logout").hide();
-        WDN.jQuery("#visitorChat_end").hide();
-
+            "</div>");
+        
         //Handle cookies. (IE session handling);
         var phpsessid = WDN.jQuery.cookies.get('UNL_Visitorchat_Session');
         if (phpsessid != null) {
@@ -610,15 +612,21 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         //Delete the current cookie.
-        WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
-        WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
-        WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
+        VisitorChat.deleteAnalyticsCookies();
 
         this.initWatchers();
 
         if (callback && !callbackSet) {
             callback();
         }
+    },
+    
+    deleteAnalyticsCookies: function()
+    {
+        //Delete the current cookie.
+        WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
+        WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
+        WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
     },
 
     closeChatContainer: function() {

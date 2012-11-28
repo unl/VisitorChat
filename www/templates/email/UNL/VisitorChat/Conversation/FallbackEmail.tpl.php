@@ -17,6 +17,7 @@
             echo "Email: " . $client->email . " <br />";
         }
         ?>
+        User Agent: <?php echo $context->conversation->user_agent ?><br />
         at <?php echo $context->conversation->initial_url; ?> <br /> <?php echo $response;?>
     </p>
 </div>
