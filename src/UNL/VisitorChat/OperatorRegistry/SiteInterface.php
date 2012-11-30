@@ -42,7 +42,7 @@ abstract class SiteInterface
                 continue;
             }
             
-            if ($user->status != 'AVAILABLE') {
+            if ($user->getStatus()->status != 'AVAILABLE') {
                 continue;
             }
             

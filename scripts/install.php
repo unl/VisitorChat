@@ -17,6 +17,8 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
                     $result->free();
                 }
             } while ($db->next_result());
+        } else {
+            echo "Query Failed: " . $db->error . PHP_EOL;
         }
     } catch (Exception $e) {
         $result = false;
@@ -25,7 +27,8 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
             exit();
         }
     }
-    echo 'finished.<br />'.PHP_EOL;
+    echo 'finished.'.PHP_EOL;
+    echo '------------------------------------------'.PHP_EOL;
     return $result;
 }
 
@@ -58,6 +61,7 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.popup_notifications.sql"), 'adding the popup_notifcations to the users table');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/spam.sql"), 'adding spam info');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.alias.sql"), 'adding user alias');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/user_statuses.sql"), 'adding users_status table');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
@@ -67,7 +71,8 @@ if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser->type         = "operator";
     $systemUser->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
     $systemUser->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-    $systemUser->status       = "BUSY";
     $systemUser->max_chats    = 0;
     $systemUser->save();
+    
+    $systemUser->setStatus("BUSY");
 }

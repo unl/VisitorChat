@@ -23,7 +23,7 @@
                     }
 
                     $disabled = "disabled='disabled'";
-                    if ($account->status == "AVAILABLE") {
+                    if ($account->getStatus()->status == "AVAILABLE") {
                         $disabled = "";
                     }
 
