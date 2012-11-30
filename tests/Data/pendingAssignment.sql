@@ -198,7 +198,7 @@ CREATE  TABLE IF NOT EXISTS `user_statuses` (
   INDEX `fk_user_statuses_users` (`users_id` ASC) ,
   CONSTRAINT `fk_users_statuses_users`
     FOREIGN KEY (`users_id` )
-    REFERENCES `visitorchatapp`.`users` (`id` )
+    REFERENCES `users` (`id` )
     ON DELETE CASCADE
     ON UPDATE CASCADE 
 )
