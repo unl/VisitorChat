@@ -74,15 +74,16 @@ class Info
         
         if ($user->type == "operator") {
             //Send the current user status;
-            $this->userStatus       = $user->status;
-            $this->userStatusReason = $user->status_reason;
+            $status = $user->getStatus();
+            $this->userStatus       = $status->status;
+            $this->userStatusReason = $status->reason;
             
             //Update the last time the user was active.
             $user->last_active = \UNL\VisitorChat\Controller::epochToDateTime();
             $user->save();
 
-            //If the user is avaiable, proccess pending assignments.
-            if ($user->status == "AVAILABLE" && $assignment = \UNL\VisitorChat\Assignment\Record::getOldestPendingRequestForUser($user->id)) {
+            //If the user is available, proccess pending assignments.
+            if ($user->getStatus()->status == "AVAILABLE" && $assignment = \UNL\VisitorChat\Assignment\Record::getOldestPendingRequestForUser($user->id)) {
                 $this->pendingAssignment = $assignment->id;
                 $this->pendingDate       = date('r', strtotime($assignment->date_created));
             }
