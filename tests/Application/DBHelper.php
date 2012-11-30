@@ -34,6 +34,8 @@ class DBHelper
                 /* store first result set */
                 if ($result = $db->store_result()) {
                     $result->free();
+                } else {
+                    echo "ERROR: DBHelper::query - DB QUERY ERROR!!!!" . PHP_EOL;
                 }
             } while ($db->next_result());
         }
