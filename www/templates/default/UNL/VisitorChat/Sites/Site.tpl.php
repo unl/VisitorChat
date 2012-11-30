@@ -25,7 +25,7 @@
                 $alias = " (" . $chatUser->alias . ")";
             }
             
-            echo "<li class='" . strtolower($chatUser->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ")</li>";
+            echo "<li class='" . strtolower($chatUser->getStatus()->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ")</li>";
         }
     ?>
 </ul>

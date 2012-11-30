@@ -42,8 +42,7 @@ class Edit extends \UNL\VisitorChat\User\Record
                 throw new \Exception("invalid status.", 400);
             }
             
-            $this->status        = $post['status'];
-            $this->status_reason = $reason;
+            $this->setStatus($post['status'], $reason);
         }
         
         if (isset($post['max_chats'])) {

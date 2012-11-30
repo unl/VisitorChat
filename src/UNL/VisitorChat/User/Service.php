@@ -42,7 +42,7 @@ class Service
                 continue;
             }
             
-            if ($user->status == 'AVAILABLE') {
+            if ($user->getStatus()->status == 'AVAILABLE') {
                 return true;
             }
         }
