@@ -29,15 +29,16 @@ class DBHelper
     function query($sql)
     {
         $db = \UNL\VisitorChat\Controller::getDB();
+
         if ($db->multi_query($sql)) {
             do {
-                /* store first result set */
-                if ($result = $db->store_result()) {
-                    $result->free();
-                } else {
-                    echo "ERROR: DBHelper::query - DB QUERY ERROR!!!!" . PHP_EOL;
-                }
+                //nothing
             } while ($db->next_result());
+        }
+
+        //Check if there was an error
+        if ($db->errno) {
+            echo "DBHelper::query - ERROR: Stopped while retrieving result : ".$db->error;
         }
         
         return true;
