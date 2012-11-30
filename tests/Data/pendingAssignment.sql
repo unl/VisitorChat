@@ -230,7 +230,7 @@ ALTER TABLE `assignments`
 --
 ALTER TABLE `conversations`
   ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `visitorchatapp`.`users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `invitations`
