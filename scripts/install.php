@@ -17,6 +17,8 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
                     $result->free();
                 }
             } while ($db->next_result());
+        } else {
+            echo "Query Failed: " . $db->error . PHP_EOL;
         }
     } catch (Exception $e) {
         $result = false;
@@ -25,7 +27,8 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
             exit();
         }
     }
-    echo 'finished.<br />'.PHP_EOL;
+    echo 'finished.'.PHP_EOL;
+    echo '------------------------------------------'.PHP_EOL;
     return $result;
 }
 
