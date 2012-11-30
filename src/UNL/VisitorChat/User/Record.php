@@ -11,8 +11,8 @@ class Record extends \Epoch\Record
     public $date_updated;
     public $type; //Client or Operator
     public $max_chats;
-    public $status;
-    public $status_reason;
+    public $status;        //Store current status here (as kind of a cache)
+    public $status_reason; //Store current status reason here (as kind of a cache)
     public $last_active;
     public $popup_notifications; //1=show, 2=no show
     public $alias; //custom name to be shown to clients
@@ -34,7 +34,12 @@ class Record extends \Epoch\Record
 
     function insert()
     {
-        return parent::insert();
+        if ($result = parent::insert()) {
+            //Store the status in the history table.
+            $this->setStatus($this->status);
+        }
+        
+        return $result;
     }
     
     function keys()
@@ -168,5 +173,27 @@ class Record extends \Epoch\Record
         }
         
         return false;
+    }
+    
+    function setStatus($status, $reason = "USER") 
+    {
+        if (!$status = Status\Record::addStatus($this->id, $status, $reason)) {
+            return false;
+        }
+        
+        //Store the current status in this record (for caching and easy access).
+        $this->status        = $status->status;
+        $this->status_reason = $status->reason;
+        $this->save();
+    }
+    
+    function getStatus()
+    {
+        //Format the current status as a user_status record for consistency
+        $status = new Status\Record();
+        $status->setStatus($this->status, $this->status_reason);
+        $status->users_id = $this->id;
+        
+        return $status;
     }
 }
