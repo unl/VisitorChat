@@ -62,4 +62,38 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
         }
         return $this->title;
     }
+    
+    /**
+     * Determines the number of operators for this site that are current available.
+     *
+     * @return int the number of operators currently available
+     */
+    function getAvailableCount()
+    {
+        $db = \UNL\VisitorChat\Controller::getDB();
+        
+        $sql = "SELECT count(id) as total 
+                        FROM users 
+                        WHERE status = 'AVAILABLE' AND (false ";
+        
+        foreach ($this->getMembers() as $member) {
+            if ($member->getRole() == 'other') {
+                continue;
+            }
+        
+            $sql .= "OR uid = '" . $db->escape_string($member->getUID()) . "' ";
+        }
+        
+        $sql .= ");";
+        
+        if ($result = $db->query($sql)) {
+            $row = $result->fetch_assoc();
+        
+            if (isset($row['total'])) {
+                return $row['total'];
+            }
+        }
+        
+        return 0;
+    }
 }

@@ -23,7 +23,7 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         }
         
         //data was not cached, get data and then cache it.
-        $data = @file_get_contents($url);
+        $data = $this->queryRegistry($url);
         
         if (!$data) {
             return false;
@@ -39,6 +39,24 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         }
         
         return new SiteList($sites);
+    }
+    
+    protected function queryRegistry($url) {
+        // create a new cURL resource
+        $ch = curl_init();
+        
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        // grab URL and pass it to the browser
+        $result = curl_exec($ch);
+        
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+        return $result;
     }
     
     function getCacheTitle()

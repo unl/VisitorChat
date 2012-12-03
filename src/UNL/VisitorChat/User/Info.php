@@ -26,7 +26,7 @@ class Info
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         if (isset($options['checkOperators'])) {
-            $this->operatorsAvailable = $this->areOperatorsAvaiable($options['checkOperators']);
+            $this->operatorsAvailable = $this->areOperatorsAvailable($options['checkOperators']);
 
             if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {
                 //For now we need to include the login html (until rollout is complete).
@@ -101,7 +101,7 @@ class Info
         }
     }
     
-    function areOperatorsAvaiable($url)
+    function areOperatorsAvailable($url)
     {
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
 
@@ -109,6 +109,12 @@ class Info
             return false;
         }
 
-        return \UNL\VisitorChat\User\Service::areUsersAvaiable($sites->current()->getMembers());
+        $available = $sites->current()->getAvailableCount();
+        
+        if ($available > 0) {
+            return true;
+        }
+        
+        return false;
     }
 }
