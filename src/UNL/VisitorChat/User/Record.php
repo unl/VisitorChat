@@ -63,11 +63,14 @@ class Record extends \Epoch\Record
     
     public function update()
     {
-        parent::update();
+        $result = parent::update();
         
+        //Update the current user object in memory
         if (\UNL\VisitorChat\User\Service::getCurrentUser() && \UNL\VisitorChat\User\Service::getCurrentUser()->id == $this->id) {
             \UNL\VisitorChat\User\Service::setCurrentUser($this);
         }
+        
+        return $result;
     }
     
     public static function getCurrentUser()
@@ -174,21 +177,45 @@ class Record extends \Epoch\Record
         
         return false;
     }
-    
+
+    /**
+     * Sets the user's status.  If the user is an operator, the status is recorded in the
+     * history table.
+     * 
+     * @param        $status
+     * @param string $reason
+     *
+     * @return bool
+     */
     function setStatus($status, $reason = "USER") 
     {
-        if (!$status = Status\Record::addStatus($this->id, $status, $reason)) {
+        //Store the current status in this record (for caching and easy access).
+        $this->status        = $status;
+        $this->status_reason = $reason;
+        
+        //If we failed to save, exist early.
+        if (!$this->save()) {
             return false;
         }
         
-        //Store the current status in this record (for caching and easy access).
-        $this->status        = $status->status;
-        $this->status_reason = $status->reason;
-        $this->save();
+        //We are not tracking client statuses so exit early...
+        if ($this->type == 'client') {
+            return true;
+        }
+        
+        if (!Status\Record::addStatus($this->id, $status, $reason)) {
+            return false;
+        }
+        
+        return true;
     }
     
     function getStatus()
     {
+        if ($this->status == null) {
+            $this->status = "BUSY";
+        }
+        
         //Format the current status as a user_status record for consistency
         $status = new Status\Record();
         $status->setStatus($this->status, $this->status_reason);
