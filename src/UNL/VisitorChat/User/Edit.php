@@ -32,13 +32,11 @@ class Edit extends \UNL\VisitorChat\User\Record
                 $reason = strtoupper($post['reason']);
             }
 
-            if (!in_array($post['reason'], array('CLIENT_IDLE', 'USER'))) {
+            if (!in_array($post['reason'], \UNL\VisitorChat\User\Status\Record::getValidStatusReasons())) {
                 throw new \Exception("invalid status.", 400);
             }
 
-            $accepted = array("BUSY", "AVAILABLE");
-            
-            if (!in_array($post['status'], $accepted)) {
+            if (!in_array($post['status'], \UNL\VisitorChat\User\Status\Record::getValidStatuses())) {
                 throw new \Exception("invalid status.", 400);
             }
             
