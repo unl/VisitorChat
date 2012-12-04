@@ -252,4 +252,34 @@ class Record extends \Epoch\Record
     {
         return \UNL\VisitorChat\User\Record::getByID($this->users_id);
     }
+    
+    public function expire()
+    {
+        //Ensure that it can be expired.
+        if ($this->status != 'PENDING') {
+            return false;
+        }
+        
+        if (!$this->updateStatus('EXPIRED')) {
+            return false;
+        }
+        
+        //Update the conversation status if we need to.
+        $conversation = $this->getConversation();
+        if ($conversation->status != 'CHATTING') {
+            $conversation->status = 'SEARCHING';
+        }
+        
+        if (!$conversation->save()) {
+            return false;
+        }
+        
+        //Update the user status if we need to.
+        $user = $this->getUser();
+        if (!$user->setStatus('BUSY', 'EXPIRED_REQUEST')) {
+            return false;
+        }
+        
+        return true;
+    }
 }
