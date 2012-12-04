@@ -113,4 +113,15 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+    
+    public static function getAllPendingAndExpired($options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
+                                 AND assignments.status = 'PENDING'";
+
+        return self::getBySql($options);
+    }
 }
