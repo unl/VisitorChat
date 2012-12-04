@@ -189,6 +189,11 @@ class Record extends \Epoch\Record
      */
     function setStatus($status, $reason = "USER") 
     {
+        //Don't allow the same status to be posted twice in a row. (Could happen when logging in/out).
+        if ($this->status == $status) {
+            return true;
+        }
+        
         //Store the current status in this record (for caching and easy access).
         $this->status        = $status;
         $this->status_reason = $reason;
