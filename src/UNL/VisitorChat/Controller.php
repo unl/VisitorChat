@@ -72,7 +72,7 @@ class Controller extends \Epoch\Controller
         
         //reject all old requests.
         $assignmentService = new \UNL\VisitorChat\Assignment\Service();
-        $assignmentService->rejectAllExpiredRequests();
+        $assignmentService->expirePendingRequests();
         
         //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);
