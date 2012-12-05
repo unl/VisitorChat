@@ -32,7 +32,8 @@
             var diff = moment.duration(moment(original_data[item]['start']).diff(moment(original_data[item]['end']))).humanize();
 
             height = Math.round(num / maxNum * 70 + 20);
-            style = 'height:' + height + 'px;' +
+            
+            style = 'height:' + height + '%;' +
                     'background-color: ' + color + ';';
 
             var content = '<div class="bar" style="' + style + '" ' +
@@ -51,7 +52,7 @@
         // specify options
         options = {
             "width":  "100%",
-            "height": "300px",
+            "height": "200px",
             "style": "box", // optional
             "stackEvents": false,
             "animateZoom": false,
