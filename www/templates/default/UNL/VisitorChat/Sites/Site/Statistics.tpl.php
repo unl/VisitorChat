@@ -68,7 +68,40 @@
         // Draw our timeline with the created data and options
         timeline.draw(data, options);
     });
-        
+
+    WDN.jQuery(function() {
+        WDN.jQuery( "#from" ).datepicker({
+            defaultDate    : "+1w",
+            changeMonth    : true,
+            changeYear     : true,
+            numberOfMonths : 1,
+            dateFormat     : "yy-mm-dd",
+            onClose: function( selectedDate ) {
+                WDN.jQuery( "#to" ).datepicker( "option", "minDate", selectedDate );
+            }
+        });
+        WDN.jQuery( "#to" ).datepicker({
+            defaultDate    : "+1w",
+            changeMonth    : true,
+            changeYear     : true,
+            numberOfMonths : 1,
+            dateFormat     : "yy-mm-dd",
+            onClose: function( selectedDate ) {
+                WDN.jQuery( "#from" ).datepicker( "option", "maxDate", selectedDate );
+            }
+        });
+    });
 </script>
+    
+<div id='dateRange'>
+    <form action='<?php echo $context->getURL(); ?>'>
+        <label for="from">From</label>
+        <input type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
+        <label for="to">to</label>
+        <input type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
+        <input type='hidden' name='url' value='<?php echo $context->url ?>' />
+        <input type='submit' value='Submit' />
+    </form>
+</div>
     
 <div id="mytimeline"></div>

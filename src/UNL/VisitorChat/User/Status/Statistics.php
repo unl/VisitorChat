@@ -51,8 +51,8 @@ class Statistics
         
         //Get everything between the dates
         $i = 1;
+        
         foreach (RecordList::getAllForUsersBetweenDates($userIDs, $start, $end) as $status) {
-            
             if ($status->status == 'AVAILABLE') {
                 //Add to the total available.
                 $total++;
