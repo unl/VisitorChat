@@ -35,9 +35,17 @@
             
             style = 'height:' + height + '%;' +
                     'background-color: ' + color + ';';
+            
+            var person = "person";
+            
+            if (num > 0) {
+                person = "people";
+            }
+            
+            var totalPeopleOnline = (num)?num:'';
 
             var content = '<div class="bar" style="' + style + '" ' +
-                    ' title="' + num + ' people Available for ' + diff + '">' + num + '</div>';
+                    ' title="' + num + ' ' + person + ' available for ' + diff + '">' + totalPeopleOnline + '</div>';
 
             //add to array
             data.push({
@@ -57,7 +65,7 @@
             "stackEvents": false,
             "animateZoom": false,
             "animate": false,
-            "intervalMin": 1000,
+            "intervalMin": 10000,
             "max": max,
             "min": min,
             "showNavigation": true
