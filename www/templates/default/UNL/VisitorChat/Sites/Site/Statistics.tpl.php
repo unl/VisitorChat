@@ -176,9 +176,9 @@
         
             foreach ($stats['assignment_types'] as $type=>$value) {
                 echo "<tr>
-                            <td>$type</td>
-                            <td>$value</td>
-                          </tr>";
+                        <td>$type</td>
+                        <td>$value</td>
+                      </tr>";
             }
             ?>
             </tbody>
