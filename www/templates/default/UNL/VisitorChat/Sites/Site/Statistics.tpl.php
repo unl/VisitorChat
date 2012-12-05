@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/timeline/timeline-min.js"></script>
+<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/moment.min.js"></script>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     
 <link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/timeline/timeline.css">
@@ -33,15 +34,16 @@
                 color = 'grey';
             }
             
+            //Calculate a human readable difference
+            var diff = moment.duration(moment(original_data[item]['start']).diff(moment(original_data[item]['end']))).humanize();
+            
             height = Math.round(num / maxNum * 70 + 20);
             style = 'height:' + height + 'px;' +
                     'background-color: ' + color + ';';
                     
             var content = '<div class="bar" style="' + style + '" ' +
-                    ' title="' + num + ' people Available">' + num + '</div>';
+                    ' title="' + num + ' people Available for ' + diff + '">' + num + '</div>';
             
-            //TODO: Add data (duration) moment.duration().humanize()
-
             //add to array
             data.push({
                 'start': new Date(original_data[item]['start']),
