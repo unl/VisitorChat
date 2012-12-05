@@ -104,5 +104,48 @@
         <input type='submit' value='Submit' />
     </form>
 </div>
+
+<div class='grid12 first'>
+    <h3>Site Availability</h3>
+    <div id="mytimeline"></div>
+</div>
+
+<div class='grid12 first'>
+    <div class='grid6 first'>
+        <h3>Conversation Statistics</h3>
+        <table class="zentable neutral">
+            <thead><tr><th>Type</th> <th>Value</th></tr></thead>
+            <tbody>
+            <?php
+                $stats = $context->getConversationStats()->getRawObject();
+                
+                foreach ($stats['conversation_types'] as $type=>$value) {
+                    echo "<tr>
+                            <td>$type</td>
+                            <td>$value</td>
+                          </tr>";
+                }
+            ?>
+            </tbody>
+        </table>
+    </div>
     
-<div id="mytimeline"></div>
+    <div class='grid6'>
+        <h3>Assignment Statistics</h3>
+        <table class="zentable neutral">
+            <thead><tr><th>Type</th> <th>Value</th></tr></thead>
+            <tbody>
+            <?php
+            $stats = $context->getAssignmentStats()->getRawObject();
+        
+            foreach ($stats['assignment_types'] as $type=>$value) {
+                echo "<tr>
+                            <td>$type</td>
+                            <td>$value</td>
+                          </tr>";
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div>
