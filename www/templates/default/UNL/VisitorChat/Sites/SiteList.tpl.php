@@ -25,7 +25,7 @@ foreach ($context->sites as $site) {
     echo "<div class='zenbox bright'>
 	          <h3><a href='" . $site->getURL() . "'>" . $site->getTitle() . "</a>".
 		         "<a class='zen-header-link' href='" .
-		         \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/' . $site->getURL()) . "'>View Details</a>".
+		         \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getURL())) . "'>View Details</a>".
 			 "</h3>".
          "<ul>
              <li>Your chat role: <strong>" . $role . "</strong></li>" .

@@ -11,11 +11,11 @@ class Site extends \UNL\VisitorChat\Conversation\RecordList
         //require that an operator is logged in.
         \UNL\VisitorChat\Controller::requireOperatorLogin();
 
-        if (!isset($options['site_url'])) {
+        if (!isset($options['url'])) {
             throw new \Exception('no site url given', 400);
         }
         
-        $this->url = $options['site_url'];
+        $this->url = $options['url'];
         
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             throw new \Exception('not a valid url', 400);

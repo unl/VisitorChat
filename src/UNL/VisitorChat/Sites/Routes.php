@@ -6,7 +6,10 @@ class Routes extends \RegExpRouter\RoutesInterface
     public static function getGetRoutes()
     {
         return array('/^sites$/i'  => 'SiteList',
-                     '/^sites\/(?P<site_url>.+)$/i' => 'Site');
+                     '/^sites\/site$/i' => 'Site',
+                     '/^sites\/statistics$/i' => 'Site\Statistics',
+                     '/^sites\/(?P<url>.+)$/i' => 'Site', //Historical
+                     );
     }
 
     public static function getPostRoutes()

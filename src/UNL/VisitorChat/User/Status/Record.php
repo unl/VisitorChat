@@ -130,4 +130,9 @@ class Record extends \Epoch\Record
 
         return $record;
     }
+
+    function getUser()
+    {
+        return \UNL\VisitorChat\User\Record::getByID($this->users_id);
+    }
 }

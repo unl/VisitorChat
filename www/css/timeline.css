@@ -1,0 +1,28 @@
+div.timeline-event {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    border-radius: 0 0 0 0;
+}
+div.timeline-event-selected {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+div.timeline-event-content {
+    margin: 0;
+}
+div.timeline-event-range {
+    border: medium none;
+    border-radius: 0 0 0 0;
+    height: 100px;
+    overflow: visible;
+    position: relative;
+    width: 100%;
+}
+div.bar {
+    bottom: 0;
+    color: white;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
