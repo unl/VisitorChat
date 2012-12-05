@@ -8,7 +8,6 @@ class Routes extends \RegExpRouter\RoutesInterface
         return array('/^sites$/i'  => 'SiteList',
                      '/^sites\/site$/i' => 'Site',
                      '/^sites\/statistics$/i' => 'Site\Statistics',
-                     '/^sites\/(?P<url>.+)$/i' => 'Site', //Historical
                      );
     }
 
