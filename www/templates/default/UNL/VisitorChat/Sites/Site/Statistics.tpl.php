@@ -5,6 +5,33 @@
 <link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>css/timeline.css">
 
 <script type="text/javascript">
+    /**
+     * Calculate the color based on the given value.
+     * @param {number} H   Hue, a value be between 0 and 360
+     * @param {number} S   Saturation, a value between 0 and 1
+     * @param {number} V   Value, a value between 0 and 1
+     */
+    var hsv2rgb = function(H, S, V) {
+        var R, G, B, C, Hi, X;
+
+        C = V * S;
+        Hi = Math.floor(H/60);  // hi = 0,1,2,3,4,5
+        X = C * (1 - Math.abs(((H/60) % 2) - 1));
+
+        switch (Hi) {
+            case 0: R = C; G = X; B = 0; break;
+            case 1: R = X; G = C; B = 0; break;
+            case 2: R = 0; G = C; B = X; break;
+            case 3: R = 0; G = X; B = C; break;
+            case 4: R = X; G = 0; B = C; break;
+            case 5: R = C; G = 0; B = X; break;
+
+            default: R = 0; G = 0; B = 0; break;
+        }
+
+        return "RGB(" + parseInt(R*255) + "," + parseInt(G*255) + "," + parseInt(B*255) + ")";
+    };
+    
     // Called when the Visualization API is loaded.
     WDN.jQuery(function(){
         var original_data = <?php echo json_encode($context->getRawObject()->getStatusStatistics()); ?>
@@ -21,17 +48,20 @@
 
             var num = original_data[item]['total'];
             var maxNum = 20;
+            var height = Math.round(num / maxNum * 70 + 20);
 
             var color = 'red';
 
             if (num > 0) {
-                color = 'grey';
+                var hue = Math.min(Math.max(180+(num*6)), 240)// hue between 0 (red) and 120 (green)
+                //alert(hue);
+                color = hsv2rgb(hue, 0.95, 0.95);
             }
 
             //Calculate a human readable difference
             var diff = moment.duration(moment(original_data[item]['start']).diff(moment(original_data[item]['end']))).humanize();
 
-            height = Math.round(num / maxNum * 70 + 20);
+            
             
             style = 'height:' + height + '%;' +
                     'background-color: ' + color + ';';
