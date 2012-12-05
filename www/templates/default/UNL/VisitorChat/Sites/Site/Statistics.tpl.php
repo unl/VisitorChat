@@ -70,10 +70,15 @@
                 person = "people";
             }
             
+            var user = "";
+            if (original_data[item]['user'] !== undefined) {
+                user = " | " + original_data[item]['user'] + " changed to " + original_data[item]['status'];
+            }
+            
             var totalPeopleOnline = (num)?num:'';
 
             var content = '<div class="bar" style="' + style + '" ' +
-                    ' title="' + num + ' ' + person + ' available for ' + diff + '">' + totalPeopleOnline + '</div>';
+                    ' title="' + num + ' ' + person + ' available for ' + diff + user + '">' + totalPeopleOnline + '</div>';
 
             //add to array
             data.push({

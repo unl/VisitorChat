@@ -61,9 +61,11 @@ class Statistics
                 $total--;
             }
 
-            $changes[$i-1]['end'] = strtotime($status->date_created) * 1000;
-            $changes[$i]['start'] = strtotime($status->date_created) * 1000;
-            $changes[$i]['total'] = $total;
+            $changes[$i-1]['end']  = strtotime($status->date_created) * 1000;
+            $changes[$i]['start']  = strtotime($status->date_created) * 1000;
+            $changes[$i]['total']  = $total;
+            $changes[$i]['user']   = $status->getUser()->name;
+            $changes[$i]['status'] = $status->status;
             
             $i++;
         }
