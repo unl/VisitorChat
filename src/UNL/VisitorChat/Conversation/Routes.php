@@ -10,7 +10,7 @@ class Routes extends \RegExpRouter\RoutesInterface
                      '/^conversations$/i' => 'RecordList',
                      '/^history$/i'       => 'History\User',
                      '/^history\/sites$/i'  => 'History\SiteList', //historical
-                     '/^history\/sites\/(?P<site_url>.+)$/i' => 'History\Site',  //historical
+                     '/^history\/sites\/(?P<url>.+)$/i' => 'History\Site',  //historical
                      '/^sites\/history$/i'  => 'History\Site',);
     }
     
