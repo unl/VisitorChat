@@ -61,8 +61,6 @@
             //Calculate a human readable difference
             var diff = moment.duration(moment(original_data[item]['start']).diff(moment(original_data[item]['end']))).humanize();
 
-            
-            
             style = 'height:' + height + '%;' +
                     'background-color: ' + color + ';';
             
