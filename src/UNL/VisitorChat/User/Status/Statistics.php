@@ -70,7 +70,13 @@ class Statistics
             $i++;
         }
         
-        $changes[$i-1]['end'] = strtotime($end) * 1000;
+        $end = strtotime($end);
+        
+        if ($end > time()) {
+            $end = time();
+        }
+        
+        $changes[$i-1]['end'] = $end * 1000;
         
         return $changes;
     }

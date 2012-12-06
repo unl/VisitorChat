@@ -36,6 +36,18 @@ class Statistics
         \UNL\VisitorChat\Controller::$pagetitle = "Site Statistics: " . $this->site->getTitle();
     }
     
+    
+    function getStartDate()
+    {
+        return date("Y-m-d", strtotime("-1 day", strtotime($this->start)));
+    }
+    
+    function getEndDate()
+    {
+        return date("Y-m-d", strtotime("+1 day", strtotime($this->end)));
+    }
+   
+    
     function getStatusStatistics()
     {
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->url);
@@ -55,18 +67,18 @@ class Statistics
 
         $statistics = new \UNL\VisitorChat\User\Status\Statistics();
 
-        return $statistics->getStats($userIDs, $this->start, $this->end);
+        return $statistics->getStats($userIDs, $this->getStartDate(), $this->getEndDate());
     }
     
     function getAssignmentStats()
     {
         $answering_site = $this->site->getURL();
         $assignments = array();
-        $assignments['completed'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->start, $this->end, 'COMPLETED');
-        $assignments['expired'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->start, $this->end, 'EXPIRED');
-        $assignments['rejected'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->start, $this->end, 'REJECTED');
-        $assignments['failed'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->start, $this->end, 'FAILED');
-        $assignments['left'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->start, $this->end, 'LEFT');
+        $assignments['completed'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'COMPLETED');
+        $assignments['expired'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'EXPIRED');
+        $assignments['rejected'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'REJECTED');
+        $assignments['failed'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'FAILED');
+        $assignments['left'] = \UNL\VisitorChat\Assignment\RecordList::getAssignmentsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'LEFT');
 
         $totalAssignments = 0;
 
@@ -90,8 +102,8 @@ class Statistics
     function getConversationStats()
     {
         $conversations = array();
-        $conversations['answered']   = \UNL\VisitorChat\Conversation\RecordList::getCompletedConversationsForSite($this->site->getURL(), $this->start, $this->end, 'ANSWERED');
-        $conversations['unanswered'] =  \UNL\VisitorChat\Conversation\RecordList::getCompletedConversationsForSite($this->site->getURL(), $this->start, $this->end, 'UNANSWERED');
+        $conversations['answered']   = \UNL\VisitorChat\Conversation\RecordList::getCompletedConversationsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'ANSWERED');
+        $conversations['unanswered'] =  \UNL\VisitorChat\Conversation\RecordList::getCompletedConversationsForSite($this->site->getURL(), $this->getStartDate(), $this->getEndDate(), 'UNANSWERED');
 
         $totalConversations = 0;
 
