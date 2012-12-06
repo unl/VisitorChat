@@ -58,7 +58,7 @@ class OperatorLogin
                 }
             }
         }
-
+        $user->status = 'BUSY';
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         
         $user->save();
