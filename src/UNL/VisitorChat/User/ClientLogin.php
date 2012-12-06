@@ -68,6 +68,7 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $user->type         = 'client';
         $user->max_chats    = 3;
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $user->status = 'BUSY';
         
         $user->save();
 
