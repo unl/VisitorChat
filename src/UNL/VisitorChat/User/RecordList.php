@@ -22,4 +22,17 @@ class RecordList extends \Epoch\RecordList
 
         return self::getBySql($options);
     }
+
+    public static function getIdleOperators($options = array())
+    {
+        //Build the list
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM users
+                           WHERE type = 'operator'
+                               AND last_active < ADDTIME(now(), '-00:10:00')
+                               AND status = 'AVAILABLE'";
+echo $options['sql']; exit();
+        return self::getBySql($options);
+    }
 }
