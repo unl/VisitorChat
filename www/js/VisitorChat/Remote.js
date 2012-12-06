@@ -465,6 +465,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.confirmationHTML = data['confirmationHTML'];
 
         WDN.jQuery("#visitorChat_chatBox").height("150px");
+        
+        WDN.jQuery("#visitorChat_messageForm").remove();
 
         WDN.jQuery("#visitorChat_closed").append(data['confirmationHTML'])
 
