@@ -294,6 +294,12 @@ class Record extends \Epoch\Record
         if (!$closerID) {
             $closerID = \UNL\VisitorChat\User\Service::getCurrentUser()->id;
         }
+        
+        //Only send a transcript if a conversation actually took place.
+        $sendTranscript = false;
+        if ($this->status == 'CHATTING') {
+            $sendTranscript = true;
+        }
 
         if (!$closeStatus) {
             $closeStatus = "CLIENT";
@@ -319,8 +325,10 @@ class Record extends \Epoch\Record
             $assignment->markAsCompleted();
         }
         
-        //Send a confirnation email to the client.
-        \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
+        //Send a transcript email to the client if we need to.
+        if ($sendTranscript) {
+            \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
+        }
     }
     
     function getAssignments()
