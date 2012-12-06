@@ -11,7 +11,7 @@ class Record extends \Epoch\Record
     public $date_updated;
     public $type; //Client or Operator
     public $max_chats;
-    public $status;        //Store current status here (as kind of a cache)
+    protected $status;        //Store current status here (as kind of a cache)
     public $status_reason; //Store current status reason here (as kind of a cache)
     public $last_active;
     public $popup_notifications; //1=show, 2=no show
