@@ -136,7 +136,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
         // Hover for Client Info
         WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
