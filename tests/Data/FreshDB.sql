@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `max_chats` int(11) NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.',
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
   `last_active` datetime DEFAULT NULL,
-  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT "USER",
+  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST', 'NEW_USER', 'MAINTENANCE', 'LOGIN', 'LOGOUT') NULL DEFAULT "USER",
   `popup_notifications` int(1) NULL default 0,
   `alias` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -184,7 +184,7 @@ CREATE  TABLE IF NOT EXISTS `user_statuses` (
   `users_id` INT(10) NOT NULL ,
   `date_created` DATETIME NOT NULL ,
   `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
-  `reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT "USER" ,
+  `reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST', 'NEW_USER', 'MAINTENANCE', 'LOGIN', 'LOGOUT') NULL DEFAULT "USER" ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_user_statuses_users` (`users_id` ASC) ,
   CONSTRAINT `fk_users_statuses_users`
