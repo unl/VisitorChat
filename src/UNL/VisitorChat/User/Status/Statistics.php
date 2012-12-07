@@ -53,6 +53,11 @@ class Statistics
         $i = 1;
         
         foreach (RecordList::getAllForUsersBetweenDates($userIDs, $start, $end) as $status) {
+            //Don't display status changes for new users (otherwise we would be subtracting 1 from the total and skewing the results).
+            if ($status->reason == "NEW_USER") {
+                continue;
+            }
+            
             if ($status->status == 'AVAILABLE') {
                 //Add to the total available.
                 $total++;
