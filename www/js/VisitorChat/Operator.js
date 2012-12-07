@@ -296,7 +296,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 this.showBrightBox();
                 this.loadShareWatchers();
                 //start a new dialog box.
-            }, this),
+            }, this)
         });
 
         WDN.jQuery('#visitorChat_brightBox').height('350px');
@@ -798,7 +798,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 }, this),
                 "Nevermind":WDN.jQuery.proxy(function () {
                     WDN.jQuery("#alert").dialog("close");
-                }, this),
+                }, this)
             }
         });
     },
