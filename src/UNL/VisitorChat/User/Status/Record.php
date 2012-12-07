@@ -108,7 +108,15 @@ class Record extends \Epoch\Record
     
     public static function getValidStatusReasons()
     {
-        return array('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST');
+        return array('USER',            //The user changed their status
+                     'SERVER_IDLE',     //The server changed their status due to them being idle (scripts/handleIdleOperators.php)
+                     'CLIENT_IDLE',     //The client went idle (no activity for x amount of time)
+                     'EXPIRED_REQUEST', //The user failed to answer an assignment
+                     'NEW_USER',        //The status was set due to the user being newly created
+                     'MAINTENANCE',     //Changed due to server maintenance
+                     'LOGIN',           //The user logged in
+                     'LOGOUT',          //The user logged out
+                    );
     }
     
     public static function getLatestForUser($userID)

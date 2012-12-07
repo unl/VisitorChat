@@ -63,6 +63,7 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/spam.sql"), 
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.alias.sql"), 'adding user alias');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/user_statuses.sql"), 'adding users_status table');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/indexes.sql"), 'adding indexes to tables');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/status_reasons.sql"), 'adding status reasons');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {

@@ -433,9 +433,20 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         //Alert the user if the server set them to busy.
-        if (data['userStatus'] != this.operatorStatus && data['userStatusReason'] == 'SERVER_IDLE') {
+        if (data['userStatus'] != this.operatorStatus && (data['userStatusReason'] == 'SERVER_IDLE' || data['userStatusReason'] == 'MAINTENANCE')) {
             this.alert('idle');
-            WDN.jQuery("#alert").html("Due to inactivity with the server, you have been set to 'busy'.  This usually happens when you forget to change your status to 'unavailable' before you close the browser or after your computer has lost connection with the server.");
+            
+            var helpText = "You have been set to BUSY";
+            
+            if (data['userStatusReason'] == 'SERVER_IDLE') {
+                helpText = "Due to inactivity with the server, you have been set to 'busy'.  This usually happens when you forget to change your status to 'unavailable' before you close the browser or after your computer has lost connection with the server.";
+            }
+
+            if (data['userStatusReason'] == 'MAINTENANCE') {
+                helpText = "Due to server maintenance, you have been set to 'busy'.  Maintenance has been completed and you can now set yourself as AVAILABLE.";
+            }
+            
+            WDN.jQuery("#alert").html(helpText);
             WDN.jQuery("#alert").dialog({
                 resizable:false,
                 height:180,
