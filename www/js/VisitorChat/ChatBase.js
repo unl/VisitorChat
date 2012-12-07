@@ -223,7 +223,7 @@ var VisitorChat_ChatBase = Class.extend({
             },
             dataType:"json",
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('test: ' + textStatus);
+                //alert('test: ' + textStatus);
             },
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
