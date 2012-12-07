@@ -68,7 +68,7 @@ class ClientLogin
         $user->type         = 'client';
         $user->max_chats    = 3;
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-        $user->setStatus("BUSY");
+        $user->setStatus("BUSY", "NEW_USER");
         $user->save();
 
         //Append a unique ID to the end of an guest's user's name
