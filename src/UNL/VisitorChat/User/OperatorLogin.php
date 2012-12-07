@@ -41,6 +41,9 @@ class OperatorLogin
             $user->type         = 'operator';
             $user->max_chats    = 3;
             $user->uid          = $auth->getUser();
+            
+            //Set the status to BUSY for new user.
+            $user->setStatus("BUSY", "NEW_USER");
 
             if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $auth->getUser() . "&format=json")) {
                 if ($data = json_decode($json, true)) {
@@ -61,7 +64,7 @@ class OperatorLogin
         
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         
-        $user->setStatus("BUSY");
+        $user->setStatus("BUSY", "LOGIN");
         
         $user->save();
 
