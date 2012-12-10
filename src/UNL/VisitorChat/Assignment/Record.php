@@ -9,7 +9,7 @@ namespace UNL\VisitorChat\Assignment;
  * 'EXPIRED' -> timed out (no response by operator)
  * 'COMPLETED' -> accepted and completed.  This status is only reached when the conversation is closed.
  * 'LEFT' -> left the conversation before it was completed
- * 'FAILED' -> assignment failed, probably due to the invitation failing prematurely.
+ * 'FAILED' -> assignment failed, probably due to the invitation failing prematurely. (conversation was closed before the assignment was answered).
  */
 
 class Record extends \Epoch\Record
