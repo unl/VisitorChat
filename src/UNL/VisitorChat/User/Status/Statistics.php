@@ -70,6 +70,7 @@ class Statistics
             $changes[$i]['start']  = strtotime($status->date_created) * 1000;
             $changes[$i]['total']  = $total;
             $changes[$i]['user']   = $status->getUser()->name;
+            $changes[$i]['reason'] = $status->reason;
             $changes[$i]['status'] = $status->status;
             
             $i++;
