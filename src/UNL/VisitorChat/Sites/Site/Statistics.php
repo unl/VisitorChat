@@ -61,7 +61,11 @@ class Statistics
         $userIDs = array();
 
         foreach ($site->getMembers() as $member) {
-            $account = $member->getAccount();
+            //Don't add the user if they don't have an account yet.
+            if (!$account = $member->getAccount()) {
+                continue;
+            }
+            
             $userIDs[] = $account->id;
         }
 
