@@ -165,16 +165,22 @@
                         <?php echo $stats['total']; ?>
                     </td>
                 </tr>
-                <?php
-                    
-                    
-                    foreach ($stats['conversation_types'] as $type=>$value) {
-                        echo "<tr>
-                                <td>$type</td>
-                                <td>$value</td>
-                              </tr>";
-                    }
-                ?>
+                <tr>
+                    <td>
+                        Answered
+                    </td>
+                    <td>
+                        <?php echo $stats['conversation_types']['answered']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Unanswered
+                    </td>
+                    <td>
+                        <?php echo $stats['conversation_types']['unanswered']; ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -192,14 +198,46 @@
                         <?php echo $stats['total']; ?>
                     </td>
                 </tr>
-                <?php
-                foreach ($stats['assignment_types'] as $type=>$value) {
-                    echo "<tr>
-                            <td>$type</td>
-                            <td>$value</td>
-                          </tr>";
-                }
-                ?>
+                <tr>
+                    <td>
+                        Completed
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['completed']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Expired
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['expired']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Rejected
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['rejected']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Failed
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['failed']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Left
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['left']; ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
