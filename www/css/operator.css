@@ -921,3 +921,7 @@ p.sub-head {
     top: -1em;
     color: #999;
 }
+
+#statustimeline {
+    margin-bottom: 10px;
+}
