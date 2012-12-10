@@ -223,7 +223,7 @@ var VisitorChat_ChatBase = Class.extend({
             },
             dataType:"json",
             error: function(jqXHR, textStatus, errorThrown) {
-                alert('test: ' + textStatus);
+                //alert('test: ' + textStatus);
             },
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
@@ -415,9 +415,10 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Closed:function (data) {
         if (data['html'] != undefined) {
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
-            WDN.jQuery("#visitorChat_container").append("<div class='visitorChat_center'></div>");
         }
 
+        WDN.jQuery("#visitorChat_container").append("<div class='visitorChat_center'></div>");
+        
         clearTimeout(VisitorChat.loopID);
 
         var html = '<div class="chat_notify" id="visitorChat_closed"><h2>This conversation has ended.</h2></div>';

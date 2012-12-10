@@ -89,7 +89,7 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
     
-    public static function getAssignmentsForSite($url = false, $days = false, $status = false, $options = array())
+    public static function getAssignmentsForSite($url = false, $start = false, $end = false, $status = false, $options = array())
     {
         $options = $options + self::getDefaultOptions();
         
@@ -101,8 +101,12 @@ class RecordList extends \Epoch\RecordList
             $options['sql'] .= "AND answering_site = '" . self::escapeString($url) . "' ";
         }
 
-        if ($days) {
-            $options['sql'] .= "AND DATE_SUB(CURDATE(),INTERVAL " . $days . " DAY) <= date_created ";
+        if ($start && $end) {
+            $options['sql'] .= "AND date_created BETWEEN '" . self::escapeString($start) . "' AND '" . self::escapeString($end) . "' ";
+        } else if ($start) {
+            $options['sql'] .= "AND date_created > '" . self::escapeString($start) . "' ";
+        } else if ($end) {
+            $options['sql'] .= "AND date_created < '" . self::escapeString($end) . "' ";
         }
 
         if ($status) {
@@ -111,6 +115,17 @@ class RecordList extends \Epoch\RecordList
         
         $options['sql'] .= "ORDER BY date_created ASC";
         
+        return self::getBySql($options);
+    }
+    
+    public static function getAllPendingAndExpired($options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
+                                 AND assignments.status = 'PENDING'";
+
         return self::getBySql($options);
     }
 }

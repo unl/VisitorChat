@@ -42,11 +42,11 @@ class Edit extends \UNL\VisitorChat\Conversation\Record
                 throw new \Exception("invalid status.", 400);
             }
             
-            $this->status = $post['status'];
-            
             if ($post['status'] == 'CLOSED') {
                 $this->close();
             } else {
+                $this->status = $post['status'];
+                
                 $this->save();
             }
         }

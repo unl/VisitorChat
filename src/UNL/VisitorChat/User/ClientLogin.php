@@ -1,7 +1,7 @@
 <?php 
 namespace UNL\VisitorChat\User;
 
-class ClientLogin extends \UNL\VisitorChat\User\Record
+class ClientLogin
 {
     function __construct($options = array())
     {
@@ -61,17 +61,16 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             $method = "EMAIL";
         }
         
-        $user = new self();
+        $user = new \UNL\VisitorChat\User\Record();
         $user->name         = $post['name'];
         $user->email        = $post['email'];
         $user->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
         $user->type         = 'client';
         $user->max_chats    = 3;
-        $user->status       = 'BUSY';
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-        
+        $user->setStatus("BUSY", "NEW_USER");
         $user->save();
-        
+
         //Append a unique ID to the end of an guest's user's name
         if ($user->name == "Guest") {
             $user->name = $user->name . $user->id;

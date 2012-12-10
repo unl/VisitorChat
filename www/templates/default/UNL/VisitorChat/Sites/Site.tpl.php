@@ -3,7 +3,7 @@
 <h3><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getTitle();?></a>
 <?php
     if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
-        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('history/sites/' . $context->site->getURL()) . "'>History</a>";
+        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getURL())) . "'>History</a>";
     }
     ?></h3>
 
@@ -25,7 +25,7 @@
                 $alias = " (" . $chatUser->alias . ")";
             }
             
-            echo "<li class='" . strtolower($chatUser->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ")</li>";
+            echo "<li class='" . strtolower($chatUser->getStatus()->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ")</li>";
         }
     ?>
 </ul>

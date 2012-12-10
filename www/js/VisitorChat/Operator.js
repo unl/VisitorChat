@@ -136,7 +136,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
         // Hover for Client Info
         WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
@@ -296,7 +296,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 this.showBrightBox();
                 this.loadShareWatchers();
                 //start a new dialog box.
-            }, this),
+            }, this)
         });
 
         WDN.jQuery('#visitorChat_brightBox').height('350px');
@@ -433,9 +433,20 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         //Alert the user if the server set them to busy.
-        if (data['userStatus'] != this.operatorStatus && data['userStatusReason'] == 'SERVER_IDLE') {
+        if (data['userStatus'] != this.operatorStatus && (data['userStatusReason'] == 'SERVER_IDLE' || data['userStatusReason'] == 'MAINTENANCE')) {
             this.alert('idle');
-            WDN.jQuery("#alert").html("Due to inactivity with the server, you have been set to 'busy'.  This usually happens when you forget to change your status to 'unavailable' before you close the browser or after your computer has lost connection with the server.");
+            
+            var helpText = "You have been set to BUSY";
+            
+            if (data['userStatusReason'] == 'SERVER_IDLE') {
+                helpText = "Due to inactivity with the server, you have been set to 'busy'.  This usually happens when you forget to change your status to 'unavailable' before you close the browser or after your computer has lost connection with the server.";
+            }
+
+            if (data['userStatusReason'] == 'MAINTENANCE') {
+                helpText = "Due to server maintenance, you have been set to 'busy'.  Maintenance has been completed and you can now set yourself as AVAILABLE.";
+            }
+            
+            WDN.jQuery("#alert").html(helpText);
             WDN.jQuery("#alert").dialog({
                 resizable:false,
                 height:180,
@@ -787,7 +798,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 }, this),
                 "Nevermind":WDN.jQuery.proxy(function () {
                     WDN.jQuery("#alert").dialog("close");
-                }, this),
+                }, this)
             }
         });
     },

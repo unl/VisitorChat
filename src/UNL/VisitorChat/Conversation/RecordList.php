@@ -121,7 +121,7 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
 
-    public static function getCompletedConversationsForSite($url = false, $days = false, $result = false, $options = array())
+    public static function getCompletedConversationsForSite($url = false, $start = false, $end, $result = false, $options = array())
     {
         $options = $options + self::getDefaultOptions();
 
@@ -136,8 +136,12 @@ class RecordList extends \Epoch\RecordList
             $options['sql'] .= "AND answering_site = '" . self::escapeString($url) . "' ";
         }
 
-        if ($days) {
-            $options['sql'] .= "AND DATE_SUB(CURDATE(),INTERVAL " . $days . " DAY) <= conv1.date_created ";
+        if ($start && $end) {
+            $options['sql'] .= "AND conv1.date_created BETWEEN '" . self::escapeString($start) . "' AND '" . self::escapeString($end) . "' ";
+        } else if ($start) {
+            $options['sql'] .= "AND conv1.date_created > '" . self::escapeString($start) . "' ";
+        } else if ($end) {
+            $options['sql'] .= "AND conv1.date_created < '" . self::escapeString($end) . "' ";
         }
         
         if ($result) {
