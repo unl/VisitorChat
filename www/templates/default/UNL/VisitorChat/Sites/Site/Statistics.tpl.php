@@ -159,22 +159,28 @@
             <tbody>
                 <tr>
                     <td>
-                        Total
+                        <span title="The total number of conversations started">Total</span>
                     </td>
                     <td>
                         <?php echo $stats['total']; ?>
                     </td>
                 </tr>
-                <?php
-                    
-                    
-                    foreach ($stats['conversation_types'] as $type=>$value) {
-                        echo "<tr>
-                                <td>$type</td>
-                                <td>$value</td>
-                              </tr>";
-                    }
-                ?>
+                <tr>
+                    <td>
+                        <span title="The total number of conversations that were answered by atleast 1 operator">Answered</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['conversation_types']['answered']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="The total number of conversations that went unanswered by operators">Unanswered</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['conversation_types']['unanswered']; ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -186,20 +192,52 @@
             <tbody>
                 <tr>
                     <td>
-                        Total
+                        <span title="The total number of assignments created">Total</span>
                     </td>
                     <td>
                         <?php echo $stats['total']; ?>
                     </td>
                 </tr>
-                <?php
-                foreach ($stats['assignment_types'] as $type=>$value) {
-                    echo "<tr>
-                            <td>$type</td>
-                            <td>$value</td>
-                          </tr>";
-                }
-                ?>
+                <tr>
+                    <td>
+                        <span title="The assignment was answered and stayed in the conversation until the conversation was completed">Completed</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['completed']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="The assignment was not answered">Expired</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['expired']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="The assignment clicked 'reject' when prompted to answer an assignment">Rejected</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['rejected']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="The conversation was closed before the assignment could be responded to">Failed</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['failed']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="An operator left a conversation before it was completed">Left</span>
+                    </td>
+                    <td>
+                        <?php echo $stats['assignment_types']['left']; ?>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
