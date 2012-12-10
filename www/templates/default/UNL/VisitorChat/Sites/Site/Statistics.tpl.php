@@ -105,7 +105,7 @@
         };
 
         // Instantiate our timeline object.
-        var timeline = new links.Timeline(document.getElementById('mytimeline'));
+        var timeline = new links.Timeline(document.getElementById('statustimeline'));
 
         // Draw our timeline with the created data and options
         timeline.draw(data, options);
@@ -148,7 +148,7 @@
 
 <div class='grid12 first'>
     <h3>Site Availability</h3>
-    <div id="mytimeline"></div>
+    <div id="statustimeline"></div>
 </div>
 
 <div class='grid12 first'>
