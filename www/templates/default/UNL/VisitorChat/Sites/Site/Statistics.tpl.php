@@ -153,39 +153,53 @@
 
 <div class='grid12 first'>
     <div class='grid6 first'>
-        <h3>Conversation Statistics</h3>
+        <?php $stats = $context->getConversationStats()->getRawObject(); ?>
         <table class="zentable neutral">
-            <thead><tr><th>Type</th> <th>Value</th></tr></thead>
+            <thead><tr><th colspan='2'>Conversation Statistics</th></thead>
             <tbody>
-            <?php
-                $stats = $context->getConversationStats()->getRawObject();
-                
-                foreach ($stats['conversation_types'] as $type=>$value) {
-                    echo "<tr>
-                            <td>$type</td>
-                            <td>$value</td>
-                          </tr>";
-                }
-            ?>
+                <tr>
+                    <td>
+                        Total
+                    </td>
+                    <td>
+                        <?php echo $stats['total']; ?>
+                    </td>
+                </tr>
+                <?php
+                    
+                    
+                    foreach ($stats['conversation_types'] as $type=>$value) {
+                        echo "<tr>
+                                <td>$type</td>
+                                <td>$value</td>
+                              </tr>";
+                    }
+                ?>
             </tbody>
         </table>
     </div>
     
     <div class='grid6'>
-        <h3>Assignment Statistics</h3>
+        <?php $stats = $context->getAssignmentStats()->getRawObject(); ?>
         <table class="zentable neutral">
-            <thead><tr><th>Type</th> <th>Value</th></tr></thead>
+            <thead><tr><th colspan='2'>Assignment Statistics</th></thead>
             <tbody>
-            <?php
-            $stats = $context->getAssignmentStats()->getRawObject();
-        
-            foreach ($stats['assignment_types'] as $type=>$value) {
-                echo "<tr>
-                        <td>$type</td>
-                        <td>$value</td>
-                      </tr>";
-            }
-            ?>
+                <tr>
+                    <td>
+                        Total
+                    </td>
+                    <td>
+                        <?php echo $stats['total']; ?>
+                    </td>
+                </tr>
+                <?php
+                foreach ($stats['assignment_types'] as $type=>$value) {
+                    echo "<tr>
+                            <td>$type</td>
+                            <td>$value</td>
+                          </tr>";
+                }
+                ?>
             </tbody>
         </table>
     </div>
