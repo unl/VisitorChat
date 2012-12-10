@@ -72,7 +72,7 @@
             
             var user = "";
             if (original_data[item]['user'] !== undefined) {
-                user = " | " + original_data[item]['user'] + " changed to " + original_data[item]['status'];
+                user = " | " + original_data[item]['user'] + " changed to " + original_data[item]['status'] + " (" + original_data[item]['reason'] + ")";
             }
             
             var totalPeopleOnline = (num)?num:'';
