@@ -159,7 +159,7 @@
             <tbody>
                 <tr>
                     <td>
-                        Total
+                        <span title="The total number of conversations started">Total</span>
                     </td>
                     <td>
                         <?php echo $stats['total']; ?>
@@ -167,7 +167,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Answered
+                        <span title="The total number of conversations that were answered by atleast 1 operator">Answered</span>
                     </td>
                     <td>
                         <?php echo $stats['conversation_types']['answered']; ?>
@@ -175,7 +175,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Unanswered
+                        <span title="The total number of conversations that went unanswered by operators">Unanswered</span>
                     </td>
                     <td>
                         <?php echo $stats['conversation_types']['unanswered']; ?>
@@ -192,7 +192,7 @@
             <tbody>
                 <tr>
                     <td>
-                        Total
+                        <span title="The total number of assignments created">Total</span>
                     </td>
                     <td>
                         <?php echo $stats['total']; ?>
@@ -200,7 +200,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Completed
+                        <span title="The assignment was answered and stayed in the conversation until the conversation was completed">Completed</span>
                     </td>
                     <td>
                         <?php echo $stats['assignment_types']['completed']; ?>
@@ -208,7 +208,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Expired
+                        <span title="The assignment was not answered">Expired</span>
                     </td>
                     <td>
                         <?php echo $stats['assignment_types']['expired']; ?>
@@ -216,7 +216,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Rejected
+                        <span title="The assignment clicked 'reject' when prompted to answer an assignment">Rejected</span>
                     </td>
                     <td>
                         <?php echo $stats['assignment_types']['rejected']; ?>
@@ -224,7 +224,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Failed
+                        <span title="The conversation was closed before the assignment could be responded to">Failed</span>
                     </td>
                     <td>
                         <?php echo $stats['assignment_types']['failed']; ?>
@@ -232,7 +232,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Left
+                        <span title="An operator left a conversation before it was completed">Left</span>
                     </td>
                     <td>
                         <?php echo $stats['assignment_types']['left']; ?>
