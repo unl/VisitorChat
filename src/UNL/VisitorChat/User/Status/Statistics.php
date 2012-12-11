@@ -46,8 +46,13 @@ class Statistics
         $changes = array();
         
         //Give total at the start.
-        $changes[0]['start'] = strtotime($start) * 1000;
-        $changes[0]['total'] = $total;
+        $changes[0]['start']                   = strtotime($start) * 1000;
+        $changes[0]['total']                   = $total;
+        $changes['total_time_online']          = 0;
+        $changes['total_time_online_business'] = 0;
+        $changes['total_time']                 = 0;
+        $changes['percent_online']             = 0;
+        $changes['percent_online_business']    = 0;
         
         //Get everything between the dates
         $i = 1;
@@ -65,14 +70,14 @@ class Statistics
                 //We may or may not have all the history in the db, so this MAY dip below 0. Don't allow that.
                 $total--;
             }
-
+            
             $changes[$i-1]['end']  = strtotime($status->date_created) * 1000;
             $changes[$i]['start']  = strtotime($status->date_created) * 1000;
             $changes[$i]['total']  = $total;
             $changes[$i]['user']   = $status->getUser()->name;
             $changes[$i]['reason'] = $status->reason;
             $changes[$i]['status'] = $status->status;
-            
+
             $i++;
         }
         
@@ -83,6 +88,53 @@ class Statistics
         }
         
         $changes[$i-1]['end'] = $end * 1000;
+        
+        //Calculate percents and total times.
+        
+        $changes['total_time'] = strtotime($start) - strtotime($end);
+
+        //Add total time online.
+        foreach ($changes as $change) {
+            if ($change['total'] > 0) {
+                $changes['total_time_online'] += ($change['end']/1000 - ($change['start']/1000));
+                
+                $tmpStart = new \DateTime(date("r", $change['start']/1000));
+                $tmpEnd   = new \DateTime(date("r", $change['end']/1000));
+                
+                if ($tmpStart->format("N") > 0 && $tmpStart->format("N") < 6
+                    || $tmpEnd->format("N") > 0 && $tmpEnd->format("N") < 6) {
+                    
+                    if ($tmpStart->format("N") > 5) {
+                        $diff = $tmpStart->format("N") - 5;
+                        $tmpStart->modify("-$diff day");
+                    }
+
+                    if ($tmpStart->format("G") < 8) {
+                        $tmpStart->setTime(8, 0);
+                    }
+
+                    if ($tmpEnd->format("N") > 5) {
+                        $diff = $tmpStart->format("N") - 5;
+                        $tmpEnd->modify("-$diff day");
+                    }
+                    
+                    if ($tmpEnd->format("G") > 17) {
+                        $tmpEnd->setTime(17, 0);
+                    }
+
+                    $changes['total_time_online_business'] += ($tmpEnd->getTimestamp() - $tmpStart->getTimestamp());
+                }
+            }
+        }
+        
+        if ($changes['total_time'] > 0) {
+            $changes['percent_online'] = round(($changes['total_time_online'] / $changes['total_time']), 2);
+        }
+        
+        $totalDays = $changes['total_time'] / 86400;
+        $totalBusinessSeconds = $totalDays * 28800;
+        
+        $changes['percent_online_business'] = round($changes['total_time_online_business'] / $totalBusinessSeconds, 2);
         
         return $changes;
     }
