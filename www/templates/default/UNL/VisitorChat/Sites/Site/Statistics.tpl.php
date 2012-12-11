@@ -45,12 +45,12 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
         var min  = false;
         var max  = false;
 
-        for (item in original_data) {
+        for (item in original_data['statuses']) {
             if (!min) {
-                min = new Date(original_data[item]['start'] - 86400000);
+                min = new Date(original_data['statuses'][item]['start'] - 86400000);
             }
 
-            var num = original_data[item]['total'];
+            var num = original_data['statuses'][item]['total'];
             var maxNum = 20;
             var height = Math.round(num / maxNum * 70 + 20);
 
@@ -63,7 +63,7 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
             }
 
             //Calculate a human readable difference
-            var diff = moment.duration(moment(original_data[item]['start']).diff(moment(original_data[item]['end']))).humanize();
+            var diff = moment.duration(moment(original_data['statuses'][item]['start']).diff(moment(original_data['statuses'][item]['end']))).humanize();
 
             style = 'height:' + height + '%;' +
                     'background-color: ' + color + ';';
@@ -75,8 +75,8 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
             }
             
             var user = "";
-            if (original_data[item]['user'] !== undefined) {
-                user = " | " + original_data[item]['user'] + " changed to " + original_data[item]['status'] + " (" + original_data[item]['reason'] + ")";
+            if (original_data['statuses'][item]['user'] !== undefined) {
+                user = " | " + original_data['statuses'][item]['user'] + " changed to " + original_data['statuses'][item]['status'] + " (" + original_data['statuses'][item]['reason'] + ")";
             }
             
             var totalPeopleOnline = (num)?num:'';
@@ -86,14 +86,14 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
 
             //add to array
             data.push({
-                'start': new Date(original_data[item]['start']),
-                'end': new Date(original_data[item]['end']),  // end is optional
+                'start': new Date(original_data['statuses'][item]['start']),
+                'end': new Date(original_data['statuses'][item]['end']),  // end is optional
                 'content': content
             });
         }
-
-        max = new Date(original_data[item]['end'] + 86400000);
-
+        
+        max = new Date(original_data['statuses'][item]['end'] + 86400000);
+        
         // specify options
         options = {
             "width":  "100%",
@@ -105,7 +105,9 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
             "intervalMin": 10000,
             "max": max,
             "min": min,
-            "showNavigation": true
+            "showNavigation": true,
+            "showCurrentTime": false,
+            "start": min
         };
 
         // Instantiate our timeline object.

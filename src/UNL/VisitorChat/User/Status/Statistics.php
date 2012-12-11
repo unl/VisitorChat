@@ -44,10 +44,11 @@ class Statistics
         $total = $this->getTotalAvailableAtTime($userIDs, $start);
         
         $changes = array();
+        $changes['statuses'] = array();
         
         //Give total at the start.
-        $changes[0]['start']                   = strtotime($start) * 1000;
-        $changes[0]['total']                   = $total;
+        $changes['statuses'][0]['start']       = strtotime($start) * 1000;
+        $changes['statuses'][0]['total']       = $total;
         $changes['total_time_online']          = 0;
         $changes['total_time_online_business'] = 0;
         $changes['total_time']                 = 0;
@@ -71,30 +72,30 @@ class Statistics
                 $total--;
             }
             
-            $changes[$i-1]['end']  = strtotime($status->date_created) * 1000;
-            $changes[$i]['start']  = strtotime($status->date_created) * 1000;
-            $changes[$i]['total']  = $total;
-            $changes[$i]['user']   = $status->getUser()->name;
-            $changes[$i]['reason'] = $status->reason;
-            $changes[$i]['status'] = $status->status;
+            $changes['statuses'][$i-1]['end']  = strtotime($status->date_created) * 1000;
+            $changes['statuses'][$i]['start']  = strtotime($status->date_created) * 1000;
+            $changes['statuses'][$i]['total']  = $total;
+            $changes['statuses'][$i]['user']   = $status->getUser()->name;
+            $changes['statuses'][$i]['reason'] = $status->reason;
+            $changes['statuses'][$i]['status'] = $status->status;
 
             $i++;
         }
 
-        $changes[$i-1]['end'] = strtotime($end);
+        $changes['statuses'][$i-1]['end'] = strtotime($end);
         
         if (strtotime($end) > time()) {
-            $changes[$i-1]['end'] = time();
+            $changes['statuses'][$i-1]['end'] = time();
         } 
         
-        $changes[$i-1]['end'] = $changes[$i-1]['end'] * 1000;
+        $changes['statuses'][$i-1]['end'] = $changes['statuses'][$i-1]['end'] * 1000;
         
         //Calculate percents and total times.
         
         $changes['total_time'] = strtotime($end) - strtotime($start);
         
         //Add total time online.
-        foreach ($changes as $change) {
+        foreach ($changes['statuses'] as $change) {
             if ($change['total'] > 0) {
                 $changes['total_time_online'] += ($change['end']/1000 - ($change['start']/1000));
                 
