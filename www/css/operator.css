@@ -882,6 +882,7 @@
     float: right;
     font-weight: normal;
     font-size: 0.9em;
+    margin-left: 5px;
 }
 
 p.sub-head {
@@ -921,12 +922,21 @@ p.sub-head {
 
 #maincontent
 .big-number {
-    font-size: 4em;
+    font-size: 2em;
+}
+
+#maincontent
+h1.big-number {
+    padding-bottom: 0px;
 }
 
 .big-number,
 .big-number + p {
     text-align: center;
+}
+
+.percent {
+    font-size: 1.5em;
 }
 
 #maincontent
