@@ -139,8 +139,21 @@ class Statistics
         }
         
         $totalDays = $changes['total_time'] / 86400;
-        $totalBusinessSeconds = $totalDays * 28800;
+        $totalBusinessSeconds = 0;
+
+        $dateRange = new \DatePeriod(new \DateTime($start), new \DateInterval('P1D'), new \DateTime($end));
         
+        foreach ($dateRange as $date) {
+            $day = $date->format("N");
+            
+            //Skip weekends
+            if (in_array($day, array(6, 7))) {
+                continue;
+            }
+            
+            $totalBusinessSeconds += 28800;
+        }
+
         if ($changes['total_time_online_business'] > 0) {
             $changes['percent_online_business'] = round(($changes['total_time_online_business'] / $totalBusinessSeconds) * 100, 2) . "%";
         }
