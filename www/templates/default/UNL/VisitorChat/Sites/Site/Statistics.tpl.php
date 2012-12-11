@@ -139,25 +139,79 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
     });
 </script>
     
-<div id='dateRange'>
-    <form action='<?php echo $context->getURL(); ?>'>
-        <label for="from">From</label>
-        <input type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
-        <label for="to">to</label>
-        <input type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
-        <input type='hidden' name='url' value='<?php echo $context->url ?>' />
-        <input type='submit' value='Submit' />
-    </form>
-</div>
 
-<div class='grid12 first'>
+<div class='grid12 first stats-table'>
     <h3>Site Availability</h3>
+    <div id='dateRange'>
+        <form action='<?php echo $context->getURL(); ?>'>
+            <label for="from">From</label>
+            <input type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
+            <label for="to">to</label>
+            <input type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
+            <input type='hidden' name='url' value='<?php echo $context->url ?>' />
+            <input type='submit' value='Submit' />
+        </form>
+    </div>
     <div id="statustimeline"></div>
 </div>
 
+<!-- Conversation Stats -->
+<?php $stats = $context->getConversationStats()->getRawObject(); ?>
+
+<section class="grid4 first shadow-right">
+    <h1 class="big-number"><?php echo $statusStatistics['percent_online']; ?></h1>
+    <p>Chat Online</p>
+    <p class="inline-number">
+        <span class="percent"><?php echo $statusStatistics['percent_online_business']; ?></span>
+        <span class="right-text">During<br />8:00-5:00</span>
+    </p>
+</section>
+
+<section class="grid8">
+    <div class="grid4 first">
+        <h1 class="big-number"><?php echo $stats['conversation_types']['answered']; ?></h1>
+        <p>Answered</p>
+    </div>
+    <div class="grid4">
+        <h1 class="big-number"><?php echo $stats['conversation_types']['unanswered']; ?></h1>
+        <p>Unanswered</p>
+    </div>
+    
+    <!-- Assignment Stats -->
+    <?php $stats = $context->getAssignmentStats()->getRawObject(); ?>
+    
+    <table class="assign-stats">
+        <tbody>
+            <tr>
+                <td>
+                    <h1><?php echo $stats['assignment_types']['completed']; ?></h1>
+                    <p>Completed</p>
+                </td>
+                <td>
+                    <h1><?php echo $stats['assignment_types']['left']; ?></h1>
+                    <p>Left</p>
+                </td>
+                <td>
+                    <h1><?php echo $stats['assignment_types']['expired']; ?></h1>
+                    <p>Expired</p>
+                </td>
+                <td>
+                    <h1><?php echo $stats['assignment_types']['rejected']; ?></h1>
+                    <p>Rejected</p>
+                </td>
+                <td>
+                    <h1><?php echo $stats['assignment_types']['failed']; ?></h1>
+                    <p>Failed</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!--
 <div class='grid12 first'>
     <div class='grid6 first'>
-        <?php $stats = $context->getConversationStats()->getRawObject(); ?>
+        
         <table class="zentable neutral">
             <thead><tr><th colspan='2'>Conversation Statistics</th></thead>
             <tbody>
@@ -206,7 +260,7 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
     </div>
     
     <div class='grid6'>
-        <?php $stats = $context->getAssignmentStats()->getRawObject(); ?>
+        
         <table class="zentable neutral">
             <thead><tr><th colspan='2'>Assignment Statistics</th></thead>
             <tbody>
@@ -262,3 +316,4 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
         </table>
     </div>
 </div>
+-->
