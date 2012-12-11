@@ -158,7 +158,7 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
 <!-- Conversation Stats -->
 <?php $stats = $context->getConversationStats()->getRawObject(); ?>
 
-<section class="grid4 first">
+<section class="grid4 first shadow-right">
 <h1 class="big-number"><?php echo $statusStatistics['percent_online']; ?></h1>
 <p>Chat Online</p>
 <p class="inline-number"><span class="percent"><?php echo $statusStatistics['percent_online_business']; ?></span><span class="right-text">During<br />8:00-5:00</span></p>
