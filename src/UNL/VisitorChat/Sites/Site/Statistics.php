@@ -106,7 +106,7 @@ class Statistics
                 continue;
             }
             
-            $stats['assignment_types'][$type] = $list->count() . "(" . round(($list->count()/$totalAssignments)*100) . "%)";
+            $stats['assignment_types'][$type] = $list->count() . " <span class='percent'>(" . round(($list->count()/$totalAssignments)*100) . "%)</span>";
         }
         
         return $stats;
@@ -136,7 +136,7 @@ class Statistics
                 continue;
             }
             
-            $stats['conversation_types'][$type] = $list->count() . "(" . round(($list->count()/$totalConversations)*100) . "%)";
+            $stats['conversation_types'][$type] = $list->count() . " <span class='percent'>(" . round(($list->count()/$totalConversations)*100) . "%)</span>";
         }
         
         return $stats;
