@@ -31,6 +31,10 @@ class Statistics
             $this->end = $options['end'];
         }
         
+        if ($this->getStartDate() >= $this->getEndDate()) {
+            throw new \Exception("The start date must be before the end date.", 400);
+        }
+        
         $this->site = $this->site->current();
 
         \UNL\VisitorChat\Controller::$pagetitle = "Site Statistics: " . $this->site->getTitle();
