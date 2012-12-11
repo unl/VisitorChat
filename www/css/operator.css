@@ -924,6 +924,11 @@ p.sub-head {
     font-size: 4em;
 }
 
+#maincontent
+h1.big-number {
+    padding-bottom: 0px;
+}
+
 .big-number,
 .big-number + p {
     text-align: center;
