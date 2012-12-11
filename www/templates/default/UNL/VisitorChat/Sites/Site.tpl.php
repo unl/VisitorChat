@@ -3,6 +3,9 @@
 <h3><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getTitle();?></a>
 <?php
     if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
+        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/statistics?url=' . urlencode($context->site->getURL())) . "'>Statistics</a>";
+    }
+    if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
         echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getURL())) . "'>History</a>";
     }
     ?></h3>
