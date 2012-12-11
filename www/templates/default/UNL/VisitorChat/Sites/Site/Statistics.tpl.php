@@ -186,7 +186,7 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
                 </td>
                 <td>
                     <h3><?php echo $stats['assignment_types']['left']; ?></h3>
-                    <p>Abandoned</p>
+                    <p>Left</p>
                 </td>
                 
                 <td>
