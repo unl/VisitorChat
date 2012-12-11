@@ -100,14 +100,17 @@ class Statistics
                 
                 $tmpStart = new \DateTime(date("r", $change['start']/1000));
                 $tmpEnd   = new \DateTime(date("r", $change['end']/1000));
-                
-                if ($tmpStart->format("N") > 0 && $tmpStart->format("N") < 6
-                    || $tmpEnd->format("N") > 0 && $tmpEnd->format("N") < 6
-                    && ($tmpStart->format("G") > 7 && $tmpStart->format("G") < 18)) {
+
+                if (($tmpStart->format("N") > 0 && $tmpStart->format("N") < 6
+                    || $tmpEnd->format("N") > 0 && $tmpEnd->format("N") < 6)
+                    && (($tmpStart->format("G") > 7 & $tmpStart->format("G") < 17) || ($tmpEnd->format("G") > 7 & $tmpEnd->format("G") < 17))) {
                     
                     if ($tmpStart->format("N") > 5) {
                         $diff = $tmpStart->format("N") - 5;
                         $tmpStart->modify("-$diff day");
+                        
+                        //it ends after the end of the business day... so set to the end of the business day.
+                        $tmpStart->setTime(17, 0);
                     }
 
                     if ($tmpStart->format("G") < 8) {
@@ -117,6 +120,9 @@ class Statistics
                     if ($tmpEnd->format("N") > 5) {
                         $diff = $tmpStart->format("N") - 5;
                         $tmpEnd->modify("-$diff day");
+
+                        //it ends after the end of the business day... so set to the end of the business day.
+                        $tmpEnd->setTime(17, 0);
                     }
                     
                     if ($tmpEnd->format("G") > 17) {
