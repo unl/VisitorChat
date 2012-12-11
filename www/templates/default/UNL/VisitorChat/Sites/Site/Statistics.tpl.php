@@ -160,166 +160,54 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
 <!-- Conversation Stats -->
 <?php $stats = $context->getConversationStats()->getRawObject(); ?>
 
-<section class="grid4 first shadow-right">
-<h1 class="big-number"><?php echo $statusStatistics['percent_online']; ?></h1>
-<p>Chat Online</p>
-<p class="inline-number"><span class="percent"><?php echo $statusStatistics['percent_online_business']; ?></span><span class="right-text">During<br />8:00-5:00</span></p>
+<section class="grid2 first shadow-right">
+    <div class='grid2 first'>
+        <p class="med-number"><span class='percent'><?php echo $statusStatistics['percent_online']; ?></span></p>
+        <p class='stat-title'>Chat Online</p>
+    </div>
+    <div class='grid2 first'>
+        <p class="med-number"><span class='percent'><?php echo $statusStatistics['percent_online_business']; ?></span></p>
+        <p class="stat-title">Online during<br />8:00-5:00</p>
+    </div>
 </section>
 
-<section class="grid8">
-    <div class="grid4 first">
-        <h1 class="big-number"><?php echo $stats['conversation_types']['answered']; ?></h1>
+<section class="grid10">
+    <div class="grid5 first" title="The total number of conversations that were answered by at least 1 operator">
+        <p class="big-number"><?php echo $stats['conversation_types']['answered']; ?></p>
         <p>Answered</p>
     </div>
-    <div class="grid4">
-        <h1 class="big-number"><?php echo $stats['conversation_types']['unanswered']; ?></h1>
+    <div class="grid5" title="The total number of conversations that went unanswered by operators">
+        <p class="big-number"><?php echo $stats['conversation_types']['unanswered']; ?></p>
         <p>Unanswered</p>
     </div>
     
 <!-- Assignments Stats -->
 <?php $stats = $context->getAssignmentStats()->getRawObject(); ?>
     
-    <table class="assign-stats">
-        <tbody>
-            <tr>
-                <td>
-                    <h3><?php echo $stats['assignment_types']['completed']; ?></h3>
-                    <p>Completed</p>
-                </td>
-                <td>
-                    <h3><?php echo $stats['assignment_types']['left']; ?></h3>
-                    <p>Left</p>
-                </td>
-                
-                <td>
-                    <h3><?php echo $stats['assignment_types']['expired']; ?></h3>
-                    <p>Expired</p>
-                </td>
-                
-                <td>
-                    <h3><?php echo $stats['assignment_types']['rejected']; ?></h3>
-                    <p>Rejected</p>
-                </td>
-                
-                <td>
-                    <h3><?php echo $stats['assignment_types']['failed']; ?></h3>
-                    <p>Failed</p>
-                </td>
-                
-            </tr>
-        </tbody>
-    </table>
+    <div class="assign-stats">
+        <div class='grid2 first' title="The assignment was answered and stayed in the conversation until the conversation was completed">
+            <p class="med-number"><?php echo $stats['assignment_types']['completed']; ?></p>
+            <p class="stat-title">Completed</p>
+        </div>
+        
+        <div class='grid2' title="An operator left a conversation before it was completed">
+            <p class="med-number"><?php echo $stats['assignment_types']['left']; ?></p>
+            <p class="stat-title">Left</p>
+        </div>
+        
+        <div class='grid2' title="The assignment was not answered">
+            <p class="med-number"><?php echo $stats['assignment_types']['expired']; ?></p>
+            <p class="stat-title">Expired</p>
+        </div>
+        
+        <div class='grid2' title="The assignment clicked 'reject' when prompted to answer an assignment">
+            <p class="med-number"><?php echo $stats['assignment_types']['rejected']; ?></p>
+            <p class="stat-title">Rejected</p>
+        </div>
+
+        <div class='grid2' title="The conversation was closed before the assignment could be responded to">
+            <p class="med-number"><?php echo $stats['assignment_types']['failed']; ?></p>
+            <p class="stat-title">Failed</p>
+        </div>
+    </div>
 </section>
-
-
-<!--
-<div class='grid12 first'>
-    <div class='grid6 first'>
-        
-        <table class="zentable neutral">
-            <thead><tr><th colspan='2'>Conversation Statistics</th></thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <span title="The total number of conversations started">Total</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['total']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The total number of conversations that were answered by atleast 1 operator">Answered</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['conversation_types']['answered']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The total number of conversations that went unanswered by operators">Unanswered</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['conversation_types']['unanswered']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="">Percent of time Online</span>
-                    </td>
-                    <td>
-                        <?php echo $statusStatistics['percent_online']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="">Percent of time Online from 8 to 5 Mon - Friday</span>
-                    </td>
-                    <td>
-                        <?php echo $statusStatistics['percent_online_business']; ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-
-    
-    <div class='grid6'>
-        
-        <table class="zentable neutral">
-            <thead><tr><th colspan='2'>Assignment Statistics</th></thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <span title="The total number of assignments created">Total</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['total']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The assignment was answered and stayed in the conversation until the conversation was completed">Completed</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['assignment_types']['completed']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The assignment was not answered">Expired</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['assignment_types']['expired']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The assignment clicked 'reject' when prompted to answer an assignment">Rejected</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['assignment_types']['rejected']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="The conversation was closed before the assignment could be responded to">Failed</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['assignment_types']['failed']; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span title="An operator left a conversation before it was completed">Left</span>
-                    </td>
-                    <td>
-                        <?php echo $stats['assignment_types']['left']; ?>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
--->
