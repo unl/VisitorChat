@@ -4,6 +4,10 @@
 <link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/timeline/timeline.css">
 <link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>css/timeline.css">
 
+<?php
+$statusStatistics = $context->getRawObject()->getStatusStatistics();
+?>
+    
 <script type="text/javascript">
     /**
      * Calculate the color based on the given value.
@@ -34,7 +38,7 @@
     
     // Called when the Visualization API is loaded.
     WDN.jQuery(function(){
-        var original_data = <?php echo json_encode($context->getRawObject()->getStatusStatistics()); ?>
+        var original_data = <?php echo json_encode($statusStatistics); ?>
 
         // Create and populate a data table.
         var data = [];
@@ -179,6 +183,22 @@
                     </td>
                     <td>
                         <?php echo $stats['conversation_types']['unanswered']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="">Percent of time Online</span>
+                    </td>
+                    <td>
+                        <?php echo $statusStatistics['percent_online']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span title="">Percent of time Online from 8 to 5 Mon - Friday</span>
+                    </td>
+                    <td>
+                        <?php echo $statusStatistics['percent_online_business']; ?>
                     </td>
                 </tr>
             </tbody>
