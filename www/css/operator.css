@@ -922,54 +922,55 @@ p.sub-head {
 
 #maincontent
 .big-number {
-    font-size: 2em;
+    font-size: 2.2em;
+    font-weight: bold;
+    line-height: 150%;
 }
 
 #maincontent
-h1.big-number {
+p.big-number {
     padding-bottom: 0px;
 }
 
+#maincontent
+p.big-number, #maincontent p.med-number {
+    color: grey;
+}
+
+#maincontent
 .big-number,
 .big-number + p {
     text-align: center;
-}
-
-.percent {
-    font-size: 1.5em;
+    margin-bottom: 0px;
 }
 
 #maincontent
-.inline-number {
+p.med-number {
     text-align: center;
-}
-
-.inline-number > .percent,
-.inline-number > .right-text {
-    display: inline-block;
-}
-
-#maincontent
-.inline-number > .percent {
-    font-family: Helvetica,Arial,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
-    font-size: 3em;
-    color: #535353;
     font-weight: bold;
-    padding: 0 5px;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    line-height: 150%;
 }
 
 #maincontent
-.inline-number > .right-text {
-    text-align: left;
-    margin: 1.1em 0;
+.percent {
+    font-size: 1.75em;
+    color: black;
 }
 
+#maincontent
 .shadow-right {
     box-shadow: 10px 0px 10px -10px rgba(0, 0, 0, 0.3);
 }
 
-
-table.assign-stats {
+#maincontent
+p.stat-title {
+    margin-bottom: 10px;
+    text-align: center;
     width: 100%;
+}
+
+.assign-stats {
     text-align: center;
 }
