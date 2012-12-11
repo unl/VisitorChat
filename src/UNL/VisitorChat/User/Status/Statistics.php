@@ -102,7 +102,8 @@ class Statistics
                 $tmpEnd   = new \DateTime(date("r", $change['end']/1000));
                 
                 if ($tmpStart->format("N") > 0 && $tmpStart->format("N") < 6
-                    || $tmpEnd->format("N") > 0 && $tmpEnd->format("N") < 6) {
+                    || $tmpEnd->format("N") > 0 && $tmpEnd->format("N") < 6
+                    && ($tmpStart->format("G") > 7 && $tmpStart->format("G") < 18)) {
                     
                     if ($tmpStart->format("N") > 5) {
                         $diff = $tmpStart->format("N") - 5;
@@ -128,13 +129,13 @@ class Statistics
         }
         
         if ($changes['total_time'] > 0) {
-            $changes['percent_online'] = round(($changes['total_time_online'] / $changes['total_time']), 2);
+            $changes['percent_online'] = round(($changes['total_time_online'] / $changes['total_time']) * 100, 2) . "%";
         }
         
         $totalDays = $changes['total_time'] / 86400;
         $totalBusinessSeconds = $totalDays * 28800;
         
-        $changes['percent_online_business'] = round($changes['total_time_online_business'] / $totalBusinessSeconds, 2);
+        $changes['percent_online_business'] = round(($changes['total_time_online_business'] / $totalBusinessSeconds) * 100, 2) . "%";
         
         return $changes;
     }
