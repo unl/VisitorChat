@@ -80,19 +80,19 @@ class Statistics
 
             $i++;
         }
+
+        $changes[$i-1]['end'] = strtotime($end);
         
-        $end = strtotime($end);
+        if (strtotime($end) > time()) {
+            $changes[$i-1]['end'] = time();
+        } 
         
-        if ($end > time()) {
-            $end = time();
-        }
-        
-        $changes[$i-1]['end'] = $end * 1000;
+        $changes[$i-1]['end'] = $changes[$i-1]['end'] * 1000;
         
         //Calculate percents and total times.
         
-        $changes['total_time'] = strtotime($start) - strtotime($end);
-
+        $changes['total_time'] = strtotime($end) - strtotime($start);
+        
         //Add total time online.
         foreach ($changes as $change) {
             if ($change['total'] > 0) {
