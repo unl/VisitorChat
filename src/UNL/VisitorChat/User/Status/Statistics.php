@@ -141,7 +141,9 @@ class Statistics
         $totalDays = $changes['total_time'] / 86400;
         $totalBusinessSeconds = $totalDays * 28800;
         
-        $changes['percent_online_business'] = round(($changes['total_time_online_business'] / $totalBusinessSeconds) * 100, 2) . "%";
+        if ($changes['total_time_online_business'] > 0) {
+            $changes['percent_online_business'] = round(($changes['total_time_online_business'] / $totalBusinessSeconds) * 100, 2) . "%";
+        }
         
         return $changes;
     }

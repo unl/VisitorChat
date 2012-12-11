@@ -31,7 +31,7 @@ class Statistics
             $this->end = $options['end'];
         }
         
-        if ($this->getStartDate() >= $this->getEndDate()) {
+        if ($this->getStartDate() > $this->getEndDate()) {
             throw new \Exception("The start date must be before the end date.", 400);
         }
         
@@ -43,12 +43,12 @@ class Statistics
     
     function getStartDate()
     {
-        return date("Y-m-d", strtotime("-1 day", strtotime($this->start)));
+        return $this->start;
     }
     
     function getEndDate()
     {
-        return date("Y-m-d", strtotime("+1 day", strtotime($this->end)));
+        return $this->end;
     }
    
     
@@ -101,6 +101,11 @@ class Statistics
         $stats['assignment_types'] = array();
         
         foreach ($assignments as $type=>$list) {
+            if ($list->count() == 0) {
+                $stats['assignment_types'][$type] = "0";
+                continue;
+            }
+            
             $stats['assignment_types'][$type] = $list->count() . "(" . round(($list->count()/$totalAssignments)*100) . "%)";
         }
         
@@ -126,7 +131,11 @@ class Statistics
         $stats['conversation_types'] = array();
         
         foreach ($conversations as $type=>$list) {
-
+            if ($list->count() == 0) {
+                $stats['conversation_types'][$type] = "0";
+                continue;
+            }
+            
             $stats['conversation_types'][$type] = $list->count() . "(" . round(($list->count()/$totalConversations)*100) . "%)";
         }
         
