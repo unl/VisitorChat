@@ -32,7 +32,7 @@ class RecordList extends \Epoch\RecordList
                            WHERE type = 'operator'
                                AND last_active < ADDTIME(now(), '-00:10:00')
                                AND status = 'AVAILABLE'";
-echo $options['sql']; exit();
+        
         return self::getBySql($options);
     }
 }
