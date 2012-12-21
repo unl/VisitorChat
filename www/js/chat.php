@@ -9,6 +9,42 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
     require dirname(dirname(dirname(__FILE__))) . '/config.sample.php';
 }
 
+function sendCacheHeaders($filename)
+{
+    //get the last modified date of the cache file
+    $lastModified = filemtime($filename);
+    
+    //get a unique hash of this file (etag)
+    $etagFile = md5_file($filename);
+    
+    //check if HTTP_IF_MODIFIED_SINCE is set
+    $ifModifiedSince = false;
+    if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+        $ifModifiedSince = $_SERVER['HTTP_IF_MODIFIED_SINCE'];
+    }
+    
+    //get the HTTP_IF_NONE_MATCH header if set (etag: unique file hash)
+    $etag = false;
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+        $etag = trim($_SERVER['HTTP_IF_NONE_MATCH']);
+    }
+    
+    //set last-modified header
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified)." GMT");
+    
+    //set etag-header
+    header("Etag: $etagFile");
+    
+    //make sure caching is turned on
+    header('Cache-Control: public');
+    
+    //check if page has changed. If not, send 304 and exit
+    if (@strtotime($ifModifiedSince)==$lastModified || $etag == $etagFile) {
+        header("HTTP/1.1 304 Not Modified");
+        exit();
+    }
+}
+
 //Make sure the browser knows it is javascript.
 header('Content-Type: application/javascript');
 
@@ -20,6 +56,7 @@ if (isset($_GET['for'])) {
 $filename = \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_js_" . md5(\UNL\VisitorChat\Controller::$url . $for);
 
 if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($filename)) {
+    sendCacheHeaders($filename);
     echo file_get_contents($filename);
     exit();
 }
