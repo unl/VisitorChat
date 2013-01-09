@@ -49,6 +49,8 @@
         <?php
     }
 ?>
+    
+<?php echo \UNL\VisitorChat\Controller::$headerHTML; ?>
 
 <!-- InstanceEndEditable -->
 <!-- InstanceParam name="class" type="text" value="document" -->
