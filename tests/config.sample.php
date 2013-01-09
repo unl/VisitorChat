@@ -50,7 +50,7 @@ error_reporting(E_ALL);
 //Set session key to prevent man in the middle attacks.
 \UNL\VisitorChat\Controller::$sessionKey = "lol";
 
-\UNL\VisitorChat\Controller::$cacheJS = false;
+\UNL\VisitorChat\Asset\View::$cache = false;
 
 \Epoch\Controller::setDbSettings(array(
     'host'     => '127.0.0.1',
