@@ -13,6 +13,8 @@ class Controller extends \Epoch\Controller
 
     public static $conversationTTL = 30;  //minutes
     
+    public static $headerHTML = ""; //Header html to inject.
+    
     /**
      * An array of possible roles.
      * Note tha the lower the index, the less rights will be given to that user.
