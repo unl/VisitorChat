@@ -92,11 +92,11 @@ error_reporting(E_ALL);
  */
 \UNL\VisitorChat\Controller::$cacheRoutes = false;
 
-/* To cache and minimize or not to cache and minimize javascrip.  That is the question.
+/* To cache and minimize or not to cache and minimize javascript and css output.  That is the question.
  * 
  * @var bool
  */
-\UNL\VisitorChat\Controller::$cacheJS = false;
+\UNL\VisitorChat\Asset\View::$cache = false;
 
 /* A list of admins (via their UIDs).  Admins can view all past conversations for all sites.
  * 
