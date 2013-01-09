@@ -10,7 +10,7 @@ The system aims to bring advanced functionality of a live chat solution while ke
 
 Requirements
 ------------
- - PHP 5+
+ - PHP 5.3+
  - MySQL 5+
  - Apache
 
