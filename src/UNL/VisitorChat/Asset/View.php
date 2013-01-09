@@ -102,7 +102,7 @@ class View
                     $data = \JSMin::minify($data);
                     break;
                 case 'css':
-                    //TODO: min css.
+                    $data = \Minify_CSS::minify($data);
                     break;
             }
             
