@@ -348,8 +348,6 @@ class Controller extends \Epoch\Controller
             }
         }
 
-
-
         return self::$templater->render($this);
     }
 }

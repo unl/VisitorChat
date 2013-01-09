@@ -106,7 +106,6 @@ class View
                     break;
             }
             
-            
             file_put_contents($this->getCacheFileName(), $data);
         }
         
