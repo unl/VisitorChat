@@ -97,9 +97,15 @@ class View
         \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 
         if (\UNL\VisitorChat\Controller::$cacheJS) {
-            require_once(\UNL\VisitorChat\Controller::$applicationDir . '/lib/JSMin.php');
-
-            $js = \JSMin::minify($data);
+            switch ($this->type) {
+                case 'js':
+                    $data = \JSMin::minify($data);
+                    break;
+                case 'css':
+                    //TODO: min css.
+                    break;
+            }
+            
             
             file_put_contents($this->getCacheFileName(), $data);
         }
