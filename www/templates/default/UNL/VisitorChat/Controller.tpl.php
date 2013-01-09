@@ -29,7 +29,7 @@
 <!-- Place optional header elements here -->
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/wdn/templates_3.1/scripts/plugins/ui/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo \UNL\VisitorChat\Controller::$url;?>css/operator.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo \UNL\VisitorChat\Controller::$url;?>assets/css?for=operator" />
 <?php
     //load model-specific css.
     if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/" . str_replace("\\", "/", $context->options['model']) . ".css")) {
@@ -39,7 +39,7 @@
 <script type="text/javascript" src="/wdn/templates_3.1/scripts/plugins/ui/jQuery.ui.js"></script>
 <?php
     if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
-        echo '<script type="text/javascript" src="' . \UNL\VisitorChat\Controller::$url . 'js/chat.php?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '"></script>';
+        echo '<script type="text/javascript" src="' . \UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '"></script>';
     } else {
         ?>
         <script type="text/javascript">
