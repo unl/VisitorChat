@@ -317,4 +317,39 @@ class Controller extends \Epoch\Controller
         
         parent::redirect($url, $exit);
     }
+
+    /**
+     * Render the actionable items for this controller via savvy.
+     *
+     * @return string the rendered output.
+     */
+    function render()
+    {
+        //Assets will always have the format of asset (to remove the wrapper)
+        if ($this->actionable instanceof \UNL\VisitorChat\Asset\View) {
+            $this->options['format'] = 'asset';
+        } else {
+            // Always escape output, use $context->getRaw('var'); to get the raw data.
+            self::$templater->setEscape('htmlentities');
+        }
+
+        if ($this->options['format'] != 'html') {
+            self::$templater->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
+            self::$templater->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
+            switch($this->options['format']) {
+                case 'json':
+                    header('Content-type:application/json;charset=UTF-8');
+                    break;
+                case 'asset':
+                    //Do not send a content-type.  That will be done by the asset.
+                    break;
+                default:
+                    header('Content-type:text/html;charset=UTF-8');
+            }
+        }
+
+
+
+        return self::$templater->render($this);
+    }
 }
