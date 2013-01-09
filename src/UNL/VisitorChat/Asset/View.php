@@ -35,11 +35,25 @@ class View
         $this->for  = $this->options['for'];
         
         $this->data = $this->getData();
+        
+        $this->sendContentTypeHeaders();
     }
     
     function getCacheFileName()
     {
         return \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_asset_" . $this->type . "_" . $this->for . "_" . $this->version;
+    }
+
+    function sendContentTypeHeaders()
+    {
+        switch ($this->type) {
+            case 'js':
+                header('Content-Type: application/javascript');
+                break;
+            case 'css':
+                header('Content-Type: text/css');
+                break;
+        }
     }
 
     function sendCacheHeaders()
