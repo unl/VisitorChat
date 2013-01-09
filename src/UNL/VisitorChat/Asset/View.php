@@ -3,11 +3,18 @@ namespace UNL\VisitorChat\Asset;
 
 class View 
 {
-    public $data    = "";
+    public $data    = ""; //Data (asset) to be sent.
     
     public $options = array();
     
     public $version = "3.1";
+    
+    public $type    = false;  //'js' OR 'css'
+    
+    public $for     = 'client';  //'operator' OR 'client'
+    
+    //Set to true to start caching.
+    public static $cache = false;
     
     function __construct($options = array())
     {
@@ -35,11 +42,25 @@ class View
         $this->for  = $this->options['for'];
         
         $this->data = $this->getData();
+        
+        $this->sendContentTypeHeaders();
     }
     
     function getCacheFileName()
     {
         return \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_asset_" . $this->type . "_" . $this->for . "_" . $this->version;
+    }
+
+    function sendContentTypeHeaders()
+    {
+        switch ($this->type) {
+            case 'js':
+                header('Content-Type: application/javascript');
+                break;
+            case 'css':
+                header('Content-Type: text/css');
+                break;
+        }
     }
 
     function sendCacheHeaders()
@@ -64,6 +85,8 @@ class View
             $etag = trim($_SERVER['HTTP_IF_NONE_MATCH']);
         }
 
+        header('Expires:' . gmdate("D, d M Y H:i:s", strtotime('+2 week')) . " GMT");
+        
         //set last-modified header
         header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified)." GMT");
 
@@ -82,7 +105,7 @@ class View
     
     function getData()
     {
-        if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($this->getCacheFileName())) {
+        if (self::$cache && file_exists($this->getCacheFileName())) {
             $this->sendCacheHeaders();
             
             return file_get_contents($this->getCacheFileName());
@@ -96,10 +119,15 @@ class View
         
         \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 
-        if (\UNL\VisitorChat\Controller::$cacheJS) {
-            require_once(\UNL\VisitorChat\Controller::$applicationDir . '/lib/JSMin.php');
-
-            $js = \JSMin::minify($data);
+        if (self::$cache) {
+            switch ($this->type) {
+                case 'js':
+                    $data = \JSMin::minify($data);
+                    break;
+                case 'css':
+                    $data = \Minify_CSS::minify($data);
+                    break;
+            }
             
             file_put_contents($this->getCacheFileName(), $data);
         }

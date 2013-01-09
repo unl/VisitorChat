@@ -10,9 +10,6 @@ class Controller extends \Epoch\Controller
     public static $chatRequestTimeout = 10000;
     
     public static $sessionKey = "key";
-    
-    //Should the sysem compress and cache JS output?
-    public static $cacheJS = true;
 
     public static $conversationTTL = 30;  //minutes
     
@@ -347,8 +344,6 @@ class Controller extends \Epoch\Controller
                     header('Content-type:text/html;charset=UTF-8');
             }
         }
-
-
 
         return self::$templater->render($this);
     }
