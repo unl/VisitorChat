@@ -78,6 +78,8 @@ class View
             $etag = trim($_SERVER['HTTP_IF_NONE_MATCH']);
         }
 
+        header('Expires:' . gmdate("D, d M Y H:i:s", strtotime('+2 week')) . " GMT");
+        
         //set last-modified header
         header("Last-Modified: " . gmdate("D, d M Y H:i:s", $lastModified)." GMT");
 
