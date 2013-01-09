@@ -3,11 +3,18 @@ namespace UNL\VisitorChat\Asset;
 
 class View 
 {
-    public $data    = "";
+    public $data    = ""; //Data (asset) to be sent.
     
     public $options = array();
     
     public $version = "3.1";
+    
+    public $type    = false;  //'js' OR 'css'
+    
+    public $for     = 'client';  //'operator' OR 'client'
+    
+    //Set to true to start caching.
+    public static $cache = false;
     
     function __construct($options = array())
     {
@@ -98,7 +105,7 @@ class View
     
     function getData()
     {
-        if (\UNL\VisitorChat\Controller::$cacheJS && file_exists($this->getCacheFileName())) {
+        if (self::$cache && file_exists($this->getCacheFileName())) {
             $this->sendCacheHeaders();
             
             return file_get_contents($this->getCacheFileName());
@@ -112,7 +119,7 @@ class View
         
         \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 
-        if (\UNL\VisitorChat\Controller::$cacheJS) {
+        if (self::$cache) {
             switch ($this->type) {
                 case 'js':
                     $data = \JSMin::minify($data);
