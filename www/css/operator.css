@@ -971,3 +971,11 @@ p.stat-title {
 .assign-stats {
     text-align: center;
 }
+
+#maincontent .zenbox.available {
+    border: 5px solid #4C9021;
+}
+
+#maincontent li.available {
+    border-left: 5px solid #4C9021;
+}
