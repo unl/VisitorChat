@@ -21,8 +21,13 @@ foreach ($context->sites as $site) {
     } else {
 		echo "<section class='grid4'>";
 	}
-				
-    echo "<div class='zenbox bright'>
+    
+    $class = 'busy';
+    if ($site->getAvailableCount()) {
+        $class='available';
+    }
+    
+    echo "<div class='zenbox bright $class'>
 	          <h3><a href='" . $site->getURL() . "'>" . $site->getTitle() . "</a>".
 		         "<a class='zen-header-link' href='" .
 		         \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getURL())) . "'>View Details</a>".
