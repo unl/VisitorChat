@@ -415,3 +415,8 @@
 #clientInfo {
     display: none;
 }
+
+#visitorChat fieldset{
+     margin-bottom: 0;
+     padding: 0;
+ }
