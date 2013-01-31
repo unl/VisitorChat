@@ -147,7 +147,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     ajaxBeforeSubmit:function (arr, $form, options) {
         //Start an email convo now if need be.
-        for (key in arr) {
+        for (var key = 0; key<arr.length; key++) {
             if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
                 if (this.confirmAnonSubmit()) {
                     this.startEmail();

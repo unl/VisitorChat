@@ -691,15 +691,15 @@ var VisitorChat_ChatBase = Class.extend({
         
         //Set the alertID to false so that we no there are no current alerts.
         VisitorChat.alertID = false;
-
-        for (id in this.notifications) {
+        
+        for (var id = 0; id<this.notifications.length; id++) {
             if (this.notifications[id]['window'] != undefined) {
                 this.notifications[id]['window'].close();
             }
         }
 
         if (window.webkitNotifications) {
-            for (id in this.notifications) {
+            for (var id = 0; id<this.notifications.length; id++) {
                 this.notifications[id]['notification'].cancel();
             }
         }
