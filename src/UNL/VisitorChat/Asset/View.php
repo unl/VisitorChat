@@ -3,15 +3,17 @@ namespace UNL\VisitorChat\Asset;
 
 class View 
 {
-    public $data    = ""; //Data (asset) to be sent.
+    public $data     = ""; //Data (asset) to be sent.
     
-    public $options = array();
+    public $options  = array();
     
-    public $version = "3.1";
+    public $version  = "3.1";
     
-    public $type    = false;  //'js' OR 'css'
+    public $type     = false;  //'js' OR 'css'
     
-    public $for     = 'client';  //'operator' OR 'client'
+    public $for      = 'client';  //'operator' OR 'client'
+    
+    public $protocol = 'http';
     
     //Set to true to start caching.
     public static $cache = false;
@@ -37,6 +39,12 @@ class View
             $this->options['for'] = "client";
         }
         
+        $parts = parse_url(\UNL\VisitorChat\Controller::$url);
+        
+        if (isset($parts['scheme'])) {
+            $this->protocol = $parts['scheme'];
+        }
+        
         $this->type = $this->options['type'];
 
         $this->for  = $this->options['for'];
@@ -48,7 +56,7 @@ class View
     
     function getCacheFileName()
     {
-        return \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_asset_" . $this->type . "_" . $this->for . "_" . $this->version;
+        return \UNL\VisitorChat\CacheableURL::$tmpDir . "unl_visitorchat_asset_" . $this->type . "_" . $this->for . "_" . $this->protocol . "_" . $this->version;
     }
 
     function sendContentTypeHeaders()
