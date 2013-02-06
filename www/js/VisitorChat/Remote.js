@@ -538,6 +538,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     updatePHPSESSID:function (phpsessid) {
         this.phpsessid = phpsessid;
+
+        //set the cookie (IE ONLY).
+        if (navigator.userAgent.indexOf("MSIE") !== -1) {
+            WDN.jQuery.cookies.set('UNL_Visitorchat_Session', phpsessid, {domain:'.unl.edu'});
+        }
     },
 
     loadStyles:function () {
@@ -624,6 +629,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     {
         //Delete the current cookie.
         WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
+        WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
         WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
     },
 
