@@ -84,7 +84,14 @@ var VisitorChat_ChatBase = Class.extend({
             this.updateUserInfo();
             this.initWatchers();
         }, this));
+    },
+    
+    getURLSessionParam: function() {
+        if (navigator.userAgent.indexOf("MSIE") == -1) {
+            return '';
+        }
         
+        return 'PHPSESSID=' + this.phpsessid;
     },
 
     /**
@@ -129,7 +136,7 @@ var VisitorChat_ChatBase = Class.extend({
      * Generates the current chat URL.
      */
     generateChatURL:function () {
-        return this.serverURL + "conversation?format=json&last=" + this.latestMessageId + "&PHPSESSID=" + this.phpsessid;
+        return this.serverURL + "conversation?format=json&last=" + this.latestMessageId + "&" + this.getURLSessionParam();
     },
 
     /**
@@ -157,7 +164,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         //Start the chat.
         WDN.jQuery.ajax({
-            url:this.serverURL + "user/info?format=json&PHPSESSID=" + this.phpsessid + checkOperators,
+            url:this.serverURL + "user/info?format=json&" + this.getURLSessionParam() + checkOperators,
             xhrFields:{
                 withCredentials:true
             },
@@ -552,7 +559,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         if (action !== undefined && action.indexOf("format=json") == -1) {
             WDN.jQuery('.unl_visitorchat_form').attr('action', WDN.jQuery.proxy(function (i, val) {
-                return val + '?format=json&PHPSESSID=' + this.phpsessid
+                return val + '?format=json&' + this.getURLSessionParam();
             }, this));
         }
 
@@ -761,7 +768,7 @@ var VisitorChat_ChatBase = Class.extend({
         //Send a post response.
         WDN.jQuery.ajax({
             type:"POST",
-            url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&PHPSESSID=" + this.phpsessid,
+            url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
             data:"status=" + status
         }).done(WDN.jQuery.proxy(function (msg) {
             //update the chat.
@@ -780,7 +787,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         //2. logout
         WDN.jQuery.ajax({
-            url:this.serverURL + "logout" + "?format=json&PHPSESSID=" + this.phpsessid,
+            url:this.serverURL + "logout" + "?format=json&" + this.getURLSessionParam(),
             xhrFields:{
                 withCredentials:true
             },
