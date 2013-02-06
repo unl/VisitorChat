@@ -234,14 +234,18 @@ class Controller extends \Epoch\Controller
         if (!isset($_SERVER['HTTP_USER_AGENT'])) {
             $_SERVER['HTTP_USER_AGENT'] = "unknown";
         }
+
+        if (!isset($_SERVER['REMOTE_ADDR'])) {
+            $_SERVER['REMOTE_ADDR'] = "unknown";
+        }
         
         //Do we have a key in the session? (session hijacking prevention)
         if (!isset($_SESSION['key'])) {
-            $_SESSION['key'] = md5($_SERVER['HTTP_USER_AGENT']);
+            $_SESSION['key'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
         }
         
         //Check the key (session hijacking prevention)
-        if ($_SESSION['key'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+        if ($_SESSION['key'] != md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR'])) {
             session_write_close();
             session_start();
         }
