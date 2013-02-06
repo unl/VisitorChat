@@ -769,6 +769,9 @@ var VisitorChat_ChatBase = Class.extend({
         WDN.jQuery.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
+            xhrFields:{
+                withCredentials:true
+            },
             data:"status=" + status
         }).done(WDN.jQuery.proxy(function (msg) {
             //update the chat.
