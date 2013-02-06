@@ -215,11 +215,13 @@ class Controller extends \Epoch\Controller
      */
     function startSession()
     {
+        //Set the session cookie name.
+        session_name("UNL_Visitorchat_Session"); 
+        
         //has it already been started?
         if (session_id() !== "") {
             return true;
         }
-        
         
         /**
          * IE8+ does not allow for cookies to be passed with its XDomainRequest.
