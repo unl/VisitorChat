@@ -70,6 +70,11 @@ class Statistics
                 continue;
             }
             
+            //Only track people with chat roles for this site.
+            if ($member->getRole() == 'other') {
+                continue;
+            }
+            
             $userIDs[] = $account->id;
         }
 
