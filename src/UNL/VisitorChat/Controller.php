@@ -23,6 +23,14 @@ class Controller extends \Epoch\Controller
      * @var array
      */
     public static $roles = array('other', 'operator', 'operator1', 'operator2', 'manager');
+
+    /**
+     * An array of blocked IP address.
+     * TODO: Make this dynamic (so that operators and managers can configure)
+     * 
+     * @var array
+     */
+    public static $blockedIPs = array();
     
     /**
      * uids of admins for the chat system.

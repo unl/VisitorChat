@@ -25,7 +25,13 @@ class Info
         
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
-        if (isset($options['checkOperators'])) {
+        
+        $blocked = false;
+        if (isset($_SERVER['REMOTE_ADDR']) && in_array($_SERVER['REMOTE_ADDR'], \UNL\VisitorChat\Controller::$blockedIPs)) {
+            $blocked = true;
+        }
+        
+        if (!$blocked && isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvailable($options['checkOperators']);
 
             if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {
