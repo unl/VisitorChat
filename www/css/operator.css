@@ -733,7 +733,7 @@
 }
 
 #leaveConversation a {
-    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat 0 0;
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat 0 0;
     width: 35px;
 }
 
@@ -742,7 +742,7 @@
 }
 
 #shareConversation a {
-    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -36px 0;
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat -36px 0;
     width: 35px;
 }
 
@@ -751,7 +751,7 @@
 }
 
 #closeConversation a {
-    background: url('http://ucommwiedel.unl.edu/workspace/visitorchat/www/images/sprites.png') no-repeat -71px 0;
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat -71px 0;
     width: 24px
 }
 
