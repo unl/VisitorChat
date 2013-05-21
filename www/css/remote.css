@@ -15,7 +15,7 @@
     border-radius: 3px;
     max-height: 450px;
     z-index: 1000;
-    dispaly: none;
+    display: none;
 }
 
 #visitorChat_header {
