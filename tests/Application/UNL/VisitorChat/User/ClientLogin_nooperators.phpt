@@ -19,7 +19,7 @@ $_POST = array('initial_url'       =>'http://unl.edu',
                'message'           =>'hello?');
 
 $app = new \UNL\VisitorChat\Controller($_GET);
-
+$app->run();
 $result = $app->render();
 
 $result = json_decode($result, true);
