@@ -66,7 +66,9 @@ class Controller extends \Epoch\Controller
         //Set the application dir for Epoch.
         self::$applicationDir = dirname(dirname(dirname(dirname(__FILE__))));
         
-        self::$customNamespace = "UNL\VisitorChat";
+        self::$customNamespace = "UNL\\VisitorChat";
+
+        parent::__construct($options);
         
         //1. Send CORS.
         $this->sendCORS();
@@ -91,9 +93,6 @@ class Controller extends \Epoch\Controller
         if (!self::$mailService) {
             self::$mailService = new \UNL\VisitorChat\Mail\Driver();
         }
-        
-        //4. Move along...
-        parent::__construct($options);
     }
 
     /**
@@ -259,34 +258,71 @@ class Controller extends \Epoch\Controller
             session_write_close();
             session_start();
         }
+        
+        $sessionModels = array(
+            'UNL\VisitorChat\User\ClientLogin',
+            'UNL\VisitorChat\User\OperatorLogin',
+            'UNL\VisitorChat\User\Logout',
+        );
+        
+        //Close the session early so that it isn't locked... UNLESS we will be saving data to it.
+        if (isset($this->options['model']) && !in_array($this->options['model'], $sessionModels)) {
+            session_write_close();
+        }
     }
     
     function run()
     {
-         //Don't try to run if we are running in cli.
-         if (self::$environment == "CLI") {
-             return false;
-         }
-         
-         if (!isset($this->options['model'])) {
-             throw new \Exception('Un-registered view', 404);
-         }
-         /**
-          * webkit cant follow cors redirects, so... if the user isn't logged in don't
-          * redirect, instead change the current model.
-          */
-         //are they already logged in?
-         if ($this->options['model'] =='UNL\VisitorChat\Conversation\View' && !isset($_SESSION['id'])) {
-            //redirect to client login
-            $this->options['model'] = '\UNL\VisitorChat\User\ClientLogin';
-         }
-         
-         if ($this->options['model'] =='UNL\VisitorChat\User\ClientLogin' && isset($_SESSION['id'])) {
-            //redirect to conversation view
-            $this->options['model'] = '\UNL\VisitorChat\Conversation\View';
-         }
-         
-         return parent::run();
+        //Don't try to run if we are running in cli.
+        if (self::$environment == "CLI") {
+            return false;
+        }
+        
+        if (!isset($this->options['model'])) {
+            throw new \Exception('Un-registered view', 404);
+        }
+
+        try {
+            //Handle Post
+            if (!empty($_POST)) {
+                $this->handlePost();
+            }
+
+            /**
+             * webkit cant follow cors redirects, so... if the user isn't logged in don't
+             * redirect, instead change the current model.
+             */
+            //are they already logged in?
+            if ($this->options['model'] =='UNL\VisitorChat\Conversation\View' && !isset($_SESSION['id'])) {
+                //redirect to client login
+                $this->options['model'] = '\UNL\VisitorChat\User\ClientLogin';
+            }
+            
+            if ($this->options['model'] =='UNL\VisitorChat\User\ClientLogin' && isset($_SESSION['id'])) {
+                //redirect to conversation view
+                $this->options['model'] = '\UNL\VisitorChat\Conversation\View';
+            }
+
+            //Handle GET
+            if (!isset($this->options['model'])) {
+                throw new \Exception('Un-registered view', 404);
+            }
+
+            $this->actionable = new $this->options['model']($this->options);
+        } catch(\Exception $e) {
+            if (isset($this->options['ajaxupload'])) {
+                echo $e->getMessage();
+                exit();
+            }
+
+            if (false == headers_sent()
+                && $code = $e->getCode()) {
+                header('HTTP/1.1 '.$code.' '.$e->getMessage());
+                header('Status: '.$code.' '.$e->getMessage());
+            }
+
+            $this->actionable = $e;
+        }
     }
     
     /**
