@@ -242,7 +242,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`blocked_ips` (
   `users_id` INT NOT NULL ,
   `block_start` DATETIME NOT NULL ,
   `block_end` DATETIME NOT NULL ,
-  `status` ENUM('ENABLED', 'DISABLED') NOT NULL DEFAULT ENABLED ,
+  `status` ENUM('ENABLED', 'DISABLED') NOT NULL DEFAULT 'ENABLED' ,
   `date_created` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_blocked_ips_users1` (`users_id` ASC) ,
