@@ -263,6 +263,7 @@ class Controller extends \Epoch\Controller
             'UNL\VisitorChat\User\ClientLogin',
             'UNL\VisitorChat\User\OperatorLogin',
             'UNL\VisitorChat\User\Logout',
+            'UNL\VisitorChat\Conversation\View'
         );
         
         //Close the session early so that it isn't locked... UNLESS we will be saving data to it.
