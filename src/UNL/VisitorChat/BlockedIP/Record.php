@@ -117,4 +117,9 @@ class Record extends \Epoch\Record
                 break;
         }
     }
+    
+    function getUser()
+    {
+        return \UNL\VisitorChat\User\Record::getByID($this->users_id);
+    }
 }
