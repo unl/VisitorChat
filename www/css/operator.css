@@ -979,3 +979,7 @@ p.stat-title {
 #maincontent li.available {
     border-left: 5px solid #4C9021;
 }
+
+#maincontent form li {
+    list-style: none;
+}
