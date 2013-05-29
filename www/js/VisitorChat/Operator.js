@@ -486,6 +486,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         //1. Check for any pending conversations.
         if (data['pendingAssignment'] == false || data['pendingDate'] == false) {
+            this.currentRequest = false;
+            clearTimeout(VisitorChat.requestLoopID);
+            WDN.jQuery("#chatRequest").dialog("close");
             return true;
         }
 
@@ -493,12 +496,6 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.alert('assignment');
 
         var date = new Date(data['pendingDate']);
-        
-        //Close requests as they are closed.
-        if (data['pendingAssignment'] == false) {
-            this.currentRequest = false;
-            clearTimeout(VisitorChat.requestLoopID);
-        }
 
         //3. Alert the user.
         if (this.currentRequest != data['pendingAssignment']) {
