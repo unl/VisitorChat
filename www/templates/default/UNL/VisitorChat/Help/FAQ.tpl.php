@@ -5,6 +5,7 @@
     <li><a href='#features'>What are some features of the chat system?</a></li>
     <li><a href='#cost'>How much does the chat system cost?</a></li>
     <li><a href='#notifications'>How do I turn on notifications?</a></li>
+    <li><a href='#block'>How can I block someone?</a></li>
     <li><a href='#listsrv'>How can I be notified of issues or upgrades to the system?</a></li>
 </ul>
 
@@ -63,6 +64,26 @@
         <p>
             Desktop notifications can only be used when the operator is using Google Chrome (currently the only browser that supports desktop notifications).
             If you are using google chrome, you can enable desktop notifications in the settings page.
+        </p>
+    </dd>
+
+    <dt id='block'>How can I block someone?</dt>
+    <dd><p>An operator or manager can block someone by IP address.</p>
+        <ol>
+            <li>During a conversation, hover over the visitor's name in the header section of the chat</li>
+            <li>Click the Block link</li>
+            <li>Confirm to end the conversation and then edit/submit the block.</li>
+        </ol>
+        <p>
+            <img src="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('images/block_ip.png');?>" />
+        </p>
+        <p>
+            Blocks should be temporary.  By default, the length of the block will get longer the more often the IP address has been blocked in the past.
+            IP addresses of users can change, so it is important to not block an IP address permanently.
+        </p>
+        <p>
+            IP address blocks are system wide and can be created/edited/disabled by any operator or manager regardless of what site they are assigned to.
+            To disable an active block, simply edit it and change the status to DISABLED.
         </p>
     </dd>
     
