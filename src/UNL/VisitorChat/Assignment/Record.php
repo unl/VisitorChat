@@ -240,7 +240,11 @@ class Record extends \Epoch\Record
             $message->save();
         }
         
-        return $this->updateStatus('ACCEPTED');
+        $this->updateStatus('ACCEPTED');
+
+        foreach ($conversation->getPendingAssignments() as $assignment) {
+            $assignment->updateStatus('OTHER_ANSWERED');
+        }
     }
     
     public function reject()
