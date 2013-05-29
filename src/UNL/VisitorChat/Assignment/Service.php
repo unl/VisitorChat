@@ -11,7 +11,7 @@ class Service
      * 
      * @return mixed (string $id, false if failed)
      */
-    function findAvaiableOperatorForInvitation($operators, \UNL\VisitorChat\Invitation\Record $invitation)
+    function findAvailableOperatorsForInvitation($operators, \UNL\VisitorChat\Invitation\Record $invitation)
     {
         //If there are no operators assigned to this site, bail out now.
         if (empty($operators)) {
@@ -68,7 +68,7 @@ class Service
         }
         
         //Select a random operator
-        return $operators[rand(0,count($operators)-1)];
+        return $operators;
     }
     
     /* Finds an online operator and assigns them to this a chat/invitation.
@@ -81,33 +81,44 @@ class Service
      * 
      * @return bool
      */
-    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation, $operatorID = 0)
+    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation, $operatorID = false)
     {
+        $operators = array();
+        
         if (!$operatorID) {
             if ($invitation->isForSite()) {
                 //search for a url
                 if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
                     return false;
                 }
+                $operators += $operator;
             } else if ($to = $invitation->getAccountUID()) {
                 //get a specific operator
-                if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
+                if (!$operatorIDs = $this->findAvailableOperatorsForInvitation(array($to), $invitation)) {
                     return false;
                 }
                 
                 //We expect to proceed with an array containing an operatorID and the responding site.
-                $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
+                foreach ($operatorIDs as $id) {
+                    $operators[] = array('operatorID'=>$id, 'site'=>$invitation->invitee);
+                }
             } else {
                 return false;
             }
         } else {
-            $operator = array();
-            $operator['operatorID']  = $operatorID;
-            $operator['site']        = $invitation->getSiteURL();
+            $data = array();
+            $data['operatorID']  = $operatorID;
+            $data['site']        = $invitation->getSiteURL();
+            
+            $operators[] = $data;
         }
         
-        //Create a new assignment.
-        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operator['operatorID'], $operator['site'], $invitation->conversations_id, $invitation->id);
+        //Create a new assignments.
+        foreach($operators as $operator) {
+            \UNL\VisitorChat\Assignment\Record::createNewAssignment($operator['operatorID'], $operator['site'], $invitation->conversations_id, $invitation->id);
+        }
+        
+        return true;
     }
     
     function findAvaiableOperatorForURL($url, $invitation) {
@@ -129,8 +140,12 @@ class Service
             $operators = $this->generateOperatorsArrayForSite($site);
             
             //Break out of the loop once we find someone.
-            if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
-                return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
+            if ($operatorIDs = $this->findAvailableOperatorsForInvitation($operators, $invitation)) {
+                $operators = array();
+                foreach ($operatorIDs as $id) {
+                    $operators[] = array('operatorID'=>$id, 'site'=> $site->getURL());
+                }
+                return $operators;
             }
 
             $totalSearched++;
@@ -145,8 +160,12 @@ class Service
                 $operators = $this->generateOperatorsArrayForSite($site);
                 
                 //Break out of the loop once we find someone.
-                if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
-                    return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
+                if ($operatorIDs = $this->findAvailableOperatorsForInvitation($operators, $invitation)) {
+                    $operators = array();
+                    foreach ($operatorIDs as $id) {
+                        $operators[] = array('operatorID'=>$id, 'site'=> $site->getURL());
+                    }
+                    return $operators;
                 }
             }
         }
