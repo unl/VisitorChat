@@ -4,7 +4,7 @@ namespace UNL\VisitorChat\Assignment;
 class Service
 {
     /**
-     * Finds an avaiable operator from a set of operators and a conversation.
+     * Finds an available operator from a set of operators and a conversation.
      * 
      * @param array $operators
      * @param \UNL\VisitorChat\Invitation\Record $invitation
