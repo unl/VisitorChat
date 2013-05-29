@@ -17,6 +17,16 @@ function get_var($var, $context) {
     //]]>
 </script>
 
+<?php
+if ($context->id) {
+    ?>
+    <ul>
+        <li>Originally Created by <?php echo $context->getUser()->name;?></li>
+    </ul>
+    <?php
+}
+?>
+
 <h3 class='zenform'>Create/Edit IP address block</h3>
 <form class='zenform' method="post" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks/" . (($context->id)?$context->id . '/':'')  . "edit");?>" >
     <fieldset>

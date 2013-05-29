@@ -31,7 +31,11 @@
     <?php
     foreach ($context as $block) {
         ?>
-        <li><a href="<?php echo $block->getEditURL() ?>"><?php echo $block->ip_address ?></a> ends at <?php echo $block->block_end ?></li>
+        <li>
+            <a href="<?php echo $block->getEditURL() ?>"><?php echo $block->ip_address ?></a> 
+            ends at <?php echo $block->block_end ?>
+            by <?php echo $block->getUser()->name ?>
+        </li>
         <?php
     }
     ?>
