@@ -8,7 +8,8 @@ class RecordList extends \Epoch\RecordList
             parent::__construct($options);
             return;
         }
-
+        \UNL\VisitorChat\Controller::$pagetitle = "Blocked IP addresses";
+        
         \UNL\VisitorChat\Controller::requireOperatorLogin();
 
         $options['returnArray'] = true;

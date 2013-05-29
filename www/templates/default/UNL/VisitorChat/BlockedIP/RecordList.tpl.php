@@ -1,5 +1,3 @@
-<h3>Blocked IP addresses</h3>
-
 <script type="text/javascript">
     //<![CDATA[
     WDN.jQuery(document).ready(function(){
