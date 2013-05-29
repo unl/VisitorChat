@@ -59,7 +59,7 @@ class RecordList extends \Epoch\RecordList
         $options = $options + self::getDefaultOptions();
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips
-                           WHERE NOW() BETWEEN blocked_ips.start_date and blocked_ips.end_date
+                           WHERE NOW() BETWEEN blocked_ips.block_start and blocked_ips.block_end
                                AND blocked_ips.status = 'ENABLED'
                            ORDER BY blocked_ips.date_created ASC";
 
