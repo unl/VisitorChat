@@ -647,6 +647,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     displaySiteAvailability:function () {
         if (this.chatOpened) {
+            WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header").show();
             WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
             return true;
@@ -654,6 +655,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         if (this.operatorsAvailable) {
             WDN.jQuery("#visitorChat_header").show();
+            WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
         } else {
             WDN.jQuery("#visitorChat_header").hide();
