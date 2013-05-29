@@ -136,7 +136,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
         // Hover for Client Info
         WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
@@ -196,6 +196,15 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             if (confirm("Are you sure you want to end the conversation?")) {
                 VisitorChat.changeConversationStatus("CLOSED");
             }
+        });
+
+        WDN.jQuery('#block_ip').click(function () {
+            if (confirm("Are you sure you want to end the conversation and block this IP address?")) {
+                VisitorChat.changeConversationStatus("CLOSED");
+                return true;
+            }
+            
+            return false;
         });
 
         WDN.jQuery('#shareConversation').click(function () {
