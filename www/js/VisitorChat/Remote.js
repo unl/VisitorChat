@@ -17,7 +17,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         this.launchChatContainer();
         
         if (this.blocked) {
-            var html = "Your IP address has been blocked.";
+            var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
             
             this.updateChatContainerWithHTML("#visitorChat_container", html, false);
             return;
