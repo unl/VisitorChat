@@ -106,6 +106,14 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('blocks');?>">Blocked IPs</a>
+                            <ul>
+                                <li>
+                                    <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('blocks/edit');?>">Block an IP address</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('user/settings');?>"><?php echo \UNL\VisitorChat\User\Service::getCurrentUser()->name;?></a>
                             <ul>
                                 <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('user/settings');?>">Settings</a></li>
