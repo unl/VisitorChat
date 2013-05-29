@@ -40,13 +40,14 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
 
-    public static function getAllEnabledForIP($ip, $options = array())
+    public static function getAllActiveForIP($ip, $options = array())
     {
         //Build the list
         $options = $options + self::getDefaultOptions();
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips
-                           WHERE blocked_ips.ip_address = '" . self::escapeString($ip) . "'
+                           WHERE NOW() BETWEEN blocked_ips.block_start and blocked_ips.block_end
+                              AND blocked_ips.ip_address = '" . self::escapeString($ip) . "'
                               AND blocked_ips.status = 'ENABLED'
                            ORDER BY blocked_ips.date_created ASC";
 

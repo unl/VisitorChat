@@ -15,6 +15,13 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
     startChat:function (chatInProgress) {
         this.method = 'chat';
         this.launchChatContainer();
+        
+        if (this.blocked) {
+            var html = "Your IP address has been blocked.";
+            
+            this.updateChatContainerWithHTML("#visitorChat_container", html, false);
+            return;
+        }
 
         if (chatInProgress) {
             this.chatStatus = false;

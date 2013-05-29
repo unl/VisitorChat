@@ -4,6 +4,7 @@ namespace UNL\VisitorChat\User;
 class Info
 {
     public $userID             = false;
+    public $blocked            = false;
     public $conversationID     = false;
     public $phpssid            = false;
     public $pendingAssignment  = false;
@@ -25,13 +26,16 @@ class Info
         
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
-        
-        $blocked = false;
-        if (isset($_SERVER['REMOTE_ADDR']) && in_array($_SERVER['REMOTE_ADDR'], \UNL\VisitorChat\Controller::$blockedIPs)) {
-            $blocked = true;
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            //check if the ip is blocked.
+            $blocks = \UNL\VisitorChat\BlockedIP\RecordList::getAllActiveForIP($_SERVER['REMOTE_ADDR']);
+            
+            if (count($blocks)) {
+                $this->blocked = true;
+            }
         }
         
-        if (!$blocked && isset($options['checkOperators'])) {
+        if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvailable($options['checkOperators']);
 
             if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {

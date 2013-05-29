@@ -43,6 +43,8 @@ var VisitorChat_ChatBase = Class.extend({
 
     //The current user id.
     userID:false,
+    
+    blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
     operatorsChecked:false,
@@ -184,6 +186,8 @@ var VisitorChat_ChatBase = Class.extend({
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
         }
+        
+        this.blocked = data['blocked'];
         
         this.operatorsChecked = true;
         
