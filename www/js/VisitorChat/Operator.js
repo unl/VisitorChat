@@ -570,6 +570,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
                 //Did our session expire?
                 401: function() {
                     window.location.reload(); //reload the page
+                },
+                400: function() {
+                    alert("Someone has already accepted this conversation, or the visitor ended the conversation.");
                 }
             },
             data:"status=" + response
