@@ -791,9 +791,15 @@ var VisitorChat_ChatBase = Class.extend({
         return this.updateChatWithData(data);
     },
 
-    changeConversationStatus:function (status) {
+    changeConversationStatus:function (status, callback) {
         if (!this.conversationID || this.conversationID == undefined) {
             return false;
+        }
+        
+        if (callback == undefined) {
+            callback = function() {
+                VisitorChat.updateChat(VisitorChat.generateChatURL(), true);
+            }
         }
 
         //Send a post response.
@@ -804,10 +810,7 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             },
             data:"status=" + status
-        }).done(WDN.jQuery.proxy(function (msg) {
-            //update the chat.
-            this.updateChat(this.generateChatURL(), true);
-        }, this));
+        }).done(callback);
     },
 
     /**

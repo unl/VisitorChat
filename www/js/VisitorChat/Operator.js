@@ -200,8 +200,11 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
 
         WDN.jQuery('#block_ip').click(function () {
             if (confirm("Are you sure you want to end the conversation and block this IP address?")) {
-                VisitorChat.changeConversationStatus("CLOSED");
-                return true;
+                var href= this.href;
+                VisitorChat.changeConversationStatus("CLOSED", function(){
+                    window.location = href;
+                });
+                return false;
             }
             
             return false;
