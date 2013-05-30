@@ -596,6 +596,8 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return true;
         }
 
+        WDN.jQuery.xhrPool.abortAll();
+        
         if (this.method != 'email') {
             callbackSet = false;
             if (WDN.jQuery('#visitorChat_container').is(":visible")) {
