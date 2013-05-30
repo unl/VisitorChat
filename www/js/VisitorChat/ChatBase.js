@@ -833,7 +833,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         //3. clear vars.
         this.latestMessageId = 0;
-        this.chatStatus = false;
+        this.chatStatus = 'CLOSED';
     },
 
     /**

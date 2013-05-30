@@ -23,8 +23,9 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
             return;
         }
 
-        if (chatInProgress) {
-            this.chatStatus = false;
+        if (chatInProgress && this.chatStatus == "LOGIN") {
+            this.chatStatus = "CHATTING";
+
             return this.start();
         }
 
@@ -521,7 +522,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         }
 
         //Handle the rest of the data.
-        if (data['conversationID']) {
+        if (data['conversationID'] && this.chatStatus == false) {
             this.startChat(true);
         }
 
