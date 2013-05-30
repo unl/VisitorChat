@@ -349,7 +349,7 @@ class Record extends \Epoch\Record
     
     function getPendingAssignments()
     {
-        return \UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForConversationsation($this->id);
+        return \UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForConversation($this->id);
     }
     
     function getInvolvedUsers()
