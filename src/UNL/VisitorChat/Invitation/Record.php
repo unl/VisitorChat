@@ -141,7 +141,7 @@ class Record extends \Epoch\Record
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
         
         //Make sure that all assignments for this invitation are marked as completed.
-        foreach (\UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForInvitation($this->id) as $assignment) {
+        foreach ($this->getPendingAssignments() as $assignment) {
             $assignment->markAsFailed();
         }
         
@@ -166,5 +166,15 @@ class Record extends \Epoch\Record
     public function getAssignments()
     {
         return \UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForInvitation($this->id);
+    }
+    
+    public function getPendingAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForInvitation($this->id);
+    }
+
+    public function getAcceptedAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getAcceptedAssignmentsForInvitation($this->id);
     }
 }
