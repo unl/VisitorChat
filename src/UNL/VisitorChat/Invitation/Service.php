@@ -73,17 +73,16 @@ class Service
         $assignmentService = new \UNL\VisitorChat\Assignment\Service();
         
         //Loop over current searching invitations and assign operators based on those inviations.
-        foreach (\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($conversation->id) as $invitation) {
-            //Get the latest assignment for this invitation
-            $assignment = \UNL\VisitorChat\Assignment\Record::getLatestForInvitation($invitation->id);
-            
-            //Don't try to assign if we are currently pening.
-            if (is_object($assignment) && $assignment->status == "PENDING") {
+        foreach (\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($conversation->id) as $invitation) {      
+            //Don't try to assign if we are currently pending.
+            $pendingAssignments = $invitation->getPendingAssignments();
+            if (count($pendingAssignments)) {
                 continue;
             }
             
             //If it was accepted, close this invitation
-            if (is_object($assignment) && $assignment->status == "ACCEPTED") {
+            $acceptedAssignments = $invitation->getAcceptedAssignments();
+            if (count($acceptedAssignments)) {
                 $invitation->complete();
                 continue;
             }
