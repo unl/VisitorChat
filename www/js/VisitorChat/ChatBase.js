@@ -78,6 +78,8 @@ var VisitorChat_ChatBase = Class.extend({
 
         this.refreshRate = refreshRate;
 
+        this.initAjaxPool();
+        
         //Start the chat
         this.loadStyles();
         this.initWindow();
@@ -86,6 +88,31 @@ var VisitorChat_ChatBase = Class.extend({
             this.updateUserInfo();
             this.initWatchers();
         }, this));
+        
+        
+    },
+    
+    initAjaxPool: function()
+    {
+        WDN.jQuery.xhrPool = [];
+        WDN.jQuery.xhrPool.abortAll = function() {
+            WDN.jQuery(this).each(function(idx, jqXHR) {
+                jqXHR.abort();
+            });
+            WDN.jQuery.xhrPool.length = 0
+        };
+
+        WDN.jQuery.ajaxSetup({
+            beforeSend: function(jqXHR) {
+                WDN.jQuery.xhrPool.push(jqXHR);
+            },
+            complete: function(jqXHR) {
+                var index = WDN.jQuery.xhrPool.indexOf(jqXHR);
+                if (index > -1) {
+                    WDN.jQuery.xhrPool.splice(index, 1);
+                }
+            }
+        });
     },
     
     getURLSessionParam: function() {
@@ -546,7 +573,7 @@ var VisitorChat_ChatBase = Class.extend({
             clearForm:true,
             timeout:3000,
             dataType:"json",
-            complete:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
+            success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.handleAjaxResponse(data, textStatus);
                 WDN.jQuery('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
@@ -800,6 +827,7 @@ var VisitorChat_ChatBase = Class.extend({
             },
             dataType:"json",
             complete:function (jqXHR, textStatus) {
+                WDN.jQuery.xhrPool.abortAll();
             }
         });
 
