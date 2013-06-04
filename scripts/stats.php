@@ -5,6 +5,9 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
     require dirname(dirname(__FILE__)) . '/config.sample.php';
 }
 
+//TODO: Convert to web view
+//TODO: Make site selectable
+
 $db = \UNL\VisitorChat\Controller::getDB();
 
 echo "==== GENERAL METRICS ====" . PHP_EOL;
