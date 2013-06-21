@@ -481,7 +481,7 @@
 }
 
 .loading {
-    background: url("../images/ajax.gif");
+    background: url("../../../images/ajax.gif");
     background-repeat: no-repeat;
     background-position: center center;
     width: 100%;
