@@ -15,12 +15,18 @@ class View
     
     public $protocol = 'http';
     
+    public $allowed_versions = array('3.1', '4.0');
+    
     //Set to true to start caching.
     public static $cache = false;
     
     function __construct($options = array())
     {
         $this->options = $options;
+        
+        if (isset($this->options['v'])) {
+            $this->version = $this->options['v'];
+        }
         
         //Handle legacy urls.
         if (strpos($_SERVER['REQUEST_URI'], 'js/chat.php') !== false) {
@@ -119,14 +125,66 @@ class View
             return file_get_contents($this->getCacheFileName());
         }
 
-        $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
+        ob_start();
 
-        \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/asset/"));
+        switch ($this->type) {
+            case 'js':
+                ?>
+                if (VisitorChat == undefined) {
+                    var VisitorChat = false;
+                }
+                <?php
+                
+                //Include the required things for all versions and types:
+                require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/SimpleJavaScriptInheritance.js");
+                require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/form.js");
+                require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/ChatBase.js");
+                
+                switch($this->for) {
+                    case 'operator':
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/chosen.min.js");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/Operator.js");
+                        ?>
+                        //start the chat
+                        WDN.jQuery(function(){
+                        VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+                        VisitorChat.start();
+                        });
+                        <?php
+                        break;
+                    case 'client':
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/jquery.cookies.min.js");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/" . $this->version . "/Remote.js");
+                        ?>
+                        WDN.jQuery(function(){
+                        WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
+                        if (VisitorChat == false) {
+                        VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+                        }
+                        });
+                        });
+                        <?php
+                        break;
+                    }
+                break;
+            case 'css':
+                switch ($this->for) {
+                    case 'client':
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/VisitorChat/" . $this->version . "/remote.css");
+                        break;
+                    case 'operator':
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/share.css");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/chosen.css");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/VisitorChat/" . $this->version . "/operator.css");
+                        break;
+                }
+                break;
+        }
         
-        $data = \UNL\VisitorChat\Controller::$templater->render($this, 'UNL/VisitorChat/Asset/' . strtoupper($this->type) . '.tpl.php');
-        
-        \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
+        $data = ob_get_contents();
+        ob_end_clean();
 
+        //Cache if we have to.
         if (self::$cache) {
             switch ($this->type) {
                 case 'js':
