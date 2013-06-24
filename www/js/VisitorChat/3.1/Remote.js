@@ -1,4 +1,4 @@
-var VisitorChat_Chat = VisitorChat_ChatBase.extend({
+var VisitorChat_Client = VisitorChat_ChatBase.extend({
     loginHTML: false,
     clientName: false,
     initialMessage: false,
