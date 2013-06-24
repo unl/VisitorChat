@@ -147,19 +147,19 @@ class View
                         ?>
                         //start the chat
                         WDN.jQuery(function(){
-                        VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+                        VisitorChat = new VisitorChat_Operator("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
                         VisitorChat.start();
                         });
                         <?php
                         break;
                     case 'client':
                         require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/jquery.cookies.min.js");
-                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/" . $this->version . "/Remote.js");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/" . $this->version . "/Client.js");
                         ?>
                         WDN.jQuery(function(){
                         WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
                         if (VisitorChat == false) {
-                        VisitorChat = new VisitorChat_Chat("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+                        VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
                         }
                         });
                         });
@@ -170,7 +170,7 @@ class View
             case 'css':
                 switch ($this->for) {
                     case 'client':
-                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/VisitorChat/" . $this->version . "/remote.css");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/VisitorChat/" . $this->version . "/client.css");
                         break;
                     case 'operator':
                         require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/share.css");
