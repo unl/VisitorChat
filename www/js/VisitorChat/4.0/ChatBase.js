@@ -43,7 +43,7 @@ var VisitorChat_ChatBase = Class.extend({
 
     //The current user id.
     userID:false,
-    
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
@@ -60,11 +60,11 @@ var VisitorChat_ChatBase = Class.extend({
 
     //true if there are any pending updateUserInfo Ajax connections
     pendingUserAJAX:false,
-    
+
     //Should large popup windows be displayed for notifications?
     popupNotifications:false,
-    
-    version:4.0,
+
+    version:3.1,
 
     /**
      * Constructor function.
@@ -72,7 +72,7 @@ var VisitorChat_ChatBase = Class.extend({
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
-        
+
         //Change to https if we need to.
         if ('https:' == document.location.protocol) {
             this.serverURL = serverURL.replace('http://', 'https://');
@@ -81,7 +81,7 @@ var VisitorChat_ChatBase = Class.extend({
         this.refreshRate = refreshRate;
 
         this.initAjaxPool();
-        
+
         //Start the chat
         this.loadStyles();
         this.initWindow();
@@ -90,10 +90,10 @@ var VisitorChat_ChatBase = Class.extend({
             this.updateUserInfo();
             this.initWatchers();
         }, this));
-        
-        
+
+
     },
-    
+
     initAjaxPool: function()
     {
         WDN.jQuery.xhrPool = [];
@@ -116,12 +116,12 @@ var VisitorChat_ChatBase = Class.extend({
             }
         });
     },
-    
+
     getURLSessionParam: function() {
         if (navigator.userAgent.indexOf("MSIE") == -1) {
             return '';
         }
-        
+
         return 'PHPSESSID=' + this.phpsessid;
     },
 
@@ -147,11 +147,11 @@ var VisitorChat_ChatBase = Class.extend({
      */
     start:function () {
         this.initWatchers();
-        
+
         this.chatOpened = true;
 
         clearTimeout(VisitorChat.loopID);
-        
+
         VisitorChat_Timer_ID = VisitorChat.loop();
     },
 
@@ -195,15 +195,18 @@ var VisitorChat_ChatBase = Class.extend({
 
         //Start the chat.
         WDN.jQuery.ajax({
-            url:this.serverURL + "user/info?format=json&" + this.getURLSessionParam() + checkOperators,
+            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
             xhrFields:{
                 withCredentials:true
             },
             dataType:"json",
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.handleUserDataResponse(data);
-                this.pendingUserAJAX = false;
-            }, this)
+            }, this),
+            complete:function(data, textStatus, jqXHR)
+            {
+                VisitorChat.pendingUserAJAX = false;
+            }
         });
     },
 
@@ -215,11 +218,11 @@ var VisitorChat_ChatBase = Class.extend({
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
         }
-        
+
         this.blocked = data['blocked'];
-        
+
         this.operatorsChecked = true;
-        
+
         if (data['popupNotifications'] != undefined) {
             this.popupNotifications = data['popupNotifications'];
         }
@@ -342,7 +345,7 @@ var VisitorChat_ChatBase = Class.extend({
 
     onConversationStatus_Captcha:function (data) {
     },
-    
+
     /**
      * onConversationStatus_Emailed
      * Related status code: EMAILED
@@ -458,7 +461,7 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         WDN.jQuery("#visitorChat_container").append("<div class='visitorChat_center'></div>");
-        
+
         clearTimeout(VisitorChat.loopID);
 
         var html = '<div class="chat_notify" id="visitorChat_closed"><h2>This conversation has ended.</h2></div>';
@@ -545,7 +548,7 @@ var VisitorChat_ChatBase = Class.extend({
             if (VisitorChat.chatStatus == false) {
                 return true;
             }
-            
+
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
@@ -686,7 +689,7 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
-        
+
         notification.onclick = function() {
             //Focus the window.
             window.focus();
@@ -698,11 +701,11 @@ var VisitorChat_ChatBase = Class.extend({
             window.focus();
             VisitorChat.clearAlert();
         };
-        
+
         notification.show();
 
         notifyWindow = undefined;
-        
+
         if (this.popupNotifications) {
             //Create a notification window.
             notifyWindow = window.open(this.serverURL + 'notifications/notification.php?message='+message,'_blank','width=850,height=650,menubar=no,location=no')
@@ -715,7 +718,7 @@ var VisitorChat_ChatBase = Class.extend({
                 }
             }, 50);
         }
-        
+
         item = new Array();
         item['notification'] = notification;
         item['window']       = notifyWindow;
@@ -726,12 +729,12 @@ var VisitorChat_ChatBase = Class.extend({
         if (VisitorChat.alertID) {
             clearTimeout(VisitorChat.alertID);
         }
-        
+
         document.title = VisitorChat.siteTitle;
-        
+
         //Set the alertID to false so that we no there are no current alerts.
         VisitorChat.alertID = false;
-        
+
         for (var id = 0; id<this.notifications.length; id++) {
             if (this.notifications[id]['window'] != undefined) {
                 this.notifications[id]['window'].close();
@@ -797,7 +800,7 @@ var VisitorChat_ChatBase = Class.extend({
         if (!this.conversationID || this.conversationID == undefined) {
             return false;
         }
-        
+
         if (callback == undefined) {
             callback = function() {
                 VisitorChat.updateChat(VisitorChat.generateChatURL(), true);
