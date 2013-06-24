@@ -1,4 +1,4 @@
-var VisitorChat_Chat = VisitorChat_ChatBase.extend({
+var VisitorChat_Client = VisitorChat_ChatBase.extend({
     loginHTML: false,
     clientName: false,
     initialMessage: false,
@@ -558,7 +558,7 @@ var VisitorChat_Chat = VisitorChat_ChatBase.extend({
         if (document.createStyleSheet) {
             document.createStyleSheet(this.serverURL + "css/remote.php");
         } else {
-            WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + this.serverURL + "css/remote.php' type='text/css' media='screen' />"));
+            WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + this.serverURL + "assets/css?for=client&v=" + this.version + "' type='text/css' media='screen' />"));
         }
 
         WDN.jQuery(window).load(function () {

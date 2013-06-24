@@ -1,5 +1,5 @@
 //TODO:  Simply attach the getUserData function to the end of the loop function.
-var VisitorChat_Chat = VisitorChat_ChatBase.extend({
+var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     currentRequest:false, //The current request ID.
     requestTimeout:false, //Life of a in-coming chat request
     requestLoopID:false,

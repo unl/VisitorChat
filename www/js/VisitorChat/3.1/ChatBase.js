@@ -63,6 +63,8 @@ var VisitorChat_ChatBase = Class.extend({
     
     //Should large popup windows be displayed for notifications?
     popupNotifications:false,
+    
+    version:3.1,
 
     /**
      * Constructor function.
@@ -193,15 +195,18 @@ var VisitorChat_ChatBase = Class.extend({
 
         //Start the chat.
         WDN.jQuery.ajax({
-            url:this.serverURL + "user/info?format=json&" + this.getURLSessionParam() + checkOperators,
+            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
             xhrFields:{
                 withCredentials:true
             },
             dataType:"json",
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.handleUserDataResponse(data);
-                this.pendingUserAJAX = false;
-            }, this)
+            }, this),
+            complete:function(data, textStatus, jqXHR)
+            {
+                VisitorChat.pendingUserAJAX = false;
+            }
         });
     },
 
