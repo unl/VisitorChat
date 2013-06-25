@@ -554,11 +554,12 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
     },
 
     loadStyles:function () {
+        var stylesheet = this.serverURL + "assets/css?for=client&v=" + this.version;
         //load styling.
         if (document.createStyleSheet) {
-            document.createStyleSheet(this.serverURL + "css/remote.php");
+            document.createStyleSheet(stylesheet);
         } else {
-            WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + this.serverURL + "assets/css?for=client&v=" + this.version + "' type='text/css' media='screen' />"));
+            WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen' />"));
         }
 
         WDN.jQuery(window).load(function () {
