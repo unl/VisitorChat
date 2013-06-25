@@ -29,7 +29,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`users` (
   INDEX `index_type` (`type` ASC) ,
   INDEX `index_last_active` (`last_active` ASC) )
 ENGINE = InnoDB
-AUTO_INCREMENT = 712
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -69,7 +69,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`conversations` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 700
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -103,7 +103,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`invitations` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 486
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -145,7 +145,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`assignments` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 456
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -177,7 +177,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`emails` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 390
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -206,7 +206,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`messages` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 1054
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
@@ -228,7 +228,7 @@ CREATE  TABLE IF NOT EXISTS `visitorchatapp`.`user_statuses` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 53
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
