@@ -74,7 +74,9 @@ if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
     $systemUser->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
     $systemUser->max_chats    = 0;
+
+    $systemUser->setStatus("BUSY");
     $systemUser->save();
     
-    $systemUser->setStatus("BUSY");
+    
 }
