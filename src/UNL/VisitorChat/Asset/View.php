@@ -27,7 +27,11 @@ class View
         if (isset($this->options['v'])) {
             $this->version = $this->options['v'];
         }
-        
+
+        if (isset($this->options['version'])) {
+            $this->version = $this->options['version'];
+        }
+
         //Handle legacy urls.
         if (strpos($_SERVER['REQUEST_URI'], 'js/chat.php') !== false) {
             $this->options['type'] = "js";
