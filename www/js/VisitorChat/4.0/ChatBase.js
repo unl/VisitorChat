@@ -64,7 +64,7 @@ var VisitorChat_ChatBase = Class.extend({
     //Should large popup windows be displayed for notifications?
     popupNotifications:false,
 
-    version:3.1,
+    version: 4.0,
 
     /**
      * Constructor function.
