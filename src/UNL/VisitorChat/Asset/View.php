@@ -31,6 +31,15 @@ class View
         if (isset($this->options['version'])) {
             $this->version = $this->options['version'];
         }
+        
+        //parse the version. (handle the case that 4.0 is sent as 4
+        if (!substr_count($this->version, '.')) {
+            $this->version = $this->version . '.0';
+        }
+        
+        if (!in_array($this->version, $this->allowed_versions)) {
+            throw new \Exception('The specified version is not allowed.', 400);
+        }
 
         //Handle legacy urls.
         if (strpos($_SERVER['REQUEST_URI'], 'js/chat.php') !== false) {
