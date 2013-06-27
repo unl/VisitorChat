@@ -122,7 +122,7 @@ var VisitorChat_ChatBase = Class.extend({
             return '';
         }
         
-        return 'PHPSESSID=' + this.phpsessid;
+        return '&PHPSESSID=' + this.phpsessid;
     },
 
     /**
