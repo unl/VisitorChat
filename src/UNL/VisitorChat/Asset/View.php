@@ -151,12 +151,12 @@ class View
                 //Include the required things for all versions and types:
                 require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/SimpleJavaScriptInheritance.js");
                 require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/form.js");
-                require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/ChatBase.js");
+                require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/ChatBase.js.php");
                 
                 switch($this->for) {
                     case 'operator':
                         require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/chosen.min.js");
-                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/Operator.js");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/VisitorChat/" . $this->version . "/Operator.js.php");
                         ?>
                         //start the chat
                         WDN.jQuery(function(){
@@ -167,7 +167,7 @@ class View
                         break;
                     case 'client':
                         require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/jquery.cookies.min.js");
-                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/" . $this->version . "/Client.js");
+                        require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/" . $this->version . "/Client.js.php");
                         ?>
                         WDN.jQuery(function(){
                         WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {

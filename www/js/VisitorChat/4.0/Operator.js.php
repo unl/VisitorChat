@@ -874,3 +874,9 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this.operatorStatus = newStatus;
     }
 });
+
+//start the chat
+WDN.jQuery(function(){
+    VisitorChat = new VisitorChat_Operator("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
+    VisitorChat.start();
+});
