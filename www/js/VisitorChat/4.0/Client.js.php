@@ -679,3 +679,11 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         return true;
     }
 });
+
+WDN.jQuery(function(){
+    WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
+        if (VisitorChat == false) {
+            VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
+        }
+    });
+});
