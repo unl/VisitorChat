@@ -4,7 +4,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     WDN.jQuery = $;
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
-    require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/jquery.cookies.min.js");
     ?>
     
     var VisitorChat_Client = VisitorChat_ChatBase.extend({
@@ -60,16 +59,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         onOperatorMessage:function (message) {
             //Fire an analytics event on first response.  set cookie for cross domain.
-            if (!WDN.jQuery.cookies.get('UNL_Visitorchat_FirstOperatorResponse') && WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
-                start = WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
+            if (!WDN.getCookie('UNL_Visitorchat_FirstOperatorResponse') && WDN.getCookie('UNL_Visitorchat_Start')) {
+                start = WDN.getCookie('UNL_Visitorchat_Start');
                 date = new Date();
                 date = Math.round(date.getTime() / 1000);
-                difference = date - WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
+                difference = date - start;
     
                 analytics.callTrackEvent('WDN Chat', 'Response', 'Received', difference);
     
                 //Set a cookie so that we don't call this if we have to reload the chat (page refresh or move to another page).
-                WDN.jQuery.cookies.set('UNL_Visitorchat_FirstOperatorResponse', difference, {domain:'.unl.edu'});
+                WDN.setCookie('UNL_Visitorchat_FirstOperatorResponse', difference, null, '/');
             }
         },
     
@@ -458,7 +457,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             
             //Set a cookie.
             date = new Date();
-            WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
+            WDN.setCookie('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), null, '/');
     
             //Send analytics data
             _gaq.push(['wdn._setCustomVar',
@@ -558,7 +557,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             //set the cookie (IE ONLY).
             if (navigator.userAgent.indexOf("MSIE") !== -1) {
-                WDN.jQuery.cookies.set('UNL_Visitorchat_Session', phpsessid, {domain:'.unl.edu'});
+                WDN.setCookie('UNL_Visitorchat_Session', phpsessid, null, '/');
             }
         },
     
@@ -593,7 +592,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 "</div>");
             
             //Handle cookies. (IE session handling);
-            var phpsessid = WDN.jQuery.cookies.get('UNL_Visitorchat_Session');
+            var phpsessid = WDN.getCookie('UNL_Visitorchat_Session');
             if (phpsessid != null) {
                 this.phpsessid = phpsessid;
             }
@@ -627,10 +626,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.closeChatContainer();
             }
     
-            if (WDN.jQuery.cookies.get('UNL_Visitorchat_Start')) {
+            if (WDN.getCookie('UNL_Visitorchat_Start')) {
                 date = new Date();
                 date = Math.round(date.getTime() / 1000);
-                difference = date - WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
+                difference = date - WDN.getCookie('UNL_Visitorchat_Start');
     
                 analytics.callTrackEvent('WDN Chat', 'Ended', undefined, difference);
             }
@@ -647,12 +646,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
         },
         
-        deleteAnalyticsCookies: function()
-        {
+        deleteAnalyticsCookies: function() {
             //Delete the current cookie.
-            WDN.jQuery.cookies.del('UNL_Visitorchat_Start', {domain:'.unl.edu'});
-            WDN.jQuery.cookies.del('UNL_Visitorchat_Session', {domain:'.unl.edu'});
-            WDN.jQuery.cookies.del('UNL_Visitorchat_FirstOperatorResponse', {domain:'.unl.edu'});
+            WDN.setCookie('UNL_Visitorchat_Start', '0', -1, '/');
+            WDN.setCookie('UNL_Visitorchat_Session', '0', -1, '/');
+            WDN.setCookie('UNL_Visitorchat_FirstOperatorResponse', '0', -1, '/');
         },
     
         closeChatContainer: function() {
