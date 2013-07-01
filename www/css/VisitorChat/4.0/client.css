@@ -3,6 +3,22 @@
     border-bottom: 0;
 }
 
+#visitorChat ul {
+    margin:0;
+    padding:0 5px;
+}
+
+#visitorChat ul li {
+    list-style: none;
+}
+
+input, textarea, select {
+    margin-top:6px;
+    padding:4px;
+    width:100%;
+    border:1px solid #ccc;
+}
+
 #visitorChat {
     font-family: arial, tahoma, verdana, sans-serif;
     position: fixed;
@@ -19,18 +35,17 @@
 }
 
 #visitorChat_header {
-    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    background: #76CC52 url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png') no-repeat 10px 50%;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     height: 24px;
     padding: 4px 5px 0px 5px;
-    width: 105px;
+    width: 176px;
     display: none;
     outline:none;
-
+    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
+    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
+    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
+    background: #76CC52 url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png') no-repeat 10px 50%;
     transition: all 0.12s ease-in-out;
     -moz-transition: all 0.12s ease-in-out;
     -webkit-transition: all 0.12s ease-in-out;
@@ -46,16 +61,44 @@
 }
 
 #visitorChat_header_text {
+    color:#fff;
+    text-shadow: 1px 1px 0px #60A642;
+    filter: dropshadow(color = #60A642, offx = 0, offy = 1);   
+}
+
+.offline #visitorChat_header {
+    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
+    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
+    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
+    background: #ccc url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png') no-repeat 10px 50%;
+    transition: all 0.12s ease-in-out;
+    -moz-transition: all 0.12s ease-in-out;
+    -webkit-transition: all 0.12s ease-in-out;
+    -o-transition: all 0.12s ease-in-out;
+}
+
+.offline #visitorChat_header:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 20px 2px #fff;
+    -moz-box-shadow: 0px 0px 20px 2px #fff;
+    box-shadow: 0px 0px 20px 2px #fff;
+    outline: none;
+}
+
+#visitorChat_header_text {
     display: none;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #fff;
-    text-shadow: 0 1px 2px #60A642;
-    filter: dropshadow(color = #60A642, offx = 0, offy = 1);
-    text-shadow: 1px 1px 1px #60A642;
     margin-left: 33px;
     position: relative;
     top: -1px;
+}
+
+.offline #visitorChat_header_text {
+    color:#000;
+    text-shadow: 1px 1px 0px rgba(255,255,255,.8);
+    filter: dropshadow(color = #fff, offx = 0, offy = 1);
 }
 
 #visitorChat_logout, #visitorChat_end {
@@ -133,16 +176,6 @@
     padding: 5px;
 }
 
-#visitorchat_clientLogin ul {
-    margin:0;
-    padding:0;
-    border:0;
-}
-
-#visitorchat_clientLogin ul li {
-    list-style: none;
-}
-
 #visitorChat_chatBox {
     font-size: 12px;
     height: 300px;
@@ -151,7 +184,7 @@
 }
 
 #visitorChat_chatBox ul li {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #ddd;
     color: #555;
     /*This looks super ugly
     filter: dropshadow(color=#ffffff, offx=0, offy=1);*/
@@ -170,7 +203,7 @@
     display: block;
     font-size: 11px;
     font-weight: normal;
-    opacity: 0.69;
+    opacity: .65;
     padding-left: 1em;
 }
 
@@ -186,12 +219,12 @@
 #visitorChat_messageBox {
     font-size:13px;
     border: 1px solid #CCCCCC;
-    margin: 5px auto;
+    margin: 5px 0;
     padding: 2px;
     overflow-y: auto;
     resize: none;
     height: 61px;
-    width: 95%;
+    width: 100%;
 }
 
 .visitorChat_center {
@@ -199,10 +232,10 @@
     border-bottom: transparent !important;
 }
 
-#visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
+/*#visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
     margin-top: 6px;
-    width: 95%;
-}
+    width: 100%;
+}*/
 
 .visitorChat_info {
     display: none;
@@ -381,7 +414,7 @@
     background: linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.25) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#59000000', GradientType = 0);
     padding-bottom: 15px;
-    text-shadow: 0 1px #fff;
+    text-shadow: 0 1px rgba(255,255,255,.85);
 }
 
 /* hide all email related settings for now */

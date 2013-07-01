@@ -103,7 +103,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             $("#visitorchat_clientLogin").parent().html("Disabled");
     
-            $("#visitorChat_header").animate({'width':'204px'}, 200);
+            $("#visitorChat_header").animate({'width':'214px'}, 200);
     
             //Display and set the name (if found).
             $("#visitorChat_container").delay(10).slideDown(320, function() {
@@ -496,9 +496,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Minimize header function while chatting
             $('#visitorChat_header').click(function () {
                 if ($('#visitorChat_container').css('display') === 'none') {
-                    $("#visitorChat_header").animate({'width':'105px'}, 280);
+                    $("#visitorChat_header").animate({'width':'176px'}, 280);
                 } else {
-                    $("#visitorChat_header").animate({'width':'204px'}, 280);
+                    $("#visitorChat_header").animate({'width':'214px'}, 280);
                 }
             });
     
@@ -652,7 +652,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         closeChatContainer: function() {
             $("#visitorChat_logout").css({'display':'none'});
-            $("#visitorChat_header").animate({'width':'105px'}, 200);
+            $("#visitorChat_header").animate({'width':'176px'}, 200);
     
             $("#visitorChat_footercontainer").html("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
             $("#visitorChat_footerHeader").css({'display':'block'});
