@@ -1,4 +1,4 @@
-require(['jquery', 'idm'], function($, idm) {
+require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     console.log("here");
     console.log(idm);
     WDN.jQuery = $;
@@ -66,7 +66,7 @@ require(['jquery', 'idm'], function($, idm) {
                 date = Math.round(date.getTime() / 1000);
                 difference = date - WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
     
-                WDN.analytics.callTrackEvent('WDN Chat', 'Response', 'Received', difference);
+                analytics.callTrackEvent('WDN Chat', 'Response', 'Received', difference);
     
                 //Set a cookie so that we don't call this if we have to reload the chat (page refresh or move to another page).
                 WDN.jQuery.cookies.set('UNL_Visitorchat_FirstOperatorResponse', difference, {domain:'.unl.edu'});
@@ -469,7 +469,7 @@ require(['jquery', 'idm'], function($, idm) {
             ]);
     
             //Mark as started
-            WDN.analytics.callTrackEvent('WDN Chat', 'Started');
+            analytics.callTrackEvent('WDN Chat', 'Started');
         },
     
         onConversationStatus_Closed:function (data) {
@@ -632,7 +632,7 @@ require(['jquery', 'idm'], function($, idm) {
                 date = Math.round(date.getTime() / 1000);
                 difference = date - WDN.jQuery.cookies.get('UNL_Visitorchat_Start');
     
-                WDN.analytics.callTrackEvent('WDN Chat', 'Ended', undefined, difference);
+                analytics.callTrackEvent('WDN Chat', 'Ended', undefined, difference);
             }
     
             //Delete the current cookie.
