@@ -21,7 +21,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     clientInfo: "",
 
     initWindow:function () {
-        WDN.jQuery("#toggleOperatorStatus").click(function () {
+        $("#toggleOperatorStatus").click(function () {
             if (VisitorChat.operatorStatus == 'AVAILABLE') {
                 VisitorChat.checkOperatorCountBeforeStatusChange();
             } else {
@@ -34,31 +34,31 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this.flashOverlay();
 
         //For status toggle useability
-        WDN.jQuery('#toggleOperatorStatus').hover(function () {
-            var isOpen = WDN.jQuery(this).hasClass('open');
+        $('#toggleOperatorStatus').hover(function () {
+            var isOpen = $(this).hasClass('open');
 
             if (isOpen) {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("Go offline?");
+                $(this).children('#currentOperatorStatus').html("Go offline?");
             } else {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("Go online?");
+                $(this).children('#currentOperatorStatus').html("Go online?");
             }
 
         }, function () {
-            var isOpen = WDN.jQuery(this).hasClass('open');
+            var isOpen = $(this).hasClass('open');
 
             if (isOpen) {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("You are available");
+                $(this).children('#currentOperatorStatus').html("You are available");
             } else {
-                WDN.jQuery(this).children('#currentOperatorStatus').html("You are unavailable");
+                $(this).children('#currentOperatorStatus').html("You are unavailable");
             }
         });
 
         //Every time the mouse moves, update the last active time
-        WDN.jQuery('body').mousemove(function(){
+        $('body').mousemove(function(){
             VisitorChat.lastActiveTime = new Date();
         });
 
-        WDN.jQuery(window).scroll(function(){
+        $(window).scroll(function(){
             VisitorChat.lastActiveTime = new Date();
         });
 
@@ -87,20 +87,20 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             this.alert('idle');
 
             //Create a new dialog to tell the operator that they missed a chat request.
-            WDN.jQuery("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
-            WDN.jQuery("#alert").dialog({
+            $("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
+            $("#alert").dialog({
                 resizable:false,
                 height:180,
                 modal:true,
                 open: function() {
-                    WDN.jQuery('.ui-dialog-buttonpane button:visible:eq(1)').focus();
+                    $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
                 },
                 buttons:{
-                    "Okay":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#alert").dialog("close");
+                    "Okay":$.proxy(function () {
+                        $("#alert").dialog("close");
                     }, this),
-                    "Go back online":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#alert").dialog("close");
+                    "Go back online":$.proxy(function () {
+                        $("#alert").dialog("close");
                         this.toggleOperatorStatus('USER');
                     }, this)
                 }
@@ -114,48 +114,48 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         var mouse_is_inside = false;
 
         //Navigation needs to be under back-drop
-        WDN.jQuery("#wdn_navigation_wrapper").css({'z-index':'1'});
+        $("#wdn_navigation_wrapper").css({'z-index':'1'});
 
         //Add in the back-drop and show brightBox
-        WDN.jQuery("body").append("<div id='visitorChat_backDrop'></div>");
-        WDN.jQuery('#visitorChat_brightBox').fadeIn("fast");
+        $("body").append("<div id='visitorChat_backDrop'></div>");
+        $('#visitorChat_brightBox').fadeIn("fast");
 
         //Track mouse position
-        WDN.jQuery('#visitorChat_brightBox').mouseleave(function () {
+        $('#visitorChat_brightBox').mouseleave(function () {
             mouse_is_inside = false;
         });
 
-        WDN.jQuery('#visitorChat_brightBox').mouseenter(function () {
+        $('#visitorChat_brightBox').mouseenter(function () {
             mouse_is_inside = true;
         });
 
         //Click outside container to close
-        WDN.jQuery("#visitorChat_backDrop").mouseup(function () {
+        $("#visitorChat_backDrop").mouseup(function () {
             if (!mouse_is_inside) {
-                WDN.jQuery("#visitorChat_backDrop").remove();
-                WDN.jQuery('#visitorChat_brightBox').fadeOut(100);
-                WDN.jQuery("#wdn_navigation_wrapper").css({'z-index':'auto'});
+                $("#visitorChat_backDrop").remove();
+                $('#visitorChat_brightBox').fadeOut(100);
+                $("#wdn_navigation_wrapper").css({'z-index':'auto'});
             }
         });
     },
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
+        $('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
         // Hover for Client Info
-        WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
-            WDN.jQuery('#clientInfo').fadeIn('fast', function () {
-                WDN.jQuery(this).hover(function () {
-                    WDN.jQuery(this).show();
+        $('#visitorChat_url_title > span').mouseover(function () {
+            $('#clientInfo').fadeIn('fast', function () {
+                $(this).hover(function () {
+                    $(this).show();
                 }, function () {
-                    WDN.jQuery(this).fadeOut('fast');
+                    $(this).fadeOut('fast');
                 });
             });
         });
 
         //Watch coversation link clicks.  Loads up the conversation all ajaxy
-        WDN.jQuery('.conversationLink').click(function () {
+        $('.conversationLink').click(function () {
             //Empty out the current chat.
             VisitorChat.clearChat();
 
@@ -166,16 +166,16 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             VisitorChat.updateChat(this);
 
             //Add selected class for active client
-            var isSelected = WDN.jQuery(this).parent().hasClass('selected');
+            var isSelected = $(this).parent().hasClass('selected');
 
             if (!isSelected) {
-                var prevSelected = WDN.jQuery('#clientList').find('.selected');
-                var nowSelected = WDN.jQuery(this).parent();
-                var clientName = WDN.jQuery(this).children('span').text();
+                var prevSelected = $('#clientList').find('.selected');
+                var nowSelected = $(this).parent();
+                var clientName = $(this).children('span').text();
 
                 // Add transitions to newly selected, take out from old.
                 prevSelected.children('a').removeClass('transition');
-                WDN.jQuery(this).addClass('transition');
+                $(this).addClass('transition');
 
                 // Slide <span> back
                 prevSelected.children().children('span').animate({
@@ -197,13 +197,13 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             return false;
         });
 
-        WDN.jQuery('#closeConversation').click(function () {
+        $('#closeConversation').click(function () {
             if (confirm("Are you sure you want to end the conversation?")) {
                 VisitorChat.changeConversationStatus("CLOSED");
             }
         });
 
-        WDN.jQuery('#block_ip').click(function () {
+        $('#block_ip').click(function () {
             if (confirm("Are you sure you want to end the conversation and block this IP address?")) {
                 var href= this.href;
                 VisitorChat.changeConversationStatus("CLOSED", function(){
@@ -215,18 +215,18 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             return false;
         });
 
-        WDN.jQuery('#shareConversation').click(function () {
+        $('#shareConversation').click(function () {
             VisitorChat.openShareWindow();
         });
 
-        WDN.jQuery('#leaveConversation').click(function () {
+        $('#leaveConversation').click(function () {
             if (confirm("Are you sure you want to leave the conversation?")) {
                 VisitorChat.leaveConversation();
             }
         });
 
-        if (WDN.jQuery().qtip !== undefined) {
-            var elems = WDN.jQuery('#visitorChat_InvitationList .tooltip[title]');
+        if ($().qtip !== undefined) {
+            var elems = $('#visitorChat_InvitationList .tooltip[title]');
 
             WDN.tooltip.addTooltip(elems);
 
@@ -235,7 +235,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
              * they won't show their tool tip on the first 'hover'.  Below is a small hack to force loading
              * of the tooltip.
              */
-            if (WDN.jQuery('#ui-tooltip-0').length == 0) {
+            if ($('#ui-tooltip-0').length == 0) {
                 elems.trigger('mouseover');
             }
         }
@@ -245,8 +245,8 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     },
 
     clearChat:function () {
-        WDN.jQuery('#clientChat').empty();
-        WDN.jQuery('#clientChat_Invitations').empty();
+        $('#clientChat').empty();
+        $('#clientChat_Invitations').empty();
         this.invitationsHTML = "";
         this.latestMessageId = 0;
     },
@@ -262,22 +262,22 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this.initWatchers();
 
         if (window.webkitNotifications && window.webkitNotifications.checkPermission()) {
-            WDN.jQuery('#notificationOptions').show();
+            $('#notificationOptions').show();
         }
 
-        WDN.jQuery('#testNotifications').click(function () {
+        $('#testNotifications').click(function () {
             VisitorChat.alert('test', true);
         });
 
         //Request permission for notifications.
-        WDN.jQuery('#requestNotifications').click(function () {
+        $('#requestNotifications').click(function () {
             if (!window.webkitNotifications) {
                 return false;
             }
 
             window.webkitNotifications.requestPermission(function () {
                 if (!window.webkitNotifications.checkPermission()) {
-                    WDN.jQuery('#notificationOptions').hide();
+                    $('#notificationOptions').hide();
                 }
             });
             return false
@@ -296,7 +296,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
     openShareWindow:function () {
         //Update the Client List
-        WDN.jQuery.ajax({
+        $.ajax({
             url:this.serverURL + "conversation/" + this.conversationID + "/share?format=partial",
             xhrFields:{
                 withCredentials:true
@@ -307,30 +307,30 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                     window.location.reload(); //reload the page
                 }
             },
-            success:WDN.jQuery.proxy(function (data) {
+            success:$.proxy(function (data) {
 
-                WDN.jQuery("#visitorChat_brightBox").html(data);
+                $("#visitorChat_brightBox").html(data);
                 this.showBrightBox();
                 this.loadShareWatchers();
                 //start a new dialog box.
             }, this)
         });
 
-        WDN.jQuery('#visitorChat_brightBox').height('350px');
+        $('#visitorChat_brightBox').height('350px');
     },
 
     loadShareWatchers:function () {
-        WDN.jQuery(".chzn-select").chosen({no_results_text: "No results matched", max_selected_options: 5});
+        $(".chzn-select").chosen({no_results_text: "No results matched", max_selected_options: 5});
 
-        WDN.jQuery("#shareForm").submit(function() {
+        $("#shareForm").submit(function() {
             VisitorChat.confirmShare();
             return false;
         });
     },
 
     confirmShare:function () {
-        var to = WDN.jQuery('#share_to').val();
-        var toHTML = WDN.jQuery('option[value="'+to+'"]').text();
+        var to = $('#share_to').val();
+        var toHTML = $('option[value="'+to+'"]').text();
 
         if (to == 'default') {
             alert('Please select person or a team');
@@ -338,9 +338,9 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         }
 
         //Clean to as it may contain lots of whitepsace
-        toHTML = WDN.jQuery.trim(toHTML);
+        toHTML = $.trim(toHTML);
 
-        var method = WDN.jQuery('input[name=method]:checked', '#shareForm').val();
+        var method = $('input[name=method]:checked', '#shareForm').val();
         var methodHTML = method;
 
         if (confirm('Are sure you want to ' + methodHTML + ' ' + toHTML + '?')) {
@@ -349,7 +349,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     },
 
     share:function (method, to) {
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/share?format=json",
             statusCode: {
@@ -365,7 +365,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     },
 
     leaveConversation:function () {
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/leave?format=json",
             statusCode: {
@@ -390,10 +390,10 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             
             // Don't display if '0' unread messages
             if (html === '0' || html === '') {
-                WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).removeClass('unread_message');
+                $("#visitorChat_UnreadMessages_" + conversation).removeClass('unread_message');
             } else {
-                WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).html(html);
-                WDN.jQuery("#visitorChat_UnreadMessages_" + conversation).addClass('unread_message');
+                $("#visitorChat_UnreadMessages_" + conversation).html(html);
+                $("#visitorChat_UnreadMessages_" + conversation).addClass('unread_message');
             }
         }
     },
@@ -463,20 +463,20 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                 helpText = "Due to server maintenance, you have been set to 'busy'.  Maintenance has been completed and you can now set yourself as AVAILABLE.";
             }
             
-            WDN.jQuery("#alert").html(helpText);
-            WDN.jQuery("#alert").dialog({
+            $("#alert").html(helpText);
+            $("#alert").dialog({
                 resizable:false,
                 height:180,
                 modal:true,
                 open: function() {
-                    WDN.jQuery('.ui-dialog-buttonpane button:visible:eq(1)').focus();
+                    $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
                 },
                 buttons:{
-                    "Okay":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#alert").dialog("close");
+                    "Okay":$.proxy(function () {
+                        $("#alert").dialog("close");
                     }, this),
-                    "Go back online":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#alert").dialog("close");
+                    "Go back online":$.proxy(function () {
+                        $("#alert").dialog("close");
                         this.toggleOperatorStatus('USER');
                     }, this)
                 }
@@ -496,7 +496,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         if (data['pendingAssignment'] == false || data['pendingDate'] == false) {
             this.currentRequest = false;
             clearTimeout(VisitorChat.requestLoopID);
-            WDN.jQuery("#chatRequest").dialog("close");
+            $("#chatRequest").dialog("close");
             return true;
         }
 
@@ -508,22 +508,22 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         //3. Alert the user.
         if (this.currentRequest != data['pendingAssignment']) {
             //start a new dialog box.
-            WDN.jQuery("#chatRequest").dialog({
+            $("#chatRequest").dialog({
                 resizable:false,
                 height:140,
                 modal:true,
                 open: function() {
-                    WDN.jQuery('.ui-dialog-buttonpane button:visible:eq(1)').focus();
+                    $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
                 },
                 buttons:{
-                    "Reject":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#chatRequest").dialog("close");
+                    "Reject":$.proxy(function () {
+                        $("#chatRequest").dialog("close");
                         this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
                         this.clearAlert();
                         clearTimeout(VisitorChat.requestLoopID);
                     }, this),
-                    "Accept":WDN.jQuery.proxy(function () {
-                        WDN.jQuery("#chatRequest").dialog("close");
+                    "Accept":$.proxy(function () {
+                        $("#chatRequest").dialog("close");
                         this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
                         clearTimeout(VisitorChat.requestLoopID);
                         this.clearAlert();
@@ -546,8 +546,8 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         }
 
         //switch to a new color
-        WDN.jQuery(".ui-widget-overlay").css('background', color);
-        WDN.jQuery(".ui-widget-overlay").css('opacity', .5);
+        $(".ui-widget-overlay").css('background', color);
+        $(".ui-widget-overlay").css('opacity', .5);
 
         //Google chrome has issues with clearing the timeout.  Work around it...
         if (VisitorChat.overlayLoopID == -1) {
@@ -571,7 +571,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     },
 
     sendChatRequestResponse:function (id, response) {
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"POST",
             url:this.serverURL + "assignment/" + id + "/edit?format=json&PHPSESSID=" + this.phpsessid,
             statusCode: {
@@ -607,7 +607,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     requestLoop:function (id) {
         currentDate = new Date();
         difference = Math.round((VisitorChat.requestExpireDate[id] - currentDate.getTime()) / 1000);
-        WDN.jQuery("#chatRequestCountDown").html(difference);
+        $("#chatRequestCountDown").html(difference);
 
         if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
             this.onRequestExpired();
@@ -624,25 +624,25 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
      */
     onRequestExpired:function () {
         //Close the current request dialog.
-        WDN.jQuery("#chatRequest").dialog("close"); //Remove the dialog box.
+        $("#chatRequest").dialog("close"); //Remove the dialog box.
         clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
         this.clearAlert();
 
         //Create a new dialog to tell the operator that they missed a chat request.
-        WDN.jQuery("#alert").html("You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.");
-        WDN.jQuery("#alert").dialog({
+        $("#alert").html("You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.");
+        $("#alert").dialog({
             resizable:false,
             height:180,
             modal:true,
             open: function() {
-                WDN.jQuery('.ui-dialog-buttonpane button:visible:eq(1)').focus();
+                $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
             },
             buttons:{
-                "Okay":WDN.jQuery.proxy(function () {
-                    WDN.jQuery("#alert").dialog("close");
+                "Okay":$.proxy(function () {
+                    $("#alert").dialog("close");
                 }, this),
-                "Go back online":WDN.jQuery.proxy(function () {
-                    WDN.jQuery("#alert").dialog("close");
+                "Go back online":$.proxy(function () {
+                    $("#alert").dialog("close");
                     this.toggleOperatorStatus('USER');
                 }, this)
             }
@@ -669,7 +669,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         if (data['client_html'] !== undefined && data['client_html']) {
 			//alert('here');
 			this.clientInfo = data['client_html'];
-            //WDN.jQuery('#clientInfo').html(data['client_html']);
+            //$('#clientInfo').html(data['client_html']);
         }
 
         if (data['operators'] !== undefined) {
@@ -679,9 +679,9 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                 this.operators.push(data['operators'][operator]);
             }
             if (this.operators.length > 1) {
-                WDN.jQuery('#leaveConversation').show();
+                $('#leaveConversation').show();
             } else {
-                WDN.jQuery('#leaveConversation').hide();
+                $('#leaveConversation').hide();
             }
         }
 
@@ -691,7 +691,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     updateInvitationsListWithHTML:function (html) {
         if (this.invitationsHTML != html) {
             this.invitationsHTML = html;
-            WDN.jQuery("#clientChat_Invitations").html(html);
+            $("#clientChat_Invitations").html(html);
         }
     },
 
@@ -713,21 +713,21 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
     onConversationStatus_Closed:function (data) {
         //Disable the input message input.
-        WDN.jQuery("#visitorChat_messageBox").attr("disabled", "disabled");
+        $("#visitorChat_messageBox").attr("disabled", "disabled");
 
         //Don't let the operator share or close (because it is already closed).
-        WDN.jQuery("#shareConversation").remove();
-        WDN.jQuery("#closeConversation").remove();
+        $("#shareConversation").remove();
+        $("#closeConversation").remove();
 
         //Display a closed message.
         var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
-        html = WDN.jQuery("#clientChat").prepend(html);
+        html = $("#clientChat").prepend(html);
         //this.updateChatContainerWithHTML("#clientChat", html);
 
         //set the opacity of all siblings
-        WDN.jQuery('#visitorChat_closed').siblings().css({'opacity':'0.1'})
+        $('#visitorChat_closed').siblings().css({'opacity':'0.1'})
         //set the opacity of current item to full, and add the effect class
-        WDN.jQuery('#visitorChat_closed').css({'opacity':'1.0'});
+        $('#visitorChat_closed').css({'opacity':'1.0'});
 
         if (data['messages'] == undefined) {
             return true;
@@ -738,7 +738,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
     updateConversationList:function () {
         //Update the Client List
-        WDN.jQuery.ajax({
+        $.ajax({
             url:this.serverURL + "conversations?format=partial",
             xhrFields:{
                 withCredentials:true
@@ -749,10 +749,10 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                     window.location.reload(); //reload the page
                 }
             },
-            success:WDN.jQuery.proxy(function (data) {
-                WDN.jQuery("#clientList").html(data);
-                WDN.jQuery("#conversationId_" + this.conversationID).addClass('selected');
-                WDN.jQuery("#conversationId_" + this.conversationID).children().children('span').css({
+            success:$.proxy(function (data) {
+                $("#clientList").html(data);
+                $("#conversationId_" + this.conversationID).addClass('selected');
+                $("#conversationId_" + this.conversationID).children().children('span').css({
                     paddingLeft:"20px"
                 });
                 this.updateConversationListWithUnreadMessages();
@@ -762,7 +762,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     },
 
     checkOperatorCountBeforeStatusChange:function () {
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"GET",
             url:this.serverURL + "user/sites?format=json",
             statusCode: {
@@ -771,7 +771,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                     window.location.reload(); //reload the page
                 }
             },
-            success:WDN.jQuery.proxy(function (data) {
+            success:$.proxy(function (data) {
                 var offline = new Array();
 
                 i = 0;
@@ -790,7 +790,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                 }
 
             }, this),
-            error:WDN.jQuery.proxy(function (data) {
+            error:$.proxy(function (data) {
                 this.toggleOperatorStatus('CLIENT_IDLE');
             }, this)
         });
@@ -805,22 +805,22 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
         html += "</ul>";
 
-        WDN.jQuery("#alert").html(html);
+        $("#alert").html(html);
 
         //start a new dialog box.
-        WDN.jQuery("#alert").dialog({
+        $("#alert").dialog({
             resizable:false,
             modal:true,
             open: function() {
-                WDN.jQuery('.ui-dialog-buttonpane button:visible:eq(1)').focus();
+                $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
             },
             buttons:{
-                "Go Offline Anyway":WDN.jQuery.proxy(function () {
-                    WDN.jQuery("#alert").dialog("close");
+                "Go Offline Anyway":$.proxy(function () {
+                    $("#alert").dialog("close");
                     this.toggleOperatorStatus('USER');
                 }, this),
-                "Nevermind":WDN.jQuery.proxy(function () {
-                    WDN.jQuery("#alert").dialog("close");
+                "Nevermind":$.proxy(function () {
+                    $("#alert").dialog("close");
                 }, this)
             }
         });
@@ -837,7 +837,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             return false;
         }
 
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"POST",
             url:this.serverURL + "users/" + this.userID + "/edit?format=json",
             data:"status=" + status + "&reason=" + reason,
@@ -847,7 +847,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                     window.location.reload(); //reload the page
                 }
             },
-            success:WDN.jQuery.proxy(function (data) {
+            success:$.proxy(function (data) {
                 this.updateOperatorStatus(status);
             }, this)
         });
@@ -856,24 +856,24 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     updateOperatorStatus:function (newStatus) {
         var formatStatus = 'Available';
 
-        $flag = WDN.jQuery("#toggleOperatorStatus").hasClass("closed");
+        $flag = $("#toggleOperatorStatus").hasClass("closed");
 
         if (newStatus == 'BUSY') {
             formatStatus = 'You are unavailable';
         }
 
         if (newStatus == 'BUSY') {
-            WDN.jQuery("#toggleOperatorStatus").addClass("closed");
-            WDN.jQuery("#toggleOperatorStatus").removeClass("open");
+            $("#toggleOperatorStatus").addClass("closed");
+            $("#toggleOperatorStatus").removeClass("open");
         } else {
-            WDN.jQuery("#toggleOperatorStatus").addClass("open");
-            WDN.jQuery("#toggleOperatorStatus").removeClass("closed");
+            $("#toggleOperatorStatus").addClass("open");
+            $("#toggleOperatorStatus").removeClass("closed");
             formatStatus = 'You are available';
         }
 
         //Don't call this if its the same status
         if (newStatus !== this.operatorStatus) {
-            WDN.jQuery("#currentOperatorStatus").html(formatStatus);
+            $("#currentOperatorStatus").html(formatStatus);
         }
 
         this.operatorStatus = newStatus;
@@ -881,7 +881,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 });
 
 //start the chat
-WDN.jQuery(function(){
+$(function(){
     VisitorChat = new VisitorChat_Operator("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>, <?php echo \UNL\VisitorChat\Controller::$chatRequestTimeout; ?>);
     VisitorChat.start();
 });

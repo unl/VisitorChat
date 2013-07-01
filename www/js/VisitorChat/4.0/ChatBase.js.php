@@ -1,6 +1,6 @@
 <?php
 require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/SimpleJavaScriptInheritance.js");
-require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/form.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/4.0/" . "/form.js");
 ?>
 
 /*
@@ -91,7 +91,7 @@ var VisitorChat_ChatBase = Class.extend({
         this.loadStyles();
         this.initWindow();
 
-        WDN.jQuery(document).ready(WDN.jQuery.proxy(function(){
+        $(document).ready($.proxy(function(){
             this.updateUserInfo();
             this.initWatchers();
         }, this));
@@ -101,22 +101,22 @@ var VisitorChat_ChatBase = Class.extend({
 
     initAjaxPool: function()
     {
-        WDN.jQuery.xhrPool = [];
-        WDN.jQuery.xhrPool.abortAll = function() {
-            WDN.jQuery(this).each(function(idx, jqXHR) {
+        $.xhrPool = [];
+        $.xhrPool.abortAll = function() {
+            $(this).each(function(idx, jqXHR) {
                 jqXHR.abort();
             });
-            WDN.jQuery.xhrPool.length = 0
+            $.xhrPool.length = 0
         };
 
-        WDN.jQuery.ajaxSetup({
+        $.ajaxSetup({
             beforeSend: function(jqXHR) {
-                WDN.jQuery.xhrPool.push(jqXHR);
+                $.xhrPool.push(jqXHR);
             },
             complete: function(jqXHR) {
-                var index = WDN.jQuery.xhrPool.indexOf(jqXHR);
+                var index = $.xhrPool.indexOf(jqXHR);
                 if (index > -1) {
-                    WDN.jQuery.xhrPool.splice(index, 1);
+                    $.xhrPool.splice(index, 1);
                 }
             }
         });
@@ -134,12 +134,12 @@ var VisitorChat_ChatBase = Class.extend({
      * Initalize event watchers related to the current window.
      */
     initWindow:function () {
-        WDN.jQuery([window, document]).blur(function () {
+        $([window, document]).blur(function () {
 
             VisitorChat.windowVisible = false;
         });
 
-        WDN.jQuery([window, document]).focus(function () {
+        $([window, document]).focus(function () {
             VisitorChat.windowVisible = true;
             VisitorChat.clearAlert();
             document.title = VisitorChat.siteTitle;
@@ -199,13 +199,13 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Start the chat.
-        WDN.jQuery.ajax({
+        $.ajax({
             url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
             xhrFields:{
                 withCredentials:true
             },
             dataType:"json",
-            success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
+            success:$.proxy(function (data, textStatus, jqXHR) {
                 this.handleUserDataResponse(data);
             }, this),
             complete:function(data, textStatus, jqXHR)
@@ -264,7 +264,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         this.pendingChatAJAX = true;
 
-        WDN.jQuery.ajax({
+        $.ajax({
             url:url,
             xhrFields:{
                 withCredentials:true
@@ -273,7 +273,7 @@ var VisitorChat_ChatBase = Class.extend({
             error: function(jqXHR, textStatus, errorThrown) {
                 //alert('test: ' + textStatus);
             },
-            success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
+            success:$.proxy(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
                 this.pendingChatAJAX = false;
             }, this)
@@ -331,9 +331,9 @@ var VisitorChat_ChatBase = Class.extend({
     updateLatestMessageId:function (latest) {
         this.latestMessageId = latest;
 
-        if (action = WDN.jQuery('.unl_visitorchat_form').attr('action')) {
+        if (action = $('.unl_visitorchat_form').attr('action')) {
             action = action.replace(/last=(\d)*/g, "last=" + latest);
-            WDN.jQuery('.unl_visitorchat_form').attr('action', action);
+            $('.unl_visitorchat_form').attr('action', action);
         }
     },
 
@@ -415,7 +415,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         for (id in messages) {
             //skip if a message with this id already exists
-            if (WDN.jQuery('#visitorChat_message_' + id).length != 0) {
+            if ($('#visitorChat_message_' + id).length != 0) {
                 continue;
             }
 
@@ -448,7 +448,7 @@ var VisitorChat_ChatBase = Class.extend({
      * Appends a single message to the conversation.
      */
     appendMessage:function (id, message) {
-        WDN.jQuery("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
+        $("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
             "<br /><span class='timestamp'>" + message['date'] + "</span><span class='stamp'>from " + message['poster']['name'] + "</span>" +
             "</li>");
     },
@@ -465,7 +465,7 @@ var VisitorChat_ChatBase = Class.extend({
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
         }
 
-        WDN.jQuery("#visitorChat_container").append("<div class='visitorChat_center'></div>");
+        $("#visitorChat_container").append("<div class='visitorChat_center'></div>");
 
         clearTimeout(VisitorChat.loopID);
 
@@ -527,13 +527,13 @@ var VisitorChat_ChatBase = Class.extend({
      */
     updateChatContainerWithHTML:function (selector, html, sendAlerts) {
         //Should we alert the user?
-        if (sendAlerts != false && WDN.jQuery(selector).html() !== html) {
+        if (sendAlerts != false && $(selector).html() !== html) {
             this.clearAlert();
             this.alert();
         }
 
         //Update the html
-        WDN.jQuery(selector).html(html);
+        $(selector).html(html);
 
         //Scroll if we can.
         this.scroll();
@@ -549,7 +549,7 @@ var VisitorChat_ChatBase = Class.extend({
      * add a new watcher.
      */
     initWatchers:function () {
-        WDN.jQuery('#visitorChat_messageBox').keypress(function (e) {
+        $('#visitorChat_messageBox').keypress(function (e) {
             if (VisitorChat.chatStatus == false) {
                 return true;
             }
@@ -557,10 +557,10 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                    WDN.jQuery('#visitorchat_clientLogin').submit();
+                    $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                    WDN.jQuery('#visitorChat_messageForm').submit();
-                    WDN.jQuery('#visitorChat_messageBox').val('');
+                    $('#visitorChat_messageForm').submit();
+                    $('#visitorChat_messageBox').val('');
                 }
             }
         });
@@ -572,7 +572,7 @@ var VisitorChat_ChatBase = Class.extend({
      * scroll is used to scroll the current chat to the bottom of the chat div.
      */
     scroll:function () {
-        WDN.jQuery("#visitorChat_chatBox").scrollTop(WDN.jQuery("#visitorChat_chatBox").prop('scrollHeight'));
+        $("#visitorChat_chatBox").scrollTop($("#visitorChat_chatBox").prop('scrollHeight'));
     },
 
     /**
@@ -583,11 +583,11 @@ var VisitorChat_ChatBase = Class.extend({
             clearForm:true,
             timeout:3000,
             dataType:"json",
-            success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
+            success:$.proxy(function (data, textStatus, jqXHR) {
                 this.handleAjaxResponse(data, textStatus);
-                WDN.jQuery('#visitorChat_chatBox').removeClass('visitorChat_loading');
+                $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
-            beforeSubmit:WDN.jQuery.proxy(function (arr, $form, options) {
+            beforeSubmit:$.proxy(function (arr, $form, options) {
                 return this.ajaxBeforeSubmit(arr, $form, options);
             }, this),
             crossDomain:true,
@@ -596,21 +596,21 @@ var VisitorChat_ChatBase = Class.extend({
             }
         };
 
-        var action = WDN.jQuery('.unl_visitorchat_form').attr('action');
+        var action = $('.unl_visitorchat_form').attr('action');
 
         if (action !== undefined && action.indexOf("format=json") == -1) {
-            WDN.jQuery('.unl_visitorchat_form').attr('action', WDN.jQuery.proxy(function (i, val) {
+            $('.unl_visitorchat_form').attr('action', $.proxy(function (i, val) {
                 return val + '?format=json&' + this.getURLSessionParam();
             }, this));
         }
 
         //bind form using 'ajaxForm'
-        WDN.jQuery('.unl_visitorchat_form').ajaxForm(options);
+        $('.unl_visitorchat_form').ajaxForm(options);
     },
 
     onLogin:function () {
         var html = "<div class='visitorChat_loading'></div>";
-        WDN.jQuery('#visitorChat_container').html(html);
+        $('#visitorChat_container').html(html);
     },
 
     ajaxBeforeSubmit:function (arr, $form, options) {
@@ -618,7 +618,7 @@ var VisitorChat_ChatBase = Class.extend({
             VisitorChat.onLogin();
         } else {
             if (VisitorChat.chatStatus != 'CLOSED') {
-                WDN.jQuery('#visitorChat_chatBox').addClass("visitorChat_loading");
+                $('#visitorChat_chatBox').addClass("visitorChat_loading");
             }
         }
 
@@ -786,7 +786,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     handleAjaxResponse:function (data, textStatus) {
         if (data["responseText"] !== undefined) {
-            data = WDN.jQuery.parseJSON(data["responseText"]);
+            data = $.parseJSON(data["responseText"]);
         }
 
         if (textStatus == 'error') {
@@ -813,7 +813,7 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Send a post response.
-        WDN.jQuery.ajax({
+        $.ajax({
             type:"POST",
             url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
             xhrFields:{
@@ -833,14 +833,14 @@ var VisitorChat_ChatBase = Class.extend({
         this.chatOpened = false;
 
         //2. logout
-        WDN.jQuery.ajax({
+        $.ajax({
             url:this.serverURL + "logout" + "?format=json&" + this.getURLSessionParam(),
             xhrFields:{
                 withCredentials:true
             },
             dataType:"json",
             complete:function (jqXHR, textStatus) {
-                WDN.jQuery.xhrPool.abortAll();
+                $.xhrPool.abortAll();
             }
         });
 

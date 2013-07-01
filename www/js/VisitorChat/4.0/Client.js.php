@@ -1,7 +1,4 @@
 require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
-    console.log("here");
-    console.log(idm);
-    WDN.jQuery = $;
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
     ?>
@@ -45,15 +42,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
     
-            WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
-            WDN.jQuery("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
+            $("#visitorChat_footerHeader").css({'display':'none'});
+            $("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
     
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
-            if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
-                WDN.jQuery("#visitorChat_messageBox").val('');
+            if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
+                $("#visitorChat_messageBox").val('');
             }
     
-            WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
+            $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
             this.start();
         },
     
@@ -76,42 +73,42 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.chatStatus = "LOGIN";
     
             //Remove an old one if it is there.
-            WDN.jQuery('#visitorChat_container').remove();
+            $('#visitorChat_container').remove();
     
             //set up a container.
             var html = "<div id='visitorChat_container'>Please Wait...</div>";
     
-            WDN.jQuery("#visitorchat_clientLogin").replaceWith("<div id='visitorChat_container'></div>");
+            $("#visitorchat_clientLogin").replaceWith("<div id='visitorChat_container'></div>");
     
-            WDN.jQuery("#visitorChat_container").show();
+            $("#visitorChat_container").show();
         },
     
         launchChatContainer:function () {
             //Remove an old one if it is there.
-            WDN.jQuery('#visitorChat_container').remove();
+            $('#visitorChat_container').remove();
     
             //set up a container.
-            WDN.jQuery("#visitorChat").append(
+            $("#visitorChat").append(
                 "<div id='visitorChat_container'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
     
             //Set header_text to visible
-            WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
+            $("#visitorChat_header_text").css('display', 'inline');
     
-            WDN.jQuery("#visitorChat_header").show();
+            $("#visitorChat_header").show();
     
             this.chatStatus = "LOGIN";
     
-            WDN.jQuery("#visitorchat_clientLogin").parent().html("Disabled");
+            $("#visitorchat_clientLogin").parent().html("Disabled");
     
-            WDN.jQuery("#visitorChat_header").animate({'width':'204px'}, 200);
+            $("#visitorChat_header").animate({'width':'204px'}, 200);
     
             //Display and set the name (if found).
-            WDN.jQuery("#visitorChat_container").delay(10).slideDown(320, function() {
+            $("#visitorChat_container").delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
-                    WDN.jQuery("#visitorChat_name").val(idm.getDisplayName());
+                    $("#visitorChat_name").val(idm.getDisplayName());
                 }
             });
         },
@@ -130,7 +127,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         //Require confirmation that a comment is to be submitted anon.
         confirmAnonSubmit: function() {
-            var email = WDN.jQuery('#visitorChat_email').val();
+            var email = $('#visitorChat_email').val();
     
             //If the email is empty, don't submit and append a warning to the form, otherwise continue on.
             if (email != '') {
@@ -138,24 +135,24 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
     
             //Check if they are confirming anon...
-            if (WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, I do not need a response') {
+            if ($('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, I do not need a response') {
                 //Reset to say 'submit'.
-                WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+                $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
                 return true;
             }
     
             //Display error and request confirmation before continuing.
             var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK?</div>";
     
-            WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
-            WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
+            $('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
+            $('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
     
             this.initWatchers();
     
             //remove the warning if they start to enter an email
-            WDN.jQuery("#visitorChat_email").keyup(function () {
-                WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
-                WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+            $("#visitorChat_email").keyup(function () {
+                $('#visitorchat_clientLogin_anonwaning').remove();
+                $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
             });
     
             return false;
@@ -177,10 +174,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
     
         initValidation: function() {
-            WDN.jQuery.validation.addMethod('validate-require-if-question',
+            $.validation.addMethod('validate-require-if-question',
                 'An email address is required if you ask a question so that we can respond.',
                 function(value, object) {
-                    var message = WDN.jQuery('#visitorChat_messageBox').val();
+                    var message = $('#visitorChat_messageBox').val();
                     if (message.indexOf("?") != -1 && value == "") {
                         return false;
                     }
@@ -189,21 +186,21 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 });
     
             //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
-            WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
-            WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
+            $('#visitorchat_clientLogin').data('validation', false);
+            $('#visitorChat_confirmationEamilForm').data('validation', false);
     
             //Require email for questions submitted via the footer comment form.
-            WDN.jQuery('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
+            $('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
     
             //Validator
-            WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+            $('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
         },
     
         initPlaceHolders: function() {
             //Load placeholders if not supported.
             if (WDN.hasDocumentClass('no-placeholder')) {
                 WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
-                    WDN.jQuery('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
+                    $('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
                 });
             }
         },
@@ -214,7 +211,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
              * of watch functions, we should always unbind previous
              * watch functions before applying the new ones.
              */
-            WDN.jQuery('#visitorChat_container, ' +
+            $('#visitorChat_container, ' +
                 '#visitorChat_email_fallback, ' +
                 '#visitorChat_logout, ' +
                 '#visitorChat_login_submit, ' +
@@ -237,47 +234,47 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.initValidation();
     
             //Reveal timestamp
-            WDN.jQuery("#visitorChat_chatBox > ul > li").hover(
+            $("#visitorChat_chatBox > ul > li").hover(
                 function () {
-                    WDN.jQuery(this).children(".timestamp").animate({'opacity':'1'}, 120);
-                    WDN.jQuery(this).children(".stamp").animate({'opacity':'1'}, 120);
+                    $(this).children(".timestamp").animate({'opacity':'1'}, 120);
+                    $(this).children(".stamp").animate({'opacity':'1'}, 120);
                 }, function () {
-                    WDN.jQuery(this).children(".timestamp").animate({'opacity':'0'}, 120);
-                    WDN.jQuery(this).children(".stamp").animate({'opacity':'0.65'}, 120);
+                    $(this).children(".timestamp").animate({'opacity':'0'}, 120);
+                    $(this).children(".stamp").animate({'opacity':'0.65'}, 120);
                 }
             );
     
             //Make sure the footer input is only submitting as email
-            WDN.jQuery("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
+            $("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
     
             //Make sure the chat input is only submitting as chat.
-            WDN.jQuery("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
+            $("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
     
-            WDN.jQuery('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
+            $('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
                 if (!result) {
                     VisitorChat.initPlaceHolders();
                 }
             });
     
-            WDN.jQuery('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
-                WDN.jQuery('#visitorchat_clientLogin_anonwaning').remove();
+            $('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
+                $('#visitorchat_clientLogin_anonwaning').remove();
     
-                if (WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, no response needed'
-                    && WDN.jQuery('#visitorChat_email').val() != '') {
-                    WDN.jQuery('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+                if ($('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, no response needed'
+                    && $('#visitorChat_email').val() != '') {
+                    $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
                 }
     
                 return true;
             });
     
-            WDN.jQuery('#visitorChat_confirmationEamilForm').bind('validate-form', function (event, result) {
+            $('#visitorChat_confirmationEamilForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    WDN.jQuery('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + WDN.jQuery('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
+                    $('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
     
-                    WDN.jQuery().unbind('#visitorChat_sendAnotherConfirmation');
+                    $().unbind('#visitorChat_sendAnotherConfirmation');
     
-                    WDN.jQuery('#visitorChat_sendAnotherConfirmation').click(function(){
-                        WDN.jQuery('#visitorChat_confirmationContainer').html(WDN.jQuery(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html());
+                    $('#visitorChat_sendAnotherConfirmation').click(function(){
+                        $('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html());
                         VisitorChat.initWatchers();
                         return false;
                     });
@@ -290,11 +287,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this._super();
     
             //Click header to open up Chat
-            WDN.jQuery('#visitorChat_header').click(function () {
-                if (!WDN.jQuery('#visitorChat_container').is(":visible")) {
-                    WDN.jQuery("#visitorChat_container").slideDown(320);
+            $('#visitorChat_header').click(function () {
+                if (!$('#visitorChat_container').is(":visible")) {
+                    $("#visitorChat_container").slideDown(320);
                 } else {
-                    WDN.jQuery("#visitorChat_container").slideUp(320);
+                    $("#visitorChat_container").slideUp(320);
     
                     if (VisitorChat.chatStatus == "LOGIN") {
                         VisitorChat.stop();
@@ -314,7 +311,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
     
             //Logout function
-            WDN.jQuery('#visitorChat_logout').click(WDN.jQuery.proxy(function () {
+            $('#visitorChat_logout').click($.proxy(function () {
                 if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
                     return false;
                 }
@@ -335,75 +332,75 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
                 //if email_fallback is checked, make sure that the email is required.
-                WDN.jQuery("#visitorChat_email_fallback").click(function () {
-                    if (WDN.jQuery(this).is(":checked")) {
-                        WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Required)");
-                        WDN.jQuery('#visitorChat_email').addClass('required-entry');
+                $("#visitorChat_email_fallback").click(function () {
+                    if ($(this).is(":checked")) {
+                        $("#visitorChat_email").attr("placeholder", "Email (Required)");
+                        $('#visitorChat_email').addClass('required-entry');
                     } else {
-                        WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Optional)");
-                        WDN.jQuery('#visitorChat_email').removeClass('required-entry');
+                        $("#visitorChat_email").attr("placeholder", "Email (Optional)");
+                        $('#visitorChat_email').removeClass('required-entry');
                     }
                 });
             }
     
             //This will slide down the Name and Email fields, plus the Ask button
-            WDN.jQuery("#visitorChat_messageBox").one("keyup", function () {
+            $("#visitorChat_messageBox").one("keyup", function () {
                 if (idm.getDisplayName()) {
-                    WDN.jQuery("#visitorChat_name").val(idm.getDisplayName());
+                    $("#visitorChat_name").val(idm.getDisplayName());
                 }
                 if (idm.getEmailAddress()) {
-                    WDN.jQuery("#visitorChat_email").val(idm.getEmailAddress());
+                    $("#visitorChat_email").val(idm.getEmailAddress());
                 }
     
-                WDN.jQuery(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
-                    if (VisitorChat.initialMessage && !WDN.jQuery("#visitorChat_messageBox").is(":focus")) {
-                        WDN.jQuery("#visitorChat_email").focus();
+                $(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
+                    if (VisitorChat.initialMessage && !$("#visitorChat_messageBox").is(":focus")) {
+                        $("#visitorChat_email").focus();
                     }
                 });
             });
     
-            WDN.jQuery("#visitorChat_failedOptions_yes").click(function() {
+            $("#visitorChat_failedOptions_yes").click(function() {
                 VisitorChat.stop(function(){
                     if (VisitorChat.clientName) {
-                        WDN.jQuery("#visitorChat_name").val(VisitorChat.clientName);
+                        $("#visitorChat_name").val(VisitorChat.clientName);
                     }
     
                     if (VisitorChat.initialMessage) {
-                        WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                        $("#visitorChat_messageBox").val(VisitorChat.initialMessage);
                     }
                     
-                    WDN.jQuery("#visitorChat_email").focus();
-                    WDN.jQuery("#visitorChat_messageBox").keyup();
+                    $("#visitorChat_email").focus();
+                    $("#visitorChat_messageBox").keyup();
                 });
     
                 return true;
             });
     
-            WDN.jQuery('#visitorChat_confirmationEmail').keypress(function (e) {
+            $('#visitorChat_confirmationEmail').keypress(function (e) {
                 if (e.which == 13) {
                     e.preventDefault();
     
-                    WDN.jQuery('#visitorChat_confirmationEamilForm').submit();
+                    $('#visitorChat_confirmationEamilForm').submit();
                 }
             });
     
-            WDN.jQuery("#visitorChat_failedOptions_no").click(function() {
+            $("#visitorChat_failedOptions_no").click(function() {
                 VisitorChat.stop();
     
                 return true;
             });
     
             if (this.chatStatus) {
-                WDN.jQuery("#visitorChat_header").hover(function () {
-                    WDN.jQuery("#visitorChat_logout").css({'display':'inline-block'});
+                $("#visitorChat_header").hover(function () {
+                    $("#visitorChat_logout").css({'display':'inline-block'});
                 }, function () {
-                    WDN.jQuery("#visitorChat_logout").css({'display':'none'});
+                    $("#visitorChat_logout").css({'display':'none'});
                 });
             }
     
             //set the for_url
-            WDN.jQuery('#initial_url').val(document.URL);
-            WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
+            $('#initial_url').val(document.URL);
+            $('#initial_pagetitle').val($(document).attr('title'));
         },
     
         /**
@@ -447,8 +444,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
     
         onLogin:function () {
-            this.clientName = WDN.jQuery("#visitorChat_name").val();
-            this.initialMessage = WDN.jQuery("#visitorChat_messageBox").val();
+            this.clientName = $("#visitorChat_name").val();
+            this.initialMessage = $("#visitorChat_messageBox").val();
     
             this._super();
     
@@ -472,7 +469,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
     
         onConversationStatus_Closed:function (data) {
-            if (WDN.jQuery("#visitorChat_confirmationContainer").length != 0) {
+            if ($("#visitorChat_confirmationContainer").length != 0) {
                 return false;
             }
     
@@ -480,15 +477,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             this.confirmationHTML = data['confirmationHTML'];
     
-            WDN.jQuery("#visitorChat_chatBox").height("150px");
+            $("#visitorChat_chatBox").height("150px");
             
-            WDN.jQuery("#visitorChat_messageForm").remove();
+            $("#visitorChat_messageForm").remove();
     
-            WDN.jQuery("#visitorChat_closed").append(data['confirmationHTML'])
+            $("#visitorChat_closed").append(data['confirmationHTML'])
     
             this.initWatchers();
     
-            WDN.jQuery().unbind('visitorChat_header');
+            $().unbind('visitorChat_header');
     
             this.scroll();
         },
@@ -497,15 +494,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this._super(data);
     
             //Minimize header function while chatting
-            WDN.jQuery('#visitorChat_header').click(function () {
-                if (WDN.jQuery('#visitorChat_container').css('display') === 'none') {
-                    WDN.jQuery("#visitorChat_header").animate({'width':'105px'}, 280);
+            $('#visitorChat_header').click(function () {
+                if ($('#visitorChat_container').css('display') === 'none') {
+                    $("#visitorChat_header").animate({'width':'105px'}, 280);
                 } else {
-                    WDN.jQuery("#visitorChat_header").animate({'width':'204px'}, 280);
+                    $("#visitorChat_header").animate({'width':'204px'}, 280);
                 }
             });
     
-            WDN.jQuery().unbind('visitorChat_header');
+            $().unbind('visitorChat_header');
         },
     
         handleUserDataResponse:function (data) {
@@ -519,11 +516,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (data['loginHTML'] !== undefined && data['loginHTML']) {
                 this.loginHTML = data['loginHTML'];
     
-                WDN.jQuery("#wdn_feedback_comments").replaceWith("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
+                $("#wdn_feedback_comments").replaceWith("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
     
                 //media queries are not supported in ie8, so show the footer container by default.
-                if (WDN.jQuery("html").hasClass('ie8')) {
-                    WDN.jQuery("#visitorChat_footercontainer").show();
+                if ($("html").hasClass('ie8')) {
+                    $("#visitorChat_footercontainer").show();
                 }
     
                 this.initWatchers();
@@ -567,10 +564,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (document.createStyleSheet) {
                 document.createStyleSheet(stylesheet);
             } else {
-                WDN.jQuery("head").append(WDN.jQuery("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen' />"));
+                $("head").append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen' />"));
             }
     
-            WDN.jQuery(window).load(function () {
+            $(window).load(function () {
                 VisitorChat.displaySiteAvailability();
             });
     
@@ -578,7 +575,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
     
         init:function (serverURL, refreshRate) {
-            WDN.jQuery("body").append("" +
+            $("body").append("" +
                 "<div id='visitorChat'>" +
                     "<div id='visitorChat_header'>" +
                         "<span style='display:none;' id='visitorChat_header_text'>Live Chat</span>" +
@@ -606,13 +603,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return true;
             }
     
-            WDN.jQuery.xhrPool.abortAll();
+            $.xhrPool.abortAll();
             
             if (this.method != 'email') {
                 callbackSet = false;
-                if (WDN.jQuery('#visitorChat_container').is(":visible")) {
+                if ($('#visitorChat_container').is(":visible")) {
                     callbackSet = true;
-                    WDN.jQuery("#visitorChat_container").slideUp(400, WDN.jQuery.proxy(function () {
+                    $("#visitorChat_container").slideUp(400, $.proxy(function () {
                         if (callback) {
                             callback();
                         }
@@ -654,40 +651,40 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
     
         closeChatContainer: function() {
-            WDN.jQuery("#visitorChat_logout").css({'display':'none'});
-            WDN.jQuery("#visitorChat_header").animate({'width':'105px'}, 200);
+            $("#visitorChat_logout").css({'display':'none'});
+            $("#visitorChat_header").animate({'width':'105px'}, 200);
     
-            WDN.jQuery("#visitorChat_footercontainer").html("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
-            WDN.jQuery("#visitorChat_footerHeader").css({'display':'block'});
+            $("#visitorChat_footercontainer").html("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
+            $("#visitorChat_footerHeader").css({'display':'block'});
         },
     
         displaySiteAvailability:function () {
             if (this.chatOpened) {
-                WDN.jQuery("#visitorChat").show();
-                WDN.jQuery("#visitorChat_header").show();
-                WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
+                $("#visitorChat").show();
+                $("#visitorChat_header").show();
+                $("#visitorChat_header_text").css('display', 'inline');
                 return true;
             }
     
-            WDN.jQuery("#visitorChat_header").show();
-            WDN.jQuery("#visitorChat").show();
-            WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
+            $("#visitorChat_header").show();
+            $("#visitorChat").show();
+            $("#visitorChat_header_text").css('display', 'inline');
             
             if (this.operatorsAvailable) {
-                WDN.jQuery("#visitorChat_header_text").html('Chat with us');
-                WDN.jQuery("#visitorChat").addClass('online');
-                WDN.jQuery("#visitorChat").removeClass('offline');
+                $("#visitorChat_header_text").html('Chat with us');
+                $("#visitorChat").addClass('online');
+                $("#visitorChat").removeClass('offline');
             } else {
-                WDN.jQuery("#visitorChat_header_text").html('Send us a message');
-                WDN.jQuery("#visitorChat").addClass('offline');
-                WDN.jQuery("#visitorChat").removeClass('online');
+                $("#visitorChat_header_text").html('Send us a message');
+                $("#visitorChat").addClass('offline');
+                $("#visitorChat").removeClass('online');
             }
     
             return true;
         }
     });
 
-    WDN.jQuery(function(){
+    $(function(){
         WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
             if (VisitorChat == false) {
                 VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
