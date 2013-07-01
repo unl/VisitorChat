@@ -1,3 +1,8 @@
+<?php
+require_once(__DIR__ . "/ChatBase.js.php");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/chosen.min.js");
+?>
+
 //TODO:  Simply attach the getUserData function to the end of the loop function.
 var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     currentRequest:false, //The current request ID.

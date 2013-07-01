@@ -1,3 +1,8 @@
+<?php
+require_once(__DIR__ . "/ChatBase.js.php");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/jquery.cookies.min.js");
+?>
+
 var VisitorChat_Client = VisitorChat_ChatBase.extend({
     loginHTML: false,
     clientName: false,

@@ -1,3 +1,8 @@
+<?php
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/SimpleJavaScriptInheritance.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/form.js");
+?>
+
 /*
  * The base Chat class.  This class can be extended.
  * However, the application is built so that ONLY one
