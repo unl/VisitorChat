@@ -60,21 +60,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
 
-            html = '';
-            if (VisitorChat.method == 'chat') {
-                html = 'Chat with ';
-            } else {
-                html = 'Email ';
-            }
-            
-            if (VisitorChat.answeringSite) {
-                html += '<a href="' + VisitorChat.answeringSite['url'] + '">' + VisitorChat.answeringSite['title'].split(' | ')[0] + '</a>';
-            } else {
-                html += 'us';
-            }
-            
-            WDN.jQuery("#visitorChat_footerHeader").html(html);
-
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
             if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
                 $("#visitorChat_messageBox").val('');
@@ -684,12 +669,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
             
             if (this.operatorsAvailable) {
-                $("#visitorChat_header_text").html('Chat with us');
+                $("#visitorChat_header_text").html('Chat with ' + $('#wdn_site_title').text());
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
                 VisitorChat.method = 'chat';
             } else {
-                $("#visitorChat_header_text").html('Send us a message');
+                $("#visitorChat_header_text").html('Send ' + $('#wdn_site_title').text() + ' a message');
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
                 VisitorChat.method = 'email';

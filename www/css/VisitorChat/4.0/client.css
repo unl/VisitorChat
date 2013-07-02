@@ -316,6 +316,10 @@ input, textarea, select {
     text-align: center;
 }
 
+#visitorChat_footerHeader {
+    display: none;
+}
+
 /* Validation Stylings */
 
 #visitorChat_footercontainer .validation-advice, #visitorChat .validation-advice {
