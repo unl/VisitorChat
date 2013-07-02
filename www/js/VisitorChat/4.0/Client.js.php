@@ -76,6 +76,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_container').remove();
     
             //set up a container.
+            $("#visitorChat").append(
+                "<div id='visitorChat_container'>" +
+                "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
+                "</div>"
+            );
+    
+            //set up a container.
             var html = "<div id='visitorChat_container'>Please Wait...</div>";
     
             $("#visitorchat_clientLogin").replaceWith("<div id='visitorChat_container'></div>");
