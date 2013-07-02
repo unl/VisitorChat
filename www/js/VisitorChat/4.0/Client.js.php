@@ -15,25 +15,38 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.method = 'email';
             this.launchEmailContainer();
             this.start();
+            $("#visitorChat_messageBox").attr('placeholder', 'We will get back to you as soon as possible.');
+            //Submit as email
+            $("#visitorChat_login_chatmethod").val("EMAIL");
         },
     
         startChat:function (chatInProgress) {
             this.method = 'chat';
             this.launchChatContainer();
+
+            if (chatInProgress && this.chatStatus == "LOGIN") {
+                this.chatStatus = "CHATTING";
+                return this.start();
+            }
+
+            $("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
+            
+            this.start();
+
+            $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
+            //Submit as chat
+            $("#visitorChat_login_chatmethod").val("CHAT");
+        },
+        
+        start:function () {
+            $("#visitorChat_header").animate({'width':'214px'}, 200);
             
             if (this.blocked) {
                 var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
-                
                 this.updateChatContainerWithHTML("#visitorChat_container", html, false);
                 return;
             }
-    
-            if (chatInProgress && this.chatStatus == "LOGIN") {
-                this.chatStatus = "CHATTING";
-    
-                return this.start();
-            }
-    
+            
             //Always show the chat if we are logged in as an operator.  Otherwise only show if someone is available.
             if (this.userType == 'operator') {
                 html = "<div class='chat_notify'>You are currently logged in as an operator and can not start a client conversation from this browser.  If you want to start a conversation, please either log out or do so in another web browser.</div>";
@@ -41,17 +54,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             } else {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
-    
-            $("#visitorChat_footerHeader").css({'display':'none'});
-            $("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
-    
+
+            WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
+
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
             if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
                 $("#visitorChat_messageBox").val('');
             }
-    
-            $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
-            this.start();
+            
+            this._super();
         },
     
         onOperatorMessage:function (message) {
@@ -110,8 +121,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             $("#visitorchat_clientLogin").parent().html("Disabled");
     
-            $("#visitorChat_header").animate({'width':'214px'}, 200);
-    
             //Display and set the name (if found).
             $("#visitorChat_container").delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
@@ -142,24 +151,24 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
     
             //Check if they are confirming anon...
-            if ($('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, I do not need a response') {
+            if ($('#visitorChat_login_submit').val() == 'Yes, I do not need a response') {
                 //Reset to say 'submit'.
-                $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+                $('#visitorChat_login_submit').val("Submit");
                 return true;
             }
     
             //Display error and request confirmation before continuing.
             var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK?</div>";
     
-            $('#visitorChat_footercontainer #visitorChat_login_submit').before(html);
-            $('#visitorChat_footercontainer #visitorChat_login_submit').val("Yes, I do not need a response");
+            $('#visitorChat_login_submit').before(html);
+            $('#visitorChat_login_submit').val("Yes, I do not need a response");
     
             this.initWatchers();
     
             //remove the warning if they start to enter an email
             $("#visitorChat_email").keyup(function () {
                 $('#visitorchat_clientLogin_anonwaning').remove();
-                $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
+                $('#visitorChat_login_submit').val("Submit");
             });
     
             return false;
@@ -170,7 +179,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             for (var key = 0; key<arr.length; key++) {
                 if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
                     if (this.confirmAnonSubmit()) {
-                        this.startEmail();
+                        //this.startEmail();
                     } else {
                         return false;
                     }
@@ -305,7 +314,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         return false;
                     }
                 } else {
-                    VisitorChat.startChat();
+                    if (VisitorChat.method == 'chat') {
+                        VisitorChat.startChat();
+                    } else {
+                        VisitorChat.startEmail();
+                    }
+                    
                 }
     
                 return false;
@@ -517,13 +531,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (data['loginHTML'] !== undefined && data['loginHTML']) {
                 this.loginHTML = data['loginHTML'];
     
-                $("#wdn_feedback_comments").replaceWith("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
-    
-                //media queries are not supported in ie8, so show the footer container by default.
-                if ($("html").hasClass('ie8')) {
-                    $("#visitorChat_footercontainer").show();
-                }
-    
                 this.initWatchers();
             }
     
@@ -654,9 +661,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         closeChatContainer: function() {
             $("#visitorChat_logout").css({'display':'none'});
             $("#visitorChat_header").animate({'width':'176px'}, 200);
-    
-            $("#visitorChat_footercontainer").html("<div id='visitorChat_footercontainer'>" + this.loginHTML + "</div>");
-            $("#visitorChat_footerHeader").css({'display':'block'});
         },
     
         displaySiteAvailability:function () {
@@ -675,17 +679,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $("#visitorChat_header_text").html('Chat with us');
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
-            
-
-                //Submit as chat.
-                $("#visitorChat_login_chatmethod").val("CHAT");
+                VisitorChat.method = 'chat';
             } else {
                 $("#visitorChat_header_text").html('Send us a message');
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
-                
-                //Submit as email
-                $("#visitorChat_login_chatmethod").val("EMAIL");
+                VisitorChat.method = 'email';
             }
     
             return true;
