@@ -12,6 +12,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         confirmationHTML: false,
         userType: 'client',
         method: 'chat',
+        answeringSite: false,
     
         startEmail:function () {
             this.method = 'email';
@@ -59,7 +60,20 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
 
-            WDN.jQuery("#visitorChat_footerHeader").css({'display':'none'});
+            html = '';
+            if (VisitorChat.method == 'chat') {
+                html = 'Chat with ';
+            } else {
+                html = 'Email ';
+            }
+            
+            if (VisitorChat.answeringSite) {
+                html += '<a href="' + VisitorChat.answeringSite['url'] + '">' + VisitorChat.answeringSite['title'].split(' | ')[0] + '</a>';
+            } else {
+                html += 'us';
+            }
+            
+            WDN.jQuery("#visitorChat_footerHeader").html(html);
 
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
             if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
@@ -115,11 +129,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
-    
-            //Set header_text to visible
-            $("#visitorChat_header_text").css('display', 'inline');
-    
-            $("#visitorChat_header").show();
     
             this.chatStatus = "LOGIN";
     
@@ -534,6 +543,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             if (data['loginHTML'] !== undefined && data['loginHTML']) {
                 this.loginHTML = data['loginHTML'];
+                this.answeringSite = data['answeringSite'];
     
                 this.initWatchers();
             }
@@ -591,7 +601,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("body").append("" +
                 "<div id='visitorChat'>" +
                     "<div id='visitorChat_header'>" +
-                        "<span style='display:none;' id='visitorChat_header_text'>Live Chat</span>" +
+                        "<span id='visitorChat_header_text'>Live Chat</span>" +
                         "<div id='visitorChat_logout'>" +
                             "<a href='#'>close</a>" +
                         "</div>" +
@@ -670,15 +680,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         displaySiteAvailability:function (force) {
             if (this.chatOpened && !force) {
-                $("#visitorChat").show();
-                $("#visitorChat_header").show();
-                $("#visitorChat_header_text").css('display', 'inline');
                 return true;
             }
-    
-            $("#visitorChat_header").show();
-            $("#visitorChat").show();
-            $("#visitorChat_header_text").css('display', 'inline');
             
             if (this.operatorsAvailable) {
                 $("#visitorChat_header_text").html('Chat with us');
