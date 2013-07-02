@@ -244,12 +244,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 }
             );
     
-            //Make sure the footer input is only submitting as email
-            $("#visitorChat_footercontainer #visitorChat_login_chatmethod").val("EMAIL");
-    
-            //Make sure the chat input is only submitting as chat.
-            $("#visitorChat_container #visitorChat_login_chatmethod").val("CHAT");
-    
             $('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
                 if (!result) {
                     VisitorChat.initPlaceHolders();
@@ -674,10 +668,17 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $("#visitorChat_header_text").html('Chat with us');
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
+            
+
+                //Submit as chat.
+                $("#visitorChat_login_chatmethod").val("CHAT");
             } else {
                 $("#visitorChat_header_text").html('Send us a message');
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
+                
+                //Submit as email
+                $("#visitorChat_login_chatmethod").val("EMAIL");
             }
     
             return true;
