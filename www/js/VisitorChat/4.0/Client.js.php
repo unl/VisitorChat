@@ -372,16 +372,18 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
     
             $("#visitorChat_failedOptions_yes").click(function() {
-                VisitorChat.startEmail();
-                if (VisitorChat.initialMessage) {
+                VisitorChat.stop(function(){
+                    VisitorChat.startEmail();
+                    if (VisitorChat.initialMessage) {
                     $("#visitorChat_messageBox").val(VisitorChat.initialMessage);
-                }
-
-                $("#visitorChat_name").val(VisitorChat.name);
-                $("#visitorChat_email").val(VisitorChat.email);
-                
-                $("#visitorChat_email").focus();
-                $("#visitorChat_messageBox").keyup();
+                    }
+        
+                    $("#visitorChat_name").val(VisitorChat.name);
+                    $("#visitorChat_email").val(VisitorChat.email);
+        
+                    $("#visitorChat_email").focus();
+                    $("#visitorChat_messageBox").keyup();
+                });
                 
                 return true;
             });
