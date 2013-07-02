@@ -17,6 +17,7 @@ class Info
     public $userType           = false;
     public $userStatusReason   = false;
     public $popupNotifications = false;
+    public $answeringSite      = false;
     
     function __construct($options = array())
     {
@@ -37,6 +38,19 @@ class Info
         
         if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvailable($options['checkOperators']);
+
+            $this->answeringSite = array(
+                'url' => '',
+                'title' => ''
+            );
+
+            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($options['checkOperators']);
+
+            if (!empty($sites)) {
+                $site = $sites->current();
+                $this->answeringSite['title'] = $site->getTitle();
+                $this->answeringSite['url'] = $site->getURL();
+            }
 
             if (!Service::getCurrentUser() || Service::getCurrentUser()->type == 'client') {
                 //For now we need to include the login html (until rollout is complete).
