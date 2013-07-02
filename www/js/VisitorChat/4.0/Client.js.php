@@ -7,12 +7,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         loginHTML: false,
         clientName: false,
         initialMessage: false,
+        name:'',
+        email:'',
         confirmationHTML: false,
         userType: 'client',
         method: 'chat',
     
         startEmail:function () {
             this.method = 'email';
+            this.displaySiteAvailability(true);
             this.launchEmailContainer();
             this.start();
             $("#visitorChat_messageBox").attr('placeholder', 'We will get back to you as soon as possible.');
@@ -22,6 +25,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         startChat:function (chatInProgress) {
             this.method = 'chat';
+            this.displaySiteAvailability(true);
             this.launchChatContainer();
 
             if (chatInProgress && this.chatStatus == "LOGIN") {
@@ -375,19 +379,17 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
     
             $("#visitorChat_failedOptions_yes").click(function() {
-                VisitorChat.stop(function(){
-                    if (VisitorChat.clientName) {
-                        $("#visitorChat_name").val(VisitorChat.clientName);
-                    }
-    
-                    if (VisitorChat.initialMessage) {
-                        $("#visitorChat_messageBox").val(VisitorChat.initialMessage);
-                    }
-                    
-                    $("#visitorChat_email").focus();
-                    $("#visitorChat_messageBox").keyup();
-                });
-    
+                VisitorChat.startEmail();
+                if (VisitorChat.initialMessage) {
+                    $("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                }
+
+                $("#visitorChat_name").val(VisitorChat.name);
+                $("#visitorChat_email").val(VisitorChat.email);
+                
+                $("#visitorChat_email").focus();
+                $("#visitorChat_messageBox").keyup();
+                
                 return true;
             });
     
@@ -461,6 +463,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onLogin:function () {
             this.clientName = $("#visitorChat_name").val();
             this.initialMessage = $("#visitorChat_messageBox").val();
+            this.name = $("#visitorChat_name").val();
+            this.email = $("#visitorChat_email").val();
     
             this._super();
     
@@ -552,6 +556,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
+            VisitorChat.operatorsAvailable = false;
             var html = '<div class="chat_notify">Unfortunately all of our operators are currently busy.  Would you like to send an email instead?' +
                 '<div id="visitorChat_failedOptions"><a id="visitorChat_failedOptions_yes" href="#">Yes</a> <a id="visitorChat_failedOptions_no" href="#">No</a></div></div>';
             this.updateChatContainerWithHTML("#visitorChat_container", html);
@@ -663,8 +668,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("#visitorChat_header").animate({'width':'176px'}, 200);
         },
     
-        displaySiteAvailability:function () {
-            if (this.chatOpened) {
+        displaySiteAvailability:function (force) {
+            if (this.chatOpened && !force) {
                 $("#visitorChat").show();
                 $("#visitorChat_header").show();
                 $("#visitorChat_header_text").css('display', 'inline');
