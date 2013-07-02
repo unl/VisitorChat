@@ -18,7 +18,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.displaySiteAvailability(true);
             this.launchEmailContainer();
             this.start();
-            $("#visitorChat_messageBox").attr('placeholder', 'We will get back to you as soon as possible.');
+            $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
             //Submit as email
             $("#visitorChat_login_chatmethod").val("EMAIL");
         },
