@@ -12,7 +12,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         confirmationHTML: false,
         userType: 'client',
         method: 'chat',
-        answeringSite: false,
     
         startEmail:function () {
             this.method = 'email';
@@ -528,7 +527,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             if (data['loginHTML'] !== undefined && data['loginHTML']) {
                 this.loginHTML = data['loginHTML'];
-                this.answeringSite = data['answeringSite'];
     
                 this.initWatchers();
             }
