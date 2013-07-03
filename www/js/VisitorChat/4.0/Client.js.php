@@ -43,8 +43,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
         
         start:function () {
-            //$("#visitorChat_header").animate({'width':'214px'}, 200);
-            
             if (this.blocked) {
                 var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
                 this.updateChatContainerWithHTML("#visitorChat_container", html, false);
@@ -506,16 +504,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         onConversationStatus_Chatting:function (data) {
             this._super(data);
-    
-            //Minimize header function while chatting
-            //$('#visitorChat_header').click(function () {
-              //  if ($('#visitorChat_container').css('display') === 'none') {
-                //    $("#visitorChat_header").animate({'width':'176px'}, 280);
-                //} else {
-                //    $("#visitorChat_header").animate({'width':'214px'}, 280);
-                //}
-            //});
-    
+            
             $().unbind('visitorChat_header');
         },
     
