@@ -26,7 +26,7 @@ input, textarea, select {
     right: 3%;
     bottom: 0px;
     width: 214px;
-    color: black;
+    color: #000;
     background-color: transparent;
     border-radius: 3px;
     max-height: 450px;
@@ -38,48 +38,25 @@ input, textarea, select {
     border-top-left-radius: 5px;
     height: 24px;
     padding: 4px 5px 0px 5px;
-    width: 176px;
+    width: 214px;
     outline:none;
-    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5), inset 0px -10px 8px rgba(111, 191, 77, 0.8);
-    background: #76CC52 url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/chat.png') no-repeat 10px 50%;
+    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.3), inset 0px 1px 0px #97df79; /*inset 0px -10px 8px rgba(111, 191, 77, 0.8);*/
+    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.3), inset 0px 1px 0px #97df79;
+    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.3), inset 0px 1px 0px #97df79;
+    background: #76CC52;
     transition: all 0.12s ease-in-out;
     -moz-transition: all 0.12s ease-in-out;
     -webkit-transition: all 0.12s ease-in-out;
     -o-transition: all 0.12s ease-in-out;
+    color:#fff;
+    text-shadow:1px 1px 0px #60A642;
 }
 
 #visitorChat_header:hover {
     cursor: pointer;
-    -webkit-box-shadow: 0px 0px 20px 2px #fff;
-    -moz-box-shadow: 0px 0px 20px 2px #fff;
-    box-shadow: 0px 0px 20px 2px #fff;
-    outline: none;
-}
-
-#visitorChat_header_text {
-    color:#fff;
-    text-shadow: 1px 1px 0px #60A642;
-    filter: dropshadow(color = #60A642, offx = 0, offy = 1);   
-}
-
-.offline #visitorChat_header {
-    -webkit-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
-    -moz-box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
-    box-shadow: 0px 0px 10px -2px rgba(10, 10, 10, 0.5);
-    background: #ccc url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png') no-repeat 10px 50%;
-    transition: all 0.12s ease-in-out;
-    -moz-transition: all 0.12s ease-in-out;
-    -webkit-transition: all 0.12s ease-in-out;
-    -o-transition: all 0.12s ease-in-out;
-}
-
-.offline #visitorChat_header:hover {
-    cursor: pointer;
-    -webkit-box-shadow: 0px 0px 20px 2px #fff;
-    -moz-box-shadow: 0px 0px 20px 2px #fff;
-    box-shadow: 0px 0px 20px 2px #fff;
+    -webkit-box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px #97df79;
+    -moz-box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px #97df79;
+    box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px #97df79;
     outline: none;
 }
 
@@ -87,26 +64,47 @@ input, textarea, select {
     display: inline;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
-    color: #fff;
-    margin-left: 33px;
     position: relative;
     top: -1px;
 }
 
-.offline #visitorChat_header_text {
-    color:#000;
-    text-shadow: 1px 1px 0px rgba(255,255,255,.8);
-    filter: dropshadow(color = #fff, offx = 0, offy = 1);
+#visitorChat_header_text:before {
+    margin-right:4px;
 }
 
-#visitorChat_logout, #visitorChat_end {
-    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/close.png') no-repeat 0 0;
+.offline #visitorChat_header {
+    -webkit-box-shadow: 0px 0px 6px rgba(10, 10, 10, 0.3), inset 0px 1px 0px rgba(255,255,255,.4);
+    -moz-box-shadow: 0px 0px 6px rgba(10, 10, 10, 0.3), inset 0px 1px 0px rgba(255,255,255,.4);
+    box-shadow: 0px 0px 6px rgba(10, 10, 10, 0.3), inset 0px 1px 0px rgba(255,255,255,.4);
+    background: #ccc; /*url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/comment.png') no-repeat 10px 50%;*/
+    transition: all 0.12s ease-in-out;
+    -moz-transition: all 0.12s ease-in-out;
+    -webkit-transition: all 0.12s ease-in-out;
+    -o-transition: all 0.12s ease-in-out;
+    color:#333;
+    text-shadow:1px 1px 0px rgba(255,255,255,.6);
+}
+
+.offline #visitorChat_header:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px rgba(255,255,255,.4);
+    -moz-box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px rgba(255,255,255,.4);
+    box-shadow: 0px 0px 6px rgba(255,255,255,.8), inset 0px 1px 0px rgba(255,255,255,.4);
+    outline: none;
+}
+
+#visitorChat_logout {
     bottom: 2px;
     display: none;
     float: right;
     height: 20px;
     position: relative;
     width: 20px;
+}
+
+#visitorChat_logout:before {
+    font-size: 1.1rem;
+    margin-top:-3px;
 }
 
 #visitorChat_confiramtionEmail {
@@ -131,8 +129,7 @@ input, textarea, select {
     font-weight: bold;
 }
 
-#visitorChat_logout a, #visitorChat_end a {
-    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/close.png') no-repeat 0 -20px;
+#visitorChat_logout a {
     display: inline-block;
     height: 20px;
     opacity: 0;
@@ -148,9 +145,7 @@ input, textarea, select {
 }
 
 #visitorChat_logout a:hover,
-#visitorChat_logout a:focus,
-#visitorChat_end a:hover,
-#visitorChat_end a:focus {
+#visitorChat_logout a:focus {
     opacity: 1;
 }
 
@@ -184,8 +179,6 @@ input, textarea, select {
 #visitorChat_chatBox ul li {
     border-bottom: 1px solid #ddd;
     color: #555;
-    /*This looks super ugly
-    filter: dropshadow(color=#ffffff, offx=0, offy=1);*/
     padding: 6px 8px;
     text-shadow: 0 1px white;
     line-height: 125%;
@@ -229,11 +222,6 @@ input, textarea, select {
     text-align: center;
     border-bottom: transparent !important;
 }
-
-/*#visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
-    margin-top: 6px;
-    width: 100%;
-}*/
 
 .visitorChat_info {
     display: none;
@@ -349,7 +337,6 @@ input, textarea, select {
     text-align: center;
 
     text-shadow: 0 1px rgba(255, 255, 255, 0.85);
-    filter: dropshadow(color = rgba(255, 255, 255, 0.85), offx = 0, offy = 1);
 }
 
 #visitorChat_footercontainer #visitorChat_container {
