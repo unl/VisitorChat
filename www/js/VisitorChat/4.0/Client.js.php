@@ -43,7 +43,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
         
         start:function () {
-            $("#visitorChat_header").animate({'width':'214px'}, 200);
+            //$("#visitorChat_header").animate({'width':'214px'}, 200);
             
             if (this.blocked) {
                 var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
@@ -508,13 +508,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this._super(data);
     
             //Minimize header function while chatting
-            $('#visitorChat_header').click(function () {
-                if ($('#visitorChat_container').css('display') === 'none') {
-                    $("#visitorChat_header").animate({'width':'176px'}, 280);
-                } else {
-                    $("#visitorChat_header").animate({'width':'214px'}, 280);
-                }
-            });
+            //$('#visitorChat_header').click(function () {
+              //  if ($('#visitorChat_container').css('display') === 'none') {
+                //    $("#visitorChat_header").animate({'width':'176px'}, 280);
+                //} else {
+                //    $("#visitorChat_header").animate({'width':'214px'}, 280);
+                //}
+            //});
     
             $().unbind('visitorChat_header');
         },
@@ -587,7 +587,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 "<div id='visitorChat'>" +
                     "<div id='visitorChat_header'>" +
                         "<span id='visitorChat_header_text'>Live Chat</span>" +
-                        "<div id='visitorChat_logout'>" +
+                        "<div id='visitorChat_logout' class='wdn-icon-cancel'>" +
                             "<a href='#'>close</a>" +
                         "</div>" +
                     "</div>" +
@@ -660,7 +660,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         closeChatContainer: function() {
             $("#visitorChat_logout").css({'display':'none'});
-            $("#visitorChat_header").animate({'width':'176px'}, 200);
+            //$("#visitorChat_header").animate({'width':'176px'}, 200);
         },
     
         displaySiteAvailability:function (force) {
@@ -672,11 +672,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $("#visitorChat_header_text").html('Chat with ' + $('#wdn_site_title').text());
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
+                $("#visitorChat_header_text").addClass('wdn-icon-comment-alt');
+                $("#visitorChat_header_text").removeClass('wdn-icon-comment');
                 VisitorChat.method = 'chat';
             } else {
                 $("#visitorChat_header_text").html('Send ' + $('#wdn_site_title').text() + ' a message');
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
+                $("#visitorChat_header_text").addClass('wdn-icon-comment');
+                $("#visitorChat_header_text").removeClass('wdn-icon-comment-alt');
                 VisitorChat.method = 'email';
             }
     
