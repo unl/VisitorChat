@@ -504,7 +504,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         onConversationStatus_Chatting:function (data) {
             this._super(data);
-            
+
             $().unbind('visitorChat_header');
         },
     
@@ -649,7 +649,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         closeChatContainer: function() {
             $("#visitorChat_logout").css({'display':'none'});
-            //$("#visitorChat_header").animate({'width':'176px'}, 200);
         },
     
         displaySiteAvailability:function (force) {
