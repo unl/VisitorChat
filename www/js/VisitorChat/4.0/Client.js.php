@@ -57,6 +57,18 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
 
+            var title = $('#wdn_site_title').text().trim();
+    
+            if (title.length > 15) {
+                title = title.substr(0, 15) + '&hellip;';
+            }
+    
+            if (VisitorChat.operatorsAvailable) {
+                $("#visitorChat_footerHeader").html('Chat with the friendly folks at ' + title);
+            } else {
+                $("#visitorChat_footerHeader").html('Send the friendly folks at ' + title + ' a message');
+            }
+            
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
             if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
                 $("#visitorChat_messageBox").val('');
@@ -575,7 +587,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("body").append("" +
                 "<div id='visitorChat' class='offline'>" +
                     "<div id='visitorChat_header'>" +
-                        "<span id='visitorChat_header_text'>Send us a message</span>" +
+                        "<span id='visitorChat_header_text'>Let's Talk</span>" +
                         "<div id='visitorChat_logout' class='wdn-icon-cancel'>" +
                             "<a href='#'>close</a>" +
                         "</div>" +
@@ -656,21 +668,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return true;
             }
             
-            var title = $('#wdn_site_title').text().trim();
-            
-            if (title.length > 6) {
-               title = title.substr(0, 6) + '&hellip;';
-            }
-            
             if (this.operatorsAvailable) {
-                $("#visitorChat_header_text").html('Chat with ' + title);
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
                 $("#visitorChat_header_text").addClass('wdn-icon-comment-alt');
                 $("#visitorChat_header_text").removeClass('wdn-icon-comment');
                 VisitorChat.method = 'chat';
             } else {
-                $("#visitorChat_header_text").html('Send ' + title + ' a message');
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
                 $("#visitorChat_header_text").addClass('wdn-icon-comment');

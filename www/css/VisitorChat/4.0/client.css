@@ -151,11 +151,11 @@ input, textarea, select {
 
 #visitorChat_container {
     background: #F8F8F8;
-    background: -moz-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.85) 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(244, 244, 244, 1)), color-stop(100%, rgba(255, 255, 255, 0.85)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.85) 100%);
-    background: -o-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.85) 100%);
-    background: -ms-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.85) 100%);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(244, 244, 244, 1)), color-stop(100%, rgba(255, 255, 255, 0.95)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
     background: radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.85) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f4f4f4', endColorstr = '#ebffffff', GradientType = 1);
     display: none;
@@ -277,7 +277,7 @@ input, textarea, select {
 }
 
 .unl_visitorchat_form legend {
-    font-weight: bold;
+    text-align: center;
 }
 
 .unl_visitorchat_submit {
@@ -302,10 +302,6 @@ input, textarea, select {
 .chat_notify {
     padding: 20px 5px;
     text-align: center;
-}
-
-#visitorChat_footerHeader {
-    display: none;
 }
 
 /* Validation Stylings */
@@ -336,7 +332,7 @@ input, textarea, select {
     padding: 5px;
     text-align: center;
 
-    text-shadow: 0 1px rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px rgba(255, 255, 255, 0.95);
 }
 
 #visitorChat_footercontainer #visitorChat_container {
