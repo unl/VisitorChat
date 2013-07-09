@@ -355,10 +355,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     return false;
                 }
     
-                //change the method to chat, so that the chat window will close.
-                //it MIGHT be open due to captcha.
-                this.method = 'chat';
-    
                 VisitorChat.stop();
     
                 return false;
