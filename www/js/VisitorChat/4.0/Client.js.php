@@ -633,10 +633,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
     
             this._super();
-    
-            if (this.method != 'email') {
-                this.closeChatContainer();
-            }
+
+            this.closeChatContainer();
     
             if (WDN.getCookie('UNL_Visitorchat_Start')) {
                 date = new Date();
