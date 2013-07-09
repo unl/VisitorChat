@@ -648,9 +648,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
             //Delete the current cookie.
             VisitorChat.deleteAnalyticsCookies();
-            
-            VisitorChat.updateUserInfo();
-    
+
             this.initWatchers();
     
             if (callback && !callbackSet) {

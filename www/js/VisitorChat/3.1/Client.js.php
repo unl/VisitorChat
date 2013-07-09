@@ -632,8 +632,6 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
 
         //Delete the current cookie.
         VisitorChat.deleteAnalyticsCookies();
-        
-        VisitorChat.updateUserInfo();
 
         this.initWatchers();
 
