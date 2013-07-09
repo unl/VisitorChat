@@ -19,7 +19,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.launchEmailContainer();
             this.start();
 
-            $("#visitorChat_footerHeader").html('Send the friendly folks at ' + $('#wdn_site_title').text().trim() + ' a message');
+            $("#visitorChat_footerHeader").html('Send ' + $('#wdn_site_title').text().trim() + ' a message');
             
             $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
             //Submit as email
@@ -50,7 +50,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             
             this.start();
 
-            $("#visitorChat_footerHeader").html('Chat with the friendly folks at ' + $('#wdn_site_title').text().trim());
+            $("#visitorChat_footerHeader").html('Chat with ' + $('#wdn_site_title').text().trim());
 
             $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
             //Submit as chat
