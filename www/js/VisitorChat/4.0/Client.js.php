@@ -15,12 +15,25 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         startEmail:function () {
             this.method = 'email';
-            this.displaySiteAvailability(true);
+            this.displaySiteAvailability(false);
             this.launchEmailContainer();
             this.start();
+
+            $("#visitorChat_footerHeader").html('Send the friendly folks at ' + $('#wdn_site_title').text().trim() + ' a message');
+            
             $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
             //Submit as email
-            $("#visitorChat_login_chatmethod").val("EMAIL");
+
+            if (VisitorChat.operatorsAvailable) {
+                $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
+                
+                $('#visitorChat_methods_chat').one('click', function() {
+                    VisitorChat.stop(function(){
+                        VisitorChat.startChat();
+                        $("#visitorChat_messageBox").keyup();
+                    });
+                });
+            }
         },
     
         startChat:function (chatInProgress) {
@@ -37,9 +50,20 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             
             this.start();
 
+            $("#visitorChat_footerHeader").html('Chat with the friendly folks at ' + $('#wdn_site_title').text().trim());
+
             $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
             //Submit as chat
             $("#visitorChat_login_chatmethod").val("CHAT");
+
+            $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_email' href='#'>email us</a></div>");
+        
+            $('#visitorChat_methods_email').one('click', function() {
+                VisitorChat.stop(function(){
+                    VisitorChat.startEmail();
+                    $("#visitorChat_messageBox").keyup();
+                });
+            });
         },
         
         start:function () {
@@ -55,18 +79,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", html, false);
             } else {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
-            }
-
-            var title = $('#wdn_site_title').text().trim();
-    
-            if (title.length > 15) {
-                title = title.substr(0, 15) + '&hellip;';
-            }
-    
-            if (VisitorChat.operatorsAvailable) {
-                $("#visitorChat_footerHeader").html('Chat with the friendly folks at ' + title);
-            } else {
-                $("#visitorChat_footerHeader").html('Send the friendly folks at ' + title + ' a message');
             }
             
             //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
@@ -613,17 +625,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
     
             $.xhrPool.abortAll();
-            
-            if (this.method != 'email') {
-                callbackSet = false;
-                if ($('#visitorChat_container').is(":visible")) {
-                    callbackSet = true;
-                    $("#visitorChat_container").slideUp(400, $.proxy(function () {
-                        if (callback) {
-                            callback();
-                        }
-                    }, this));
-                }
+
+            callbackSet = false;
+            if ($('#visitorChat_container').is(":visible")) {
+                callbackSet = true;
+                $("#visitorChat_container").slideUp(400, $.proxy(function () {
+                    if (callback) {
+                        callback();
+                    }
+                }, this));
             }
     
             this._super();
@@ -663,12 +673,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("#visitorChat_logout").css({'display':'none'});
         },
     
-        displaySiteAvailability:function (force) {
-            if (this.chatOpened && !force) {
-                return true;
+        displaySiteAvailability:function (available) {
+            if (available == null) {
+                available = VisitorChat.operatorsAvailable;
             }
             
-            if (this.operatorsAvailable) {
+            if (available) {
                 $("#visitorChat").addClass('online');
                 $("#visitorChat").removeClass('offline');
                 $("#visitorChat_header_text").addClass('wdn-icon-comment-alt');

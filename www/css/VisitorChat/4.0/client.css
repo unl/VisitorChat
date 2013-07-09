@@ -457,3 +457,11 @@ input, textarea, select {
      padding: 0;
      border:0;
  }
+
+#visitorChat_methods {
+    padding: 2px;
+    text-align: center;
+    background-color: #F1F1F1;
+    width: 100%;
+    border-top: 1px solid #000;
+}
