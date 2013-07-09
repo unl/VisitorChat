@@ -50,6 +50,7 @@ input, textarea, select {
     -o-transition: all 0.12s ease-in-out;
     color:#fff;
     text-shadow:1px 1px 0px #60A642;
+    border-bottom:1px solid #60b83b;
 }
 
 #visitorChat_header:hover {
@@ -83,6 +84,7 @@ input, textarea, select {
     -o-transition: all 0.12s ease-in-out;
     color:#333;
     text-shadow:1px 1px 0px rgba(255,255,255,.6);
+    border-bottom:1px solid #bbb;
 }
 
 .offline #visitorChat_header:hover {
@@ -277,7 +279,10 @@ input, textarea, select {
 }
 
 .unl_visitorchat_form legend {
-    text-align: center;
+    text-align:left;
+    line-height: 16px;
+    line-height: 1rem;
+    padding:0 5px;
 }
 
 .unl_visitorchat_submit {
