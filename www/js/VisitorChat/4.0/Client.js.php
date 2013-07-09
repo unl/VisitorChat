@@ -32,6 +32,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         VisitorChat.startChat();
                         $("#visitorChat_messageBox").keyup();
                     });
+                    
+                    return false;
                 });
             }
         },
@@ -63,6 +65,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     VisitorChat.startEmail();
                     $("#visitorChat_messageBox").keyup();
                 });
+                return false;
             });
         },
         
