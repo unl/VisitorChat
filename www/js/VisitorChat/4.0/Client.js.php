@@ -19,7 +19,14 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.launchEmailContainer();
             this.start();
 
-            $("#visitorChat_footerHeader").html('Send ' + $('#wdn_site_title').text().trim() + ' a message');
+            var title = "";
+            if ($('#wdn_site_title abbr').length) {
+                title = $('#wdn_site_title abbr').attr('title').trim();
+            } else {
+                title = $('#wdn_site_title').text().trim();
+            }
+            
+            $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
             $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
             //Submit as email
