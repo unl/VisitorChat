@@ -692,11 +692,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     });
 
     $(function(){
-        WDN.loadJS('/wdn/templates_3.1/scripts/plugins/validator/jquery.validator.js', function() {
+        WDN.initializePlugin('form_validation', [function() {
             if (VisitorChat == false) {
                 VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
             }
-        });
+        }]);
     });
 
 });
