@@ -456,13 +456,23 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         date = new Date();
         WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
 
-        //Send analytics data
+        // Send analytics data to main account
         _gaq.push(['wdn._setCustomVar',
             1,
             'WDN Chat',
             'Yes',
             2
         ]);
+
+        // Send analytics data to local analytics account if it exists
+        if (WDN.analytics.isDefaultTrackerReady()) {
+            _gaq.push(['_setCustomVar',
+                1,
+                'WDN Chat',
+                'Yes',
+                2
+            ]);
+        }
 
         //Mark as started
         WDN.analytics.callTrackEvent('WDN Chat', 'Started');
