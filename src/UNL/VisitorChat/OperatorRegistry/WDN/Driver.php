@@ -105,6 +105,10 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
             $this->setCache($cachePath, $sites);
         }
         
+        if (!$sites) {
+            $sites = array();
+        }
+        
         return new SiteList($sites);
     }
 
