@@ -23,5 +23,5 @@
     <input type="hidden" name="initial_url" id="initial_url" value=""/>
     <input type="hidden" name="initial_pagetitle" id="initial_pagetitle" value=""/>
     <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
-    <input id='visitorChat_login_submit' type="submit" value="Submit" name="visitorChat_login_submit" />
+    <input id='visitorChat_login_submit' class="wdn-button wdn-button-triad" type="submit" value="Submit" name="visitorChat_login_submit" />
 </form>

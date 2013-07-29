@@ -247,35 +247,7 @@ textarea#visitorChat_messageBox {
 }
 
 input#visitorChat_login_submit {
-    border:none 0;
-    text-transform: uppercase;
-    font-family: Oswald, Helvetica, "Trebuchet MS", sans-serif;
-    font-weight: 400; 
-    font-size:14px;
-    text-align: center;
-    text-decoration: none;
-    opacity: 0.95;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background-color: #2a79c8;
-    background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.12) 0%, rgba(255, 255, 255, 0.0) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.12) 0%, rgba(255, 255, 255, 0.0) 100%);
-    background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.12) 0%, rgba(255, 255, 255, 0.0) 100%);
-    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.12) 0%, rgba(255, 255, 255, 0.0) 100%);
-    color: #ffffff;
-    text-shadow: 0 -1px #1d5389;
-    line-height: 1;
-    padding: 0.5em 1.25em;
     display: inline-block;
-}
-
-input#visitorChat_login_submit:hover {
-    background-image: none;
-}
-
-#visitorChat_login_submit:active {
-    
 }
 
 .unl_visitorchat_form legend {
