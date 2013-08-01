@@ -246,9 +246,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         initPlaceHolders: function() {
             //Load placeholders if not supported.
             if (WDN.hasDocumentClass('no-placeholder')) {
-                WDN.initializePlugin('placeholder', [function () {
+                require(['plugins/placeholder/jquery.placeholder.min'], function() {
                     $('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-                }]);
+                });
             }
         },
     
