@@ -475,11 +475,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
          */
         onConversationStatus_Emailed:function (data) {
             this._super();
-    
-            if (this.method == 'email') {
-                this.stop();
-            }
-            
+
             //Make sure that the closed button is visible at this point.
             this.chatStatus = 'EMAILED';
             this.initWatchers();
