@@ -21,10 +21,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             var title = "";
             if ($('#wdn_site_title abbr').length) {
-                title = $('#wdn_site_title abbr').attr('title').trim();
+                title = $('#wdn_site_title abbr').attr('title');
             } else {
-                title = $('#wdn_site_title').text().trim();
+                title = $('#wdn_site_title').text()
             }
+
+            title = $.trim(title);
             
             $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
@@ -244,9 +246,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         initPlaceHolders: function() {
             //Load placeholders if not supported.
             if (WDN.hasDocumentClass('no-placeholder')) {
-                WDN.loadJS(WDN.getTemplateFilePath('scripts/plugins/placeholder/jquery.placeholder.min.js'), function() {
+                WDN.initializePlugin('placeholder', [function () {
                     $('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-                });
+                }]);
             }
         },
     
