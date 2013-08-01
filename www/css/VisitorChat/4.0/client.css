@@ -32,6 +32,10 @@
     padding:0 5px;
 }
 
+#visitorChat_sound_container {
+    display: none;
+}
+
 #visitorChat ul li {
     list-style: none;
 }
