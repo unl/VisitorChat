@@ -252,6 +252,7 @@ textarea#visitorChat_messageBox {
 
 input#visitorChat_login_submit {
     display: inline-block;
+    font-size: .9em;
 }
 
 .unl_visitorchat_form legend {
