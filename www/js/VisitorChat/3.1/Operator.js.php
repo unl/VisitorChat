@@ -19,6 +19,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     idleWatchLoopTime: 3000, //the frequency of the idle watch loop (defaults to once every 5 secodns)
     idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
     clientInfo: "",
+    lastResponse: false,
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -443,7 +444,22 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this._super();
     },
 
+    handleUserInfoError:function (data) {
+        if (this.operatorStatus == 'BUSY') {
+            return false;
+        }
+        
+        //Haven't heard anything for 15 seconds... lets try to reload the page.
+        if (this.lastActiveTime < Date.now() - 5*1000) {
+            alert('We seem to have lost connection with the server.  The page will refresh to attempt to re-connect.');
+            //Try to reload the page...
+            location.reload();
+        }
+    },
+
     handleUserDataResponse:function (data) {
+        this.lastActiveTime = new Date();
+        
         //Were we logged out?
         if (!data['userID']) {
             window.location.reload(); //reload the page

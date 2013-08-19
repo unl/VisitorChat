@@ -208,11 +208,18 @@ var VisitorChat_ChatBase = Class.extend({
             success:WDN.jQuery.proxy(function (data, textStatus, jqXHR) {
                 this.handleUserDataResponse(data);
             }, this),
+            error:WDN.jQuery.proxy(function(data, textStatus, jqXHR) {
+                this.handleUserInfoError(data, textStatus, jqXHR);
+            }, this),
             complete:function(data, textStatus, jqXHR)
             {
                 VisitorChat.pendingUserAJAX = false;
             }
         });
+    },
+
+    handleUserInfoError:function (data) {
+        
     },
 
     handleUserDataResponse:function (data) {
