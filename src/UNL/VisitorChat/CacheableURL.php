@@ -9,7 +9,7 @@ abstract class CacheableURL
     
     abstract function getCacheTitle();
     
-    protected function getCachePath($url)
+    public function getCachePath($url)
     {
         if (empty(self::$tmpDir)) {
             throw new \Exception('Cache temp directory not defined.');
@@ -25,7 +25,7 @@ abstract class CacheableURL
         return $path . $this->getCacheTitle() . md5($url);
     }
 
-    protected function getCache($path)
+    public function getCache($path)
     {
         if (file_exists($path) && (filemtime($path) + self::$cacheTimeout > time())) {
             return unserialize(file_get_contents($path));
@@ -34,7 +34,7 @@ abstract class CacheableURL
         return false;
     }
 
-    protected function setCache($path, $data)
+    public function setCache($path, $data)
     {
         file_put_contents($path, serialize($data));
     }
