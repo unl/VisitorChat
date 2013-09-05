@@ -449,8 +449,8 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             return false;
         }
         
-        //Haven't heard anything for 15 seconds... lets try to reload the page.
-        if (this.lastActiveTime < Date.now() - 30*1000) {
+        //Haven't heard anything for 60 seconds... lets try to reload the page.
+        if (this.lastActiveTime < Date.now() - 60*1000) {
             alert('We seem to have lost connection with the server.  The page will refresh to attempt to re-connect.');
             //Try to reload the page...
             location.reload();
