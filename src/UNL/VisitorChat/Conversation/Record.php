@@ -79,6 +79,32 @@ class Record extends \Epoch\Record
         $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();;
         return parent::save();
     }
+
+    /**
+     * Delete this conversation and everything about it.
+     * 
+     * @return bool|void
+     */
+    function delete()
+    {
+        //Delete all messages
+        foreach ($this->getMessages() as $message) {
+            $message->delete();
+        }
+        
+        //Delete all invitations (which should in turn delete all assignments)
+        foreach ($this->getInvitations() as $invitation) {
+            $invitation->delete();
+        }
+        
+        //Delete all emails related to this conversation
+        foreach ($this->getEmails() as $email) {
+            $email->delete();
+        }
+        
+        //finally, delete this bad boy.
+        return parent::delete();
+    }
     
     /**
      * (non-PHPdoc)
@@ -105,10 +131,8 @@ class Record extends \Epoch\Record
      */
     function getEditURL()
     {
-        return \UNL\VisitorChat\Controller::$url . "message/edit";
+        return \UNL\VisitorChat\Controller::$url . "conversation/" . $this->id . "/edit";
     }
-    
-
     
     /**
      * Returns the lastest conversation record for a given client.
@@ -205,6 +229,18 @@ class Record extends \Epoch\Record
     function getMessages($options = array())
     {
         return \UNL\VisitorChat\Message\RecordList::getAllMessagesForConversation($this->id, $options);
+    }
+
+    /**
+     * retrieves all emails for this conversation.
+     *
+     * @param array $options
+     *
+     * @return \UNL\VisitorChat\Conversation\Email\RecordList
+     */
+    function getEmails($options = array())
+    {
+        return \UNL\VisitorChat\Conversation\Email\RecordList::getAllEmailsForConversation($this->id, $options);
     }
     
     /**
@@ -386,5 +422,25 @@ class Record extends \Epoch\Record
         }
         
         return strtotime($this->date_closed) - strtotime($this->date_created);
+    }
+
+    function canDelete(\UNL\Visitorchat\User\Record $user)
+    {
+        //Let admin delete it
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        //Let managers delete it
+        foreach ($this->conversation->getAssignments() as $assignment) {
+            //Is the user a manager of the answering site?
+            foreach ($user->getManagedSites() as $site) {
+                if ($site->getURL() == $assignment->answering_site) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
