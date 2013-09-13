@@ -80,5 +80,16 @@
         <div id="clientChat_Invitations">
             <?php echo \Epoch\Controller::$templater->render($context->conversation->getInvitations())?>
         </div>
+        <?php
+        if ($context->conversation->canDelete(\UNL\VisitorChat\User\Service::getCurrentUser())) {
+            ?>
+            <div id="options">
+                <form action="<?php echo $context->conversation->getEditURL(); ?>" method="post">
+                    <input type="submit" value="Delete this Conversation" name="delete" id="delete_conversation">
+                </form>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 <!--<div style="clear:both"></div>-->

@@ -142,7 +142,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
     initWatchers:function () {
         //Remove old elvent handlers
-        WDN.jQuery('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
+        WDN.jQuery('.conversationLink, #closeConversation, #delete_conversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
         // Hover for Client Info
         WDN.jQuery('#visitorChat_url_title > span').mouseover(function () {
@@ -153,6 +153,15 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
                     WDN.jQuery(this).fadeOut('fast');
                 });
             });
+        });
+        
+        WDN.jQuery('#delete_conversation').click(function(e) {
+            if (confirm("Are you sure that you want to delete this conversation?")) {
+                return true;
+            }
+
+            e.preventDefault();
+            return false;
         });
 
         //Watch coversation link clicks.  Loads up the conversation all ajaxy

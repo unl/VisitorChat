@@ -30,6 +30,19 @@ class Edit extends \UNL\VisitorChat\Conversation\Record
     
     function handlePost($post = array())
     {
+        //Preform a check first to see if we are deleing it.
+        if (array_key_exists('delete', $post)) {
+            //You must be a manager to delete a conversation
+            if (!$this->canDelete(\UNL\VisitorChat\User\Service::getCurrentUser())) {
+                throw new \Exception("you do not have permission to delete this conversation.", 403);
+            }
+            
+            $this->delete();
+
+            \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
+        }
+        
+        //otherwise, check if we can edit it
         if (!$this->canEdit($_SESSION['id'])) {
             throw new \Exception("you do not have permission to edit this.", 403);
         }
