@@ -983,3 +983,15 @@ p.stat-title {
 #maincontent form li {
     list-style: none;
 }
+
+#maincontent #delete_conversation {
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    border: 1px black solid;
+}
+
+#maincontent #options form {
+    text-align: center;
+}
