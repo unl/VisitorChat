@@ -432,7 +432,7 @@ class Record extends \Epoch\Record
         }
         
         //Let managers delete it
-        foreach ($this->conversation->getAssignments() as $assignment) {
+        foreach ($this->getAssignments() as $assignment) {
             //Is the user a manager of the answering site?
             foreach ($user->getManagedSites() as $site) {
                 if ($site->getURL() == $assignment->answering_site) {
