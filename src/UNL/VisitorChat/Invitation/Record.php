@@ -25,6 +25,20 @@ class Record extends \Epoch\Record
     {
         return 'invitations';
     }
+
+    /**
+     * Delete the invitation and all assignments for the invitation
+     * 
+     * @return bool|void
+     */
+    public function delete()
+    {
+        foreach ($this->getAssignments() as $assignment) {
+            $assignment->delete();
+        }
+        
+        return parent::delete();
+    }
     
     function keys()
     {
