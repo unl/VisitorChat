@@ -248,7 +248,7 @@ textarea#visitorChat_messageBox {
 
 input#visitorChat_login_submit {
     margin:.25rem 0;
-    padding:.4em 1.25em;
+    padding:.75em 1.25em;
     display: inline-block;
     width: 100%;
 
