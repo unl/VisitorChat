@@ -441,3 +441,6 @@ input#visitorChat_login_submit {
 #visitorChat_failedOptions a:first-of-type{
     margin-right:8px;
 }
+#visitorChat_sound_container {
+    height: 0px;
+}
