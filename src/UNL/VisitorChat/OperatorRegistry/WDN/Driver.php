@@ -80,6 +80,10 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         //All sites for a user.
         $sites = $this->query($user, $doNotCache);
         
+        if (!$sites) {
+            $sites = array();
+        }
+        
         //Create an array of all sites that need to be removed.
         $unsets = array();
         foreach ($sites as $index=>$site) {
@@ -103,10 +107,6 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         if (!$doNotCache) {
             //Set the cache.
             $this->setCache($cachePath, $sites);
-        }
-        
-        if (!$sites) {
-            $sites = array();
         }
         
         return new SiteList($sites);
