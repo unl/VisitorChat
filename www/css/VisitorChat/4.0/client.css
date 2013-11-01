@@ -57,7 +57,7 @@
     background-color: transparent;
     border-radius: 3px;
     max-height: 450px;
-    z-index: 1000;
+    z-index: 150;
 }
 
 #visitorChat_header {
