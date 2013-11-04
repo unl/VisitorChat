@@ -7,6 +7,7 @@
     <li><a href='#notifications'>How do I turn on notifications?</a></li>
     <li><a href='#block'>How can I block someone?</a></li>
     <li><a href='#listsrv'>How can I be notified of issues or upgrades to the system?</a></li>
+    <li><a href='#whyemails'>Why am I getting emails with a subject like "UNLchat [number]"?</a></li>
 </ul>
 
 <dl class='faq'>
@@ -21,7 +22,7 @@
     </dd>
     <dt id='howtoadd'>How to I add my site to the chat system?</dt>
     <dd>
-        <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:s-mfairch4@unl.edu'>Michael Fairchild</a>.
+        <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:mfairchild@unl.edu'>Michael Fairchild</a>.
             The email should contain the following information.
         </p>
             <ul>
@@ -90,6 +91,21 @@
     <dt id='listsrv'>How can I be notified of issues or upgrades to the system?</dt>
     <dd><p>We keep a listsrv where we send announcements regarding issues and/or upgrades to the system. <br />
         <a href='http://listserv.unl.edu/signup-anon/?LISTNAME=unlchat'>Sign up for announcements now</a>!
+        </p>
+    </dd>
+
+    <dt id='whyemails'>Why am I getting emails with a subject like "UNLchat [number]"?</dt>
+    <dd>
+        <p>
+            Visitors can send emails to site members when no operators are available for chat.  By default all members of the site
+            in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a> will receive the email.
+        </p>
+        <p>
+            These emails can be sent to a site support email address instead of all of the members.  This can be set up by emailing <a href='mailto:mfairchild@unl.edu'>Michael Fairchild</a>.
+        </p>
+        <p>
+            If you do not wish to receive these emails, you will have remove yourself from the site in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a>.
+            If the site that you want to remove yourself from is a <a href="http://unlcms.unl.edu/">UNLcms</a> site, you will have to remove yourself from the site in <a href="http://unlcms.unl.edu/">UNLcms</a>.
         </p>
     </dd>
 </dl>
