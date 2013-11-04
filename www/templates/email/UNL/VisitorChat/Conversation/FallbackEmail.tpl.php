@@ -25,3 +25,7 @@
 <div>
     <?php echo \UNL\VisitorChat\Controller::$templater->render($context->messages, 'UNL/VisitorChat/Message/RecordList.tpl.php');?>
 </div>
+
+<div>
+    <a href="<?php echo \UNL\VisitorChat\Controller::$url?>faq#whyemails">Why did I get this email?</a>
+</div>
