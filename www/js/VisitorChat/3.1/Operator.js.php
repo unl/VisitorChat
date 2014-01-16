@@ -270,8 +270,8 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this.loadStyles();
         this.initWindow();
         this.initWatchers();
-
-        if (window.webkitNotifications && window.webkitNotifications.checkPermission()) {
+        
+        if (Notification && Notification.permission != 'granted') {
             WDN.jQuery('#notificationOptions').show();
         }
 
@@ -281,12 +281,12 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
         //Request permission for notifications.
         WDN.jQuery('#requestNotifications').click(function () {
-            if (!window.webkitNotifications) {
+            if (!Notification) {
                 return false;
             }
 
-            window.webkitNotifications.requestPermission(function () {
-                if (!window.webkitNotifications.checkPermission()) {
+            Notification.requestPermission(function () {
+                if (Notification.permission == 'granted') {
                     WDN.jQuery('#notificationOptions').hide();
                 }
             });

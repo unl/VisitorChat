@@ -679,12 +679,12 @@ var VisitorChat_ChatBase = Class.extend({
 
     showNotification:function (alertType) {
         //are notifications supported?
-        if (!window.webkitNotifications) {
+        if (!Notification) {
             return false;
         }
 
         // do we have permission?
-        if (window.webkitNotifications.checkPermission()) {
+        if (Notification.permission != 'granted') {
             return false;
         }
 
@@ -700,7 +700,12 @@ var VisitorChat_ChatBase = Class.extend({
                 message = "You have been set to Idle!";
         }
 
-        notification = window.webkitNotifications.createNotification(this.serverURL + 'images/alert.gif', 'UNL VisitorChat Alert', message);
+        var notification = new Notification(
+            'UNL VisitorChat Alert', {
+                body: message,
+                icon: VisitorChat.serverURL + 'images/alert.gif'
+            }
+        );
         
         notification.onclick = function() {
             //Focus the window.
@@ -713,8 +718,6 @@ var VisitorChat_ChatBase = Class.extend({
             window.focus();
             VisitorChat.clearAlert();
         };
-        
-        notification.show();
 
         notifyWindow = undefined;
         
