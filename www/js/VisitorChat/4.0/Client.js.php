@@ -613,7 +613,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("body").append("" +
                 "<div id='visitorChat' class='offline'>" +
                     "<div id='visitorChat_header'>" +
-                        "<span id='visitorChat_header_text'>Let's Talk</span>" +
+                        "<span id='visitorChat_header_text'>Email Us</span>" +
                         "<div id='visitorChat_logout' class='wdn-icon-cancel'>" +
                             "<a href='#'>close</a>" +
                         "</div>" +
@@ -693,12 +693,14 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $("#visitorChat").removeClass('offline');
                 $("#visitorChat_header_text").addClass('wdn-icon-comment-alt');
                 $("#visitorChat_header_text").removeClass('wdn-icon-comment');
+                $("#visitorChat_header_text").text("Let's Chat");
                 VisitorChat.method = 'chat';
             } else {
                 $("#visitorChat").addClass('offline');
                 $("#visitorChat").removeClass('online');
                 $("#visitorChat_header_text").addClass('wdn-icon-comment');
                 $("#visitorChat_header_text").removeClass('wdn-icon-comment-alt');
+                $("#visitorChat_header_text").text('Email Us');
                 VisitorChat.method = 'email';
             }
     
