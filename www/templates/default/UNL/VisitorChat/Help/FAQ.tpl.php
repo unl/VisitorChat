@@ -63,7 +63,7 @@
             <li>Desktop notification support.</li>
         </ul>
         <p>
-            Desktop notifications can only be used when the operator is using Google Chrome (currently the only browser that supports desktop notifications).
+            Desktop notifications can only be used when the operator is using Google Chrome, Firefox or Safari.
             If you are using google chrome, you can enable desktop notifications in the settings page.
         </p>
     </dd>
