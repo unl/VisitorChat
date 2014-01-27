@@ -672,7 +672,7 @@ var VisitorChat_ChatBase = Class.extend({
 
     showNotification:function (alertType) {
         //are notifications supported?
-        if (!Notification) {
+        if (!("Notification" in window)) {
             return false;
         }
 

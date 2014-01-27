@@ -271,27 +271,29 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
         this.initWindow();
         this.initWatchers();
         
-        if (Notification && Notification.permission != 'granted') {
-            WDN.jQuery('#notificationOptions').show();
-        }
-
-        WDN.jQuery('#testNotifications').click(function () {
-            VisitorChat.alert('test', true);
-        });
-
-        //Request permission for notifications.
-        WDN.jQuery('#requestNotifications').click(function () {
-            if (!Notification) {
-                return false;
+        if ("Notification" in window) {
+            if (Notification && Notification.permission != 'granted') {
+                WDN.jQuery('#notificationOptions').show();
             }
 
-            Notification.requestPermission(function () {
-                if (Notification.permission == 'granted') {
-                    WDN.jQuery('#notificationOptions').hide();
-                }
+            WDN.jQuery('#testNotifications').click(function () {
+                VisitorChat.alert('test', true);
             });
-            return false
-        });
+
+            //Request permission for notifications.
+            WDN.jQuery('#requestNotifications').click(function () {
+                if (!Notification) {
+                    return false;
+                }
+
+                Notification.requestPermission(function () {
+                    if (Notification.permission == 'granted') {
+                        WDN.jQuery('#notificationOptions').hide();
+                    }
+                });
+                return false
+            });
+        }
     },
 
     run:function () {
