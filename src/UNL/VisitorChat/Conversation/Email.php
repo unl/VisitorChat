@@ -33,6 +33,9 @@ class Email
     
     function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
+        //Always ensure that output is escaped
+        \UNL\VisitorChat\Controller::$templater->setEscape('htmlentities');
+        
         //Set the path to the email directory.
         \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/email/"));
         
