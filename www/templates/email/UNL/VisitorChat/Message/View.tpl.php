@@ -1,2 +1,2 @@
-<?php 
-echo htmlspecialchars_decode($context->message) . "<br /><span class=\"stamp\">from " . $context->getPoster()->getAlias() . "</span>";
+<?php
+echo $message . "<br /><span class=\"stamp\">from " . $context->getPoster()->getAlias() . "</span>";
