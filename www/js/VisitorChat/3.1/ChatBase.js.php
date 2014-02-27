@@ -756,9 +756,9 @@ var VisitorChat_ChatBase = Class.extend({
             }
         }
 
-        if (window.webkitNotifications) {
+        if (("Notification" in window)) {
             for (var id = 0; id<this.notifications.length; id++) {
-                this.notifications[id]['notification'].cancel();
+                this.notifications[id]['notification'].close();
             }
         }
     },
