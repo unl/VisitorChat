@@ -31,6 +31,15 @@ class Edit extends \UNL\VisitorChat\Message\Record
         if (!$conversation = \UNL\VisitorChat\Conversation\Record::getByID($post['conversations_id'])) {
             throw new \Exception("Could not find that conversation", 400);
         }
+
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            //check if the ip is blocked.
+            $blocks = \UNL\VisitorChat\BlockedIP\RecordList::getAllActiveForIP($_SERVER['REMOTE_ADDR']);
+
+            if (count($blocks)) {
+                throw new \Exception("This user has been blocked", 400);
+            }
+        }
         
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
