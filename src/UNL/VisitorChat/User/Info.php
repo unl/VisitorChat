@@ -80,6 +80,13 @@ class Info
 
         if ($conversation = $user->getConversation()){
             $this->conversationID = $conversation->id;
+            
+            //check if the ip is blocked.
+            $blocks = \UNL\VisitorChat\BlockedIP\RecordList::getAllActiveForIP($conversation->ip_address);
+
+            if (count($blocks)) {
+                $this->blocked = true;
+            }
         }
         
         if ($user->type == "operator") {
