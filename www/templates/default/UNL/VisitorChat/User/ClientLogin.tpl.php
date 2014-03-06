@@ -11,7 +11,7 @@
             </li>
             <li class="visitorChat_info">
                 <input type="checkbox" id="visitorChat_email_fallback" name="email_fallback" value="0" />
-                <span id="visitorChat_email_fallback_text">I would like a response via email.</span>
+                <label for="visitorChat_email_fallback" id="visitorChat_email_fallback_text">I would like a response via email.</label>
             </li>
             <li class="visitorChat_center">
                 <label for="visitorChat_messageBox">Your Message</label>
