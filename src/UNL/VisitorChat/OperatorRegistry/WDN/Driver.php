@@ -3,13 +3,13 @@ namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
 class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
 {
-    public static $baseURI      = "http://www1.unl.edu/wdn/registry/";
+    public static $baseURI      = "https://webaudit.unl.edu/registry/";
     
     public static $cacheTimeout = 18000;  //seconds (5 hours)
     
     function getQueryURL($query)
     {
-        return self::$baseURI . "?u=" . urlencode($query) . "&output=json";
+        return self::$baseURI . "?query=" . urlencode($query) . "&format=json";
     }
     
     function query($query, $doNotCache = false)
@@ -71,14 +71,15 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
     
     function getSitesForUser($user, $doNotCache = false)
     {
-        $cachePath = $this->getCachePath($this->getQueryURL($user));
+        $query = 'UNL?'.$user;
+        $cachePath = $this->getCachePath($this->getQueryURL($query));
         
         if (!$doNotCache && $sites = $this->getCache($cachePath)) {
             return new SiteList($sites);
         }
         
         //All sites for a user.
-        $sites = $this->query($user, $doNotCache);
+        $sites = $this->query($query, $doNotCache);
         
         if (!$sites) {
             $sites = array();
