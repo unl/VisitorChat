@@ -43,6 +43,10 @@ class Member extends \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
         //Loop though each of the user's roles for this site and determine their max role.
         foreach ($this->roles as $role) {
             //Get the role's rank.
+            if ($role == 'admin') {
+                //Map the admin role from the registry to the manager role in the chat system
+                $role = 'manager';
+            }
             $key = array_search($role, \UNL\VisitorChat\Controller::$roles);
             
             //If the rank is higher, use that one.
