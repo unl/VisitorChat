@@ -14,6 +14,6 @@ class MemberList extends \ArrayIterator implements \UNL\VisitorChat\OperatorRegi
     
     function current() {
         $data = parent::current();
-        return new Member(parent::key(), $data['roles'], $this->site);
+        return new Member($data['uid'], $data['roles'], $this->site);
     }
 }
