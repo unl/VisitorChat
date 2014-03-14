@@ -77,7 +77,7 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
                         WHERE status = 'AVAILABLE' AND (false ";
         
         foreach ($this->getMembers() as $member) {
-            if ($member->getRole() == 'other') {
+            if (!$member->canOperate()) {
                 continue;
             }
         
