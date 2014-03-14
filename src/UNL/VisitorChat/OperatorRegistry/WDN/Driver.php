@@ -71,7 +71,7 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
     
     function getSitesForUser($user, $doNotCache = false)
     {
-        $query = 'UNL?'.$user;
+        $query = $user .'@UNL';
         $cachePath = $this->getCachePath($this->getQueryURL($query));
         
         if (!$doNotCache && $sites = $this->getCache($cachePath)) {
