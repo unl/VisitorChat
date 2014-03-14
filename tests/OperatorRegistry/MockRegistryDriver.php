@@ -68,6 +68,16 @@ class MockSiteMember extends OperatorRegistry\SiteMemberInterface
     {
         return 'email@unl.com';
     }
+
+    /**
+     * Determine if a user can operate this site
+     *
+     * @return bool
+     */
+    function canOperate()
+    {
+        return true;
+    }
 }
 
 class MockSite extends OperatorRegistry\SiteInterface

@@ -179,7 +179,8 @@ class Service
         
         //Loop though each member and add it to the operators array.
         foreach ($site->getMembers() as $member) {
-            if ($member->getRole() != 'other') {
+            //Don't count non-operators and managers.  Managers can view history, but not operate. 
+            if ($member->canOperate()) {
                 $operators[] = $member->getUID();
             }
         }

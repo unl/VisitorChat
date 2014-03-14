@@ -62,4 +62,18 @@ class Member extends \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
     {
         return $this->uid;
     }
+
+    /**
+     * Determine if a user can operate this site
+     *
+     * @return bool
+     */
+    function canOperate()
+    {
+        if (in_array('operator', $this->roles)) {
+            return true;
+        }
+        
+        return false;
+    }
 }

@@ -30,7 +30,14 @@ abstract class SiteMemberInterface
      * @return mixed (string if exisits, false if no email provided).
      */
     abstract function getEmail();
-    
+
+    /**
+     * Determine if a user can operate this site
+     * 
+     * @return bool
+     */
+    abstract function canOperate();
+
     /**
      * Retrieves the visitorchat account for this member.
      * 
