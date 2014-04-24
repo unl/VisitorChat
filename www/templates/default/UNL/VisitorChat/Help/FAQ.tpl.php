@@ -34,7 +34,7 @@
     </dd>
     
     <dt id='shownicon'>Why does my site have chat enabled but I have not set it up?</dt>
-    <dd><p>Chances are your site is not defined in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a> yet.
+    <dd><p>Chances are your site is not defined in the <a href='http://webaudit.unl.edu/registry/'>UNLwebaudit registry</a> yet.
         Please visit the registry to ensure that your site is defined.  Note that any changes made in the registry can take up to 24 hours to take effect in the chat system.</p></dd>
     
     <dt id='features'>What are some features of the chat system?</dt>
@@ -98,13 +98,13 @@
     <dd>
         <p>
             Visitors can send emails to site members when no operators are available for chat.  By default all members of the site
-            in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a> will receive the email.
+            in the <a href='http://webaudit.unl.edu/registry/'>UNLwebaudit registry</a> will receive the email.
         </p>
         <p>
-            These emails can be sent to a site support email address instead of all of the members.  This can be set up by emailing <a href='mailto:mfairchild@unl.edu'>Michael Fairchild</a>.
+            These emails can be sent to a site support email address instead of all of the members.  This can be set up by editing your site info in UNLwebaudit.
         </p>
         <p>
-            If you do not wish to receive these emails, you will have remove yourself from the site in the <a href='http://www1.unl.edu/wdn/registry/'>WDN Registry</a>.
+            If you do not wish to receive these emails, you will have remove yourself from the site in the <a href='http://webaudit.unl.edu/registry/'>UNLwebaudit registry</a>.
             If the site that you want to remove yourself from is a <a href="http://unlcms.unl.edu/">UNLcms</a> site, you will have to remove yourself from the site in <a href="http://unlcms.unl.edu/">UNLcms</a>.
         </p>
     </dd>
