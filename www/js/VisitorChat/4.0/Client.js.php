@@ -496,24 +496,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             date = new Date();
             WDN.setCookie('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), null, '/');
     
-            // Send analytics data to main account
-            _gaq.push(['wdn._setCustomVar',
-                1,
-                'WDN Chat',
-                'Yes',
-                2
-            ]);
-
-            // Send analytics data to local analytics account if it exists
-            if (analytics.isDefaultTrackerReady()) {
-                _gaq.push(['_setCustomVar',
-                    1,
-                    'WDN Chat',
-                    'Yes',
-                    2
-                ]);
-            }
-    
             //Mark as started
             analytics.callTrackEvent('WDN Chat', 'Started');
         },
