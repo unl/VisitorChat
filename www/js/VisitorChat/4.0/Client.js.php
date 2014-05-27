@@ -12,6 +12,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         confirmationHTML: false,
         userType: 'client',
         method: 'chat',
+        config: {
+            email_required: false
+        },
     
         startEmail:function () {
             this.method = 'email';
@@ -31,7 +34,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
             $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
-            //Submit as email
+            
+            //Require email if we need to.
+            if (this.config.email_required) {
+                $("#visitorChat_email").attr("placeholder", "Email (Required)");
+                $('#visitorChat_email').addClass('required-entry');
+            }
 
             if (VisitorChat.operatorsAvailable) {
                 $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
@@ -375,7 +383,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
                 //if email_fallback is checked, make sure that the email is required.
                 $("#visitorChat_email_fallback").click(function () {
-                    if ($(this).is(":checked")) {
+                    if ($(this).is(":checked") || this.config.email_required) {
                         $("#visitorChat_email").attr("placeholder", "Email (Required)");
                         $('#visitorChat_email').addClass('required-entry');
                     } else {

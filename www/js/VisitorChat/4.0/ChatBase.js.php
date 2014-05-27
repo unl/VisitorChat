@@ -71,12 +71,18 @@ var VisitorChat_ChatBase = Class.extend({
 
     version: 4.0,
 
+    config: {},
+
     /**
      * Constructor function.
      */
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
+        
+        if (typeof visitorchat_config == "object") {
+            $.extend(this.config, visitorchat_config);
+        }
 
         //Change to https if we need to.
         if ('https:' == document.location.protocol) {
