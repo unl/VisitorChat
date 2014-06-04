@@ -60,6 +60,12 @@
     z-index: 150;
 }
 
+@media print {
+    #visitorChat {
+        display: none;
+    }
+}
+
 #visitorChat_header {
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;

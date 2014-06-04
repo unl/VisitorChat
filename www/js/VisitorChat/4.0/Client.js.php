@@ -589,7 +589,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (document.createStyleSheet) {
                 document.createStyleSheet(stylesheet);
             } else {
-                $("head").append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen' />"));
+                $("head").append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />"));
             }
     
             $(window).load(function () {
