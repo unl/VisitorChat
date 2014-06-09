@@ -21,7 +21,7 @@
     
     $Id: fixed.dwt | 1e98ba6f3cd3310802e61545987e6582d0abac6f | Wed Feb 15 11:42:58 2012 -0600 | Kevin Abel  $
 -->
-<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/scriptsandstyles.html"; ?>
+<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/scriptsandstyles_local.html"; ?>
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>UNL | UNLchat</title>
 <!-- InstanceEndEditable -->
