@@ -86,6 +86,13 @@
     border-bottom:1px solid #4686c4;
 }
 
+#visitorChat_header:focus {
+    background-color: #E0FFFF !important;
+    border: 1px dotted grey;
+    color: #000;
+    text-shadow: none;
+}
+
 #visitorChat_header:hover {
     cursor: pointer;
     outline: none;

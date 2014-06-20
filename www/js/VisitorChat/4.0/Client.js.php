@@ -336,7 +336,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this._super();
     
             //Click header to open up Chat
-            $('#visitorChat_header').click(function () {
+            $('#visitorChat_header').on('click keypress', function (event) {
+                if (event.type == 'keypress' && ($.inArray(event.which, [32,13]) == -1)) {
+                    //Must be space or enter to continue
+                    return;
+                }
+                
                 if (!$('#visitorChat_container').is(":visible")) {
                     $("#visitorChat_container").slideDown(320);
                 } else {
@@ -602,7 +607,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $("body").append("" +
                 "<div id='visitorChat' class='offline'>" +
-                    "<div id='visitorChat_header'>" +
+                    "<div id='visitorChat_header' tabindex='0'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                         "<div id='visitorChat_logout' class='wdn-icon-cancel'>" +
                             "<a href='#'>close</a>" +
