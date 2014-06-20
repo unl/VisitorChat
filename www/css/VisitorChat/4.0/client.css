@@ -183,11 +183,6 @@
     -ms-transition: opacity .1s ease-in-out;
 }
 
-#visitorChat_logout a:hover,
-#visitorChat_logout a:focus {
-    opacity: 1;
-}
-
 #visitorChat_container {
     background: #F8F8F8;
     background: -moz-radial-gradient(center, ellipse cover, rgba(244, 244, 244, 1) 0%, rgba(255, 255, 255, 0.95) 100%);

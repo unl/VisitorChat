@@ -446,11 +446,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
     
             if (this.chatStatus) {
-                $("#visitorChat_header").hover(function () {
-                    $("#visitorChat_logout").css({'display':'inline-block'});
-                }, function () {
-                    $("#visitorChat_logout").css({'display':'none'});
-                });
+                $("#visitorChat_logout").css({'display':'inline-block'});
+            } else {
+                $("#visitorChat_logout").css({'display':'none'});
             }
     
             //set the for_url
@@ -609,9 +607,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 "<div id='visitorChat' class='offline'>" +
                     "<div id='visitorChat_header' tabindex='0'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
-                        "<div id='visitorChat_logout' class='wdn-icon-cancel'>" +
-                            "<a href='#'>close</a>" +
-                        "</div>" +
+                            "<a href='#' id='visitorChat_logout' class='wdn-icon-cancel' title='close and log out of chat'></a>" +
                     "</div>" +
                     "<div id='visitorChat_sound_container'>" +
                         "<audio id='visitorChat_sound'></audio>" +
