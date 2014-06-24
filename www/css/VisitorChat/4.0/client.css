@@ -139,6 +139,18 @@
     height: 20px;
     position: relative;
     width: 20px;
+    color: #fff;
+
+    /* CSS3 */
+    transition: opacity .2s ease-in-out;
+    -webkit-transition: opacity .1s ease-in-out;
+    -moz-transition: opacity .1s ease-in-out;
+    -o-transition: opacity .1s ease-in-out;
+    -ms-transition: opacity .1s ease-in-out;
+}
+
+#visitorChat_header:focus #visitorChat_logout, .offline #visitorChat_logout{
+    color: #000;
 }
 
 #visitorChat_logout:before {
@@ -169,18 +181,9 @@
 }
 
 #visitorChat_logout a {
-    display: inline-block;
-    height: 20px;
-    opacity: 0;
-    text-indent: -9999px;
-    width: 20px;
 
-    /* CSS3 */
-    transition: opacity .2s ease-in-out;
-    -webkit-transition: opacity .1s ease-in-out;
-    -moz-transition: opacity .1s ease-in-out;
-    -o-transition: opacity .1s ease-in-out;
-    -ms-transition: opacity .1s ease-in-out;
+
+
 }
 
 #visitorChat_container {
