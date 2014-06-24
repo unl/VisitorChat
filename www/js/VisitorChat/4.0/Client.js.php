@@ -370,7 +370,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
     
             //Logout function
-            $('#visitorChat_logout').click($.proxy(function () {
+            $('#visitorChat_logout').on('click keypress', $.proxy(function (event) {
+                if (event.type == 'keypress' && ($.inArray(event.which, [32,13]) == -1)) {
+                    //Must be space or enter to continue
+                    return;
+                }
+                
                 if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
                     return false;
                 }
