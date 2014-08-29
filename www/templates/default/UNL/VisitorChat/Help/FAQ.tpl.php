@@ -1,6 +1,6 @@
 <ul>
     <li><a href='#howtouse'>How do I use the chat system?</a></li>
-    <li><a href='#howtoadd'>How to I add my site to the chat system?</a></li>
+    <li><a href='#howtoadd'>How do I add my site to the chat system?</a></li>
     <li><a href='#shownicon'>Why does my site have chat enabled but I have not set it up?</a></li>
     <li><a href='#features'>What are some features of the chat system?</a></li>
     <li><a href='#cost'>How much does the chat system cost?</a></li>
@@ -20,17 +20,18 @@
                 <li><a href='http://go.unl.edu/unlchat_operator'>Operator Tutorial</a></li>
             </ul>
     </dd>
-    <dt id='howtoadd'>How to I add my site to the chat system?</dt>
+    <dt id='howtoadd'>How do I add my site to the chat system?</dt>
     <dd>
-        <p>Currently, in order to set up your site in the chat system, you will need to send an email to <a href='mailto:mfairchild@unl.edu'>Michael Fairchild</a>.
-            The email should contain the following information.
+        <p>
+           UNLchat uses <a href="http://webaudit.unl.edu">UNLwebaudit's registry</a> as its source of users and roles.  To enable chat on your site, please do the following (you will have to be an 'admin' for the site in UNLwebaudit to do this):
         </p>
-            <ul>
-                <li>The URL of the site that you want to set up.</li>
-                <li>Names of personnel that will be answering chats.</li>
-                <li>The role for each person.  Possible chat roles include Operator (can only answer chats) and Manager (can answer chats and view site history)</li>
-            </ul>
-        <p>We are working on automating this setup process, however that work is not yet completed.</p>
+            <ol>
+                <li>Go to <a href="http://webaudit.unl.edu">UNLwebaudit</a> and log in.</li>
+                <li>Add the site to the registry if you have not already.</li>
+                <li>Go to the site in UNLwebaudit and then click "add/edit members".</li>
+                <li>Edit roles for members that you want to be able respond to to chats.  The 'operator' role will allow them to answer chats in UNLchat.  The 'admin' role will allow them to review chat history and manage members.</li>
+            </ol>
+        <p>Note that due to caching between the systems to improve performance, it might take a few hours for these changes to take effect in UNLchat.</p>
     </dd>
     
     <dt id='shownicon'>Why does my site have chat enabled but I have not set it up?</dt>
