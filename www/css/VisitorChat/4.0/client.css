@@ -262,7 +262,7 @@ input#visitorChat_login_submit {
     padding:.75em 1.25em;
     display: inline-block;
     width: 100%;
-
+    white-space: normal;
 }
 
 .unl_visitorchat_form legend {
