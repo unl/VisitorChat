@@ -13,7 +13,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         userType: 'client',
         method: 'chat',
         config: {
-            email_required: false
+            email_required: false,
+            name_required: false
         },
     
         startEmail:function () {
@@ -39,6 +40,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (this.config.email_required) {
                 $("#visitorChat_email").attr("placeholder", "Email (Required)");
                 $('#visitorChat_email').addClass('required-entry');
+            }
+
+            if (this.config.name_required) {
+                $("#visitorChat_name").attr("placeholder", "Name (Required)");
+                $('#visitorChat_name').addClass('required-entry');
             }
 
             if (VisitorChat.operatorsAvailable) {
