@@ -560,6 +560,10 @@ var VisitorChat_ChatBase = Class.extend({
                 return true;
             }
 
+            if (VisitorChat.chatStatus == 'LOGIN') {
+                return true;
+            }
+            
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
