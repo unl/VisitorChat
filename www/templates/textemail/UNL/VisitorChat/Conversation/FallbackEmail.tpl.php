@@ -1,3 +1,6 @@
+<?php if ($context->isMySupportEmail()) :?>
+assignees=<?php echo implode(' ', $context->getRaw('to_UIDs')) ?>
+<?php endif; ?>
 
 A message has been submitted on <?php echo $context->conversation->date_created;?>
 
@@ -9,18 +12,21 @@ if ($context->conversation->email_fallback && !empty($client->email)) {
 }
 ?>
 Message from <?php echo $client->name ?>
+
 IP: <?php echo $context->conversation->ip_address ?>
+
 <?php
 if (!empty($client->email)) {
     echo "Email: " . $client->email . " \n";
 }
 ?>
+
 User Agent: <?php echo $context->conversation->user_agent ?>
+
 at <?php echo $context->conversation->initial_url; ?>
+
 <?php echo $response;?>
 
 <?php echo \UNL\VisitorChat\Controller::$templater->render($context->messages, 'UNL/VisitorChat/Message/RecordList.tpl.php');?>
-
-this is text.
 
 Why did I get this email? See: <?php echo \UNL\VisitorChat\Controller::$url?>faq#whyemails

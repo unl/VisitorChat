@@ -9,6 +9,8 @@ class Email
     
     public $to_emails    = array();
     
+    public $to_UIDs      = array();
+    
     public $to_group     = "GENERAL";
     
     //An array of email address to send the conversation to in the event that no address can be found.
@@ -33,12 +35,6 @@ class Email
     
     function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
-        //Always ensure that output is escaped
-        \UNL\VisitorChat\Controller::$templater->setEscape('htmlentities');
-        
-        //Set the path to the email directory.
-        \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/email/"));
-        
         $this->conversation = $conversation;
         $this->messages     = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
         $this->subject      = self::$default_subject . ' ' . $this->conversation->id;
@@ -57,14 +53,20 @@ class Email
 
         if (\Validate::email($client->email)) {
             $this->reply_to = $client->email;
-
         }
         
         return true;
     }
     
+    function isMySupportEmail()
+    {
+        return in_array('mysupport@unl.edu', $this->to_emails);
+    }
+    
     function setTo($to = array())
     {
+        $members = false;
+        
         //Check to see if we need to get the site members
         if (empty($to)) {
             $this->to_group = "SITE";
@@ -75,6 +77,7 @@ class Email
             
             //Get only site members for the top level site.
             $emails = $sites->current()->getEmail();
+            $members = $sites->current()->getMembers();
             
             $to = explode(', ', $emails);
         }
@@ -92,9 +95,17 @@ class Email
             foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
                 $sites = \UNL\VisitorChat\Controller::$registryService->getByURL($url);
                 
-                $emails = $sites->current()->getEmail();
+                $emails  = $sites->current()->getEmail();
+                $members = $sites->current()->getMembers();
                 
                 $to = explode(', ', $emails);
+            }
+        }
+        
+        //Set the UIDs for mysupport integration
+        if ($members) {
+            foreach ($members as $member) {
+                $to_UIDs[] = $member->getUID();
             }
         }
         
@@ -102,12 +113,14 @@ class Email
             $this->to_group = "CLIENT";
         }
         
+        $this->to_UIDs = $to_UIDs;
         $this->to_emails = $to;
     }
     
     function generateToString()
     {
         $to_address = "";
+        
         foreach ($this->to_emails as $mail) {
             if (\Validate::email($mail)) {
                 $to_address .= $mail . ", ";
@@ -124,15 +137,30 @@ class Email
         return $email->send();
     }
     
-    public function render()
+    public function render($format = 'htmlemail')
     {
-        return \UNL\VisitorChat\Controller::$templater->render($this, 'UNL/VisitorChat/Controller.tpl.php');
+        //Always ensure that output is escaped
+        \UNL\VisitorChat\Controller::$templater->setEscape('htmlentities');
+
+        //Set the path to the email directory.
+        $old_path =  \UNL\VisitorChat\Controller::$templater->getTemplatePath();
+        \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/" . $format . "/"));
+        
+        $result = \UNL\VisitorChat\Controller::$templater->render($this, 'UNL/VisitorChat/Controller.tpl.php');
+
+        \UNL\VisitorChat\Controller::$templater->setTemplatePath($old_path);
+        
+        return $result;
     }
     
     public function generateHeaders()
     {
         if (empty($this->from)) {
             $this->from = self::$default_from;
+        }
+        
+        if ($this->isMySupportEmail()) {
+            $this->from = 'mysupportform@unl.edu';
         }
 
         if (empty($this->reply_to)) {
@@ -158,12 +186,16 @@ class Email
             $this->setTo(self::$fallbackEmails);
         }
         
+        $text = $this->render('textemail');
+        $html = $this->render('htmlemail');
+
         $mime = new \Mail_mime("\n");
-        $mime->setHTMLBody($this->render());
+        $mime->setHTMLBody($html);
+        $mime->setTXTBody($text);
         
         $body    = $mime->get();
         $headers = $mime->headers($this->generateHeaders());
-
+        
         if (\UNL\VisitorChat\Controller::$mailService->send($this->generateToString(), $headers, $body)) {
             return Email\Record::recordSentEmail($headers['To'], $headers['From'], $headers['Reply-To'], $headers['Subject'], $this->fromId, $this->conversation->id);
         }
