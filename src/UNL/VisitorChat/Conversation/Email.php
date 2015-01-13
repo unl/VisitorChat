@@ -9,8 +9,6 @@ class Email
     
     public $to_emails    = array();
     
-    public $to_UIDs      = array();
-    
     public $to_group     = "GENERAL";
     
     //An array of email address to send the conversation to in the event that no address can be found.
@@ -32,6 +30,8 @@ class Email
     public $subject;
 
     public $fromId = 1;  //The id of the user sending the email
+
+    public $support_assignments = false;
     
     function __construct(\UNL\VisitorChat\Conversation\Record $conversation, $to = array(), $fromId = 1, $options = array())
     {
@@ -66,6 +66,7 @@ class Email
     function setTo($to = array())
     {
         $members = false;
+        $site    = false;
         
         //Check to see if we need to get the site members
         if (empty($to)) {
@@ -76,8 +77,9 @@ class Email
             }
             
             //Get only site members for the top level site.
-            $emails = $sites->current()->getEmail();
-            $members = $sites->current()->getMembers();
+            $site    = $sites->current();
+            $emails  = $site->getEmail();
+            $members = $site->getMembers();
             
             $to = explode(', ', $emails);
         }
@@ -102,10 +104,17 @@ class Email
             }
         }
         
-        //Set the UIDs for mysupport integration
-        if ($members) {
-            foreach ($members as $member) {
-                $to_UIDs[] = $member->getUID();
+        if ($site) {
+            $this->support_assignments = $site->getSupportGroups();
+            
+            //Set the UIDs for mysupport integration
+            if (empty($this->support_assignments) && $members) {
+                $to_UIDs = array();
+                foreach ($members as $member) {
+                    $to_UIDs[] = $member->getUID();
+                }
+                
+                $this->support_assignments = implode(' ', $to_UIDs);
             }
         }
         
@@ -113,7 +122,6 @@ class Email
             $this->to_group = "CLIENT";
         }
         
-        $this->to_UIDs = $to_UIDs;
         $this->to_emails = $to;
     }
     

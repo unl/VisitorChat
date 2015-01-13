@@ -1,5 +1,5 @@
 <?php if ($context->isMySupportEmail()) :?>
-assignees=<?php echo implode(' ', $context->getRaw('to_UIDs')) ?>
+assignees=<?php echo $context->support_assignments ?>
 <?php endif; ?>
 
 A message has been submitted on <?php echo $context->conversation->date_created;?>
