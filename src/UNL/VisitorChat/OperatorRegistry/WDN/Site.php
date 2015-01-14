@@ -11,6 +11,8 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     
     private $title   = null;
     
+    private $groups  = null;
+    
     function __construct($url, $data)
     {
         $this->url = $url;
@@ -26,11 +28,20 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
         if (isset($data['support_email'])) {
             $this->email = $data['support_email'];
         }
+
+        if (isset($data['support_groups'])) {
+            $this->groups = $data['support_groups'];
+        }
     }
     
     function getURL()
     {
         return $this->url;
+    }
+
+    function getSupportGroups()
+    {
+        return $this->groups;
     }
     
     function getMembers()
