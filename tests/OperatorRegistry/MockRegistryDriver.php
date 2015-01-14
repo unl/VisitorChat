@@ -110,6 +110,11 @@ class MockSite extends OperatorRegistry\SiteInterface
     {
         return new MockSiteMembers($this->url, $this->data['members']);
     }
+    
+    function getSupportGroups()
+    {
+        return false;
+    }
 }
 
 class MockSites extends ArrayIterator implements OperatorRegistry\SitesIterator
