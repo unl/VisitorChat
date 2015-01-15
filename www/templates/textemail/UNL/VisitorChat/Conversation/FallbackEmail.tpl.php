@@ -1,11 +1,16 @@
+<?php
+$client = $context->conversation->getClient();
+?>
 <?php if ($context->isMySupportEmail()) :?>
-assignees=<?php echo $context->support_assignments ?>
+assignees=<?php echo $context->support_assignments . "\n" ?>
+<?php if (!empty($client->email)): ?>
+contact=<?php echo $client->email ?>
+<?php endif; ?>
 <?php endif; ?>
 
 A message has been submitted on <?php echo $context->conversation->date_created;?>
 
-<?php 
-$client = $context->conversation->getClient();
+<?php
 $response = "";
 if ($context->conversation->email_fallback && !empty($client->email)) {
     $response = "The user requests a response \n";
