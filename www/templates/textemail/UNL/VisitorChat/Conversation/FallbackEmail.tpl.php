@@ -2,7 +2,7 @@
 $client = $context->conversation->getClient();
 ?>
 <?php if ($context->isMySupportEmail()) :?>
-assignees=<?php echo $context->support_assignments . "\n" ?>
+assignees=<?php echo str_replace("'", '"', $context->support_assignments) . "\n" ?>
 <?php if (!empty($client->email)): ?>
 contact=<?php echo $client->email ?>
 <?php endif; ?>
