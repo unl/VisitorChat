@@ -238,7 +238,7 @@ abstract class Record
             }
             $value = $this->$key;
             if ($this->getTypeString(array($key)) == 's') {
-                $value = '"'.$mysqli->escape_string($value).'"';
+                $value = '"'.$mysqli->real_escape_string($value).'"';
             }
             $sql .= $key.'='.$value.' AND ';
         }
@@ -291,7 +291,7 @@ abstract class Record
                     . $record->getTable()
                     . ' WHERE '
                     . $whereAdd
-                    . $field . ' = "' . $mysqli->escape_string($value) . '"';
+                    . $field . ' = "' . $mysqli->real_escape_string($value) . '"';
         $result = $mysqli->query($sql);
 
         if ($result === false
