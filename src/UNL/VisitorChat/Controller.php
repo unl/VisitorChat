@@ -153,7 +153,7 @@ class Controller extends \Epoch\Controller
                 $url = $_SERVER['REQUEST_URI'];
             }
             
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, true));
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, false));
         }
         
         if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {
