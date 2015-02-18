@@ -48,7 +48,7 @@ class Service
                             = 0
                          AND (false";
         foreach ($operators as $operator) {
-            $sql .= " OR users1.uid = '" . mysql_real_escape_string($operator) . "'";
+            $sql .= " OR users1.uid = '" . $db->real_escape_string($operator) . "'";
         }
         
         $sql .= ") GROUP BY users1.uid";
