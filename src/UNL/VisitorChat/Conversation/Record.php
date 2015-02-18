@@ -289,7 +289,7 @@ class Record extends \Epoch\Record
         }
         
         $db  = \UNL\VisitorChat\Controller::getDB();
-        $sql = "SELECT count(id) as unread FROM messages WHERE conversations_id = " . (int)$this->id . " AND date_created > '" . mysql_escape_string($_SESSION['last_viewed'][$this->id]) . "'";
+        $sql = "SELECT count(id) as unread FROM messages WHERE conversations_id = " . (int)$this->id . " AND date_created > '" . mysql_real_escape_string($_SESSION['last_viewed'][$this->id]) . "'";
         
         if (!$result = $db->query($sql)) {
             return 0;
