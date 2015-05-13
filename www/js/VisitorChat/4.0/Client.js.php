@@ -14,7 +14,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         method: 'chat',
         config: {
             email_required: false,
-            name_required: false
+            name_required: false,
+            site_title: false
         },
     
         startEmail:function () {
@@ -23,11 +24,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.launchEmailContainer();
             this.start();
 
-            var title = "";
-            if ($('#wdn_site_title abbr').length) {
-                title = $('#wdn_site_title abbr').attr('title');
-            } else {
-                title = $('#wdn_site_title').text()
+            var title = this.config.site_title;
+            if (false == title) {
+                if ($('#wdn_site_title abbr').length) {
+                    title = $('#wdn_site_title abbr').attr('title');
+                } else {
+                    title = $('#wdn_site_title').text()
+                }
             }
 
             title = $.trim(title);
