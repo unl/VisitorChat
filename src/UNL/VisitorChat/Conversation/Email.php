@@ -81,21 +81,24 @@ class Email
             $emails  = $site->getEmail();
             $members = $site->getMembers();
             
-            $to = explode(', ', $emails);
+            if (!empty($emails)) {
+                $to = explode(', ', $emails);
+            }
         }
         
         /* Edge case.  If a site contains only students as team members or people who
          * do not have their email address public, we will have no one to send an email to.
          * And the default operators will not be selected at this point.
          * 
-         * So, we need to determin if there are team members, but none of them have email addresses.
+         * So, we need to determine if there are team members, but none of them have email addresses.
          * If that is the case, we need to email our default operators.  This is ugly, I don't like it.
          */
         if (empty($to)) {
             $this->to_group = "ADMINS";
             
             foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
-                $sites = \UNL\VisitorChat\Controller::$registryService->getByURL($url);
+                $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
+                $site  = $sites->current();
                 
                 $emails  = $sites->current()->getEmail();
                 $members = $sites->current()->getMembers();
