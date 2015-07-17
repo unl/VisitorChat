@@ -113,6 +113,11 @@ class Controller extends \Epoch\Controller
      */
     public static function requireClientLogin()
     {
+        if (self::$environment == "CLI") {
+            //Assume a client permission is always granted in CLI
+            return true;
+        }
+        
         if (!isset($_SESSION['id'])) {
             self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("clientLogin", true, true));
         }
@@ -352,7 +357,12 @@ class Controller extends \Epoch\Controller
     
     public static function redirect($url, $exit = true)
     {
-        if (self::$environment == "PHPT" || self::$environment == "CLI") {
+        if (self::$environment == "CLI") {
+            //Don't echo in CLI, this could expose the url in things like emails
+            return true;
+        }
+        
+        if (self::$environment == "PHPT") {
             echo "Location: " . $url  . PHP_EOL;
             return true;
         }

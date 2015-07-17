@@ -10,7 +10,7 @@ if (file_exists(dirname(dirname(__FILE__)) . '/config.inc.php')) {
     require dirname(dirname(__FILE__)) . '/config.sample.php';
 }
 
-\UNL\VisitorChat\Controller::$environment = "PHPT";
+\UNL\VisitorChat\Controller::$environment = "CLI";
 $app = new \UNL\VisitorChat\Controller();
 
 foreach (\UNL\VisitorChat\Conversation\RecordList::getAllSearchingEmailConversations() as $conversation) {
