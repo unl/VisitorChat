@@ -24,16 +24,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.launchEmailContainer();
             this.start();
 
-            var title = this.config.site_title;
-            if (false == title) {
-                if ($('#wdn_site_title abbr').length) {
-                    title = $('#wdn_site_title abbr').attr('title');
-                } else {
-                    title = $('#wdn_site_title').text()
-                }
-            }
-
-            title = $.trim(title);
+            var title = this.getSiteTitle();
             
             $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
@@ -77,8 +68,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
             
             this.start();
+            
+            var title = this.getSiteTitle();
 
-            $("#visitorChat_footerHeader").html('Chat with ' + $('#wdn_site_title').text().trim());
+            $("#visitorChat_footerHeader").html('Chat with ' + title);
 
             $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
             //Submit as chat
@@ -93,6 +86,21 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 });
                 return false;
             });
+        },
+        
+        getSiteTitle: function() {
+            var title = this.config.site_title;
+            if (false == title) {
+                if ($('#wdn_site_title abbr').length) {
+                    title = $('#wdn_site_title abbr').attr('title');
+                } else {
+                    title = $('#wdn_site_title').text()
+                }
+            }
+
+            title = $.trim(title);
+            
+            return title;
         },
         
         start:function () {
