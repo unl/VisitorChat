@@ -28,7 +28,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             
             $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
-            $("#visitorChat_messageBox").attr('placeholder', 'Leave a comment or ask us a question.');
+            $("#visitorChat_messageBox").attr('placeholder', 'Send a comment or ask us a question.');
             
             //Require email if we need to.
             if (this.config.email_required) {
