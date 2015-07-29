@@ -372,7 +372,7 @@
 }
 
 /* hide all email related settings for now */
-#visitorChat_email_fallback, #visitorChat_email_fallback_text {
+#visitorChat_email_fallback, #visitorchat_clientLogin #visitorChat_email_fallback_text {
     display: none;
 }
 
@@ -403,13 +403,11 @@
     height: 15px;
 }
 
-/*
-  Labels for WCAG 2.0 validation (hide them because we provide them inline).
-*/
 #visitorchat_clientLogin label, #visitorChat_messageForm label, #visitorChat_confirmationEamilForm label {
-    line-height: 0;
-    position: absolute;
-    text-indent: -99999em;
+    text-align: left;
+    width: 100%;
+    display: block;
+    font-size: .75em;
 }
 
 #clientInfo {

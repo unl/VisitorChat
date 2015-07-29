@@ -50,7 +50,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             WDN.jQuery("#visitorChat_messageBox").val('');
         }
 
-        WDN.jQuery("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
+        WDN.jQuery("label[for='visitorChat_messageBox']").text("How can we assist you?");
         this.start();
     },
 
@@ -334,10 +334,10 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             //if email_fallback is checked, make sure that the email is required.
             WDN.jQuery("#visitorChat_email_fallback").click(function () {
                 if (WDN.jQuery(this).is(":checked")) {
-                    WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Required)");
+                    WDN.jQuery("label[for='visitorChat_email']").text("Email (Required)");
                     WDN.jQuery('#visitorChat_email').addClass('required-entry');
                 } else {
-                    WDN.jQuery("#visitorChat_email").attr("placeholder", "Email (Optional)");
+                    WDN.jQuery("label[for='visitorChat_email']").text("Email (Optional)");
                     WDN.jQuery('#visitorChat_email').removeClass('required-entry');
                 }
             });

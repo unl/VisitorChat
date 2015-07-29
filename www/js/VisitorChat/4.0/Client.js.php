@@ -28,16 +28,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             
             $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
             
-            $("#visitorChat_messageBox").attr('placeholder', 'Send a comment or ask us a question.');
+            $("label[for='visitorChat_messageBox']").text('Send a comment or ask us a question');
             
             //Require email if we need to.
             if (this.config.email_required) {
-                $("#visitorChat_email").attr("placeholder", "Email (Required)");
+                $("label[for='visitorChat_email']").text("Email (Required)");
                 $('#visitorChat_email').addClass('required-entry');
             }
 
             if (this.config.name_required) {
-                $("#visitorChat_name").attr("placeholder", "Name (Required)");
+                $("label[for='visitorChat_name']").text("Name (Required)");
                 $('#visitorChat_name').addClass('required-entry');
             }
 
@@ -73,7 +73,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $("#visitorChat_footerHeader").html('Chat with ' + title);
 
-            $("#visitorChat_messageBox").attr("placeholder", "How can we assist you?");
+            $("label[for='visitorChat_messageBox']").text("How can we assist you?");
             //Submit as chat
             $("#visitorChat_login_chatmethod").val("CHAT");
 
@@ -411,10 +411,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 //if email_fallback is checked, make sure that the email is required.
                 $("#visitorChat_email_fallback").click(function () {
                     if ($(this).is(":checked") || this.config.email_required) {
-                        $("#visitorChat_email").attr("placeholder", "Email (Required)");
+                        $("label[for='visitorChat_email']").text("Email (Required)");
                         $('#visitorChat_email').addClass('required-entry');
                     } else {
-                        $("#visitorChat_email").attr("placeholder", "Email (Optional)");
+                        $("label[for='visitorChat_email'").text("Email (Optional)");
                         $('#visitorChat_email').removeClass('required-entry');
                     }
                 });
