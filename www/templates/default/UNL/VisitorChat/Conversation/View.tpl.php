@@ -28,7 +28,7 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         }
         ?>
     </div>
-    <div id='visitorChat_chatBox'>
+    <div id='visitorChat_chatBox' role="log">
         <ul>
         </ul>
     </div>

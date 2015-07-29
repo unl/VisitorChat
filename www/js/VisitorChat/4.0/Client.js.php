@@ -626,7 +626,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     
         init:function (serverURL, refreshRate) {
             $("body").append("" +
-                "<div id='visitorChat' class='offline'>" +
+                "<div id='visitorChat' class='offline' aria-live='polite'>" +
                     "<div id='visitorChat_header' tabindex='0'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                             "<a href='#' id='visitorChat_logout' class='wdn-icon-cancel' title='close and log out of chat'></a>" +
