@@ -20,7 +20,7 @@ class Util
         });
         $regex = implode($domains, "|");
         
-        if (preg_match("/" . $regex . "$/", $parts['host'])) {
+        if (preg_match("/(" . $regex . ")$/", $parts['host'])) {
             return true;
         }
         
