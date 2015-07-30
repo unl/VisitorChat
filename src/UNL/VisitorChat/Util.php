@@ -15,12 +15,19 @@ class Util
             return false;
         }
 
-        array_walk($domains, function(&$domain) {
-            $domain = preg_quote($domain, "/");
-        });
-        $regex = implode($domains, "|");
+        $possibilities = array();
+        foreach ($domains as $domain) {
+            //Root domains are okay
+            $possibilities[] = '^' . preg_quote($domain, "/");
+            //Sub-domains are okay
+            $possibilities[] = '.*\.' . preg_quote($domain, "/");
+        }
         
-        if (preg_match("/(" . $regex . ")$/", $parts['host'])) {
+        $regex = implode($possibilities, "|");
+        
+        $regex = "/(" . $regex . ")$/i";
+        
+        if (preg_match($regex, $parts['host'])) {
             return true;
         }
         

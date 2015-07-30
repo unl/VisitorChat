@@ -20,6 +20,7 @@ echo $boolarray[\UNL\VisitorChat\Util::isAllowedDomain('http://bad.com/stuff.php
 echo $boolarray[\UNL\VisitorChat\Util::isAllowedDomain('http://bad.com/stuff.php?test=http://test.com', $allowed_domains)] . PHP_EOL;
 echo $boolarray[\UNL\VisitorChat\Util::isAllowedDomain('http://subdomain.test.com', $allowed_domains)] . PHP_EOL;
 echo $boolarray[\UNL\VisitorChat\Util::isAllowedDomain('http://test.com.bad', $allowed_domains)] . PHP_EOL;
+echo $boolarray[\UNL\VisitorChat\Util::isAllowedDomain('http://badtest.com', $allowed_domains)] . PHP_EOL;
 ?>
 ===DONE===
 --EXPECT--
@@ -30,5 +31,6 @@ false
 false
 false
 true
+false
 false
 ===DONE===
