@@ -15,12 +15,11 @@ class Util
             return false;
         }
 
-        $regex = "";
-        foreach ($domains as $domain) {
-            $regex .= preg_quote($domain, ".-/") . "|";
-        }
-
-        $regex = trim($regex, "|");
+        array_walk($domains, function(&$domain) {
+            $domain = preg_quote($domain, "/");
+        });
+        $regex = implode($domains, "|");
+        
         if (preg_match("/" . $regex . "$/", $parts['host'])) {
             return true;
         }
