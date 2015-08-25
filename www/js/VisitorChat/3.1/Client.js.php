@@ -403,6 +403,29 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         WDN.jQuery('#initial_pagetitle').val(WDN.jQuery(document).attr('title'));
     },
 
+    handleIsTyping:function () {
+        if (VisitorChat.isTypingTimeout == false) {
+            VisitorChat.sendIsTypingStatus('YES');
+
+            VisitorChat.isTypingTimeout = setTimeout(function(){
+                VisitorChat.isTypingTimeout = false;
+                VisitorChat.sendIsTypingStatus('NO');
+
+            }, 5000);
+        }
+    },
+
+    sendIsTypingStatus:function(newStatus) {
+        WDN.jQuery.ajax({
+            type:"POST",
+            url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
+            xhrFields:{
+                withCredentials:true
+            },
+            data:"client_is_typing=" + newStatus
+        })
+    },
+
     /**
      * onConversationStatus_Searching
      * Related status code: SEARCHING
@@ -685,7 +708,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         }
     },
 
-    displaySiteAvailability:function () {
+    displaySiteAvailability:function () {console.log(this.operatorsAvailable);
         if (this.chatOpened) {
             WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header").show();
@@ -694,6 +717,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         }
 
         if (this.operatorsAvailable) {
+            console.log(WDN.jQuery("#visitorChat_header_text").length);
             WDN.jQuery("#visitorChat_header").show();
             WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header_text").css('display', 'inline');
