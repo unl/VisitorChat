@@ -119,6 +119,9 @@ class Record extends \Epoch\Record
     {
         $this->status = $status;
         
+        //Make sure that we show them as not typing when their status changes.
+        $this->is_typing = self::IS_NOT_TYPING;
+        
         if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED', 'FAILED'))) {
             $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
         }

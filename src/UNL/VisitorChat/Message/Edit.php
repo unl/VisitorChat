@@ -51,6 +51,22 @@ class Edit extends \UNL\VisitorChat\Message\Record
             throw new \Exception("You do not have permission to reply to this conversation", 400);
         }
         
+        if ($user->type == 'client') {
+            $conversation->client_is_typing = \UNL\VisitorChat\Conversation\Record::CLIENT_IS_NOT_TYPING;
+            $conversation->save();
+        } else {
+            //Stop typing status for the assignment
+            foreach ($conversation->getAcceptedAssignments() as $assignment) {
+                if ($assignment->users_id != $user->id) {
+                    continue;
+                }
+                
+                $assignment->is_typing = \UNL\VisitorChat\Assignment\Record::IS_NOT_TYPING;
+                $assignment->save();
+                break;
+            }
+        }
+        
         $this->users_id = $user->id;
         $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
         

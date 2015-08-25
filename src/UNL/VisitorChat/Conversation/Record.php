@@ -356,6 +356,7 @@ class Record extends \Epoch\Record
         $this->status       = "CLOSED";
         $this->close_status = $closeStatus;
         $this->closer_id    = $closerID;
+        $this->client_is_typing = self::CLIENT_IS_NOT_TYPING;
         $this->save();
         
         //Close all searching invitations
