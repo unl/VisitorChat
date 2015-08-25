@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
   `invitations_id` int(11) NOT NULL,
   `date_finished` datetime,
   `date_accepted` datetime,
+  `is_typing` ENUM('YES','NO') NOT NULL DEFAULT 'NO',
   PRIMARY KEY (`id`),
   KEY `fk_assignments_users1` (`users_id`),
   KEY `fk_assignments_conversations1` (`conversations_id`),
@@ -72,6 +73,7 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `closer_id` INT NULL ,
   `ip_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `method` enum('CHAT','EMAIL') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.',
+  `client_is_typing` ENUM('YES','NO') NOT NULL DEFAULT 'NO',
   PRIMARY KEY (`id`),
   KEY `fk_conversations_users` (`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

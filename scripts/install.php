@@ -65,6 +65,8 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/user_statuse
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/indexes.sql"), 'adding indexes to tables');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/status_reasons.sql"), 'adding status reasons');
 
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.is_typing"), 'adding is_typing support');
+
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser = new \UNL\VisitorChat\User\Record();
