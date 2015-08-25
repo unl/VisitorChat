@@ -512,6 +512,21 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             }
         });
 
+        var is_typing = false;
+        if (data['operators'] !== undefined) {
+            for (operator in data['operators']) {
+                if (data['operators'][operator].is_typing == 'YES') {
+                    is_typing = true;
+                }
+            }
+        }
+        
+        if (is_typing) {
+            WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
+        } else {
+            WDN.jQuery('#visitorChat_is_typing').hide(500);
+        }
+
         WDN.jQuery().unbind('visitorChat_header');
     },
 

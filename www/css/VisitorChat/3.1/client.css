@@ -418,3 +418,18 @@
      margin-bottom: 0;
      padding: 0;
  }
+
+#visitorChat #visitorChat_messageForm label[for="visitorChat_messageBox"] {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px; width: 1px;
+    margin: -1px; padding: 0; border: 0;
+}
+
+#visitorChat_is_typing {
+    font-size: .75em;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+}

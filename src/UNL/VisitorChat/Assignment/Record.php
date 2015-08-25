@@ -24,6 +24,10 @@ class Record extends \Epoch\Record
     public $invitations_id;
     public $date_finished;
     public $date_accepted;
+    public $is_typing;
+    
+    const IS_TYPING = 'YES';
+    const IS_NOT_TYPING = 'NO';
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -48,6 +52,7 @@ class Record extends \Epoch\Record
     {
         $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
         $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->is_typing = self::IS_NOT_TYPING;
         return parent::insert();
     }
     
@@ -55,6 +60,20 @@ class Record extends \Epoch\Record
     {
         $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
         return parent::save();
+    }
+
+    /**
+     * Determine if this person is currently typing or not
+     * 
+     * @return bool
+     */
+    public function isTyping()
+    {
+        if ($this->is_typing == self::IS_TYPING) {
+            return true;
+        }
+        
+        return false;
     }
     
     /**

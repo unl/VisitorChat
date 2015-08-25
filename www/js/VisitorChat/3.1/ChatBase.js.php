@@ -69,6 +69,9 @@ var VisitorChat_ChatBase = Class.extend({
     //Should large popup windows be displayed for notifications?
     popupNotifications:false,
     
+    //timeout for the is_typing status
+    isTypingTimeout:false,
+    
     version:3.1,
 
     /**
@@ -561,6 +564,8 @@ var VisitorChat_ChatBase = Class.extend({
                 return true;
             }
             
+            VisitorChat.handleIsTyping();
+            
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
@@ -573,6 +578,10 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         this.initAjaxForms();
+    },
+    
+    handleIsTyping:function () {
+        //empty, operator and client will need to implement this differently
     },
 
     /**

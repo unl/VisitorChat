@@ -272,6 +272,10 @@ input#visitorChat_login_submit {
     padding:0 5px;
 }
 
+.unl_visitorchat_form fieldset ul li {
+    margin: 0px;
+}
+
 .unl_visitorchat_submit {
     display: none;
 }
@@ -452,4 +456,19 @@ input#visitorChat_login_submit {
 }
 #visitorChat_sound_container {
     height: 0px;
+}
+
+#visitorChat #visitorChat_messageForm label[for="visitorChat_messageBox"] {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px; width: 1px;
+    margin: -1px; padding: 0; border: 0;
+}
+
+#visitorChat_is_typing {
+    font-size: .75em;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
 }

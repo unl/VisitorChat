@@ -558,6 +558,22 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onConversationStatus_Chatting:function (data) {
             this._super(data);
 
+            var is_typing = false;
+            if (data['operators'] !== undefined) {
+                for (operator in data['operators']) {
+                    console.log(data['operators'][operator].is_typing );
+                    if (data['operators'][operator].is_typing == 'YES') {
+                        is_typing = true;
+                    }
+                }
+            }
+
+            if (is_typing) {
+                WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
+            } else {
+                WDN.jQuery('#visitorChat_is_typing').hide(500);
+            }
+
             $().unbind('visitorChat_header');
         },
     

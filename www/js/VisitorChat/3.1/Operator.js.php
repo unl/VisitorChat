@@ -20,6 +20,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
     idleTimeout: 7200000,  //time of being inactive before going idle (default to 7200000 or 2 hours)
     clientInfo: "",
     lastResponse: false,
+    assignmentID: false,
 
     initWindow:function () {
         WDN.jQuery("#toggleOperatorStatus").click(function () {
@@ -173,7 +174,7 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             VisitorChat.chatStatus = false;
 
             //Load the chat.
-            VisitorChat.updateChat(this);
+            VisitorChat.updateChat(this.href);
 
             //Add selected class for active client
             var isSelected = WDN.jQuery(this).parent().hasClass('selected');
@@ -252,6 +253,26 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
 
         this._super();
+    },
+
+    handleIsTyping:function () {
+        if (VisitorChat.isTypingTimeout == false) {
+            VisitorChat.sendIsTypingStatus(VisitorChat.assignmentID, 'YES');
+            
+            VisitorChat.isTypingTimeout = setTimeout(function(){
+                VisitorChat.isTypingTimeout = false;
+                VisitorChat.sendIsTypingStatus(VisitorChat.assignmentID, 'NO');
+                
+            }, 5000);
+        }
+    },
+    
+    sendIsTypingStatus:function(assignmentID, newStatus) {
+        WDN.jQuery.ajax({
+            type:"POST",
+            url:this.serverURL + "assignment/" + assignmentID + "/edit?format=json",
+            data:"is_typing=" + newStatus
+        })
     },
 
     clearChat:function () {
@@ -704,6 +725,11 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
 
             for (operator in data['operators']) {
                 this.operators.push(data['operators'][operator]);
+
+                if (data['operators'][operator].id == VisitorChat.userID) {
+                    //This is the current assignment
+                    VisitorChat.assignmentID = data['operators'][operator].assignment;
+                }
             }
             if (this.operators.length > 1) {
                 WDN.jQuery('#leaveConversation').show();

@@ -55,7 +55,12 @@ class View
         
         foreach ($this->conversation->getAcceptedAssignments() as $assignment) {
             if ($operator = $assignment->getUser()) {
-                $this->operators[] = $operator->name;
+                $this->operators[] = array(
+                    'name' => $operator->name,
+                    'assignment' => $assignment->id,
+                    'id' => $operator->id,
+                    'is_typing' => $assignment->is_typing
+                );
             }
         }
 

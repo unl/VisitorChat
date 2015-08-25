@@ -1,3 +1,4 @@
+<div id="visitorChat_is_typing"></div>
 <form class='unl_visitorchat_form' id='visitorChat_messageForm' name="input" action="<?php echo $context->getEditURL();?>" method="post">
     <fieldset>
           <ul>
