@@ -4,6 +4,7 @@ $data['status']                     = $context->conversation->status;
 $data['conversation_id']            = $context->conversation->id;
 $data['phpssid']                    = session_id();
 $data['operators']                  = $context->operators->getArrayCopy()->getRawObject();
+$data['client_is_typing']           = $context->conversation->clientIsTyping();
 
 //Save the current template path.
 $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();

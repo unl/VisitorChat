@@ -995,3 +995,10 @@ p.stat-title {
 #maincontent #options form {
     text-align: center;
 }
+
+#visitorChat_is_typing {
+    font-size: .75em;
+    margin-left: 1em;
+    margin-right: 1em;
+    text-align: center;
+}

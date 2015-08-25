@@ -761,6 +761,12 @@ var VisitorChat_Operator = VisitorChat_ChatBase.extend({
             return true;
         }
 
+        if (data['client_is_typing']) {
+            WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
+        } else {
+            WDN.jQuery('#visitorChat_is_typing').hide(500);
+        }
+
         this.appendMessages(data['messages']);
     },
 

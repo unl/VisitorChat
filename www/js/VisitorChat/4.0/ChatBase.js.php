@@ -73,6 +73,9 @@ var VisitorChat_ChatBase = Class.extend({
 
     config: {},
 
+    //timeout for the is_typing status
+    isTypingTimeout:false,
+
     /**
      * Constructor function.
      */
@@ -563,6 +566,8 @@ var VisitorChat_ChatBase = Class.extend({
             if (VisitorChat.chatStatus == 'LOGIN') {
                 return true;
             }
+
+            VisitorChat.handleIsTyping();
             
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
@@ -576,6 +581,10 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         this.initAjaxForms();
+    },
+
+    handleIsTyping:function () {
+        //empty, operator and client will need to implement this differently
     },
 
     /**

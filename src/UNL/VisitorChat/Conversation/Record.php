@@ -60,6 +60,11 @@ class Record extends \Epoch\Record
     
     public $ip_address;
     
+    public $client_is_typing;
+    
+    const CLIENT_IS_TYPING = 'YES';
+    const CLIENT_IS_NOT_TYPING = 'NO';
+    
     /**
      * Returns a conversation record by ID.
      * 
@@ -249,7 +254,9 @@ class Record extends \Epoch\Record
      */
     function insert()
     {
-        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->client_is_typing = self::CLIENT_IS_NOT_TYPING;
+        
         return parent::insert();
     }
     
@@ -441,6 +448,20 @@ class Record extends \Epoch\Record
             }
         }
 
+        return false;
+    }
+
+    /**
+     * Determine if the client is typing
+     * 
+     * @return bool
+     */
+    function clientIsTyping()
+    {
+        if ($this->client_is_typing == self::CLIENT_IS_TYPING) {
+            return true;
+        }
+        
         return false;
     }
 }

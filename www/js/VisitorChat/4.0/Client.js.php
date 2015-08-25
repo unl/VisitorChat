@@ -477,6 +477,29 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#initial_url').val(document.URL);
             $('#initial_pagetitle').val($(document).attr('title'));
         },
+
+        handleIsTyping:function () {
+            if (VisitorChat.isTypingTimeout == false) {
+                VisitorChat.sendIsTypingStatus('YES');
+
+                VisitorChat.isTypingTimeout = setTimeout(function(){
+                    VisitorChat.isTypingTimeout = false;
+                    VisitorChat.sendIsTypingStatus('NO');
+
+                }, 5000);
+            }
+        },
+
+        sendIsTypingStatus:function(newStatus) {
+            $.ajax({
+                type:"POST",
+                url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
+                xhrFields:{
+                    withCredentials:true
+                },
+                data:"client_is_typing=" + newStatus
+            })
+        },
     
         /**
          * onConversationStatus_Searching
