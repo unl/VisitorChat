@@ -1,3 +1,9 @@
+<?php if ($context->user): ?>
+    <p>This list will only show conversations in which the user has participated.</p>
+<?php else: ?>
+    <p>This list contains all chat conversations, regardless of their status (accepted, failed, pending, chatting).</p>
+<?php endif; ?>
+
 <ul class="historyList">
     <?php 
     foreach ($context as $conversation) {

@@ -28,7 +28,12 @@
                 $alias = " (" . $chatUser->alias . ")";
             }
             
-            echo "<li class='" . strtolower($chatUser->getStatus()->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ")</li>";
+            $history_link = '';
+            if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
+                $history_link = "<a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getURL())) . "&users_id=" . $chatUser->id ."'>History</a>";
+            }
+            
+            echo "<li class='" . strtolower($chatUser->getStatus()->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ") $history_link </li>";
         }
     ?>
 </ul>

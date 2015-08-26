@@ -44,6 +44,22 @@ class RecordList extends \Epoch\RecordList
         return self::getBySql($options);
     }
 
+    public static function getConversationsForSiteAndUser($url, $users_id, $options = array())
+    {
+        //Build the list
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT conversations.id
+                           FROM conversations
+                           LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
+                           WHERE assignments.answering_site = '" . self::escapeString($url) . "'
+                             AND assignments.users_id = '" . (int)$users_id . "'
+                             AND assignments.status IN ('LEFT', 'COMPLETED')
+                           GROUP BY conversations.id
+                           ORDER BY conversations.date_created ASC";
+
+        return self::getBySql($options);
+    }
+
     /**
      * Gets a list of all idle conversations.  A conversation is considered idle based on the time of the last message posted
      * and the conversationTTL setting in the controller.
