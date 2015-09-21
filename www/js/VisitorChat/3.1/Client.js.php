@@ -708,7 +708,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         }
     },
 
-    displaySiteAvailability:function () {console.log(this.operatorsAvailable);
+    displaySiteAvailability:function () {
         if (this.chatOpened) {
             WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header").show();
