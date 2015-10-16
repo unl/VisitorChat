@@ -118,11 +118,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.updateChatContainerWithHTML("#visitorChat_container", this.loginHTML, false);
             }
             
-            //Due to IE, make sure that we clear the value of the input if it equals the placeholder value
-            if ($("#visitorChat_messageBox").val() == $("#visitorChat_messageBox").attr("placeholder")) {
-                $("#visitorChat_messageBox").val('');
-            }
-            
             this._super();
         },
     
@@ -268,15 +263,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
         },
     
-        initPlaceHolders: function() {
-            //Load placeholders if not supported.
-            if (WDN.hasDocumentClass('no-placeholder')) {
-                require(['plugins/placeholder/jquery.placeholder.min'], function() {
-                    $('#visitorChat_footercontainer, #visitorChat').find('[placeholder]').placeholder();
-                });
-            }
-        },
-    
         initWatchers:function () {
             /* This method is called several times thoughout
              * executation.  Thus in order to stop the stacking
@@ -301,8 +287,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 '.unl_visitorchat_form,' +
                 '#visitorChat_confirmationEamilForm').unbind();
     
-            this.initPlaceHolders();
-    
             this.initValidation();
     
             //Reveal timestamp
@@ -315,12 +299,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     $(this).children(".stamp").animate({'opacity':'0.65'}, 120);
                 }
             );
-    
-            $('#visitorchat_clientLogin').bind('validate-form', function (event, result) {
-                if (!result) {
-                    VisitorChat.initPlaceHolders();
-                }
-            });
     
             $('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
                 $('#visitorchat_clientLogin_anonwaning').remove();
