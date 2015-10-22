@@ -203,7 +203,13 @@ class Controller extends \Epoch\Controller
         
         // Additional headers which may be sent along with the CORS request
         // The X-Requested-With header allows jQuery requests to go through
-        header("Access-Control-Allow-Headers: 'X-Requested-With'");
+        if (isset($headers['Access-Control-Request-Headers'])) {
+            //Safari was sending some new headers which was causing things to break
+            header("Access-Control-Allow-Headers: " . $headers['Access-Control-Request-Headers']);
+        } else {
+            //Fall back to the old way we were doing things
+            header("Access-Control-Allow-Headers: 'X-Requested-With'");
+        }
         
         // Exit early so the page isn't fully loaded for options requests
         if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
