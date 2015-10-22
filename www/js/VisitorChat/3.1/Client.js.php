@@ -717,7 +717,6 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         }
 
         if (this.operatorsAvailable) {
-            console.log(WDN.jQuery("#visitorChat_header_text").length);
             WDN.jQuery("#visitorChat_header").show();
             WDN.jQuery("#visitorChat").show();
             WDN.jQuery("#visitorChat_header_text").css('display', 'inline');

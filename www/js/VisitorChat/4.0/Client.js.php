@@ -562,7 +562,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             var is_typing = false;
             if (data['operators'] !== undefined) {
                 for (operator in data['operators']) {
-                    console.log(data['operators'][operator].is_typing );
                     if (data['operators'][operator].is_typing == 'YES') {
                         is_typing = true;
                     }
