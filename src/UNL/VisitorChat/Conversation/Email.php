@@ -82,7 +82,7 @@ class Email
             $members = $site->getMembers();
             
             if (!empty($emails)) {
-                $to = explode(', ', $emails);
+                $to = explode(',', $emails);
             }
         }
         
@@ -103,7 +103,7 @@ class Email
                 $emails  = $sites->current()->getEmail();
                 $members = $sites->current()->getMembers();
                 
-                $to = explode(', ', $emails);
+                $to = explode(',', $emails);
             }
         }
         
@@ -125,7 +125,7 @@ class Email
             $this->to_group = "CLIENT";
         }
         
-        $this->to_emails = $to;
+        $this->to_emails = array_map('trim', $to);
     }
     
     function generateToString()
