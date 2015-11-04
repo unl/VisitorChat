@@ -187,14 +187,18 @@ class Email
     
     public function send()
     {
+        $to_string = $this->generateToString();
+        
         //can we send to anyone?
-        if (empty($this->to_emails)) {
+        if (empty($to_string)) {
             //Nope.  Can't find anyone to send emails to... so send to the fallback list otherwise return false
             if (empty(self::$fallbackEmails) || !is_array(self::$fallbackEmails)) {
                 return false;
             }
             
             $this->setTo(self::$fallbackEmails);
+
+            $to_string = $this->generateToString();
         }
         
         $text = $this->render('textemail');
@@ -207,7 +211,7 @@ class Email
         $body    = $mime->get();
         $headers = $mime->headers($this->generateHeaders());
         
-        if (\UNL\VisitorChat\Controller::$mailService->send($this->generateToString(), $headers, $body)) {
+        if (\UNL\VisitorChat\Controller::$mailService->send($to_string, $headers, $body)) {
             return Email\Record::recordSentEmail($headers['To'], $headers['From'], $headers['Reply-To'], $headers['Subject'], $this->fromId, $this->conversation->id);
         }
 
