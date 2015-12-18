@@ -51,7 +51,7 @@ class Service
             $sql .= " OR users1.uid = '" . $db->real_escape_string($operator) . "'";
         }
         
-        $sql .= ") GROUP BY users1.uid";
+        $sql .= ") GROUP BY users1.id";
         
         if (!$result = $db->query($sql)) {
             return false;
