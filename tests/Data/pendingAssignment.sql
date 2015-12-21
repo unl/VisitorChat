@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 --
 
 INSERT INTO `assignments` (`id`, `conversations_id`, `users_id`, `date_created`, `status`, `date_updated`, `answering_site`, `invitations_id`, `date_finished`, `date_accepted`) VALUES
-(1, 1, 2, '0000-00-00 00:00:00', 'PENDING', '2012-05-24 13:09:43', 'unl.edu', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 1, 2, NOW(), 'PENDING', NOW(), 'unl.edu', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
