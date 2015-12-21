@@ -1,7 +1,9 @@
 language: php
 php:
   - 5.3
+  - 5.5
+  - 5.6
 before_script: 
   - pyrus install -p pyrus.net/Pyrus_Developer-alpha
   - mysql -e 'create database visitorchattest;'
-script: pyrus run-phpt -r tests || (find . -name *.out | xargs -t cat && exit 1)
+script: script: ./tests/run-tests.sh
