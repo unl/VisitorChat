@@ -6,4 +6,4 @@ php:
 before_script: 
   - pyrus install -p pyrus.net/Pyrus_Developer-alpha
   - mysql -e 'create database visitorchattest;'
-script: script: ./tests/run-tests.sh
+script: ./tests/run-tests.sh
