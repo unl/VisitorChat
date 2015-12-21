@@ -1,6 +1,6 @@
 <?php
-require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js" . "/SimpleJavaScriptInheritance.js");
-require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/4.0/" . "/form.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/4.0" . "/SimpleJavaScriptInheritance.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/4.0" . "/form.js");
 ?>
 
 /*
