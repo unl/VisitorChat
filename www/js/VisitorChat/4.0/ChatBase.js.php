@@ -606,6 +606,12 @@ var VisitorChat_ChatBase = Class.extend({
                 this.handleAjaxResponse(data, textStatus);
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
+            error:$.proxy(function (data, textStatus, jqXHR) {
+                if (VisitorChat.chatStatus == 'LOGIN' && typeof data.responseJSON.message !== undefined) {
+                    //display word filter error (and other errors during login)
+                    $('#visitorChat_container').text(data.responseJSON.message);
+                }
+            }, this),
             beforeSubmit:$.proxy(function (arr, $form, options) {
                 return this.ajaxBeforeSubmit(arr, $form, options);
             }, this),

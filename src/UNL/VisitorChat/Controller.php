@@ -53,6 +53,8 @@ class Controller extends \Epoch\Controller
     
     public static $pagetitle = "UNLchat";
     
+    public static $badWords = array();
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.

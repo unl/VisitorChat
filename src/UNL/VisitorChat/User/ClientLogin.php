@@ -1,6 +1,7 @@
 <?php 
 namespace UNL\VisitorChat\User;
 
+use UNL\VisitorChat\Controller;
 use UNL\VisitorChat\Util;
 
 class ClientLogin
@@ -8,13 +9,13 @@ class ClientLogin
     function __construct($options = array())
     {
         if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
-            \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation", true, true));
+            \Epoch\Controller::redirect(Controller::$URLService->generateSiteURL("conversation", true, true));
         }
     }
     
     function getEditURL()
     {
-        return \UNL\VisitorChat\Controller::$url . "clientLogin";
+        return Controller::$url . "clientLogin";
     }
     
     function handlePost($post = array())
@@ -24,7 +25,7 @@ class ClientLogin
         }
 
         //Check the domain.
-        if (!Util::isAllowedDomain($post['initial_url'], \UNL\VisitorChat\Controller::$allowedDomains)) {
+        if (!Util::isAllowedDomain($post['initial_url'], Controller::$allowedDomains)) {
             throw new \Exception("This chat system can not run on the given domain.", 400);
         }
         
@@ -45,6 +46,16 @@ class ClientLogin
             throw new \Exception("No message was provided", 400);
         }
         
+        //Check if this needs to be blocked
+        $found = 0;
+        foreach (Controller::$badWords as $word) {
+            $found += substr_count(strtolower($post['message']), $word);
+        }
+
+        if (2 <= $found) {
+            throw new \Exception("Your message was blocked by our word filter.", 400);
+        }
+        
         $fallback = 1;
         if (!isset($post['email_fallback']) || empty($post['email_fallback'])) {
             $fallback = 0;
@@ -58,10 +69,10 @@ class ClientLogin
         $user = new \UNL\VisitorChat\User\Record();
         $user->name         = $post['name'];
         $user->email        = $post['email'];
-        $user->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $user->date_created = Controller::epochToDateTime();
         $user->type         = 'client';
         $user->max_chats    = 3;
-        $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $user->date_updated = Controller::epochToDateTime();
         $user->setStatus("BUSY", "NEW_USER");
         $user->save();
 
@@ -107,7 +118,7 @@ class ClientLogin
         //Save the first message.
         $message = new \UNL\VisitorChat\Message\Record();
         $message->users_id         = $user->id;
-        $message->date_created     = \UNL\VisitorChat\Controller::epochToDateTime();
+        $message->date_created     = Controller::epochToDateTime();
         $message->conversations_id = $conversation->id;
         $message->message          = $post['message'];
         $message->save();
