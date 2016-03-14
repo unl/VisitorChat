@@ -53,7 +53,7 @@ class Controller extends \Epoch\Controller
     
     public static $pagetitle = "UNLchat";
     
-    public static $badWords = array('fuck', 'shit', 'pussy', 'ejaculate');
+    public static $badWords = array();
     
     function __construct($options = array())
     {
