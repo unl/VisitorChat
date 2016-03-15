@@ -52,7 +52,7 @@ class ClientLogin
             $found += substr_count(strtolower($post['message']), $word);
         }
 
-        if (2 <= $found) {
+        if (Controller::$badWordsBlockCount <= $found) {
             throw new \Exception("Your message was blocked by our word filter.", 400);
         }
         

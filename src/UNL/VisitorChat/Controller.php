@@ -54,6 +54,13 @@ class Controller extends \Epoch\Controller
     public static $pagetitle = "UNLchat";
     
     public static $badWords = array();
+
+    /**
+     * Block a conversation if it had equal to or more than this number of 'bad' words.
+     * 
+     * @var int
+     */
+    public static $badWordsBlockCount = 3;
     
     function __construct($options = array())
     {
