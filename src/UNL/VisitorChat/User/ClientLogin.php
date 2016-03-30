@@ -67,8 +67,8 @@ class ClientLogin
         }
         
         $user = new \UNL\VisitorChat\User\Record();
-        $user->name         = $post['name'];
-        $user->email        = $post['email'];
+        $user->name         = trim($post['name']);
+        $user->email        = trim($post['email']);
         $user->date_created = Controller::epochToDateTime();
         $user->type         = 'client';
         $user->max_chats    = 3;
