@@ -19,6 +19,10 @@ class Email
     
     public $from;
     
+    protected $cc = false;
+    
+    protected $isUrgent = false;
+    
     //The reply-to email address
     public static $default_reply_to = "";
     
@@ -61,6 +65,38 @@ class Email
     function isMySupportEmail()
     {
         return in_array('mysupport@unl.edu', $this->to_emails);
+    }
+
+    /**
+     * Set the CC field.
+     * 
+     * @param array $emails
+     */
+    public function setCC(array $emails = array())
+    {
+        if (empty($emails)) {
+            $this->cc = false;
+            
+            return;
+        }
+        
+        //Trim whitespace
+        $emails = array_map('trim', $emails);
+        
+        //set cc
+        $cc = implode(',', $emails);
+        
+        $this->cc = $cc;
+    }
+
+    /**
+     * Set the isUrgent flag
+     * 
+     * @param $isUrgent bool - default true
+     */
+    public function isUrgent($isUrgent = true)
+    {
+        $this->isUrgent = (bool)$isUrgent;
     }
     
     function setTo($to = array())
@@ -178,11 +214,25 @@ class Email
             $this->reply_to = self::$default_reply_to;
         }
         
-        return array(
+        $headers = array(
           'From'     => $this->from,
           'Reply-To' => $this->reply_to,
           'To'       => $this->generateToString(),
-          'Subject'  => $this->subject);
+          'Subject'  => $this->subject
+        );
+        
+        if ($this->cc) {
+            $headers['Cc'] = $this->cc;
+        }
+        
+        if ($this->isUrgent) {
+            $headers['X-Priority'] = '1 (Highest)';
+            $headers['X-MSMail-Priority'] = 'High';
+            $headers['Importance'] = 'High';
+        }
+        
+        
+        return $headers;
     }
     
     public function send()
@@ -210,8 +260,15 @@ class Email
         
         $body    = $mime->get();
         $headers = $mime->headers($this->generateHeaders());
+
+        $combinedToString = $to_string;
+        if ($this->cc) {
+            //Append the cc string to the 'to' string, otherwise the mail will not be sent to the cc recipients
+            //The headers 'To' and 'Cc' fields actually define who is 'To' and 'Cc'.
+            $combinedToString .= ', ' . $this->cc;
+        }
         
-        if (\UNL\VisitorChat\Controller::$mailService->send($to_string, $headers, $body)) {
+        if (\UNL\VisitorChat\Controller::$mailService->send($combinedToString, $headers, $body)) {
             return Email\Record::recordSentEmail($headers['To'], $headers['From'], $headers['Reply-To'], $headers['Subject'], $this->fromId, $this->conversation->id);
         }
 
