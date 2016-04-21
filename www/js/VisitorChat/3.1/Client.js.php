@@ -49,6 +49,11 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
             WDN.jQuery("#visitorChat_messageBox").val('');
         }
+        
+        if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
+            console.log(visitorchat_config.chat_welcome_message);
+            WDN.jQuery('#visitorchat_clientLogin').prepend(WDN.jQuery('<p>').html(visitorchat_config.chat_welcome_message));
+        }
 
         WDN.jQuery("label[for='visitorChat_messageBox']").text("How can we assist you?");
         this.start();

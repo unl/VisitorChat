@@ -187,7 +187,8 @@
 }
 
 #visitorChat_message, #visitorChat_name, #visitorChat_email, #visitorChat_email_fallback_text {
-    margin-top: 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
     width: 95%;
 }
 
@@ -407,7 +408,6 @@
     text-align: left;
     width: 100%;
     display: block;
-    font-size: .75em;
 }
 
 #clientInfo {
