@@ -2,18 +2,12 @@
 <ul id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
+    /**
+     * @var $invitation \UNL\VisitorChat\Invitation\Record
+     */
     $name  = $invitation->invitee;
     $class = strtolower($invitation->status);
-    
-    if ($invitation->isForSite()) {
-        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($invitation->getSiteURL());
-        
-        if ($site = $sites->current()) {
-            $name = $site->getTitle();
-        }
-    } else if ($account = \UNL\VisitorChat\User\Record::getByUID($invitation->getAccountUID())) {
-        $name = $account->name;
-    }
+    $name = $invitation->getInviteeTitle();
     
     echo "<li class='$class'>
               <span class='name tooltip' title='This is who the invitation was sent to (can be either a site or a person)'>$name</span>
@@ -26,10 +20,11 @@ foreach ($context as $invitation) {
 	echo "<ul>";
               
     foreach ($invitation->getAssignments() as $assignment) {
-  		$answeringSite = $assignment->answering_site;
-		$site = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($answeringSite);
-		$site = $site->current();
-	
+        /**
+         * @var $assignment \UNL\VisitorChat\Assignment\Record
+         */
+        $site = $assignment->getAnsweringSite();
+        
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
                   "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .

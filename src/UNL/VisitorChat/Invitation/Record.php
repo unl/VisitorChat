@@ -176,6 +176,26 @@ class Record extends \Epoch\Record
         
         return $conversation->status;
     }
+
+    /**
+     * Get the title of the invitee, either a name or a site name
+     * 
+     * @return null|string
+     */
+    public function getInviteeTitle()
+    {
+        if ($this->isForSite()) {
+            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->getSiteURL());
+
+            if ($site = $sites->current()) {
+                $name = $site->getTitle();
+            }
+        } else if ($account = \UNL\VisitorChat\User\Record::getByUID($this->getAccountUID())) {
+            $name = $account->name;
+        }
+        
+        return $name;
+    }
     
     public function getAssignments()
     {

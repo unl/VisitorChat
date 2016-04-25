@@ -1,5 +1,6 @@
 <?php
 namespace UNL\VisitorChat\Assignment;
+use UNL\VisitorChat\Controller;
 
 /**
  * Status Definitions
@@ -50,15 +51,15 @@ class Record extends \Epoch\Record
     
     public function insert()
     {
-        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_created = Controller::epochToDateTime();
+        $this->date_updated = Controller::epochToDateTime();
         $this->is_typing = self::IS_NOT_TYPING;
         return parent::insert();
     }
     
     public function save()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_updated = Controller::epochToDateTime();
         return parent::save();
     }
 
@@ -123,12 +124,12 @@ class Record extends \Epoch\Record
         $this->is_typing = self::IS_NOT_TYPING;
         
         if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED', 'FAILED'))) {
-            $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
+            $this->date_finished = Controller::epochToDateTime();
         }
         
         if ($status == 'ACCEPTED') {
             $this->getInvitation()->complete();
-            $this->date_accepted = \UNL\VisitorChat\Controller::epochToDateTime();
+            $this->date_accepted = Controller::epochToDateTime();
         }
         
         return $this->save();
@@ -143,7 +144,7 @@ class Record extends \Epoch\Record
      */
     public static function getOldestPendingRequestForUser($userID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE status = 'PENDING' 
@@ -168,7 +169,7 @@ class Record extends \Epoch\Record
     
     public static function getLatestForInvitation($invitionID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE invitations_id = " . (int)$invitionID . "
@@ -192,7 +193,7 @@ class Record extends \Epoch\Record
     
     public static function getLatestByStatusForUserAndConversation($status, $userID, $conversationID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE status = '" . \Epoch\RecordList::escapeString($status) . "'
@@ -256,7 +257,7 @@ class Record extends \Epoch\Record
             //Create a new message.
             $message = new \UNL\VisitorChat\Message\Record();
             $message->users_id         = $this->users_id;
-            $message->date_created     = \UNL\VisitorChat\Controller::epochToDateTime();
+            $message->date_created     = Controller::epochToDateTime();
             $message->conversations_id = $this->conversations_id;
             $message->message          = $messageText;
             $message->save();
@@ -307,5 +308,15 @@ class Record extends \Epoch\Record
         }
         
         return true;
+    }
+
+    /**
+     * @return \UNL\VisitorChat\OperatorRegistry\WDN\Site
+     */
+    public function getAnsweringSite()
+    {
+        $answeringSite = $this->answering_site;
+        $site = Controller::$registryService->getSitesByURL($answeringSite);
+        return $site->current();
     }
 }
