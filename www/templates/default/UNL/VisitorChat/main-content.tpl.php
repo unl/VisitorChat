@@ -1,5 +1,7 @@
 <div class="wdn-band">
-    <div class="wdn-inner-wrapper">
+    <?php if (!($context->actionable->getRawObject() instanceof UNL\VisitorChat\Manage\View)): ?>
+        <div class="wdn-inner-wrapper">
+    <?php endif; ?>
         <div id='visitorChat_container'>
             <?php
             echo $savvy->render($context->actionable);
@@ -21,5 +23,7 @@
         <div id="visitorChat_brightBox">
             <p>Hello all!</p>
         </div>
-    </div>
+    <?php if (!($context->actionable->getRawObject() instanceof UNL\VisitorChat\Manage\View)): ?>
+        </div>
+    <?php endif; ?>
 </div>
