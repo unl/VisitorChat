@@ -21,4 +21,15 @@ class Site
         
         \UNL\VisitorChat\Controller::$pagetitle = "Site Details: " . $this->site->getTitle();
     }
+
+    /**
+     * Determine if a given user manages this site
+     *
+     * @param \UNL\VisitorChat\User\Record $user
+     * @return bool
+     */
+    public function userManagesSite(\UNL\VisitorChat\User\Record $user)
+    {
+        return $user->managesSite($this->url);
+    }
 }
