@@ -144,17 +144,6 @@ require(['jquery', 'jqueryui'], function($) {
             //Remove old elvent handlers
             $('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
     
-            // Hover for Client Info
-            $('#visitorChat_url_title > span').mouseover(function () {
-                $('#clientInfo').fadeIn('fast', function () {
-                    $(this).hover(function () {
-                        $(this).show();
-                    }, function () {
-                        $(this).fadeOut('fast');
-                    });
-                });
-            });
-    
             //Watch coversation link clicks.  Loads up the conversation all ajaxy
             $('.conversationLink').click(function () {
                 //Empty out the current chat.
@@ -229,7 +218,8 @@ require(['jquery', 'jqueryui'], function($) {
             if ($().qtip !== undefined) {
                 var elems = $('#visitorChat_InvitationList .tooltip[title]');
     
-                WDN.tooltip.addTooltip(elems);
+                //TODO: Fix tooltip
+                //WDN.tooltip.addTooltip(elems);
     
                 /**
                  * There is a bug with qTip.  If you apply qTips to elements that were dynamically loaded,
