@@ -3,9 +3,9 @@ namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
 class SiteList extends \ArrayIterator implements \UNL\VisitorChat\OperatorRegistry\SitesIterator
 {
-    function __construct($sites)
+    function __construct(array $sites)
     {
-        parent::__construct(new \ArrayIterator($sites));
+        parent::__construct($sites);
     }
     
     function current() {

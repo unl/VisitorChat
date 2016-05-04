@@ -75,7 +75,7 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         $cachePath = $this->getCachePath($this->getQueryURL($query));
         
         if (!$doNotCache && $sites = $this->getCache($cachePath)) {
-            return new SiteList($sites);
+            return $sites;
         }
         
         //All sites for a user.
@@ -110,7 +110,7 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
             $this->setCache($cachePath, $sites);
         }
         
-        return new SiteList($sites);
+        return $sites;
     }
 
     function getAllSites($doNotCache = false)
@@ -119,7 +119,7 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
 
         //Return a cached result if we have it.
         if (!$doNotCache && $sites = $this->getCache($cachePath)) {
-            return new SiteList($sites);
+            return $sites;
         }
 
         //get all sites
@@ -150,6 +150,6 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
             $this->setCache($cachePath, $sites);
         }
 
-        return new SiteList($sites);
+        return $sites;
     }
 }
