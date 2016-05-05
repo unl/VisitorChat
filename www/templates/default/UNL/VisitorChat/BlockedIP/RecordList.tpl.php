@@ -1,10 +1,9 @@
-<script type="text/javascript">
-    //<![CDATA[
-    WDN.jQuery(document).ready(function(){
+<script>
+    WDN.initializePlugin('jqueryui', [function () {
+        var $ = require('jquery');
         WDN.initializePlugin('zenform');
-        WDN.jQuery('.datepicker').datepicker();
-    });
-    //]]>
+        $('.datepicker').datepicker();
+    }]);
 </script>
 
 <h3 class='zenform'>Filters</h3>
