@@ -1,8 +1,3 @@
-/* #clientChat #visitorChat_container {
-    width: 700px;
-}
-*/
-
 #maincontent
 #clientChat ul,
 #maincontent
@@ -500,11 +495,15 @@
     font-weight: bold;
 }
 
+#visitorChat_container {
+    position: relative;
+}
+
 #toggleOperatorStatus {
     display: block;
     position: absolute;
     top: -3.5em;
-    right: 0;
+    right: 1em;
     width: 190px;
 }
 
@@ -898,8 +897,17 @@ p.stat-title {
     text-align: center;
 }
 
-#maincontent .zenbox.available {
-    border: 5px solid #4C9021;
+.visual-island.site-box {
+    min-height: 18em;
+    margin-bottom: 1rem;
+}
+
+.site-box.available {
+    border: 3px solid rgba(96, 166, 66, 0.2);
+    background: rgba(111, 191, 77, 0.5);
+}
+.site-box.busy {
+    border: 5px solid #f4f3f0;
 }
 
 #maincontent li.available {
