@@ -838,6 +838,10 @@ p.sub-head {
     float: right;
 }
 
+.stats-form input {
+    width: inherit;
+}
+
 #statustimeline {
     margin-bottom: 10px;
 }

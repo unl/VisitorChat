@@ -146,9 +146,9 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
 
 
 <div class='grid12 first stats-table'>
-    <h3>Site Availability</h3>
+    <h2>Site Availability</h2>
     <div id='dateRange'>
-        <form action='<?php echo $context->getURL(); ?>'>
+        <form action='<?php echo $context->getURL(); ?>' class="stats-form">
             <label for="from">From</label>
             <input type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
             <label for="to">to</label>
@@ -163,7 +163,9 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
 <!-- Conversation Stats -->
 <?php $stats = $context->getConversationStats()->getRawObject(); ?>
 
-<section class="grid2 first shadow-right">
+<h2>Chat Stats</h2>
+
+<div class="grid2 first shadow-right">
     <div class='grid2 first'>
         <p class="med-number"><span class='percent'><?php echo $statusStatistics['percent_online']; ?></span></p>
         <p class='stat-title'>Chat Online</p>
@@ -172,9 +174,9 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
         <p class="med-number"><span class='percent'><?php echo $statusStatistics['percent_online_business']; ?></span></p>
         <p class="stat-title">Online during<br />8:00-5:00</p>
     </div>
-</section>
+</div>
 
-<section class="grid10">
+<div class="grid10">
     <div class="grid5 first" title="The total number of conversations that were answered by at least 1 operator">
         <p class="big-number"><?php echo $stats['conversation_types']['answered']; ?></p>
         <p>Answered</p>
@@ -213,4 +215,4 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
             <p class="stat-title">Failed</p>
         </div>
     </div>
-</section>
+</div>
