@@ -800,11 +800,8 @@
     text-decoration: underline;
 }
 
-.zenbox h3 .zen-header-link {
-    float: right;
-    font-weight: normal;
-    font-size: 0.9em;
-    margin-left: 5px;
+.site-details dd ul {
+    margin-top: 0;
 }
 
 p.sub-head {

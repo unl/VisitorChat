@@ -1,6 +1,8 @@
 <?php
 namespace UNL\VisitorChat\Sites;
 
+use UNL\VisitorChat\User\Service;
+
 class Site
 {
     public $url = "";
@@ -31,5 +33,29 @@ class Site
     public function userManagesSite(\UNL\VisitorChat\User\Record $user)
     {
         return $user->managesSite($this->url);
+    }
+
+    /**
+     * Determine if the current user has manager access to this site
+     * 
+     * @return bool
+     */
+    public function currentUserHasManagerAccess()
+    {
+        $user = Service::getCurrentUser();
+        
+        if (!$user) {
+            return false;
+        }
+        
+        if ($this->userManagesSite($user)) {
+            return true;
+        }
+        
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        return false;
     }
 }

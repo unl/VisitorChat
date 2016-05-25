@@ -4,7 +4,10 @@ namespace UNL\VisitorChat\User;
 class Service
 {
     private static $user = false;
-    
+
+    /**
+     * @return Record | false
+     */
     public static function getCurrentUser()
     {
         if (!isset($_SESSION['id'])) {

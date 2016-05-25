@@ -1,40 +1,53 @@
-<div class="grid3 first">&nbsp;</div>
-<div class="zenbox primary grid6">
-<h3><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getTitle();?></a>
-<?php
-    if ($context->userManagesSite(\UNL\VisitorChat\User\Service::getCurrentUser()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
-        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/statistics?url=' . urlencode($context->site->getRawObject()->getURL())) . "'>Statistics</a>";
-    }
-    if ($context->userManagesSite(\UNL\VisitorChat\User\Service::getCurrentUser()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
-        echo "<a class='zen-header-link' href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getRawObject()->getURL())) . "'>History</a>";
-    }
-    ?></h3>
+<div class="site-details">
+    <dl>
+        <dt>Site URL</dt>
+        <dd><a href="<?php echo $context->site->getURL();?>"><?php echo $context->site->getURL();?></a></dd>
+        <dt>Support Email</dt>
+        <dd><a href='mailto:<?php echo $context->site->getEmail();?>'><?php echo $context->site->getEmail();?></a></dd>
+        <?php if ($context->currentUserHasManagerAccess()): ?>
+            <dt>Options</dt>
+            <dd>
+                <ul>
+                    <li>
+                        <a class='zen-header-link' href='<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/statistics?url=' . urlencode($context->site->getRawObject()->getURL())) ?>'>Statistics</a>
+                    </li>
+                    <li>
+                        <a class='zen-header-link' href='<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getRawObject()->getURL())) ?>'>History</a>
+                    </li>
+                </ul>
+            </dd>
+        <?php endif; ?>
+        <dt>Members</dt>
+        <dd>
+            <ul>
+                <?php foreach ($context->site->getMembers() as $member): ?>
+                    <?php $chatUser = \UNL\VisitorChat\User\Record::getByUID($member->getUID()); ?>
+                    <li>
+                        <?php if (!$chatUser): ?>
+                            <?php echo $member->getUID() ?> (<?php echo $member->getRole() ?>) [this member has not logged into the chat system yet]
+                            <?php continue; //we don't know anything else about this user, so move to the next one ?>
+                        <?php endif; ?>
+                        <?php
+                        $alias = "";
+                        if (!empty($chatUser->alias)) {
+                            $alias = " (" . $chatUser->alias . ")";
+                        }
+                        ?>
 
-<ul>
-    <li>Support Email: <a href='mailto:<?php echo $context->site->getEmail();?>'><?php echo $context->site->getEmail();?></a></li>
-</ul>
-
-<h4>Members</h4>
-<ul>
-    <?php 
-        foreach ($context->site->getMembers() as $member) {
-            if (!$chatUser = \UNL\VisitorChat\User\Record::getByUID($member->getUID())) {
-                echo "<li>" . $member->getUID() . " (" . $member->getRole() . ") [this member has not logged into the chat system yet]</li>";
-                continue;
-            }
-            
-            $alias = "";
-            if (!empty($chatUser->alias)) {
-                $alias = " (" . $chatUser->alias . ")";
-            }
-            
-            $history_link = '';
-            if (\UNL\VisitorChat\User\Service::getCurrentUser()->managesSite($context->site->getURL()) || \UNL\VisitorChat\User\Service::getCurrentUser()->isAdmin()) {
-                $history_link = "<a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getURL())) . "&users_id=" . $chatUser->id ."'>History</a>";
-            }
-            
-            echo "<li class='" . strtolower($chatUser->getStatus()->status) . "'><a href='" . \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) . "'>" . $chatUser->name . "</a> $alias (" . $member->getRole() . ") $history_link </li>";
-        }
-    ?>
-</ul>
+                        <a href='<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('users/' . $chatUser->id) ?>'><?php echo $chatUser->name ?></a>
+                        
+                        <?php if (!empty($chatUser->alias)): ?>
+                            <?php echo $chatUser->alias ?>
+                        <?php endif; ?>
+                        
+                        <span class="user-role">(<?php echo $member->getRole() ?>)</span>
+                        
+                        <?php if ($context->currentUserHasManagerAccess()): ?>
+                            - <a href='<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/history?url=' . urlencode($context->site->getRawObject()->getURL())) . '&users_id=' . $chatUser->id ?>'>view history</a>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </dd>
+    </dl>
 </div>
