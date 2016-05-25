@@ -19,7 +19,7 @@
         <div class="wdn-col">
             <div class='visual-island site-box <?php echo $class ?>'>
                 <h2>
-                    <a href="zen-header-link" href="<?php echo $site->getURL()  ?>"><?php echo $site->getTitle() ?></a>
+                    <a href="<?php echo $site->getURL()  ?>"><?php echo $site->getTitle() ?></a>
                 </h2>
                 <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getRawObject()->getURL())) ?>">View Details</a>
                 <p>
