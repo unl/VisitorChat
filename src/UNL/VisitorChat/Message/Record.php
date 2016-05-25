@@ -95,7 +95,7 @@ class Record extends \Epoch\Record
     public function hasTitle9Words()
     {
         foreach (\UNL\VisitorChat\Controller::$title9Words as $word) {
-            if (stripos($this->message, $word) !== false) {
+            if (preg_match('/\b('.$word.')\b/i', $this->message)) {
                 return true;
             }
         }
