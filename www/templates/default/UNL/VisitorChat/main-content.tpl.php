@@ -1,6 +1,6 @@
 <div class="wdn-band">
     <?php if (!($context->actionable->getRawObject() instanceof UNL\VisitorChat\Manage\View)): ?>
-        <div class="wdn-inner-wrapper">
+        <div class="wdn-inner-wrapper wdn-inner-padding-no-top">
     <?php endif; ?>
         <div id='visitorChat_container'>
             <?php

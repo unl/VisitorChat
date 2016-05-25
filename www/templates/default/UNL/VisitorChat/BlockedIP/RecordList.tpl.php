@@ -1,14 +1,6 @@
-<script>
-    WDN.initializePlugin('jqueryui', [function () {
-        var $ = require('jquery');
-        WDN.initializePlugin('zenform');
-        $('.datepicker').datepicker();
-    }]);
-</script>
-
-<h3 class='zenform'>Filters</h3>
-<form class='zenform' method="get" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks");?>" >
+<form method="get" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks");?>" >
     <fieldset>
+        <legend>Filters</legend>
         <ul>
             <li>
                 <label for="ip_address">IP address:</label>
@@ -26,16 +18,15 @@
     </fieldset>
 </form>
 
-<ul>
-    <?php
-    foreach ($context as $block) {
-        ?>
-        <li>
-            <a href="<?php echo $block->getEditURL() ?>"><?php echo $block->ip_address ?></a> 
-            ends at <?php echo $block->block_end ?>
-            by <?php echo $block->getUser()->name ?>
-        </li>
-        <?php
-    }
-    ?>
-</ul>
+<?php if (count($context)): ?>
+    <h2>Results</h2>
+    <ul>
+        <?php foreach ($context as $block): ?>
+            <li>
+                <a href="<?php echo $block->getEditURL() ?>"><?php echo $block->ip_address ?></a> 
+                ends at <?php echo $block->block_end ?>
+                by <?php echo $block->getUser()->name ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

@@ -12,8 +12,11 @@ class Edit extends Record
         } else if (isset($options['ip_address'])) {
             $this->ip_address = $options['ip_address'];
         }
+
+        \UNL\VisitorChat\Controller::$pagetitle = "Edit Blocked IP Address";
         
         if (!$this->id) {
+            \UNL\VisitorChat\Controller::$pagetitle = "New Blocked IP Address";
             $this->initializeDefaultDates();
         }
     }
