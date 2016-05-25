@@ -9,15 +9,6 @@
     <?php if ($user = \UNL\VisitorChat\User\Service::getCurrentUser()): ?>
     <li>
         <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites');?>">My Sites</a>
-        <ul>
-            <?php
-            foreach ($user->getSites() as $site) {
-                ?>
-                <li><a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getURL()));?>"><?php echo $site->getTitle() ?></a></li>
-                <?php
-            }
-            ?>
-        </ul>
     </li>
     <li>
         <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('blocks');?>">Blocked IPs</a>
