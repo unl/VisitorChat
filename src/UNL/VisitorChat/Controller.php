@@ -402,6 +402,8 @@ class Controller extends \Epoch\Controller
         } else {
             // Always escape output, use $context->getRaw('var'); to get the raw data.
             self::$templater->setEscape('htmlentities');
+            //Don't html5 encode (too many issues and it isn't necessary)
+            self::$templater->setHTMLEscapeSettings(array('quotes'=>ENT_COMPAT));
         }
 
         if ($this->options['format'] != 'html') {
