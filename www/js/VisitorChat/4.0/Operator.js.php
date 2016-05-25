@@ -91,7 +91,6 @@ require(['jquery', 'jqueryui'], function($) {
                 $("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
                 $("#alert").dialog({
                     resizable:false,
-                    height:180,
                     modal:true,
                     open: function() {
                         $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
@@ -459,7 +458,6 @@ require(['jquery', 'jqueryui'], function($) {
                 $("#alert").html(helpText);
                 $("#alert").dialog({
                     resizable:false,
-                    height:180,
                     modal:true,
                     open: function() {
                         $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
@@ -505,7 +503,6 @@ require(['jquery', 'jqueryui'], function($) {
                 //start a new dialog box.
                 $("#chatRequest").dialog({
                     resizable:false,
-                    height:140,
                     modal:true,
                     open: function() {
                         $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
@@ -627,7 +624,6 @@ require(['jquery', 'jqueryui'], function($) {
             $("#alert").html("You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.");
             $("#alert").dialog({
                 resizable:false,
-                height:180,
                 modal:true,
                 open: function() {
                     $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
@@ -805,6 +801,7 @@ require(['jquery', 'jqueryui'], function($) {
             //start a new dialog box.
             $("#alert").dialog({
                 resizable:false,
+                height: 450,
                 modal:true,
                 open: function() {
                     $('.ui-dialog-buttonpane button:visible:eq(1)').focus();

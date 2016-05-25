@@ -918,3 +918,7 @@ p.stat-title {
 #maincontent form li {
     list-style: none;
 }
+
+.ui-dialog {
+    z-index: 500 !important;
+}
