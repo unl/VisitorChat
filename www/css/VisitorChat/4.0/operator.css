@@ -709,7 +709,15 @@
     margin-top: -200px;
     margin-left: -180px;
     width: 320px;
-    z-index: 100;
+    z-index: 200;
+}
+
+#visitorChat_brightBox h2 {
+    margin-top: 0;
+}
+
+#shareForm fieldset {
+    margin: 0;
 }
 
 #visitorChat_backDrop {
@@ -921,4 +929,13 @@ p.stat-title {
 
 .ui-dialog {
     z-index: 500 !important;
+}
+
+.unl_visitorchat_form fieldset {
+    margin: 0;
+}
+
+.unl_visitorchat_form li {
+    margin-top: 0;
+    margin-bottom: 1em;
 }
