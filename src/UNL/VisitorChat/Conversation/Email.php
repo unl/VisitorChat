@@ -188,6 +188,7 @@ class Email
     {
         //Always ensure that output is escaped
         \UNL\VisitorChat\Controller::$templater->setEscape('htmlentities');
+        \UNL\VisitorChat\Controller::$templater->setHTMLEscapeSettings(array('quotes'=>ENT_COMPAT));
 
         //Set the path to the email directory.
         $old_path =  \UNL\VisitorChat\Controller::$templater->getTemplatePath();
