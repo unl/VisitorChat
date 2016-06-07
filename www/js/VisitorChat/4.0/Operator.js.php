@@ -233,6 +233,26 @@ require(['jquery', 'jqueryui'], function($) {
     
             this._super();
         },
+
+        handleIsTyping:function () {
+            if (VisitorChat.isTypingTimeout == false) {
+                VisitorChat.sendIsTypingStatus(VisitorChat.assignmentID, 'YES');
+
+                VisitorChat.isTypingTimeout = setTimeout(function(){
+                    VisitorChat.isTypingTimeout = false;
+                    VisitorChat.sendIsTypingStatus(VisitorChat.assignmentID, 'NO');
+
+                }, 5000);
+            }
+        },
+
+        sendIsTypingStatus:function(assignmentID, newStatus) {
+            $.ajax({
+                type:"POST",
+                url:this.serverURL + "assignment/" + assignmentID + "/edit?format=json",
+                data:"is_typing=" + newStatus
+            })
+        },
     
         clearChat:function () {
             $('#clientChat').empty();
@@ -668,6 +688,11 @@ require(['jquery', 'jqueryui'], function($) {
     
                 for (operator in data['operators']) {
                     this.operators.push(data['operators'][operator]);
+
+                    if (data['operators'][operator].id == VisitorChat.userID) {
+                        //This is the current assignment
+                        VisitorChat.assignmentID = data['operators'][operator].assignment;
+                    }
                 }
                 if (this.operators.length > 1) {
                     $('#leaveConversation').show();
@@ -697,6 +722,12 @@ require(['jquery', 'jqueryui'], function($) {
     
             if (data['messages'] == undefined) {
                 return true;
+            }
+
+            if (data['client_is_typing']) {
+                WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
+            } else {
+                WDN.jQuery('#visitorChat_is_typing').hide(500);
             }
     
             this.appendMessages(data['messages']);
