@@ -18,6 +18,8 @@ set_include_path(
     .dirname(dirname(__FILE__)) . '/src'.PATH_SEPARATOR
 );
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 require_once dirname(__FILE__) . "/OperatorRegistry/MockRegistryDriver.php";
 require_once dirname(__FILE__) . "/Mail/MockMailDriver.php";
 require_once dirname(__FILE__) . "/Application/DBHelper.php";

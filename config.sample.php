@@ -21,6 +21,8 @@ set_include_path(
     .dirname(__FILE__) . '/src'.PATH_SEPARATOR
 );
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 /**********************************************************************************************************************
  * php related settings
  */
