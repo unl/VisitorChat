@@ -1,29 +1,30 @@
 <?php  $ua = $context->conversation->parseUserAgent(); ?>
-<div class="grid9 first" id='clientChatContainer'>
-    <div id="clientChat" style="margin:0">
-        <div id='visterChat_conversation'>
-            <div id='visitorChat_conversation_header'>
-                <div id='visitorChat_url'>
-                    <span id='visitorChat_url_title'>
-                        <span><?php echo $context->conversation->getClient()->name;?></span>
-                    </span>
-                    <span class="visitorChat_topicPage">
-                    at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
+<div class="wdn-gridset archived-chat">
+    <div class="bp960-wdn-col-two-thirds" id='clientChatContainer'>
+        <div id="clientChat">
+            <div id='visterChat_conversation'>
+                <div id='visitorChat_conversation_header'>
+                    <div id='visitorChat_url'>
+                        <span id='visitorChat_url_title'>
+                            <span><?php echo $context->conversation->getClient()->name;?></span>
+                        </span>
+                        <span class="visitorChat_topicPage">
+                        at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
+                    </div>
                 </div>
-            </div>
-            <div id='visitorChat_chatBox'>
-                <ul>
-                    <?php
-                    foreach ($context->messages as $message) {
-                        echo "<li class='" . $message->getDisplayclass() . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
-                    }
-                    ?>
-                </ul>
+                <div id='visitorChat_chatBox'>
+                    <ul>
+                        <?php
+                        foreach ($context->messages as $message) {
+                            echo "<li class='" . $message->getDisplayclass() . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="grid3" id="clientChatInfoContainer">
+    <div class="bp960-wdn-col-one-third" id="clientChatInfoContainer">
         <div id="clientChat_GeneralInformation">
             <h2>Details</h2>
             <?php
@@ -63,7 +64,7 @@
                         <td><?php echo $duration; ?></td>
                     </tr>
                     <tr>
-                    	<td>Browser:</td>
+                        <td>Browser:</td>
                         <td><?php echo $ua->browser;?></td>
                     </tr>
                     <tr>
@@ -92,4 +93,4 @@
         }
         ?>
     </div>
-<!--<div style="clear:both"></div>-->
+</div>

@@ -939,3 +939,16 @@ p.stat-title {
     margin-top: 0;
     margin-bottom: 1em;
 }
+
+#maincontent .archived-chat #visitorChat_url_title {
+    display: inline;
+}
+
+#maincontent .archived-chat .visitorChat_topicPage {
+    display: inline;
+    padding: 0;
+}
+
+#maincontent .archived-chat h2 {
+    margin-top: 0;
+}
