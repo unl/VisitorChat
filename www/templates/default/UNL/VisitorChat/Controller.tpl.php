@@ -6,7 +6,7 @@ $page = Templates::factory('Fixed', Templates::VERSION_4_1);
  * @var $page \UNL\Templates\Version4x1\Fixed
  */
 
-$wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir;
+$wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
 if (file_exists($wdn_include_path . '/wdn/templates_4.1')) {
     $page->setLocalIncludePath($wdn_include_path);
 }
