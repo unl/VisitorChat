@@ -9,179 +9,38 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 } else {
     require dirname(dirname(dirname(__FILE__))) . '/config.sample.php';
 }
-?>
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="ie iem7"><![endif]-->
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"><![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"><![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"><![endif]-->
-<!--[if (gte IE 9)|(gt IEMobile 7) ]><html class="ie" lang="en"><![endif]-->
-<!--[if !(IEMobile) | !(IE)]><!--><html lang="en"><!-- InstanceBegin template="/Templates/fixed.dwt" codeOutsideHTMLIsLocked="false" --><!--<![endif]-->
-<head>
-<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/metanfavico.html"; ?>
-<!--
-    Membership and regular participation in the UNL Web Developer Network
-    is required to use the UNL templates. Visit the WDN site at 
-    http://wdn.unl.edu/. Click the WDN Registry link to log in and
-    register your unl.edu site.
-    All UNL template code is the property of the UNL Web Developer Network.
-    The code seen in a source code view is not, and may not be used as, a 
-    template. You may not use this code, a reverse-engineered version of 
-    this code, or its associated visual presentation in whole or in part to
-    create a derivative work.
-    This message may not be removed from any pages based on the UNL site template.
-    
-    $Id: fixed.dwt | 1e98ba6f3cd3310802e61545987e6582d0abac6f | Wed Feb 15 11:42:58 2012 -0600 | Kevin Abel  $
--->
-<?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/scriptsandstyles.html"; ?>
-<!-- InstanceBeginEditable name="doctitle" -->
-<title>UNL | Chat Demo | <?php echo $title?></title>
-<!-- InstanceEndEditable -->
-<!-- InstanceBeginEditable name="head" -->
-<!-- Place optional header elements here -->
-<script type="text/javascript">
-    if (WDN.jQuery) {
-        WDN.loadJS("<?php echo \UNL\VisitorChat\Controller::$url ?>js/chat.php?version=3.1");
-    }
-</script>
-<style type="text/css">
-#maincontent .grid1, #maincontent  .grid2, #maincontent  .grid3, #maincontent  .grid4, #maincontent  .grid5, #maincontent  .grid6, #maincontent  .grid7, #maincontent  .grid8, #maincontent  .grid9, #maincontent  .grid10, #maincontent  .grid11, #maincontent  .grid12 {
-    margin-bottom: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background: rgba(111,191,77,.4);
-    border: solid 1px #6FBF4D;
-    border-width: 1px 0;
-    text-align:center;
+
+use \UNL\Templates\Templates;
+$page = Templates::factory('Fixed', Templates::VERSION_4_1);
+
+/**
+ * @var $page \UNL\Templates\Version4x1\Fixed
+ */
+
+$wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
+if (file_exists($wdn_include_path . '/wdn/templates_4.1')) {
+    $page->setLocalIncludePath($wdn_include_path);
 }
-</style>
-<!-- InstanceEndEditable -->
-<!-- InstanceParam name="class" type="text" value="document" -->
-</head>
-<body class="fixed" data-version="3.1">
-    <nav class="skipnav">
-        <a class="skipnav" href="#maincontent">Skip Navigation</a>
-    </nav>
-    <div id="wdn_wrapper">
-        <header id="header" role="banner">
-            <a id="logo" href="http://www.unl.edu/" title="UNL website">UNL</a>
-            <span id="wdn_institution_title">University of Nebraska&ndash;Lincoln</span>
-            <span id="wdn_site_title"><!-- InstanceBeginEditable name="titlegraphic" -->Visitor Chat System<!-- InstanceEndEditable --></span>
-            <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/idm.html"; ?>
-            <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/wdnTools.html"; ?>
-        </header>
-        <div id="wdn_navigation_bar">
-            <nav id="breadcrumbs">
-                <!-- WDN: see glossary item 'breadcrumbs' -->
-                <h3 class="wdn_list_descriptor hidden">Breadcrumbs</h3>
-                <!-- InstanceBeginEditable name="breadcrumbs" -->
-                <ul>
-                    <li><a href="http://www.unl.edu/" title="University of Nebraska–Lincoln">UNL</a></li>
-                    <li><?php echo $title?></li>
-                </ul>
-                <!-- InstanceEndEditable -->
-            </nav>
-            <div id="wdn_navigation_wrapper">
-                <nav id="navigation" role="navigation">
-                    <h3 class="wdn_list_descriptor hidden">Navigation</h3>
-                    <!-- InstanceBeginEditable name="navlinks" -->
-                    <ul>
-                        <li><a href="index.php" title="Home">Home</a></li>
-                        <li><?php echo $link;?></li>
-                    </ul>
-                    <!-- InstanceEndEditable -->
-                </nav>
-            </div>
-        </div>
-        <div id="wdn_content_wrapper">
-            <div id="pagetitle">
-                <!-- InstanceBeginEditable name="pagetitle" -->
-                <h1><?php echo $title?></h1>
-                <!-- InstanceEndEditable -->
-            </div>
-            <div id="maincontent" role="main">
-                <!--THIS IS THE MAIN CONTENT AREA; WDN: see glossary item 'main content area' -->
-                <!-- InstanceBeginEditable name="maincontentarea" -->
-                  <h2 class="sec_header"><?php echo $title?></h2>
-                  <div class="grid1 first"> grid1 </div>
-                  <div class="grid11"> grid11 </div>
-                  <div class="grid2 first"> grid2 </div>
-                  <div class="grid10"> grid10 </div>
-                  <div class="grid3 first"> grid3 </div>
-                  <div class="grid9"> grid9 </div>
-                  <div class="grid4 first"> grid4 </div>
-                  <div class="grid8"> grid8 </div>
-                  <div class="grid4 first"> grid4 </div>
-                  <div class="grid4"> grid4 </div>
-                  <div class="grid4"> grid4 </div>
-                  <div class="grid5 first"> grid5 </div>
-                  <div class="grid7"> grid7 </div>
-                  <div class="grid6 first"> grid6 </div>
-                  <div class="grid6"> grid6 </div>
-                  <div class="grid3 first"> grid3 </div>
-                  <div class="grid3"> grid3 </div>
-                  <div class="grid1"> grid1 </div>
-                  <div class="grid5"> grid5 </div>
-                  <h3 class="sec_header">Heading 3</h3>
-                  <h4 class="sec_header">Heading 4</h4>
-                  <h5 class="sec_header">Heading 5</h5>
-                  <h6 class="sec_header">Heading 6</h6>
-                  <div class="grid1 first"> grid1 </div>
-                  <div class="grid5"> grid5 </div>
-                  <div class="grid3"> grid3 </div>
-                  <div class="grid3"> grid3 </div>
-                  <div class="grid3 first"> 3 </div>
-                  <div class="grid9">
-                    <div class="grid3 first">3</div>
-                    <div class="grid3">3</div>
-                    <div class="grid3">3</div>
-                    <div class="grid5 first">5</div>
-                    <div class="grid2">2</div>
-                    <div class="grid2">2</div>
-                  </div>
-                  <div class="grid8 first">
-                    <div class="grid3 first">3</div>
-                    <div class="grid3">3</div>
-                    <div class="grid2">2</div>
-                    <div class="grid1 first">1</div>
-                    <div class="grid1">1</div>
-                    <div class="grid6">6</div>
-                  </div>
-                  <div class="grid4"> 4 </div>
-                  <!-- InstanceEndEditable -->
-                <div class="clear"></div>
-                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/noscript.html"; ?>
-                <!--THIS IS THE END OF THE MAIN CONTENT AREA.-->
-            </div>
-        </div>
-        <footer id="footer">
-            <div id="footer_floater"></div>
-            <div class="footer_col" id="wdn_footer_feedback">
-               <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/feedback.html"; ?>
-            </div>
-            <div class="footer_col" id="wdn_footer_related">
-                <!-- InstanceBeginEditable name="leftcollinks" -->
-                example
-                <!-- InstanceEndEditable --></div>
-            <div class="footer_col" id="wdn_footer_contact">
-                <!-- InstanceBeginEditable name="contactinfo" -->
-                example
-                <!-- InstanceEndEditable --></div>
-            <div class="footer_col" id="wdn_footer_share">
-                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/socialmediashare.html"; ?>
-            </div>
-            <!-- InstanceBeginEditable name="optionalfooter" -->
-            <!-- InstanceEndEditable -->
-            <div id="wdn_copyright">
-                <div>
-                    <!-- InstanceBeginEditable name="footercontent" -->
-                    <!-- InstanceEndEditable -->
-                    <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/wdn.html"; ?>
-                </div>
-                <?php include $_SERVER['DOCUMENT_ROOT']."/wdn/templates_3.1/includes/logos.html"; ?>
-            </div>
-        </footer>
-    </div>
-</body>
-<!-- InstanceEnd --></html>
+
+//Titles
+
+
+$page->doctitle = '<title>' . $title . ' | University of Nebraska-Lincoln</title>';
+$page->titlegraphic = 'Chat Demo';
+$page->pagetitle = '<h1>'. $title . '</h1>';
+$page->affiliation = '';
+
+//Navigation
+$page->breadcrumbs = "";
+
+$page->navlinks = '<ul><li><a href="index.php">Home</a></li><li><a href="page2.php">Page 2</a></li></ul>';
+
+//Main content
+$page->maincontentarea = '<div class="wdn-band">
+  <div class="wdn-inner-wrapper">
+    '. $main_content .'
+  </div>
+</div>';
+
+echo $page;
