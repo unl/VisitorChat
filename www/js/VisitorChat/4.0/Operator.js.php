@@ -507,8 +507,9 @@ require(['jquery', 'jqueryui'], function($) {
             if (data['pendingAssignment'] == false || data['pendingDate'] == false) {
                 this.currentRequest = false;
                 clearTimeout(VisitorChat.requestLoopID);
-                if ($("#chatRequest").dialog.isOpen) {
-                    $("#chatRequest").dialog("close");
+                var $dialogElement = $('#chatRequest');
+                if ($dialogElement.dialog('instance') && $dialogElement.dialog('isOpen')) {
+                    $dialogElement.dialog('close');
                 }
                 return true;
             }
@@ -579,13 +580,13 @@ require(['jquery', 'jqueryui'], function($) {
             if (this.conversationID) {
                 conversation = "&conversation_id=" + this.conversationID;
             }
-            return this.serverURL + "conversation?format=json&last=" + this.latestMessageId + conversation + "&PHPSESSID=" + this.phpsessid;
+            return this.serverURL + "conversation?format=json&last=" + this.latestMessageId + conversation;
         },
     
         sendChatRequestResponse:function (id, response) {
             $.ajax({
                 type:"POST",
-                url:this.serverURL + "assignment/" + id + "/edit?format=json&PHPSESSID=" + this.phpsessid,
+                url:this.serverURL + "assignment/" + id + "/edit?format=json",
                 statusCode: {
                     //Did our session expire?
                     401: function() {
