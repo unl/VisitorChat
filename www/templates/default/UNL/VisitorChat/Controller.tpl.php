@@ -20,11 +20,11 @@ if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller
     $page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'css/' . str_replace("\\", "/", $context->options['model']) . '.css');
 }
 
+//Make sure that the client stuff is never initialized
+$page->addScriptDeclaration('var VisitorChat = true;');
+
 if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
     $page->addScript(\UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '&v=4.1');
-} else {
-    //TODO: does this need a var?
-    $page->addScriptDeclaration('VisitorChat = true;');
 }
 
 $page->head .= \UNL\VisitorChat\Controller::$headerHTML;
