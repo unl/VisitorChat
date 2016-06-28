@@ -456,13 +456,16 @@ require(['jquery', 'jqueryui'], function($) {
         },
     
         handleUserDataResponse:function (data) {
+            this.lastActiveTime = new Date();
+            
             //Were we logged out?
             if (!data['userID']) {
                 window.location.reload(); //reload the page
             }
-    
-            //Alert the user if the server set them to busy.
-            if (data['userStatus'] != this.operatorStatus && (data['userStatusReason'] == 'SERVER_IDLE' || data['userStatusReason'] == 'MAINTENANCE')) {
+            
+            if (data['userStatus'] != this.operatorStatus
+                && (data['userStatusReason'] == 'SERVER_IDLE' || data['userStatusReason'] == 'MAINTENANCE' || data['userStatusReason'] == 'EXPIRED_REQUEST')) {
+                //Alert the user if the server set them to busy.
                 this.alert('idle');
                 
                 var helpText = "You have been set to BUSY";
@@ -475,8 +478,15 @@ require(['jquery', 'jqueryui'], function($) {
                     helpText = "Due to server maintenance, you have been set to 'busy'.  Maintenance has been completed and you can now set yourself as AVAILABLE.";
                 }
                 
-                $("#alert").html(helpText);
-                $("#alert").dialog({
+                if (data['userStatusReason'] == 'EXPIRED_REQUEST') {
+                    helpText = "You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.";
+                    clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
+                }
+                
+                var $alert = $('#alert');
+
+                $alert.html(helpText);
+                $alert.dialog({
                     resizable:false,
                     modal:true,
                     open: function() {
@@ -484,10 +494,10 @@ require(['jquery', 'jqueryui'], function($) {
                     },
                     buttons:{
                         "Okay":$.proxy(function () {
-                            $("#alert").dialog("close");
+                            $alert.dialog("close");
                         }, this),
                         "Go back online":$.proxy(function () {
-                            $("#alert").dialog("close");
+                            $alert.dialog("close");
                             this.toggleOperatorStatus('USER');
                         }, this)
                     }
@@ -623,42 +633,10 @@ require(['jquery', 'jqueryui'], function($) {
             $("#chatRequestCountDown").html(difference);
     
             if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
-                this.onRequestExpired();
                 return false;
             }
     
             VisitorChat.requestLoopID = setTimeout("VisitorChat.requestLoop(" + id + ")", 1000);
-        },
-    
-        /**
-         * Called when a pending chat request expires.
-         *
-         * Tell the user that they missed a chat request and they have been set to 'busy'.
-         */
-        onRequestExpired:function () {
-            //Close the current request dialog.
-            $("#chatRequest").dialog("close"); //Remove the dialog box.
-            clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
-            this.clearAlert();
-    
-            //Create a new dialog to tell the operator that they missed a chat request.
-            $("#alert").html("You have missed an assignment.  In order to provide the best response times to the clients, you have been set to 'busy'.");
-            $("#alert").dialog({
-                resizable:false,
-                modal:true,
-                open: function() {
-                    $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
-                },
-                buttons:{
-                    "Okay":$.proxy(function () {
-                        $("#alert").dialog("close");
-                    }, this),
-                    "Go back online":$.proxy(function () {
-                        $("#alert").dialog("close");
-                        this.toggleOperatorStatus('USER');
-                    }, this)
-                }
-            });
         },
     
         updateChat:function (url) {
