@@ -81,7 +81,7 @@ require(['jquery', 'jqueryui'], function($) {
             currentDate = new Date();
     
             diff = currentDate.getTime() - this.lastActiveTime.getTime();
-    
+
             if (diff >= this.idleTimeout && this.operatorStatus == 'AVAILABLE') {
                 this.toggleOperatorStatus('CLIENT_IDLE');
     
@@ -456,8 +456,6 @@ require(['jquery', 'jqueryui'], function($) {
         },
     
         handleUserDataResponse:function (data) {
-            this.lastActiveTime = new Date();
-            
             //Were we logged out?
             if (!data['userID']) {
                 window.location.reload(); //reload the page
