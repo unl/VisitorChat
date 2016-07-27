@@ -14,6 +14,7 @@ if (isset($_GET['message'])) {
 <html>
 <head>
     <title>New Assignment</title>
+    <link rel="icon" type="image/png" href="/wdn/templates_4.1/includes/icons/favicon-32x32.png?v=m223gpjb0w" sizes="32x32" />
     <script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url?>js\jquery.min.js"></script>
     <style type="text/css">
         body {
