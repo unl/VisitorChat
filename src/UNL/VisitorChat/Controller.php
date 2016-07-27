@@ -294,12 +294,12 @@ class Controller extends \Epoch\Controller
         if (self::$environment == "CLI") {
             return false;
         }
-        
-        if (!isset($this->options['model'])) {
-            throw new \Exception('Un-registered view', 404);
-        }
 
         try {
+            if (!isset($this->options['model'])) {
+                throw new \Exception('Page Not Found', 404);
+            }
+            
             //Handle Post
             if (!empty($_POST)) {
                 $this->handlePost();
