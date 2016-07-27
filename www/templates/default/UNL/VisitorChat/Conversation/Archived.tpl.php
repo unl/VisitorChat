@@ -1,4 +1,4 @@
-<?php  $ua = $context->conversation->parseUserAgent(); ?>
+<?php  $ua = $context->conversation->parseUserAgent();?>
 <div class="wdn-gridset archived-chat">
     <div class="bp960-wdn-col-two-thirds" id='clientChatContainer'>
         <div id="clientChat">
@@ -65,11 +65,11 @@
                     </tr>
                     <tr>
                         <td>Browser:</td>
-                        <td><?php echo $ua->browser;?></td>
+                        <td><?php echo (isset($ua->browser))?$ua->browser:'unknown';?></td>
                     </tr>
                     <tr>
                         <td>OS:</td>
-                        <td><?php echo $ua->os;?></td>
+                        <td><?php echo (isset($ua->os))?$ua->os:'unknown';?></td>
                     </tr>
                     <tr>
                         <td>IP address:</td>
