@@ -311,12 +311,15 @@ class Record extends \Epoch\Record
     }
 
     /**
-     * @return \UNL\VisitorChat\OperatorRegistry\WDN\Site
+     * @return false|\UNL\VisitorChat\OperatorRegistry\WDN\Site
      */
     public function getAnsweringSite()
     {
         $answeringSite = $this->answering_site;
-        $site = Controller::$registryService->getSitesByURL($answeringSite);
+        if (!$site = Controller::$registryService->getSitesByURL($answeringSite)) {
+            return false;
+        }
+        
         return $site->current();
     }
 }

@@ -180,12 +180,14 @@ class Record extends \Epoch\Record
     /**
      * Get the title of the invitee, either a name or a site name
      * 
-     * @return null|string
+     * @return false|string
      */
     public function getInviteeTitle()
     {
         if ($this->isForSite()) {
-            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->getSiteURL());
+            if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->getSiteURL())) {
+                return false;
+            }
 
             if ($site = $sites->current()) {
                 $name = $site->getTitle();

@@ -25,10 +25,12 @@ foreach ($context as $invitation) {
          */
         $site = $assignment->getAnsweringSite();
         
+        $siteTitle = ($site)?$site->getTitle():'unknown';
+        
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
                   "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
-                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $site->getTitle() . "</span></span>" .
+                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $siteTitle . "</span></span>" .
             "</li>";
     }
 	echo "</ul>";
