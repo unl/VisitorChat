@@ -17,9 +17,8 @@
 
         <div id="shareChat" title="Share"></div>
 
-        <div id='visitorChat_sound_container'>
-            <audio id='visitorChat_sound' src='<?php echo \UNL\VisitorChat\Controller::$url ?>audio/message.wav'></audio>
-        </div>
+        <div id='visitorChat_sound_container'></div>
+            
         <div id="visitorChat_brightBox">
             <p>Hello all!</p>
         </div>

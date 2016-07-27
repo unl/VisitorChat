@@ -647,9 +647,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                             "<a href='#' id='visitorChat_logout' class='wdn-icon-cancel' title='close and log out of chat'></a>" +
                     "</div>" +
-                    "<div id='visitorChat_sound_container'>" +
-                        "<audio id='visitorChat_sound'></audio>" +
-                    "</div>" +
+                    "<div id='visitorChat_sound_container'></div>" +
                 "</div>");
             
             //Handle cookies. (IE session handling);

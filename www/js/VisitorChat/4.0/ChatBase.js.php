@@ -801,11 +801,18 @@ var VisitorChat_ChatBase = Class.extend({
                 break;
         }
 
-        var sound = false;
+        var $soundContainer = $('#visitorChat_sound_container');
+        if ($soundContainer.length) {
+            var audio = $('<audio />', {
+                'src': this.serverURL + "audio/" + file,
+                'autoplay': true,
+                'aria-hidden': 'true'
+            });
 
-        if (sound = document.getElementById('visitorChat_sound')) {
-            sound.src = this.serverURL + "audio/" + file;
-            sound.play();
+            audio.on('ended', function() {
+                audio.remove();
+            });
+            $soundContainer.append(audio);
         }
     },
 
