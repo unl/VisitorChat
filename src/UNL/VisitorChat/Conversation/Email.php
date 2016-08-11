@@ -99,7 +99,7 @@ class Email
         $this->isUrgent = (bool)$isUrgent;
     }
     
-    function setTo($to = array())
+    public function setTo($to = array())
     {
         $members = false;
         $site    = false;
@@ -107,16 +107,16 @@ class Email
         //Check to see if we need to get the site members
         if (empty($to)) {
             $this->to_group = "SITE";
-            
+
             if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url)) {
                 return false;
             }
-            
+
             //Get only site members for the top level site.
             $site    = $sites->current();
             $emails  = $site->getEmail();
             $members = $site->getMembers();
-            
+
             if (!empty($emails)) {
                 $to = explode(',', $emails);
             }
@@ -131,14 +131,14 @@ class Email
          */
         if (empty($to)) {
             $this->to_group = "ADMINS";
-            
+
             foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
                 $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
                 $site  = $sites->current();
-                
+
                 $emails  = $sites->current()->getEmail();
                 $members = $sites->current()->getMembers();
-                
+
                 $to = explode(',', $emails);
             }
         }

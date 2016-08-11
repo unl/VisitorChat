@@ -203,6 +203,8 @@ class Controller extends \Epoch\Controller
         //Check if the Origin header was set. If it was, make that the new origin.
         if (isset($headers['Origin'])) {
             $origin = $headers['Origin'];
+        } else if (isset($_SERVER['HTTP_ORIGIN'])) {
+            $origin = $_SERVER['HTTP_ORIGIN'];
         }
         
         // Specify domains from which requests are allowed (in this case, the same one that requested).
