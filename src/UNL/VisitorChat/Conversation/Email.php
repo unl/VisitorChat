@@ -99,7 +99,44 @@ class Email
         $this->isUrgent = (bool)$isUrgent;
     }
     
-    function setTo($to = array())
+    public function getSiteEmail()
+    {
+        $email = [];
+        
+        if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url)) {
+            return $email;
+        }
+
+        //Get only site members for the top level site.
+        $site    = $sites->current();
+        $emails  = $site->getEmail();
+        $members = $site->getMembers();
+
+        if (!empty($emails)) {
+            $email = explode(',', $emails);
+        }
+        
+        return $email;
+    }
+    
+    public function getFallBackSiteEmail()
+    {
+        $email = [];
+        
+        foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
+            $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
+            $site  = $sites->current();
+
+            $emails  = $sites->current()->getEmail();
+            $members = $sites->current()->getMembers();
+
+            $email = explode(',', $emails);
+        }
+        
+        return $email;
+    }
+    
+    public function setTo($to = array())
     {
         $members = false;
         $site    = false;
@@ -108,18 +145,7 @@ class Email
         if (empty($to)) {
             $this->to_group = "SITE";
             
-            if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url)) {
-                return false;
-            }
-            
-            //Get only site members for the top level site.
-            $site    = $sites->current();
-            $emails  = $site->getEmail();
-            $members = $site->getMembers();
-            
-            if (!empty($emails)) {
-                $to = explode(',', $emails);
-            }
+            $to = $this->getSiteEmail();
         }
         
         /* Edge case.  If a site contains only students as team members or people who
@@ -132,15 +158,7 @@ class Email
         if (empty($to)) {
             $this->to_group = "ADMINS";
             
-            foreach (\UNL\VisitorChat\Controller::$fallbackURLs as $url) {
-                $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
-                $site  = $sites->current();
-                
-                $emails  = $sites->current()->getEmail();
-                $members = $sites->current()->getMembers();
-                
-                $to = explode(',', $emails);
-            }
+            $to = $this->getFallBackSiteEmail();
         }
         
         if ($site) {

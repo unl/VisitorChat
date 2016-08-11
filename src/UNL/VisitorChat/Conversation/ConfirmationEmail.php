@@ -23,6 +23,16 @@ class ConfirmationEmail extends Email
         
         $email = new $class($conversation, $to, $fromId, $options);
         
+        $replyTo = $email->getSiteEmail();
+        
+        if (empty($replyTo)) {
+            $replyTo = $email->getFallBackSiteEmail();
+        }
+
+        $replyTo = array_map('trim', $replyTo);
+        
+        $email->setReplyTo(implode(',', $replyTo));
+        
         $email->subject = \UNL\VisitorChat\Conversation\Email::$default_subject . ": Transcript (" . $conversation->id . ")";
 
         return $email->send();
