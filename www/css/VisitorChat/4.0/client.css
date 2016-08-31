@@ -472,3 +472,8 @@ input#visitorChat_login_submit {
     margin-right: 1em;
     text-align: center;
 }
+
+#visitorChat .welcome-message {
+    margin-top: 0;
+    line-height: 1em;
+}

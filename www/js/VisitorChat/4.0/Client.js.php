@@ -41,6 +41,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $('#visitorChat_name').addClass('required-entry');
             }
 
+            VisitorChat.displayWelcomeMessage();
+
             if (VisitorChat.operatorsAvailable) {
                 $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
                 
@@ -78,6 +80,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $("#visitorChat_login_chatmethod").val("CHAT");
 
             $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_email' href='#'>email us</a></div>");
+            
+            VisitorChat.displayWelcomeMessage();
         
             $('#visitorChat_methods_email').one('click', function() {
                 VisitorChat.stop(function(){
@@ -86,6 +90,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 });
                 return false;
             });
+        },
+        
+        displayWelcomeMessage: function() {
+            if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
+                $('#visitorchat_clientLogin').prepend($('<p>', {'class':'welcome-message'}).html(visitorchat_config.chat_welcome_message));
+            }
         },
         
         getSiteTitle: function() {
