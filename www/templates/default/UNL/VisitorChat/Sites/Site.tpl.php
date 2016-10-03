@@ -27,6 +27,8 @@
                             <?php echo $member->getUID() ?> (<?php echo $member->getRole() ?>) [this member has not logged into the chat system yet]
                             <?php continue; //we don't know anything else about this user, so move to the next one ?>
                         <?php endif; ?>
+                        <span class="user-status <?php echo strtolower($chatUser->getStatus()->status) ?>"></span>
+                        <span class="wdn-text-hidden">(<?php echo strtolower($chatUser->getStatus()->status) ?>)</span>
                         <?php
                         $alias = "";
                         if (!empty($chatUser->alias)) {

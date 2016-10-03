@@ -926,8 +926,12 @@ p.stat-title {
     border: 5px solid #f4f3f0;
 }
 
-#maincontent li.available {
-    border-left: 5px solid #4C9021;
+.user-status.available {
+    display:inline-block;
+    width: 1em;
+    height: 1em;
+    border: 3px solid rgba(96, 166, 66, 0.2);
+    background: rgba(111, 191, 77, 0.5);
 }
 
 #maincontent form li {
