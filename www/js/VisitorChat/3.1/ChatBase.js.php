@@ -563,6 +563,10 @@ var VisitorChat_ChatBase = Class.extend({
             if (VisitorChat.chatStatus == false) {
                 return true;
             }
+
+            if (VisitorChat.chatStatus == 'LOGIN') {
+                return true;
+            }
             
             VisitorChat.handleIsTyping();
             
