@@ -1,0 +1,13 @@
+{
+  "name": "visitor-chat",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-less": "^1.4.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-curl": "^2.2.0",
+    "grunt-svgmin": "^4.0.0",
+    "less-plugin-autoprefix": "^1.5.1",
+    "load-grunt-tasks": "^3.5.2"
+  }
+}
