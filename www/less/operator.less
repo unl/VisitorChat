@@ -1,0 +1,965 @@
+h1 {
+    margin-top: .25em;
+}
+
+#maincontent
+#clientChat ul,
+#maincontent
+#clientList ul {
+    padding: 0;
+    list-style: none;
+}
+
+#notificationOptions {
+    display: none;
+}
+
+#leaveConversation {
+    display: none;
+}
+
+#share_to_chzn {
+    width: 320px !important;
+}
+
+.chzn-drop {
+    width: 318px !important;
+}
+
+#share_to_chzn input {
+    width: 270px !important;
+}
+
+#visitorChat_header {
+    display: inline;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.04em;
+    background-color: #B70302;
+    border-top-left-radius: 5px;
+    color: #fff;
+    height: 20px;
+    padding: 5px 25px; /* first number same as clientChat margin-top */
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    width: 250px;
+    margin-right: 5px;
+}
+
+#clientChatContainer {
+    min-height: 485px;
+    /*border-left: 5px solid #eee;*/
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+}
+
+#clientChat {
+    height: 100%;
+    margin-left: -10px;
+    margin-right: 2px;
+    box-shadow: -11px 0 0px -10px #4096EE;
+}
+
+#clientChatInfoContainer {
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-radius: 10px 0px 0px 10px;
+    border-radius: 10px 0px 0px 10px;
+}
+
+#visitorChat_chatBox {
+    overflow: auto;
+    max-height: 20em;
+    background: white;
+    border-left: 2px solid #7ABCFF;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    position: relative;
+    z-index: 10;
+}
+
+#visitorChat_chatBox ul {
+    padding: 5px 0 !important;
+    margin: 0;
+}
+
+#operatorOptions {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#maincontent
+#visitorChat_InvitationList,
+#maincontent
+#visitorChat_InvitationList ul {
+    list-style: none;
+    padding: 0;
+}
+
+#maincontent
+#visitorChat_InvitationList .userAddress {
+    font-weight: normal;
+    font-size: 9px;
+    /*color: #AAA;*/
+    display: block;
+    margin-top: -0.4em;
+    margin-bottom: 0.8em;
+}
+
+#maincontent
+#visitorChat_InvitationList .timestamp {
+    float: right;
+    font-size: 0.8em;
+}
+
+#maincontent
+#visitorChat_InvitationList > li {
+    box-shadow: 0px 3px 18px -7px black;
+    margin: 0 9px 9px;
+    padding: 2px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#visitorChat_InvitationList li .name {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#visitorChat_InvitationList li .sub {
+    display: block;
+    font-weight: normal;
+    font-size: 0.85em;
+    text-decoration: none;
+}
+
+#maincontent
+#visitorChat_InvitationList .completed,
+#maincontent
+#visitorChat_InvitationList > li > ul > .accepted {
+    background: #a5e17a;
+    background: -moz-linear-gradient(top, #a5e17a 0%, #77cb52 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a5e17a), color-stop(100%, #77cb52));
+    background: -webkit-linear-gradient(top, #a5e17a 0%, #77cb52 100%);
+    background: -o-linear-gradient(top, #a5e17a 0%, #77cb52 100%);
+    background: -ms-linear-gradient(top, #a5e17a 0%, #77cb52 100%);
+    background: linear-gradient(top, #a5e17a 0%, #77cb52 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#a5e17a', endColorstr = '#77cb52', GradientType = 0);
+    border: 1px solid #77cb52;
+    color: #0A7561;
+    text-shadow: 0 1px #D0E4C7;
+}
+
+#maincontent
+#visitorChat_InvitationList .name,
+#maincontent
+#visitorChat_InvitationList .source,
+#maincontent
+#visitorChat_InvitationList .time {
+    cursor: default;
+}
+
+#maincontent
+#visitorChat_InvitationList .name:hover,
+#maincontent
+#visitorChat_InvitationList .source:hover,
+#maincontent
+#visitorChat_InvitationList .time:hover {
+    text-decoration: underline;
+}
+
+#maincontent
+#visitorChat_InvitationList .searching,
+#maincontent
+#visitorChat_InvitationList > li > ul > .pending {
+    background: #f7f76e;
+    background: -moz-linear-gradient(top, #f7f76e 0%, #ecec13 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f7f76e), color-stop(100%, #ecec13));
+    background: -webkit-linear-gradient(top, #f7f76e 0%, #ecec13 100%);
+    background: -o-linear-gradient(top, #f7f76e 0%, #ecec13 100%);
+    background: -ms-linear-gradient(top, #f7f76e 0%, #ecec13 100%);
+    background: linear-gradient(top, #f7f76e 0%, #ecec13 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#f7f76e', endColorstr = '#ecec13', GradientType = 0);
+    border: 1px solid #ECEC13;
+    color: #646419;
+    text-shadow: 0 1px #FCFCCF;
+}
+
+#maincontent
+#visitorChat_InvitationList .failed,
+#maincontent
+#visitorChat_InvitationList > li > ul > .expired,
+#maincontent
+#visitorChat_InvitationList > li > ul > .left,
+#maincontent
+#visitorChat_InvitationList .rejected {
+    background: #e57979;
+    background: -moz-linear-gradient(top, #e57979 0%, #d84848 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e57979), color-stop(100%, #d84848));
+    background: -webkit-linear-gradient(top, #e57979 0%, #d84848 100%);
+    background: -o-linear-gradient(top, #e57979 0%, #d84848 100%);
+    background: -ms-linear-gradient(top, #e57979 0%, #d84848 100%);
+    background: linear-gradient(top, #e57979 0%, #d84848 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e57979', endColorstr = '#d84848', GradientType = 0);
+    border: 1px solid #d84848;
+    color: white;
+    text-shadow: 0 1px #AD1F1F;
+
+}
+
+#visitorChat_InvitationList > li > ul {
+    margin-top: 0.4em;
+}
+
+#visitorChat_InvitationList > li > ul > li {
+    -webkit-border-radius: 5em;
+    border-radius: 5em;
+    box-shadow: 0 1px 10px -4px black;
+    margin-bottom: 4px;
+    padding: 0 8px;
+    width: 100%;
+    margin-left: -9px;
+}
+
+#visitorChat_InvitationList > li > ul > .pending:before {
+    content: "inviting...";
+    float: right;
+    font-size: 0.85em;
+}
+
+#visitorChat_InvitationList > li > ul > .expired:before {
+    content: "expired";
+    float: right;
+    font-size: 0.85em;
+}
+
+#visitorChat_InvitationList > li > ul > .rejected:before {
+    content: "rejected";
+    float: right;
+    font-size: 0.85em;
+}
+
+#visitorChat_InvitationList > li > ul > .left:before {
+    content: "left";
+    float: right;
+    font-size: 0.85em;
+}
+
+#visitorChat_chatBox ul li {
+    padding: 6px 6px 6px 20px;
+    text-shadow: 0 1px white;
+    line-height: 130%;
+    list-style: none;
+    margin-bottom: 2px;
+}
+
+.visitorChat_client {
+    border-left: 2px solid #76CC52;
+    font-weight: bold;
+}
+
+.visitorChat_me {
+    background-color: #f8f8f8;
+    border-left: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.visitorChat_them {
+    border-left: 2px solid #e0e0e0;
+}
+
+#visitorChat_chatBox ul li .stamp {
+    color: #aaa;
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    padding-left: 1em;
+    padding-top: 0.35em;
+}
+
+#visitorChat_chatBox ul li .timestamp {
+    color: #ccc;
+    float: right;
+    font-size: 0.8em;
+    font-weight: normal;
+    margin-right: 5px;
+}
+
+.unl_visitorchat_submit {
+    border: 3px solid white;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5em;
+    margin: 0px 12px 10px 20px;
+    padding: 10px 16px;
+    width: auto;
+    min-height: 49px;
+    -moz-border-radius: 9px/10px;
+    -webkit-border-radius: 9px 10px;
+    border-radius: 9px/10px;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    display: block;
+    box-shadow: 0 0 6px #ccc;
+}
+
+#visitorChat_messageBox {
+    border-color: #CdCdCd;
+    border-radius: 3px;
+    display: block;
+    margin: 0 9px;
+    padding: 2px;
+    overflow-y: auto;
+    resize: none;
+    height: 60px;
+    width: 98%;
+}
+
+#visitorChat_messageForm fieldset {
+    /* For Sumbit button */
+    /*display: inline;*/
+}
+
+#visitorChat_clients {
+    height: 350px;
+    background: #FFF9EA;
+    border: 1px solid #BBAD8C;
+
+    overflow-x: visible !important;
+    text-shadow: 0 1px white;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px -2px #B1A078;
+}
+
+#visitorChat_clients h2 {
+    font-size: 1.5em;
+    color: #664F1E !important;
+    padding: 0.4em 5px 0 5px;
+}
+
+#clientList {
+    margin-top: 10px;
+    padding: 0 5px;
+}
+
+#clientList ul li {
+    color: #664F1E;
+    margin-bottom: 0.35em;
+    position: relative;
+}
+
+#clientList ul li .conversationLink {
+    display: block;
+    color: #664F1E;
+    padding: 5px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    position: relative;
+    margin: 0 -5px;
+}
+
+#clientList ul li .conversationLink.transition {
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+}
+
+#clientList ul li .conversationLink:hover {
+    background-color: #FFF9EA;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFF9EA), color-stop(100%, #DDD2B7));
+    background-image: -webkit-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -moz-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -ms-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: -o-linear-gradient(top, #FFF9EA, #DDD2B7);
+    background-image: linear-gradient(top, #FFF9EA, #DDD2B7);
+}
+
+#clientList ul li .conversationLink:active {
+    -webkit-box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
+}
+
+#clientList ul li.selected {
+    box-shadow: 0px 2px 9px 1px rgba(0, 0, 0, 0.2);
+}
+
+#clientList ul li.selected .conversationLink {
+    background: #7abcff;
+    color: #fff;
+    border: 1px solid #4096EE;
+    border-right: none;
+    box-shadow: inset 5px 0 10px -5px white;
+    text-shadow: 0 -1px 2px #0F529B;
+    margin-right: -20px;
+    position: relative;
+    z-index: 10;
+    border-radius: 5px 0 0 0;
+    margin-left: -12px;
+}
+
+#clientList ul li.selected .conversationLink:hover {
+    background: #7abcff;
+    color: #fff;
+    border-top: 1px solid #4096EE;
+    border-bottom: 1px solid #4096EE;
+    text-shadow: 0 -1px 2px #0F529B;
+}
+
+#clientList ul li.selected .conversationLink::before {
+    content: " ";
+    position: absolute;
+    left: -1px;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 6px 7px 0;
+    border-color: transparent #4096EE transparent transparent;
+    bottom: -8px;
+}
+
+.conversationLink span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 115px;
+}
+
+#clientList .unread_count {
+    display: none;
+}
+
+#clientList .unread_message {
+    color: white;
+    background: #F02E2E;
+    padding: 1px 3px;
+    border-radius: 3px;
+    box-shadow: inset 0 6px 5px -5px white;
+    border: 1px solid #F02E2E;
+    text-shadow: 0 1px 2px #D30000;
+    margin-left: 0.2em;
+    position: absolute;
+    top: 0.4em;
+    right: 0;
+    display: inline;
+}
+
+#clientList .unread_message::after {
+    width: 0;
+    height: 0;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-right: 5px solid #F02E2E;
+    content: "";
+    position: absolute;
+    left: -0.3em;
+    top: 0.3em;
+}
+
+#chatRequestCountDown {
+    color: red;
+}
+
+#chatRequest {
+    display: none;
+}
+
+.loading {
+    background: url("../../../images/ajax.gif");
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 100%;
+}
+
+#visitorChat_conversation_header {
+    /*overflow: hidden; So we can round-out url corner */
+    background: #7ABCFF;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 0 0 1px #4096EE, inset 0px 5px 5px -5px white;
+    color: white;
+    text-shadow: 0 1px 2px #0F529B;
+    position: relative;
+}
+
+#visitorChat_conversation_header p {
+    margin: 0;
+    font-size: .8em;
+}
+
+#visitorChat_url_title {
+    display: none;
+}
+
+#visitorChat_conversation_header .client-name {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+#visitorChat_container {
+    position: relative;
+}
+
+#toggleOperatorStatus {
+    display: block;
+    position: absolute;
+    top: -3.5em;
+    right: 1em;
+    width: 190px;
+}
+
+#currentOperatorStatus {
+    color: white !important;
+}
+
+.closed {
+    background-color: #BC4F4D;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #BC4F4D), color-stop(100%, #A53230));
+    background-image: -webkit-linear-gradient(top, #BC4F4D, #A53230);
+    background-image: -moz-linear-gradient(top, #BC4F4D, #A53230);
+    background-image: -ms-linear-gradient(top, #BC4F4D, #A53230);
+    background-image: -o-linear-gradient(top, #BC4F4D, #A53230);
+    background-image: linear-gradient(top, #BC4F4D, #A53230);
+    border: 1px solid #A53230;
+    border-bottom: 1px solid #992E2C;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 0 0 #C96E6C, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 1px 0 0 #C96E6C, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 1px 0 0 #C96E6C, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    line-height: 1;
+    padding: 7px 0 8px 0;
+    text-align: center;
+    text-shadow: 0 -1px 0 #8E2220;
+    width: 150px;
+}
+
+.open {
+    background-color: #7FBF4D;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7FBF4D), color-stop(100%, #63A62F));
+    background-image: -webkit-linear-gradient(top, #7FBF4D, #63A62F);
+    background-image: -moz-linear-gradient(top, #7FBF4D, #63A62F);
+    background-image: -ms-linear-gradient(top, #7FBF4D, #63A62F);
+    background-image: -o-linear-gradient(top, #7FBF4D, #63A62F);
+    background-image: linear-gradient(top, #7FBF4D, #63A62F);
+    border: 1px solid #63A62F;
+    border-bottom: 1px solid #5B992B;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 1px 0 0 #96ca6d, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    font: bold 14px "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+    color: white;
+    text-decoration: none;
+    line-height: 1;
+    padding: 7px 0 8px 0;
+    text-align: center;
+    text-shadow: 0 -1px 0 #4C9021;
+    width: 150px;
+}
+
+#toggleOperatorStatus:hover {
+    background: #b2b2b2;
+    background: -moz-linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b2b2b2), color-stop(100%, #9b9b9b));
+    background: -webkit-linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+    background: -o-linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+    background: -ms-linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+    background: linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+    border: 1px solid #9b9b9b;
+    border-bottom: 1px solid #999;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#b2b2b2', endColorstr = '#9b9b9b', GradientType = 0);
+    -webkit-box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 1px 0 0 #BCBCBC, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    text-shadow: 0 -1px 0 #8E8E8E;
+    cursor: pointer;
+}
+
+#toggleOperatorStatus:active {
+    border: 1px solid #999;
+    border-bottom: 1px solid #898989;
+    -webkit-box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    -moz-box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+    box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eeeeee, 0px 0px 8px 0px rgba(200, 200, 200, 1);
+}
+
+#visitorChat_closed {
+    color: #DF0101;
+    position: absolute;
+    left: 20%;
+    top: 25%;
+    font-size: 14px;
+    display: block;
+    border: 1px solid #f2f2f2;
+    padding: 10px 35px;
+    border-radius: 5px;
+    text-shadow: 0 1px white;
+    background: white;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(242, 242, 242, 1)));
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 100%);
+    background: linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(242, 242, 242, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#f2f2f2', GradientType = 0);
+    -webkit-box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.1);
+    -moz-box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.1);
+    box-shadow: 0px 2px 5px 1px rgba(20, 20, 20, 0.1);
+}
+
+#notificationOptions {
+    margin-top: 30px;
+}
+
+#visitorChat_conversation_options {
+    position: absolute;;
+    right: 5px;
+    top: 5px;
+}
+
+#visitorChat_conversation_options ul {
+    margin: 0px;
+}
+
+#visitorChat_conversation_options a {
+    border: none;
+}
+
+#visitorChat_conversation_options ul li {
+    float: left;
+    margin-left: 10px;
+    padding: 2px 0 5px;
+    border: 1px solid transparent;
+    border-radius: 6px 6px 0px 0px;
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    -ms-transition: all 0.15s ease-in-out;
+    -o-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+}
+
+#visitorChat_conversation_options ul li:hover {
+    background: #7ABCFF;
+    border: 1px solid #4096EE;
+    border-bottom-color: #7ABCFF;
+    box-shadow: inset 0 5px 5px -5px white;
+}
+
+#visitorChat_conversation_options ul li a {
+    display: block;
+    height: 24px;
+}
+
+#leaveConversation a {
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat 0 0;
+    width: 35px;
+}
+
+#leaveConversation a:hover {
+    background-position: 0 -24px;
+}
+
+#shareConversation a {
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat -36px 0;
+    width: 35px;
+}
+
+#shareConversation a:hover {
+    background-position: -36px -24px;
+}
+
+#closeConversation a {
+    background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat -71px 0;
+    width: 24px
+}
+
+#closeConversation a:hover {
+    background-position: -71px -24px;
+}
+
+#visitorChat_sitesWarning {
+    margin-top: 5px;
+}
+
+#visitorChat_sitesWarning li {
+    margin-left: 25px;
+    font-size: 12px;
+    list-style-type: circle;
+    margin-top: 3px;
+}
+
+#visitorChat_brightBox {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 1px 2px 24px -2px #555;
+    display: none;
+    padding: 18px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -180px;
+    width: 320px;
+    z-index: 200;
+}
+
+#visitorChat_brightBox h2 {
+    margin-top: 0;
+}
+
+#shareForm fieldset {
+    margin: 0;
+}
+
+#visitorChat_backDrop {
+    cursor: pointer;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: #000000;
+    opacity: .35;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(opacity = .7);
+}
+
+#visitorChat_url_operatorList {
+    display: inline;
+}
+
+#visitorChat_url_operatorList li {
+    display: inline-block;
+    list-style-type: circle;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#maincontent
+.visitorChat_topicPage {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    padding: 1px 3px;
+    font-size: .8em;
+}
+
+#maincontent
+.visitorChat_topicPage a:link,
+#maincontent
+.visitorChat_topicPage a:active,
+#maincontent
+.visitorChat_topicPage a:visited {
+    color: white;
+}
+
+#maincontent
+.visitorChat_topicPage a:hover {
+    text-decoration: underline;
+}
+
+#visitorChat_brightBox ul li {
+    list-style-type: none;
+}
+
+.faq dt {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 115%;
+    letter-spacing: -0.06em;
+    text-shadow: 1px 1px white, 2px 1px 2px rgba(183, 3, 2, 0.4);
+}
+
+.faq dd {
+    background-color: #fafafa;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    margin: 0.8em 0 1.6em;
+    padding: 0.5em 1.6em 0 !important;
+    text-shadow: 0 1px white;
+}
+
+/*
+  Labels for WCAG 2.0 validation (hide them because we provide them inline).
+*/
+#visitorchat_clientLogin label, #visitorChat_messageForm label, #visitorChat_shareList label {
+    line-height: 0;
+    position: absolute;
+    text-indent: -99999em;
+}
+
+/* Site List and Statistics styles */
+
+#visitorChat_container .zenbox h3 a {
+    text-decoration: none;
+}
+
+#visitorChat_container .zenbox h3 a:hover {
+    text-decoration: underline;
+}
+
+.site-details dd ul {
+    margin-top: 0;
+}
+
+p.sub-head {
+    font-size: 1.4em;
+    position: relative;
+    top: -1em;
+    color: #999;
+}
+
+.stats-table {
+    margin-top: 10px;
+}
+
+.stats-table h3,
+.stats-table #dateRange {
+    display: inline-block;
+}
+
+#maincontent
+.stats-table h3 {
+    margin-top:  -5px;
+    background: #76CC52;
+    padding: 5px 10px;
+    border-radius: 10px 10px 0 0;
+    color: white;
+    text-shadow: 0 -1px 1px #4C6B3F;
+    box-shadow: 0 -1px 5px 0 rgba(0, 0, 0, 0.25), inset 0px -4px 8px -4px green;
+}
+
+.stats-table #dateRange {
+    float: right;
+}
+
+.stats-form input {
+    width: inherit;
+}
+
+#statustimeline {
+    margin-bottom: 10px;
+}
+
+#maincontent
+.big-number {
+    font-size: 2.2em;
+    font-weight: bold;
+    line-height: 150%;
+}
+
+#maincontent
+p.big-number {
+    padding-bottom: 0px;
+}
+
+#maincontent
+p.big-number, #maincontent p.med-number {
+    color: grey;
+}
+
+#maincontent
+.big-number,
+.big-number + p {
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+#maincontent
+p.med-number {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    line-height: 150%;
+}
+
+#maincontent
+.percent {
+    font-size: 1.75em;
+    color: black;
+}
+
+#maincontent
+.shadow-right {
+    box-shadow: 10px 0px 10px -10px rgba(0, 0, 0, 0.3);
+}
+
+#maincontent
+p.stat-title {
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.assign-stats {
+    text-align: center;
+}
+
+.visual-island.site-box {
+    min-height: 18em;
+    margin-bottom: 1rem;
+}
+
+.site-box.available {
+    border: 3px solid rgba(96, 166, 66, 0.2);
+    background: rgba(111, 191, 77, 0.5);
+}
+.site-box.busy {
+    border: 5px solid #f4f3f0;
+}
+
+.user-status.available {
+    display:inline-block;
+    width: 1em;
+    height: 1em;
+    border: 3px solid rgba(96, 166, 66, 0.2);
+    background: rgba(111, 191, 77, 0.5);
+}
+
+#maincontent form li {
+    list-style: none;
+}
+
+.ui-dialog {
+    z-index: 500 !important;
+}
+
+.unl_visitorchat_form fieldset {
+    margin: 0;
+}
+
+.unl_visitorchat_form li {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+#maincontent .archived-chat #visitorChat_url_title {
+    display: inline;
+}
+
+#maincontent .archived-chat .visitorChat_topicPage {
+    display: inline;
+    padding: 0;
+}
+
+#maincontent .archived-chat h2 {
+    margin-top: 0;
+}
