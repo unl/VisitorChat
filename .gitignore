@@ -9,3 +9,4 @@ www/.htaccess
 /UNL_Chat.sublime-project
 .DS_Store
 /vendor/
+www/node_modules
