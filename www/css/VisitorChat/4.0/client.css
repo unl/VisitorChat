@@ -3,17 +3,17 @@
   border-bottom: 0;
 }
 #visitorChat {
-  box-shadow: 0px 5px 10px 0px rgba(10, 10, 10, 0.25);
+  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.25);
 }
 #visitorChat:hover {
-  box-shadow: 0px 5px 10px 0px rgba(10, 10, 10, 0.15);
+  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.15);
 }
 #visitorChat legend,
-#visitorChat input[type="text"],
-#visitorChat input[type="email"],
+#visitorChat input[type='text'],
+#visitorChat input[type='email'],
 #visitorChat textarea,
 #visitorChat select {
-  font-family: Georgia, Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+  font-family: Georgia, Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif;
   font-weight: 400;
 }
 #visitorChat legend {
@@ -29,8 +29,8 @@
 #visitorChat ul li {
   list-style: none;
 }
-#visitorChat input[type="text"],
-#visitorChat input[type="email"],
+#visitorChat input[type='text'],
+#visitorChat input[type='email'],
 #visitorChat textarea,
 #visitorChat select {
   font-size: 13px;
@@ -47,7 +47,7 @@
   position: fixed;
   font-size: 13px;
   right: 3%;
-  bottom: 0px;
+  bottom: 0;
   width: 214px;
   color: #000;
   background-color: transparent;
@@ -64,22 +64,18 @@
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   height: 26px;
-  padding: 4px 5px 0px 5px;
+  padding: 4px 5px 0 5px;
   width: 214px;
   outline: none;
-  /*inset 0px -10px 8px rgba(111, 191, 77, 0.8);*/
-  box-shadow: inset 0px 1px 0px #a6d3ff;
+  box-shadow: inset 0 1px 0 #a6d3ff;
   background: #3b79b7;
   transition: all 0.12s ease-in-out;
-  -moz-transition: all 0.12s ease-in-out;
-  -webkit-transition: all 0.12s ease-in-out;
-  -o-transition: all 0.12s ease-in-out;
   color: #fff;
-  text-shadow: 1px 1px 0px #3a77b3;
+  text-shadow: 1px 1px 0 #3a77b3;
   border-bottom: 1px solid #4686c4;
 }
 #visitorChat_header:focus {
-  background-color: #E0FFFF !important;
+  background-color: #e0ffff !important;
   border: 1px dotted grey;
   color: #000;
   text-shadow: none;
@@ -90,7 +86,7 @@
 }
 #visitorChat_header_text {
   display: inline;
-  font-family: Oswald, Helvetica, "Trebuchet MS", sans-serif;
+  font-family: Oswald, Helvetica, 'Trebuchet MS', sans-serif;
   font-size: 14px;
   position: relative;
   top: -1px;
@@ -99,19 +95,16 @@
   margin-right: 4px;
 }
 .offline #visitorChat_header {
-  box-shadow: 0px 0px 6px rgba(10, 10, 10, 0.3), inset 0px 1px 0px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 6px rgba(10, 10, 10, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   background: #ccc;
   transition: all 0.12s ease-in-out;
-  -moz-transition: all 0.12s ease-in-out;
-  -webkit-transition: all 0.12s ease-in-out;
-  -o-transition: all 0.12s ease-in-out;
   color: #333;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.6);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
   border-bottom: 1px solid #bbb;
 }
 .offline #visitorChat_header:hover {
   cursor: pointer;
-  box-shadow: 0px 0px 6px rgba(255, 255, 255, 0.8), inset 0px 1px 0px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   outline: none;
 }
 #visitorChat_logout {
@@ -122,12 +115,7 @@
   position: relative;
   width: 20px;
   color: #fff;
-  /* CSS3 */
   transition: opacity 0.2s ease-in-out;
-  -webkit-transition: opacity 0.1s ease-in-out;
-  -moz-transition: opacity 0.1s ease-in-out;
-  -o-transition: opacity 0.1s ease-in-out;
-  -ms-transition: opacity 0.1s ease-in-out;
 }
 #visitorChat_header:focus #visitorChat_logout,
 .offline #visitorChat_logout {
@@ -155,9 +143,7 @@
   font-weight: bold;
 }
 #visitorChat_container {
-  background: #F8F8F8;
   background: radial-gradient(center, ellipse cover, #f4f4f4 0%, rgba(255, 255, 255, 0.85) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#ebffffff', GradientType=1);
   display: none;
 }
 #visitorchat_clientLogin {
@@ -219,12 +205,11 @@ input#visitorChat_login_submit {
 }
 .unl_visitorchat_form legend {
   text-align: left;
-  line-height: 16px;
   line-height: 1rem;
   padding: 0 5px;
 }
 .unl_visitorchat_form fieldset ul li {
-  margin: 0px;
+  margin: 0;
 }
 .unl_visitorchat_submit {
   display: none;
@@ -236,7 +221,7 @@ input#visitorChat_login_submit {
   vertical-align: bottom;
 }
 .visitorChat_loading {
-  background: url("<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif");
+  background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif');
   background-repeat: no-repeat;
   background-position: 50% 70%;
   min-height: 50px;
@@ -253,18 +238,9 @@ input#visitorChat_login_submit {
 #visitorChat_footercontainer .validation-advice li,
 #visitorChat .validation-advice li,
 #visitorchat_clientLogin_anonwaning {
-  background: #fbec5d;
-  /* Old browsers */
-  /* FF3.6+ */
-  /* Chrome,Safari4+ */
-  /* Chrome10+,Safari5.1+ */
-  /* Opera 11.10+ */
-  /* IE10+ */
   background: linear-gradient(top, #fbec5d 33%, #fcd116 99%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fbec5d', endColorstr='#fcd116', GradientType=0);
-  /* IE6-9 */
-  box-shadow: 0px 2px 4px 0px #ccc;
+  box-shadow: 0 2px 4px 0 #ccc;
   border-radius: 4px;
   font-size: 10px;
   margin: 8px 0 !important;
@@ -273,7 +249,7 @@ input#visitorChat_login_submit {
   text-shadow: 0 1px rgba(255, 255, 255, 0.95);
 }
 #visitorChat_footercontainer #visitorChat_container {
-  background: #E3E3E3;
+  background: #e3e3e3;
   border-radius: 4px;
 }
 #visitorChat_footercontainer .advice-validate-email::after,
@@ -281,8 +257,8 @@ input#visitorChat_login_submit {
   bottom: 2.95em;
   right: 10px;
   border-width: 0 10px 10px;
-  border-color: #FBEC5D transparent;
-  content: "";
+  border-color: #fbec5d transparent;
+  content: '';
   position: relative;
   border-style: solid;
   display: inline-block;
@@ -293,8 +269,8 @@ input#visitorChat_login_submit {
   bottom: 15px;
   right: 130px;
   border-width: 0 10px 10px;
-  border-color: #FBEC5D transparent;
-  content: "";
+  border-color: #fbec5d transparent;
+  content: '';
   position: relative;
   border-style: solid;
   display: inline-block;
@@ -310,13 +286,12 @@ input#visitorChat_login_submit {
   text-align: center;
 }
 #visitorChat_footercontainer {
-  background: #E3E3E3;
+  background: #e3e3e3;
   border-radius: 5px 5px 5px 5px;
   display: none;
 }
 #visitorChat_closed {
   background: linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 0.25) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#59000000', GradientType=0);
   padding-bottom: 15px;
   text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
@@ -366,7 +341,7 @@ input#visitorChat_login_submit {
 #visitorChat_methods {
   padding: 2px;
   text-align: center;
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   width: 100%;
   border-top: 1px solid #999;
 }
@@ -377,9 +352,9 @@ input#visitorChat_login_submit {
   margin-right: 8px;
 }
 #visitorChat_sound_container {
-  height: 0px;
+  height: 0;
 }
-#visitorChat #visitorChat_messageForm label[for="visitorChat_messageBox"] {
+#visitorChat #visitorChat_messageForm label[for='visitorChat_messageBox'] {
   position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
