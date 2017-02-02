@@ -32,6 +32,14 @@ module.exports = function(grunt) {
                 dest: 'less/mixins'
             }
         },
+        lesshint: {
+            options: {
+                lesshintrc: true
+            },
+            files: {
+                src: ['less/*.less']
+            }
+        },
         less: {
             client: {
                 options: {
@@ -59,11 +67,11 @@ module.exports = function(grunt) {
         watch: {
             svgmin: {
                 files: ['images/svg/originals/*'],
-                tasks: ['svgmin'],
+                tasks: ['svgmin']
             },
             less: {
                 files: ['less/*', 'less/*/*'],
-                tasks: ['curl-dir', 'less'],
+                tasks: ['curl-dir', 'lesshint', 'less']
             }
         }
     });
