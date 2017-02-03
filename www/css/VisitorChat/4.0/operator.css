@@ -15,11 +15,11 @@ h1 {
 #share_to_chzn {
   width: 320px !important;
 }
-.chzn-drop {
-  width: 318px !important;
-}
 #share_to_chzn input {
   width: 270px !important;
+}
+.chzn-drop {
+  width: 318px !important;
 }
 #visitorChat_header {
   display: inline;
@@ -89,16 +89,6 @@ h1 {
   padding: 2px;
   border-radius: 3px;
 }
-#visitorChat_InvitationList li .name {
-  font-weight: bold;
-  text-decoration: none;
-}
-#visitorChat_InvitationList li .sub {
-  display: block;
-  font-weight: normal;
-  font-size: .85em;
-  text-decoration: none;
-}
 #maincontent #visitorChat_InvitationList .completed,
 #maincontent #visitorChat_InvitationList > li > ul > .accepted {
   background: linear-gradient(top, #a5e17a 0%, #77cb52 100%);
@@ -131,6 +121,16 @@ h1 {
   border: 1px solid #d84848;
   color: white;
   text-shadow: 0 1px #ad1f1f;
+}
+#visitorChat_InvitationList li .name {
+  font-weight: bold;
+  text-decoration: none;
+}
+#visitorChat_InvitationList li .sub {
+  display: block;
+  font-weight: normal;
+  font-size: .85em;
+  text-decoration: none;
 }
 #visitorChat_InvitationList > li > ul {
   margin-top: .4em;
@@ -170,18 +170,6 @@ h1 {
   list-style: none;
   margin-bottom: 2px;
 }
-.visitorChat_client {
-  border-left: 2px solid #76cc52;
-  font-weight: bold;
-}
-.visitorChat_me {
-  background-color: #f8f8f8;
-  border-left: 2px solid transparent;
-  border-radius: 4px;
-}
-.visitorChat_them {
-  border-left: 2px solid #e0e0e0;
-}
 #visitorChat_chatBox ul li .stamp {
   color: #aaa;
   display: block;
@@ -196,6 +184,18 @@ h1 {
   font-size: .8em;
   font-weight: normal;
   margin-right: 5px;
+}
+.visitorChat_client {
+  border-left: 2px solid #76cc52;
+  font-weight: bold;
+}
+.visitorChat_me {
+  background-color: #f8f8f8;
+  border-left: 2px solid transparent;
+  border-radius: 4px;
+}
+.visitorChat_them {
+  border-left: 2px solid #e0e0e0;
 }
 .unl_visitorchat_submit {
   border: 3px solid white;
@@ -290,7 +290,7 @@ h1 {
   border-bottom: 1px solid #4096ee;
   text-shadow: 0 -1px 2px #0f529b;
 }
-#clientList ul li.selected .conversationLink::before {
+#clientList ul li.selected .conversationLink:before {
   content: '';
   position: absolute;
   left: -1px;
@@ -300,12 +300,6 @@ h1 {
   border-width: 0 6px 7px 0;
   border-color: transparent #4096ee transparent transparent;
   bottom: -8px;
-}
-.conversationLink span {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 115px;
 }
 #clientList .unread_count {
   display: none;
@@ -324,7 +318,7 @@ h1 {
   right: 0;
   display: inline;
 }
-#clientList .unread_message::after {
+#clientList .unread_message:after {
   width: 0;
   height: 0;
   border-bottom: 5px solid transparent;
@@ -334,6 +328,12 @@ h1 {
   position: absolute;
   left: -0.3em;
   top: .3em;
+}
+.conversationLink span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 115px;
 }
 #chatRequestCountDown {
   color: red;
@@ -361,12 +361,12 @@ h1 {
   margin: 0;
   font-size: .8em;
 }
-#visitorChat_url_title {
-  display: none;
-}
 #visitorChat_conversation_header .client-name {
   font-size: 1.25em;
   font-weight: bold;
+}
+#visitorChat_url_title {
+  display: none;
 }
 #visitorChat_container {
   position: relative;
@@ -377,6 +377,19 @@ h1 {
   top: -3.5em;
   right: 1em;
   width: 190px;
+}
+#toggleOperatorStatus:hover {
+  background: linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
+  border: 1px solid #9b9b9b;
+  border-bottom: 1px solid #999;
+  box-shadow: inset 0 1px 0 0 #bcbcbc, 0 0 8px 0 #c8c8c8;
+  text-shadow: 0 -1px 0 #8e8e8e;
+  cursor: pointer;
+}
+#toggleOperatorStatus:active {
+  border: 1px solid #999;
+  border-bottom: 1px solid #898989;
+  box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eee, 0 0 8px 0 #c8c8c8;
 }
 #currentOperatorStatus {
   color: white !important;
@@ -411,19 +424,6 @@ h1 {
   text-shadow: 0 -1px 0 #4c9021;
   width: 150px;
 }
-#toggleOperatorStatus:hover {
-  background: linear-gradient(top, #b2b2b2 0%, #9b9b9b 100%);
-  border: 1px solid #9b9b9b;
-  border-bottom: 1px solid #999;
-  box-shadow: inset 0 1px 0 0 #bcbcbc, 0 0 8px 0 #c8c8c8;
-  text-shadow: 0 -1px 0 #8e8e8e;
-  cursor: pointer;
-}
-#toggleOperatorStatus:active {
-  border: 1px solid #999;
-  border-bottom: 1px solid #898989;
-  box-shadow: inset 0 0 8px 4px #898989, 0 1px 0 0 #eee, 0 0 8px 0 #c8c8c8;
-}
 #visitorChat_closed {
   color: #df0101;
   position: absolute;
@@ -449,9 +449,6 @@ h1 {
 #visitorChat_conversation_options ul {
   margin: 0;
 }
-#visitorChat_conversation_options a {
-  border: 0;
-}
 #visitorChat_conversation_options ul li {
   float: left;
   margin-left: 10px;
@@ -469,6 +466,9 @@ h1 {
 #visitorChat_conversation_options ul li a {
   display: block;
   height: 24px;
+}
+#visitorChat_conversation_options a {
+  border: 0;
 }
 #leaveConversation a {
   background: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/sprites.png') no-repeat 0 0;
@@ -518,6 +518,9 @@ h1 {
 #visitorChat_brightBox h2 {
   margin-top: 0;
 }
+#visitorChat_brightBox ul li {
+  list-style-type: none;
+}
 #shareForm fieldset {
   margin: 0;
 }
@@ -558,9 +561,6 @@ h1 {
 }
 #maincontent .visitorChat_topicPage a:hover {
   text-decoration: underline;
-}
-#visitorChat_brightBox ul li {
-  list-style-type: none;
 }
 .faq dt {
   font-weight: bold;
@@ -610,6 +610,9 @@ p.sub-head {
 .stats-table #dateRange {
   display: inline-block;
 }
+.stats-table #dateRange {
+  float: right;
+}
 #maincontent .stats-table h3 {
   margin-top: -5px;
   background: #76cc52;
@@ -618,15 +621,6 @@ p.sub-head {
   color: white;
   text-shadow: 0 -1px 1px #4c6b3f;
   box-shadow: 0 -1px 5px 0 rgba(0, 0, 0, 0.25), inset 0 -4px 8px -4px green;
-}
-.stats-table #dateRange {
-  float: right;
-}
-.stats-form input {
-  width: inherit;
-}
-#statustimeline {
-  margin-bottom: 10px;
 }
 #maincontent .big-number {
   font-size: 2.2em;
@@ -641,7 +635,7 @@ p.sub-head {
   color: grey;
 }
 #maincontent .big-number,
-.big-number + p {
+#maincontent .big-number + p {
   text-align: center;
   margin-bottom: 0;
 }
@@ -663,6 +657,12 @@ p.sub-head {
   margin-bottom: 10px;
   text-align: center;
   width: 100%;
+}
+.stats-form input {
+  width: inherit;
+}
+#statustimeline {
+  margin-bottom: 10px;
 }
 .assign-stats {
   text-align: center;
