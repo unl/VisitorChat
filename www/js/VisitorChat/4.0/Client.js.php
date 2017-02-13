@@ -727,15 +727,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (available) {
                 $('#visitorChat').addClass('online');
                 $('#visitorChat').removeClass('offline');
-                $('#visitorChat_header_text').addClass('wdn-icon-comment-alt');
-                $('#visitorChat_header_text').removeClass('wdn-icon-comment');
                 $('#visitorChat_header_text').text("Let's Chat");
                 VisitorChat.method = 'chat';
             } else {
                 $('#visitorChat').addClass('offline');
                 $('#visitorChat').removeClass('online');
-                $('#visitorChat_header_text').addClass('wdn-icon-comment');
-                $('#visitorChat_header_text').removeClass('wdn-icon-comment-alt');
                 $('#visitorChat_header_text').text('Email Us');
                 VisitorChat.method = 'email';
             }
