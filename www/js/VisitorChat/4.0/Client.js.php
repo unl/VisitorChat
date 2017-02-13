@@ -264,13 +264,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
             $('#visitorchat_clientLogin').data('validation', false);
-            $('#visitorChat_confirmationEamilForm').data('validation', false);
+            $('#visitorChat_confirmationEmailForm').data('validation', false);
 
             //Require email for questions submitted via the footer comment form.
             $('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
 
             //Validator
-            $('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+            $('#visitorchat_clientLogin, #visitorChat_confirmationEmailForm').validation();
         },
 
         initWatchers:function () {
@@ -295,7 +295,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 '#visitorChat_footercontainer #visitorchat_clientLogin,' +
                 '#visitorchat_clientLogin,' +
                 '.unl_visitorchat_form,' +
-                '#visitorChat_confirmationEamilForm').unbind();
+                '#visitorChat_confirmationEmailForm').unbind();
 
             this.initValidation();
 
@@ -321,7 +321,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return true;
             });
 
-            $('#visitorChat_confirmationEamilForm').bind('validate-form', function (event, result) {
+            $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
                     $('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
 
@@ -445,7 +445,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 if (e.which == 13) {
                     e.preventDefault();
 
-                    $('#visitorChat_confirmationEamilForm').submit();
+                    $('#visitorChat_confirmationEmailForm').submit();
                 }
             });
 
