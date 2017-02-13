@@ -26,30 +26,30 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             var title = this.getSiteTitle();
 
-            $("#visitorChat_footerHeader").html('Send ' + title + ' a message');
+            $('#visitorChat_footerHeader').html('Send ' + title + ' a message');
 
-            $("label[for='visitorChat_messageBox']").text('Send a comment or ask us a question');
+            $('label[for="visitorChat_messageBox"]').text("Send a comment or ask us a question");
 
             //Require email if we need to.
             if (this.config.email_required) {
-                $("label[for='visitorChat_email']").text("Email (Required)");
+                $('label[for="visitorChat_email"]').text("Email (Required)");
                 $('#visitorChat_email').addClass('required-entry');
             }
 
             if (this.config.name_required) {
-                $("label[for='visitorChat_name']").text("Name (Required)");
+                $('label[for="visitorChat_name"]').text("Name (Required)");
                 $('#visitorChat_name').addClass('required-entry');
             }
 
             VisitorChat.displayWelcomeMessage();
 
             if (VisitorChat.operatorsAvailable) {
-                $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
+                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
 
                 $('#visitorChat_methods_chat').one('click', function() {
                     VisitorChat.stop(function(){
                         VisitorChat.startChat();
-                        $("#visitorChat_messageBox").keyup();
+                        $('#visitorChat_messageBox').keyup();
                     });
 
                     return false;
@@ -67,26 +67,26 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return this.start();
             }
 
-            $("#visitorChat_container #visitorChat_email_fallback_text").html('If no operators are available,&nbsp;I would like to receive an email.');
+            $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
 
             this.start();
 
             var title = this.getSiteTitle();
 
-            $("#visitorChat_footerHeader").html('Chat with ' + title);
+            $('#visitorChat_footerHeader').html('Chat with ' + title);
 
-            $("label[for='visitorChat_messageBox']").text("How can we assist you?");
+            $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
             //Submit as chat
-            $("#visitorChat_login_chatmethod").val("CHAT");
+            $('#visitorChat_login_chatmethod').val("CHAT");
 
-            $("#visitorChat_container").append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_email' href='#'>email us</a></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_email' href='#'>email us</a></div>");
 
             VisitorChat.displayWelcomeMessage();
 
             $('#visitorChat_methods_email').one('click', function() {
                 VisitorChat.stop(function(){
                     VisitorChat.startEmail();
-                    $("#visitorChat_messageBox").keyup();
+                    $('#visitorChat_messageBox').keyup();
                 });
                 return false;
             });
@@ -153,7 +153,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_container').remove();
 
             //set up a container.
-            $("#visitorChat").append(
+            $('#visitorChat').append(
                 "<div id='visitorChat_container'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
@@ -162,9 +162,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //set up a container.
             var html = "<div id='visitorChat_container'>Please Wait...</div>";
 
-            $("#visitorchat_clientLogin").replaceWith("<div id='visitorChat_container'></div>");
+            $('#visitorchat_clientLogin').replaceWith("<div id='visitorChat_container'></div>");
 
-            $("#visitorChat_container").show();
+            $('#visitorChat_container').show();
         },
 
         launchChatContainer:function () {
@@ -172,7 +172,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_container').remove();
 
             //set up a container.
-            $("#visitorChat").append(
+            $('#visitorChat').append(
                 "<div id='visitorChat_container'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
@@ -180,12 +180,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             this.chatStatus = "LOGIN";
 
-            $("#visitorchat_clientLogin").parent().html("Disabled");
+            $('#visitorchat_clientLogin').parent().html("Disabled");
 
             //Display and set the name (if found).
-            $("#visitorChat_container").delay(10).slideDown(320, function() {
+            $('#visitorChat_container').delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
-                    $("#visitorChat_name").val(idm.getDisplayName());
+                    $('#visitorChat_name').val(idm.getDisplayName());
                 }
             });
         },
@@ -227,7 +227,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.initWatchers();
 
             //remove the warning if they start to enter an email
-            $("#visitorChat_email").keyup(function () {
+            $('#visitorChat_email').keyup(function () {
                 $('#visitorchat_clientLogin_anonwaning').remove();
                 $('#visitorChat_login_submit').val("Submit");
             });
@@ -300,13 +300,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.initValidation();
 
             //Reveal timestamp
-            $("#visitorChat_chatBox > ul > li").hover(
+            $('#visitorChat_chatBox > ul > li').hover(
                 function () {
-                    $(this).children(".timestamp").animate({'opacity':'1'}, 120);
-                    $(this).children(".stamp").animate({'opacity':'1'}, 120);
+                    $(this).children('.timestamp').animate({'opacity':'1'}, 120);
+                    $(this).children('.stamp').animate({'opacity':'1'}, 120);
                 }, function () {
-                    $(this).children(".timestamp").animate({'opacity':'0'}, 120);
-                    $(this).children(".stamp").animate({'opacity':'0.65'}, 120);
+                    $(this).children('.timestamp').animate({'opacity':'0'}, 120);
+                    $(this).children('.stamp').animate({'opacity':'0.65'}, 120);
                 }
             );
 
@@ -347,10 +347,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     return;
                 }
 
-                if (!$('#visitorChat_container').is(":visible")) {
-                    $("#visitorChat_container").slideDown(320);
+                if (!$('#visitorChat_container').is(':visible')) {
+                    $('#visitorChat_container').slideDown(320);
                 } else {
-                    $("#visitorChat_container").slideUp(320);
+                    $('#visitorChat_container').slideUp(320);
 
                     if (VisitorChat.chatStatus == "LOGIN") {
                         VisitorChat.stop();
@@ -397,45 +397,45 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
                 //if email_fallback is checked, make sure that the email is required.
-                $("#visitorChat_email_fallback").click(function () {
-                    if ($(this).is(":checked") || this.config.email_required) {
-                        $("label[for='visitorChat_email']").text("Email (Required)");
+                $('#visitorChat_email_fallback').click(function () {
+                    if ($(this).is(':checked') || this.config.email_required) {
+                        $('label[for="visitorChat_email"]').text("Email (Required)");
                         $('#visitorChat_email').addClass('required-entry');
                     } else {
-                        $("label[for='visitorChat_email'").text("Email (Optional)");
+                        $('label[for="visitorChat_email"]').text("Email (Optional)");
                         $('#visitorChat_email').removeClass('required-entry');
                     }
                 });
             }
 
             //This will slide down the Name and Email fields, plus the Ask button
-            $("#visitorChat_messageBox").one("keyup", function () {
+            $('#visitorChat_messageBox').one('keyup', function () {
                 if (idm.getDisplayName()) {
-                    $("#visitorChat_name").val(idm.getDisplayName());
+                    $('#visitorChat_name').val(idm.getDisplayName());
                 }
                 if (idm.getEmailAddress()) {
-                    $("#visitorChat_email").val(idm.getEmailAddress());
+                    $('#visitorChat_email').val(idm.getEmailAddress());
                 }
 
-                $(".visitorChat_info, #visitorChat_login_submit").slideDown("fast", function(){
-                    if (VisitorChat.initialMessage && !$("#visitorChat_messageBox").is(":focus")) {
-                        $("#visitorChat_email").focus();
+                $('.visitorChat_info, #visitorChat_login_submit').slideDown('fast', function(){
+                    if (VisitorChat.initialMessage && !$('#visitorChat_messageBox').is(':focus')) {
+                        $('#visitorChat_email').focus();
                     }
                 });
             });
 
-            $("#visitorChat_failedOptions_yes").click(function() {
+            $('#visitorChat_failedOptions_yes').click(function() {
                 VisitorChat.stop(function(){
                     VisitorChat.startEmail();
                     if (VisitorChat.initialMessage) {
-                    $("#visitorChat_messageBox").val(VisitorChat.initialMessage);
+                    $('#visitorChat_messageBox').val(VisitorChat.initialMessage);
                     }
 
-                    $("#visitorChat_name").val(VisitorChat.name);
-                    $("#visitorChat_email").val(VisitorChat.email);
+                    $('#visitorChat_name').val(VisitorChat.name);
+                    $('#visitorChat_email').val(VisitorChat.email);
 
-                    $("#visitorChat_email").focus();
-                    $("#visitorChat_messageBox").keyup();
+                    $('#visitorChat_email').focus();
+                    $('#visitorChat_messageBox').keyup();
                 });
 
                 return true;
@@ -449,16 +449,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 }
             });
 
-            $("#visitorChat_failedOptions_no").click(function() {
+            $('#visitorChat_failedOptions_no').click(function() {
                 VisitorChat.stop();
 
                 return true;
             });
 
             if (this.chatStatus) {
-                $("#visitorChat_logout").css({'display':'inline-block'});
+                $('#visitorChat_logout').css({'display':'inline-block'});
             } else {
-                $("#visitorChat_logout").css({'display':'none'});
+                $('#visitorChat_logout').css({'display':'none'});
             }
 
             //set the for_url
@@ -500,11 +500,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
          */
         onConversationStatus_Searching:function (data) {
             if (this.method == 'chat') {
-                var html = '<div class="chat_notify visitorChat_loading">Please wait while we find someone to help you.</div>';
-                this.updateChatContainerWithHTML("#visitorChat_container", html);
+                var html = "<div class='chat_notify visitorChat_loading'>Please wait while we find someone to help you.</div>";
+                this.updateChatContainerWithHTML('#visitorChat_container', html);
             } else {
-                var html = '<div class="chat_notify visitorChat_loading">Please wait while we process your request.</div>';
-                this.updateChatContainerWithHTML("#visitorChat_container", html);
+                var html = "<div class='chat_notify visitorChat_loading'>Please wait while we process your request.</div>";
+                this.updateChatContainerWithHTML('#visitorChat_container', html);
             }
 
         },
@@ -526,10 +526,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         onLogin:function () {
-            this.clientName = $("#visitorChat_name").val();
-            this.initialMessage = $("#visitorChat_messageBox").val();
-            this.name = $("#visitorChat_name").val();
-            this.email = $("#visitorChat_email").val();
+            this.clientName = $('#visitorChat_name').val();
+            this.initialMessage = $('#visitorChat_messageBox').val();
+            this.name = $('#visitorChat_name').val();
+            this.email = $('#visitorChat_email').val();
 
             this._super();
 
@@ -545,7 +545,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         onConversationStatus_Closed:function (data) {
-            if ($("#visitorChat_confirmationContainer").length != 0) {
+            if ($('#visitorChat_confirmationContainer').length != 0) {
                 return false;
             }
 
@@ -553,11 +553,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             this.confirmationHTML = data['confirmationHTML'];
 
-            $("#visitorChat_chatBox").height("150px");
+            $('#visitorChat_chatBox').height('150px');
 
-            $("#visitorChat_messageForm").remove();
+            $('#visitorChat_messageForm').remove();
 
-            $("#visitorChat_closed").append(data['confirmationHTML'])
+            $('#visitorChat_closed').append(data['confirmationHTML'])
 
             this.initWatchers();
 
@@ -579,7 +579,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             if (is_typing) {
-                WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
+                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing").show(500);
             } else {
                 WDN.jQuery('#visitorChat_is_typing').hide(500);
             }
@@ -614,15 +614,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.launchChatContainer();
             }
 
-            this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
+            this.updateChatContainerWithHTML('#visitorChat_container', data['html']);
         },
 
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
-            var html = '<div class="chat_notify">Unfortunately all of our operators are currently busy.  Would you like to send an email instead?' +
-                '<div id="visitorChat_failedOptions"><a id="visitorChat_failedOptions_yes" href="#">Yes</a> <a id="visitorChat_failedOptions_no" href="#">No</a></div></div>';
-            this.updateChatContainerWithHTML("#visitorChat_container", html);
+            var html = "<div class='chat_notify'>Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
+                "<div id='visitorChat_failedOptions'><a id='visitorChat_failedOptions_yes' href='#'>Yes</a> <a id='visitorChat_failedOptions_no' href='#'>No</a></div></div>";
+            this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
 
         updatePHPSESSID:function (phpsessid) {
@@ -640,7 +640,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (document.createStyleSheet) {
                 document.createStyleSheet(stylesheet);
             } else {
-                $("head").append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />"));
+                $('head').append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />"));
             }
 
             $(window).load(function () {
@@ -651,7 +651,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $("body").append("" +
+            $('body').append("" +
                 "<div id='visitorChat' class='offline' aria-live='polite'>" +
                     "<div id='visitorChat_header' tabindex='0'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
@@ -678,9 +678,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $.xhrPool.abortAll();
 
             callbackSet = false;
-            if ($('#visitorChat_container').is(":visible")) {
+            if ($('#visitorChat_container').is(':visible')) {
                 callbackSet = true;
-                $("#visitorChat_container").slideUp(400, $.proxy(function () {
+                $('#visitorChat_container').slideUp(400, $.proxy(function () {
                     if (callback) {
                         callback();
                     }
@@ -717,7 +717,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         closeChatContainer: function() {
-            $("#visitorChat_logout").css({'display':'none'});
+            $('#visitorChat_logout').css({'display':'none'});
         },
 
         displaySiteAvailability:function (available) {
@@ -726,18 +726,18 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             if (available) {
-                $("#visitorChat").addClass('online');
-                $("#visitorChat").removeClass('offline');
-                $("#visitorChat_header_text").addClass('wdn-icon-comment-alt');
-                $("#visitorChat_header_text").removeClass('wdn-icon-comment');
-                $("#visitorChat_header_text").text("Let's Chat");
+                $('#visitorChat').addClass('online');
+                $('#visitorChat').removeClass('offline');
+                $('#visitorChat_header_text').addClass('wdn-icon-comment-alt');
+                $('#visitorChat_header_text').removeClass('wdn-icon-comment');
+                $('#visitorChat_header_text').text("Let's Chat");
                 VisitorChat.method = 'chat';
             } else {
-                $("#visitorChat").addClass('offline');
-                $("#visitorChat").removeClass('online');
-                $("#visitorChat_header_text").addClass('wdn-icon-comment');
-                $("#visitorChat_header_text").removeClass('wdn-icon-comment-alt');
-                $("#visitorChat_header_text").text('Email Us');
+                $('#visitorChat').addClass('offline');
+                $('#visitorChat').removeClass('online');
+                $('#visitorChat_header_text').addClass('wdn-icon-comment');
+                $('#visitorChat_header_text').removeClass('wdn-icon-comment-alt');
+                $('#visitorChat_header_text').text('Email Us');
                 VisitorChat.method = 'email';
             }
 
