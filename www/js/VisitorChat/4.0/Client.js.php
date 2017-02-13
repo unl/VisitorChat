@@ -299,17 +299,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             this.initValidation();
 
-            //Reveal timestamp
-            $('#visitorChat_chatBox > ul > li').hover(
-                function () {
-                    $(this).children('.timestamp').animate({'opacity':'1'}, 120);
-                    $(this).children('.stamp').animate({'opacity':'1'}, 120);
-                }, function () {
-                    $(this).children('.timestamp').animate({'opacity':'0'}, 120);
-                    $(this).children('.stamp').animate({'opacity':'0.65'}, 120);
-                }
-            );
-
             $('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
                 $('#visitorchat_clientLogin_anonwaning').remove();
 
