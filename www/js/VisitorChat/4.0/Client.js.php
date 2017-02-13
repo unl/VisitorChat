@@ -509,7 +509,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         },
 
-
         /**
          * onConversationStatus_Emailed
          * Related status code: EMAILED
@@ -754,5 +753,3 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     });
 
 });
-
-
