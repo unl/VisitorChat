@@ -183,6 +183,8 @@
 
 #visitorChat_logout {
     display: none;
+    height: 1em;
+    width: 1em;
     margin-left: 1em;
     font-size: .563rem;
 
@@ -194,12 +196,30 @@
         margin-right: 0;
     }
 
-    .offline & {
-        color: @ui09;
-    }
+    &[class*='wdn-icon-'] {
 
-    .online & {
-        color: #fff;
+        #footer & {
+            padding-left: 0;
+
+            &:before {
+                top: 0;
+                font-size: 1em;
+            }
+        }
+
+        #footer .offline & {
+
+            &:before {
+                color: @ui09;
+            }
+        }
+
+        #footer .online & {
+
+            &:before {
+                color: #fff;
+            }
+        }
     }
 }
 
@@ -211,10 +231,11 @@
 }
 
 #visitorChat_chatBox {
+    position: relative;
     height: 14.204rem;
     overflow-x: hidden;
     overflow-y: scroll;
-    z-index: 1;
+    z-index: 0;
     font-size: .935em;
 
     ul {
@@ -282,7 +303,8 @@
     line-height: 1.425;
 }
 
-#visitorChat_login_submit {
+#visitorChat_login_submit,
+#visitorChat_message_submit {
     margin-top: .75em;
     padding: .8em 1em .75em;
     white-space: normal;
