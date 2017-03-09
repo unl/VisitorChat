@@ -10,6 +10,5 @@
     </fieldset>
     <input type="hidden" name="conversations_id" value='<?php echo $context->conversations_id ?>'/>
     <input type="hidden" name="_class" value='<?php echo get_class($context->getRawObject()); ?>'/>
-
+    <input id='visitorChat_message_submit' class="wdn-button wdn-button-triad" type="submit" value="Submit" name="visitorChat_message_submit" />
 </form>
-
