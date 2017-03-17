@@ -622,7 +622,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
             var html = "<div class='chat_notify' >Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
-                "<div id='visitorChat_failedOptions'><a id='visitorChat_failedOptions_yes' href='#'>Yes</a> <a id='visitorChat_failedOptions_no' href='#'>No</a></div></div>";
+                "<div id='visitorChat_failedOptions'><button id='visitorChat_failedOptions_yes'>Yes</button> <button id='visitorChat_failedOptions_no'>No</button></div></div>";
             this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
 
