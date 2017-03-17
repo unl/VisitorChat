@@ -154,7 +154,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='0'>" +
+                "<div id='visitorChat_container' tabindex='-1'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
@@ -554,8 +554,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_chatBox').height('150px');
 
             $('#visitorChat_messageForm').remove();
+            
+            var $closed_container = $('#visitorChat_closed');
 
-            $('#visitorChat_closed').append(data['confirmationHTML'])
+            $closed_container.append(data['confirmationHTML']);
+            $closed_container.attr('tabindex', '-1').focus();
 
             this.initWatchers();
 
