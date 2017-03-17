@@ -335,23 +335,32 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     //Must be space or enter to continue
                     return;
                 }
+                
+                var $header = $(this);
 
                 if (!$('#visitorChat_container').is(':visible')) {
+                    //Open the container
                     $('#visitorChat_container').slideDown(320);
+                    $header.attr('aria-pressed', 'true');
                 } else {
+                    //Close the container
                     $('#visitorChat_container').slideUp(320);
+                    $header.attr('aria-pressed', 'false');
 
                     if (VisitorChat.chatStatus == "LOGIN") {
+                        //If the user hasn't done anything yet, simply stop everything and exit early
                         VisitorChat.stop();
                         return false;
                     }
                 }
 
                 if (VisitorChat.chatOpened) {
+                    //If we are chatting or pending approval, don't do anything
                     if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
                         return false;
                     }
                 } else {
+                    //Otherwise start chat/email forms
                     if (VisitorChat.method == 'chat') {
                         VisitorChat.startChat();
                     } else {
@@ -641,9 +650,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#footer').append("" +
                 "<div id='visitorChat' class='offline' aria-live='polite'>" +
-                    "<div id='visitorChat_header' tabindex='0'>" +
+                    "<div id='visitorChat_header' tabindex='0' role='button' aria-pressed='false'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
-                            "<a href='#' id='visitorChat_logout' class='wdn-icon-cancel' title='close and log out of chat'></a>" +
+                    "</div>" +
+                    "<div id='visitor-chat-header-options'>" +
+                        "<button id='visitorChat_logout' aria-label='close and log out of chat'>" +
+                            "<span class='wdn-icon-cancel'></span>" +
+                        "</button>" +
                     "</div>" +
                     "<div id='visitorChat_sound_container'></div>" +
                 "</div>");
