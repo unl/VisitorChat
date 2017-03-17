@@ -174,7 +174,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='0'>" +
+                "<div id='visitorChat_container' tabindex='-1'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );

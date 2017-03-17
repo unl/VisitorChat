@@ -542,7 +542,20 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Update the html
-        $(selector).html(html);
+        var $container = $(selector);
+        $container.html(html);
+        //Send focus to the first child for a11y (notify of change)
+        //Contents should be wrapped in their own container div or element, so we need to focus that.
+        var $first_child = $(':first-child', $container);
+        if ($first_child.length) {
+            //focus first child
+            console.log($first_child.eq(0));
+            $first_child.eq(0).attr('tabindex', '-1').focus();
+        } else {
+            //focus the container
+            $container.attr('tabindex', '-1').focus();
+        }
+        
 
         //Scroll if we can.
         this.scroll();
