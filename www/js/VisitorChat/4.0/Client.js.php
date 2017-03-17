@@ -44,7 +44,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             VisitorChat.displayWelcomeMessage();
 
             if (VisitorChat.operatorsAvailable) {
-                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_chat' href='#'>chat with us</a> </div>");
+                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
 
                 $('#visitorChat_methods_chat').one('click', function() {
                     VisitorChat.stop(function(){
@@ -79,7 +79,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Submit as chat
             $('#visitorChat_login_chatmethod').val("CHAT");
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <a id='visitorChat_methods_email' href='#'>email us</a></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
 
             VisitorChat.displayWelcomeMessage();
 
@@ -313,12 +313,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    $('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
+                    $('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + " <br /> <button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
 
                     $('#visitorChat_sendAnotherConfirmation').click(function(){
-                        $('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html());
+                        $('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html()).focus();
                         VisitorChat.initWatchers();
                         return false;
                     });

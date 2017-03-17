@@ -1,4 +1,4 @@
-<div id='visitorChat_confirmationContainer'>
+<div id='visitorChat_confirmationContainer' tabindex="-1">
     Enter your email address to receive a transcript of this conversation.
     <form id='visitorChat_confirmationEmailForm' action="<?php echo UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->conversation->id . '/sendConfirmEmail', true, true)?>" class='unl_visitorchat_form' method="POST">
         <fieldset>
