@@ -650,7 +650,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         init:function (serverURL, refreshRate) {
             $('#footer').append("" +
-                "<div id='visitorChat' class='offline' aria-live='polite'>" +
+                "<div id='visitorChat' class='offline'>" +
                     "<div id='visitorChat_header' tabindex='0' role='button' aria-pressed='false'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                     "</div>" +
