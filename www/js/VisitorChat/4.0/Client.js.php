@@ -154,7 +154,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container'>" +
+                "<div id='visitorChat_container' tabindex='0'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
@@ -164,7 +164,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorchat_clientLogin').replaceWith("<div id='visitorChat_container'></div>");
 
-            $('#visitorChat_container').show();
+            $('#visitorChat_container').show().focus();
+            
         },
 
         launchChatContainer:function () {
@@ -173,7 +174,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container'>" +
+                "<div id='visitorChat_container' tabindex='0'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
@@ -183,7 +184,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorchat_clientLogin').parent().html("Disabled");
 
             //Display and set the name (if found).
-            $('#visitorChat_container').delay(10).slideDown(320, function() {
+            $('#visitorChat_container').focus().delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
                     $('#visitorChat_name').val(idm.getDisplayName());
                 }
