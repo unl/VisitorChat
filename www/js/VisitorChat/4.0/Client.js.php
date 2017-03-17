@@ -499,10 +499,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
          */
         onConversationStatus_Searching:function (data) {
             if (this.method == 'chat') {
-                var html = "<div class='chat_notify visitorChat_loading'>Please wait while we find someone to help you.</div>";
+                var html = "<div class='chat_notify visitorChat_loading' tabindex='-1'>Please wait while we find someone to help you.</div>";
                 this.updateChatContainerWithHTML('#visitorChat_container', html);
             } else {
-                var html = "<div class='chat_notify visitorChat_loading'>Please wait while we process your request.</div>";
+                var html = "<div class='chat_notify visitorChat_loading' tabindex='-1'>Please wait while we process your request.</div>";
                 this.updateChatContainerWithHTML('#visitorChat_container', html);
             }
 
@@ -621,7 +621,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
-            var html = "<div class='chat_notify'>Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
+            var html = "<div class='chat_notify' >Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
                 "<div id='visitorChat_failedOptions'><a id='visitorChat_failedOptions_yes' href='#'>Yes</a> <a id='visitorChat_failedOptions_no' href='#'>No</a></div></div>";
             this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
