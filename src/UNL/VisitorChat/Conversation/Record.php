@@ -1,6 +1,8 @@
 <?php
 namespace UNL\VisitorChat\Conversation;
 
+use UNL\VisitorChat\Controller;
+
 class Record extends \Epoch\Record
 {
     //The id of the current conversation
@@ -81,7 +83,7 @@ class Record extends \Epoch\Record
      */
     function save()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_updated = Controller::epochToDateTime();;
         return parent::save();
     }
 
@@ -136,7 +138,7 @@ class Record extends \Epoch\Record
      */
     function getEditURL()
     {
-        return \UNL\VisitorChat\Controller::$url . "conversation/" . $this->id . "/edit";
+        return Controller::$url . "conversation/" . $this->id . "/edit";
     }
     
     /**
@@ -193,7 +195,7 @@ class Record extends \Epoch\Record
      */
     function getLastMessage()
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         $sql = "SELECT id FROM messages WHERE conversations_id = " . (int)$this->id . " ORDER BY date_created DESC LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -254,7 +256,7 @@ class Record extends \Epoch\Record
      */
     function insert()
     {
-        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_created = Controller::epochToDateTime();
         $this->client_is_typing = self::CLIENT_IS_NOT_TYPING;
         
         return parent::insert();
@@ -267,7 +269,7 @@ class Record extends \Epoch\Record
      */
     function ping()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_updated = Controller::epochToDateTime();;
         $this->save();
     }
     
@@ -292,10 +294,10 @@ class Record extends \Epoch\Record
     function getUnreadMessageCount()
     {
         if (!isset($_SESSION['last_viewed'][$this->id])) {
-            $_SESSION['last_viewed'][$this->id] = \UNL\VisitorChat\Controller::epochToDateTime(1);
+            $_SESSION['last_viewed'][$this->id] = Controller::epochToDateTime(1);
         }
         
-        $db  = \UNL\VisitorChat\Controller::getDB();
+        $db  = Controller::getDB();
         $sql = "SELECT count(id) as unread FROM messages WHERE conversations_id = " . (int)$this->id . " AND date_created > '" . $db->real_escape_string($_SESSION['last_viewed'][$this->id]) . "'";
         
         if (!$result = $db->query($sql)) {
@@ -319,7 +321,7 @@ class Record extends \Epoch\Record
             $message = new \UNL\VisitorChat\Message\Record();
             $message->users_id = 1; //system
             $message->conversations_id = $this->id;
-            $message->message = "This conversation has had no activity for " . \UNL\VisitorChat\Controller::$conversationTTL . " minutes and has been closed.";
+            $message->message = "This conversation has had no activity for " . Controller::$conversationTTL . " minutes and has been closed.";
             $message->save();
         }
 
@@ -334,6 +336,10 @@ class Record extends \Epoch\Record
      */
     function close($closeStatus = false, $closerID = false)
     {
+        if ('CLOSED' === $this->status) {
+            return;
+        }
+        
         if (!$closerID) {
             $closerID = \UNL\VisitorChat\User\Service::getCurrentUser()->id;
         }
@@ -352,7 +358,7 @@ class Record extends \Epoch\Record
         }
 
         //Update the chat and mark it as closed.
-        $this->date_closed = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_closed = Controller::epochToDateTime();
         $this->status       = "CLOSED";
         $this->close_status = $closeStatus;
         $this->closer_id    = $closerID;
@@ -372,6 +378,16 @@ class Record extends \Epoch\Record
         //Send a transcript email to the client if we need to.
         if ($sendTranscript) {
             \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
+
+            //Send an operator transcript email (usually used to log conversation in an external ticket system)
+            if ($sites = Controller::$registryService->getSitesByURL($this->initial_url)) {
+                $site = $sites->current();
+
+                //Only send it if the site is in the white list
+                if (in_array($site->getURL(), Controller::$sendOperatorTranscriptEmails)) {
+                    OperatorTranscriptEmail::sendConversation($this);
+                }
+            }
         }
     }
     
