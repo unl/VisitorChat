@@ -2,7 +2,7 @@
 $client = $context->conversation->getClient();
 ?>
 
-This is a record of a conversation with Message from <?php echo $client->name ?> at <?php echo $context->conversation->initial_url; ?>
+This is a record of a conversation with <?php echo $client->name ?> at <?php echo $context->conversation->initial_url; ?>
 
 <?php
 if (!empty($client->email)) {
