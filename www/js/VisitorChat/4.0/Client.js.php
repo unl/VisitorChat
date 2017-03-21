@@ -164,8 +164,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorchat_clientLogin').replaceWith("<div id='visitorChat_container'></div>");
 
-            $('#visitorChat_container').show().focus();
-            
+            $('#visitorChat_container').show();
         },
 
         launchChatContainer:function () {
@@ -184,7 +183,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorchat_clientLogin').parent().html("Disabled");
 
             //Display and set the name (if found).
-            $('#visitorChat_container').focus().delay(10).slideDown(320, function() {
+            $('#visitorChat_container').delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
                     $('#visitorChat_name').val(idm.getDisplayName());
                 }
@@ -313,7 +312,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    $('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + " <br /> <button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
+                    $('#visitorChat_confirmationContainer').html("The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".<br /><button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
 
@@ -336,7 +335,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     //Must be space or enter to continue
                     return;
                 }
-                
+
                 var $header = $(this);
 
                 if (!$('#visitorChat_container').is(':visible')) {
@@ -456,8 +455,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             if (this.chatStatus) {
                 $('#visitorChat_logout').css({'display':'inline-block'});
+                $('#visitorChat_header_text').css({'margin-right':'1.777em'});
             } else {
                 $('#visitorChat_logout').css({'display':'none'});
+                $('#visitorChat_header_text').css({'margin-right':'0'});
             }
 
             //set the for_url
@@ -554,11 +555,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_chatBox').height('150px');
 
             $('#visitorChat_messageForm').remove();
-            
+
             var $closed_container = $('#visitorChat_closed');
 
             $closed_container.append(data['confirmationHTML']);
-            $closed_container.attr('tabindex', '-1').focus();
+            $closed_container.attr('tabindex', '-1');
+            $('#visitorChat_confiramtionEmail').focus();
 
             this.initWatchers();
 
