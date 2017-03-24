@@ -60,6 +60,13 @@ class Controller extends \Epoch\Controller
     public static $title9Emails = array();
 
     /**
+     * Array of baseurls on which operator chat transcripts should be sent to
+     * 
+     * @var array
+     */
+    public static $sendOperatorTranscriptEmails = array();
+
+    /**
      * Block a conversation if it had equal to or more than this number of 'bad' words.
      * 
      * @var int
