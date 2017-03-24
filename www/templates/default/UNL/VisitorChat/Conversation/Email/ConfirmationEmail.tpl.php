@@ -12,5 +12,6 @@
         </fieldset>
 
         <input type='hidden' name='conversations_id' value='<?php echo $context->conversation->id ?>'/>
+        <input id='visitorChat_confirmEmail_submit' class="wdn-button wdn-button-triad" type="submit" value="Submit" name="visitorChat_confirmEmail_submit" />
     </form>
 </div>

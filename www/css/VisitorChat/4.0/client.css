@@ -26,7 +26,7 @@
   content: '';
   position: absolute;
   bottom: 0;
-  right: 1em;
+  right: 1.333em;
   transform: translateY(100%);
   z-index: 299;
   border-style: solid;
@@ -137,9 +137,6 @@
   line-height: 1;
   outline: none;
 }
-#visitorChat_header:focus {
-  text-shadow: none;
-}
 #visitorChat_header:hover {
   cursor: pointer;
 }
@@ -150,37 +147,50 @@
   color: #fff;
 }
 #visitorChat_header_text {
-  font-size: .935em;
   text-transform: uppercase;
 }
 #visitorChat_header:focus #visitorChat_header_text {
   outline: thin dotted currentColor;
 }
+#visitor-chat-header-options {
+  position: absolute;
+  top: 0;
+  right: 0;
+  line-height: 1;
+}
 #visitorChat_logout {
   display: none;
-  height: 1em;
-  width: 1em;
-  margin-left: 1em;
-  font-size: .563rem;
+  padding: .75em 1.333em .75em .422em;
+  border: 0;
+  background-color: transparent;
 }
 #visitorChat_logout:focus {
   outline: thin dotted currentColor;
 }
-#visitorChat_logout:before {
-  margin-right: 0;
+.online #visitorChat_logout:focus {
+  outline: thin dotted #fff;
 }
-#footer #visitorChat_logout[class*='wdn-icon-'] {
+#footer #visitorChat_logout [class*='wdn-icon-'] {
+  display: block;
   padding-left: 0;
 }
-#footer #visitorChat_logout[class*='wdn-icon-']:before {
+#footer #visitorChat_logout [class*='wdn-icon-']:before {
+  position: relative;
   top: 0;
-  font-size: 1em;
+  margin-right: 0;
+  font-size: .75em;
 }
-#footer .offline #visitorChat_logout[class*='wdn-icon-']:before {
+#footer .offline #visitorChat_logout [class*='wdn-icon-']:before {
   color: #474746;
 }
-#footer .online #visitorChat_logout[class*='wdn-icon-']:before {
+#footer .online #visitorChat_logout [class*='wdn-icon-']:before {
   color: #fff;
+}
+#visitorChat_container:focus,
+#visterChat_conversation:focus,
+#visitorChat_confirmationContainer:focus,
+.chat_notify:focus {
+  outline: 0;
 }
 #visitorChat_container {
   position: relative;
@@ -194,6 +204,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   z-index: 0;
+  margin-bottom: .75em;
   font-size: .935em;
 }
 #visitorChat_chatBox ul {
@@ -250,7 +261,8 @@
   line-height: 1.425;
 }
 #visitorChat_login_submit,
-#visitorChat_message_submit {
+#visitorChat_message_submit,
+#visitorChat_confirmEmail_submit {
   margin-top: .75em;
   padding: .8em 1em .75em;
   white-space: normal;
@@ -278,6 +290,9 @@
   background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif');
   background-repeat: no-repeat;
   background-position: 50% 0;
+}
+#visitorChat_confirmationContainer {
+  margin-top: .75em;
 }
 /* Validation Stylings */
 #visitorChat .validation-advice li,
@@ -316,15 +331,31 @@
 }
 #visitorChat_methods {
   position: absolute;
-  right: 1.333em;
-  bottom: 1.777em;
+  right: 1.333rem;
+  bottom: 1.333rem;
   font-size: .75em;
 }
 #visitorChat_methods_email,
 #visitorChat_methods_chat,
+#visitorChat_sendAnotherConfirmation,
+#visitorChat_failedOptions button {
+  padding: 0;
+  line-height: normal;
+  color: #d00000;
+  border-width: 1px;
+  border-style: dotted;
+  border-color: transparent transparent currentColor transparent;
+  background-color: transparent;
+}
+#visitorChat_methods_email:focus,
+#visitorChat_methods_chat:focus,
+#visitorChat_sendAnotherConfirmation:focus,
+#visitorChat_failedOptions button:focus {
+  outline: 0;
+  border-color: currentColor;
+}
 #visitorChat_sendAnotherConfirmation {
-  border-bottom-style: dotted;
-  border-bottom-width: 1px;
+  margin-top: .75em;
 }
 #visitorChat_failedOptions {
   display: -ms-flexbox;
@@ -332,9 +363,6 @@
   -ms-flex-pack: distribute;
       justify-content: space-around;
   margin-top: 1em;
-}
-#visitorChat_failedOptions a {
-  font-size: 1rem;
 }
 #visitorChat_sound_container {
   height: 0;

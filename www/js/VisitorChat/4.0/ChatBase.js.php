@@ -8,7 +8,7 @@ require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat
  * However, the application is built so that ONLY one
  * instance of it is allowed at a time.  And that instance
  * MUST be a variable called VisitorChat.
- * 
+ *
  * @author Michael Fairchild <mfairchild365@gmail.com>
  * @author Caleb Wiedel
  */
@@ -82,7 +82,7 @@ var VisitorChat_ChatBase = Class.extend({
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
-        
+
         if (typeof visitorchat_config == "object") {
             $.extend(this.config, visitorchat_config);
         }
@@ -551,17 +551,21 @@ var VisitorChat_ChatBase = Class.extend({
         //Update the html
         var $container = $(selector);
         $container.html(html);
-        //Send focus to the first child for a11y (notify of change)
+        //Send focus to the first input or child for a11y (notify of change)
         //Contents should be wrapped in their own container div or element, so we need to focus that.
+        var $first_input = $('input[type="text"],textarea', $container);
         var $first_child = $(':first-child', $container);
-        if ($first_child.length) {
+
+        if ($first_input.length) {
+            //focus first input
+            $first_input.eq(0).focus();
+        } else if ($first_child.length) {
             //focus first child
             $first_child.eq(0).attr('tabindex', '-1').focus();
         } else {
             //focus the container
             $container.attr('tabindex', '-1').focus();
         }
-        
 
         //Scroll if we can.
         this.scroll();
@@ -587,7 +591,7 @@ var VisitorChat_ChatBase = Class.extend({
             }
 
             VisitorChat.handleIsTyping();
-            
+
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
