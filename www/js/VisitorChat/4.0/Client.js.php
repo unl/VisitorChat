@@ -17,6 +17,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             name_required: false,
             site_title: false
         },
+        widgetIsOpen: false,
 
         startEmail:function () {
             this.method = 'email';
@@ -340,12 +341,14 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
                 if (!$('#visitorChat_container').is(':visible')) {
                     //Open the container
+                    VisitorChat.widgetIsOpen = true;
                     $('#visitorChat_container').slideDown(320);
-                    $header.attr('aria-pressed', 'true');
+                    $header.attr('aria-label', 'Minimize the ' + $header.text() + ' widget');
                 } else {
                     //Close the container
+                    VisitorChat.widgetIsOpen = false;
                     $('#visitorChat_container').slideUp(320);
-                    $header.attr('aria-pressed', 'false');
+                    $header.attr('aria-label', 'Open the ' + $header.text() + ' widget');
 
                     if (VisitorChat.chatStatus == "LOGIN") {
                         //If the user hasn't done anything yet, simply stop everything and exit early
@@ -656,7 +659,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#footer').append("" +
                 "<div id='visitorChat' class='offline'>" +
-                    "<div id='visitorChat_header' tabindex='0' role='button' aria-pressed='false'>" +
+                    "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                     "</div>" +
                     "<div id='visitor-chat-header-options'>" +
@@ -725,23 +728,38 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         closeChatContainer: function() {
             $('#visitorChat_logout').css({'display':'none'});
+            this.widgetIsOpen = false;
+            this.displaySiteAvailability();
         },
 
         displaySiteAvailability:function (available) {
             if (available == null) {
                 available = VisitorChat.operatorsAvailable;
             }
+            
+            var $widget = $('#visitorChat');
 
+            var text = 'Email Us';
+            
             if (available) {
-                $('#visitorChat').addClass('online');
-                $('#visitorChat').removeClass('offline');
-                $('#visitorChat_header_text').text("Let's Chat");
+                $widget.addClass('online');
+                $widget.removeClass('offline');
+                text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
             } else {
-                $('#visitorChat').addClass('offline');
-                $('#visitorChat').removeClass('online');
-                $('#visitorChat_header_text').text('Email Us');
+                $widget.addClass('offline');
+                $widget.removeClass('online');
                 VisitorChat.method = 'email';
+            }
+            
+            //Update the header text
+            $('#visitorChat_header_text').text(text);
+            
+            //Set the aria-label, based on the action that will be performed when clicking the header
+            if (this.widgetIsOpen) {
+                $('#visitorChat_header').attr('aria-label', 'Minimize the ' + text + ' widget');
+            } else {
+                $('#visitorChat_header').attr('aria-label', 'Open the ' + text + ' widget');
             }
 
             return true;
