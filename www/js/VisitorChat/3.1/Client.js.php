@@ -20,10 +20,10 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
     startChat:function (chatInProgress) {
         this.method = 'chat';
         this.launchChatContainer();
-        
+
         if (this.blocked) {
             var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
-            
+
             this.updateChatContainerWithHTML("#visitorChat_container", html, false);
             return;
         }
@@ -49,7 +49,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         if (WDN.jQuery("#visitorChat_messageBox").val() == WDN.jQuery("#visitorChat_messageBox").attr("placeholder")) {
             WDN.jQuery("#visitorChat_messageBox").val('');
         }
-        
+
         if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
             WDN.jQuery('#visitorchat_clientLogin').prepend(WDN.jQuery('<p>').html(visitorchat_config.chat_welcome_message));
         }
@@ -191,13 +191,13 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
 
         //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
         WDN.jQuery('#visitorchat_clientLogin').data('validation', false);
-        WDN.jQuery('#visitorChat_confirmationEamilForm').data('validation', false);
+        WDN.jQuery('#visitorChat_confirmationEmailForm').data('validation', false);
 
         //Require email for questions submitted via the footer comment form.
         WDN.jQuery('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
 
         //Validator
-        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEamilForm').validation();
+        WDN.jQuery('#visitorchat_clientLogin, #visitorChat_confirmationEmailForm').validation();
     },
 
     initPlaceHolders: function() {
@@ -231,7 +231,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             '#visitorChat_footercontainer #visitorchat_clientLogin,' +
             '#visitorchat_clientLogin,' +
             '.unl_visitorchat_form,' +
-            '#visitorChat_confirmationEamilForm').unbind();
+            '#visitorChat_confirmationEmailForm').unbind();
 
         this.initPlaceHolders();
 
@@ -271,7 +271,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             return true;
         });
 
-        WDN.jQuery('#visitorChat_confirmationEamilForm').bind('validate-form', function (event, result) {
+        WDN.jQuery('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
             if (result) {
                 WDN.jQuery('#visitorChat_confirmationContainer').html("The Email transcript has been sent to " + WDN.jQuery('#visitorChat_confiramtionEmail').val() + " <br /> <a href='#' id='visitorChat_sendAnotherConfirmation'>Send another one</a>.");
 
@@ -372,7 +372,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
                 if (VisitorChat.initialMessage) {
                     WDN.jQuery("#visitorChat_messageBox").val(VisitorChat.initialMessage);
                 }
-                
+
                 WDN.jQuery("#visitorChat_email").focus();
                 WDN.jQuery("#visitorChat_messageBox").keyup();
             });
@@ -384,7 +384,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             if (e.which == 13) {
                 e.preventDefault();
 
-                WDN.jQuery('#visitorChat_confirmationEamilForm').submit();
+                WDN.jQuery('#visitorChat_confirmationEmailForm').submit();
             }
         });
 
@@ -464,7 +464,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         if (this.method == 'email') {
             this.stop();
         }
-        
+
         //Make sure that the closed button is visible at this point.
         this.chatStatus = 'EMAILED';
         this.initWatchers();
@@ -478,7 +478,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
 
         //Record a start event cookie (for analytics)
         VisitorChat.deleteAnalyticsCookies();
-        
+
         //Set a cookie.
         date = new Date();
         WDN.jQuery.cookies.set('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), {domain:'.unl.edu'});
@@ -515,7 +515,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         this.confirmationHTML = data['confirmationHTML'];
 
         WDN.jQuery("#visitorChat_chatBox").height("150px");
-        
+
         WDN.jQuery("#visitorChat_messageForm").remove();
 
         WDN.jQuery("#visitorChat_closed").append(data['confirmationHTML'])
@@ -547,7 +547,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
                 }
             }
         }
-        
+
         if (is_typing) {
             WDN.jQuery('#visitorChat_is_typing').text('The other party is typing').show(500);
         } else {
@@ -638,7 +638,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
                     "<audio id='visitorChat_sound'></audio>" +
                 "</div>" +
             "</div>");
-        
+
         //Handle cookies. (IE session handling);
         var phpsessid = WDN.jQuery.cookies.get('UNL_Visitorchat_Session');
         if (phpsessid != null) {
@@ -655,7 +655,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
         }
 
         WDN.jQuery.xhrPool.abortAll();
-        
+
         if (this.method != 'email') {
             callbackSet = false;
             if (WDN.jQuery('#visitorChat_container').is(":visible")) {
@@ -691,7 +691,7 @@ var VisitorChat_Client = VisitorChat_ChatBase.extend({
             callback();
         }
     },
-    
+
     deleteAnalyticsCookies: function()
     {
         //Delete the current cookie.

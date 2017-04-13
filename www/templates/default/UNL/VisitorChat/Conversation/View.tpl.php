@@ -22,7 +22,7 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
             Conversation started at: <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
         </div>
     </div>
-    <div id='visitorChat_chatBox' role="log">
+    <div id='visitorChat_chatBox' aria-live="polite" role="log">
         <ul>
         </ul>
     </div>

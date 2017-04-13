@@ -1,0 +1,12 @@
+{
+    "fileExtensions": [".less"],
+    "decimalZero": "none",
+    "hexLength": "short",
+    "idSelector": false,
+    "importantRule": false,
+    "maxCharPerLine": false,
+    "propertyOrdering": false,
+    "qualifyingElement": false,
+    "spaceAroundComma": "after",
+    "zeroUnit": "no_unit"
+}

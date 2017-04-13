@@ -7,3 +7,6 @@ www/.htaccess
 /spamRules.inc.php
 /UNL_Chat.sublime-workspace
 /UNL_Chat.sublime-project
+.DS_Store
+/vendor/
+www/node_modules

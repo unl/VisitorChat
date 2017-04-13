@@ -8,7 +8,7 @@ require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat
  * However, the application is built so that ONLY one
  * instance of it is allowed at a time.  And that instance
  * MUST be a variable called VisitorChat.
- * 
+ *
  * @author Michael Fairchild <mfairchild365@gmail.com>
  * @author Caleb Wiedel
  */
@@ -82,7 +82,7 @@ var VisitorChat_ChatBase = Class.extend({
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
-        
+
         if (typeof visitorchat_config == "object") {
             $.extend(this.config, visitorchat_config);
         }
@@ -353,7 +353,7 @@ var VisitorChat_ChatBase = Class.extend({
      * This will be called when no operator can be found and an email has not been sent.
      */
     onConversationStatus_OperatorLookupFailed:function (data) {
-        var html = '<div class="chat_notify">We could not find an operator to help you.  Please try back later.</div>';
+        var html = '<div class="chat_notify" tabindex="-1">We could not find an operator to help you.  Please try back later.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
@@ -369,7 +369,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     onConversationStatus_Emailed:function (data) {
         clearTimeout(VisitorChat.loopID);
-        var html = '<div class="chat_notify" id="visitorChat_emailed">Your message has been emailed.</div>';
+        var html = '<div class="chat_notify" id="visitorChat_emailed" tabindex="-1">Your message has been emailed.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
     },
 
@@ -478,7 +478,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         clearTimeout(VisitorChat.loopID);
 
-        var html = '<div class="chat_notify" id="visitorChat_closed"><h2>This conversation has ended.</h2></div>';
+        var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1">This conversation has ended.</div>';
         this.updateChatContainerWithHTML(".visitorChat_center", html);
 
         if (data['messages'] == undefined) {
@@ -509,7 +509,7 @@ var VisitorChat_ChatBase = Class.extend({
      * function are closely related and could probably share the same logic.
      */
     onConversationStatus_Searching:function (data) {
-        var html = '<div class="chat_notify visitorChat_loading">Please wait while we find someone to help you.</div>';
+        var html = '<div class="chat_notify visitorChat_loading" tabindex="-1">Please wait while we find someone to help you.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
 
     },
@@ -535,14 +535,37 @@ var VisitorChat_ChatBase = Class.extend({
      * functions.
      */
     updateChatContainerWithHTML:function (selector, html, sendAlerts) {
+        //$.parseHTML(html)[0].outerHTML is used to compare the rendered html (the browser can change quotes, etc)
+        //It just makes the comparison more accurate (at the cost of a little speed)
+        if ($(selector).html() === $.parseHTML(html)[0].outerHTML) {
+            //Contents are the same, nothing to be done here.
+            return;
+        }
+
         //Should we alert the user?
-        if (sendAlerts != false && $(selector).html() !== html) {
+        if (sendAlerts != false) {
             this.clearAlert();
             this.alert();
         }
 
         //Update the html
-        $(selector).html(html);
+        var $container = $(selector);
+        $container.html(html);
+        //Send focus to the first input or child for a11y (notify of change)
+        //Contents should be wrapped in their own container div or element, so we need to focus that.
+        var $first_input = $('input[type="text"],textarea', $container);
+        var $first_child = $(':first-child', $container);
+
+        if ($first_input.length) {
+            //focus first input
+            $first_input.eq(0).focus();
+        } else if ($first_child.length) {
+            //focus first child
+            $first_child.eq(0).attr('tabindex', '-1').focus();
+        } else {
+            //focus the container
+            $container.attr('tabindex', '-1').focus();
+        }
 
         //Scroll if we can.
         this.scroll();
@@ -568,7 +591,7 @@ var VisitorChat_ChatBase = Class.extend({
             }
 
             VisitorChat.handleIsTyping();
-            
+
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
