@@ -25,9 +25,8 @@
 #visitorChat:after {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 100%;
   right: 1.333em;
-  transform: translateY(100%);
   z-index: 299;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
