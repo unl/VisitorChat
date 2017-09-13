@@ -14,13 +14,13 @@ $client = $context->conversation->getClient();
 
 <div>
     <p>
-        Message from <?php echo $client->name ?><br />
+        From: <?php echo $client->name ?><br />
         <?php
         if (!empty($client->email)) {
             echo "Email: " . $client->email . " <br />";
         }
         ?>
-        URL that the email was submitted on: <?php echo $context->conversation->initial_url; ?> <br />
+        URL that the email was submitted at: <?php echo $context->conversation->initial_url; ?> <br />
         IP Address: <?php echo $context->conversation->ip_address ?><br />
         User Agent: <?php echo $context->conversation->user_agent ?><br />
     </p>
