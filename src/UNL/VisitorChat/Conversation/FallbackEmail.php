@@ -9,6 +9,14 @@ class FallbackEmail extends Email
     {
         parent::__construct($conversation, $to, $fromId, $options);
 
+        $site_title = '';
+        if ($sites = Controller::$registryService->getSitesByURL($conversation->initial_url)) {
+            $site = $sites->current();
+            $site_title = $site->getTitle();
+        }
+
+        $this->subject = 'Email from your website: ' . $site_title . ' (' . $conversation->id . ')';
+
         //Set the reply to
         $this->setReplyTo();
         
