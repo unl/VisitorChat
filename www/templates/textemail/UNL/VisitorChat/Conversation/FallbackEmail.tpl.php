@@ -8,17 +8,16 @@ contact=<?php echo $client->email ?>
 <?php endif; ?>
 <?php endif; ?>
 
-A message has been submitted on <?php echo $context->conversation->date_created;?>
-
 <?php
-$response = "";
-if ($context->conversation->email_fallback && !empty($client->email)) {
-    $response = "The user requests a response \n";
-}
-?>
-Message from <?php echo $client->name ?>
+$context->messages->rewind();
+$message = $context->messages->current();
 
-IP: <?php echo $context->conversation->ip_address ?>
+echo str_replace("&lt;br /&gt;", "\n", $message->message);
+?>
+
+--
+
+From: <?php echo $client->name ?>
 
 <?php
 if (!empty($client->email)) {
@@ -26,12 +25,10 @@ if (!empty($client->email)) {
 }
 ?>
 
+URL that the email was submitted at: <?php echo $context->conversation->initial_url; ?>
+
+IP Address: <?php echo $context->conversation->ip_address ?>
+
 User Agent: <?php echo $context->conversation->user_agent ?>
-
-at <?php echo $context->conversation->initial_url; ?>
-
-<?php echo $response;?>
-
-<?php echo \UNL\VisitorChat\Controller::$templater->render($context->messages, 'UNL/VisitorChat/Message/RecordList.tpl.php');?>
 
 Why did I get this email? See: <?php echo \UNL\VisitorChat\Controller::$url?>faq#whyemails
