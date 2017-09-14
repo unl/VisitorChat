@@ -15,6 +15,8 @@ class FallbackEmail extends Email
             $site_title = $site->getTitle();
         }
 
+        $site_title = trim(preg_replace('/\s\s+/', ' ', $site_title));
+
         $this->subject = 'Email from your website: ' . $site_title . ' (' . $conversation->id . ')';
 
         //Set the reply to
