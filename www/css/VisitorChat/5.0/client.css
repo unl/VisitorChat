@@ -77,6 +77,11 @@
 #visitorChat h3 {
   font-size: .75em;
 }
+#visitorChat ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 #visitorChat li {
   list-style: none;
   margin-top: .563em;
@@ -169,20 +174,20 @@
 .online #visitorChat_logout:focus {
   outline: thin dotted #fff;
 }
-#footer #visitorChat_logout [class*='wdn-icon-'] {
+#visitorChat_logout [class*='wdn-icon-'] {
   display: block;
   padding-left: 0;
 }
-#footer #visitorChat_logout [class*='wdn-icon-']:before {
+#visitorChat_logout [class*='wdn-icon-']:before {
   position: relative;
   top: 0;
   margin-right: 0;
   font-size: .75em;
 }
-#footer .offline #visitorChat_logout [class*='wdn-icon-']:before {
+.offline #visitorChat_logout [class*='wdn-icon-']:before {
   color: #474746;
 }
-#footer .online #visitorChat_logout [class*='wdn-icon-']:before {
+.online #visitorChat_logout [class*='wdn-icon-']:before {
   color: #fff;
 }
 #visitorChat_container:focus,

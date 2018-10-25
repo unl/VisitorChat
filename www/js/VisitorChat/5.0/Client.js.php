@@ -102,10 +102,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         getSiteTitle: function() {
             var title = this.config.site_title;
             if (false == title) {
-                if ($('#wdn_site_title abbr').length) {
-                    title = $('#wdn_site_title abbr').attr('title');
+                if ($('#dcf-site-title abbr').length) {
+                    title = $('#dcf-site-title abbr').attr('title');
                 } else {
-                    title = $('#wdn_site_title').text()
+                    title = $('#dcf-site-title').text()
                 }
             }
 
@@ -657,7 +657,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append("" +
+            $('body').append("" +
                 "<div id='visitorChat' class='offline'>" +
                     "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +

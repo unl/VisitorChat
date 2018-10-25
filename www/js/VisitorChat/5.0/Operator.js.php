@@ -114,7 +114,7 @@ require(['jquery', 'jqueryui'], function($) {
             var mouse_is_inside = false;
     
             //Navigation needs to be under back-drop
-            $("#wdn_navigation_wrapper").css({'z-index':'1'});
+            $("#dcf-navigation").css({'z-index':'1'});
     
             //Add in the back-drop and show brightBox
             $("body").append("<div id='visitorChat_backDrop'></div>");
@@ -134,7 +134,7 @@ require(['jquery', 'jqueryui'], function($) {
                 if (!mouse_is_inside) {
                     $("#visitorChat_backDrop").remove();
                     $('#visitorChat_brightBox').fadeOut(100);
-                    $("#wdn_navigation_wrapper").css({'z-index':'auto'});
+                    $("#dcf-navigation").css({'z-index':'auto'});
                 }
             });
         },
