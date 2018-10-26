@@ -387,6 +387,15 @@
     font-size: .75rem;
   }
 }
+@media screen and (max-width: 56.1231em) {
+  #visitorChat {
+    bottom: 5.5em;
+    display: none;
+  }
+  #visitorChat.visitorChat_open {
+    display: inherit;
+  }
+}
 @media print {
   #visitorChat {
     display: none;
