@@ -389,6 +389,7 @@
 }
 @media screen and (max-width: 56.1231em) {
   #visitorChat {
+    z-index: 999999;
     bottom: 5.5em;
     display: none;
   }
