@@ -677,11 +677,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     '<svg class="dcf-txt-sm dcf-mb-1 dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                         '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
                     '</svg>' +
-                    '<svg class="dcf-txt-sm dcf-mb-1 dcf-h-6 dcf-w-6 dcf-fill-current dcf-d-none" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
-                        '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"></path>' +
-                        '<path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
-                    '</svg>' +
-                    '<span class="dcf-sr-only">Open </span><span class="dcf-nav-toggle-label dcf-bold dcf-uppercase unl-ls-2">Email Us</span>' +
+                    '<span class="dcf-nav-toggle-label dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
                 '</button>');
 
             //Handle cookies. (IE session handling);
@@ -751,11 +747,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (available == null) {
                 available = VisitorChat.operatorsAvailable;
             }
-            
+
             var $widget = $('#visitorChat');
 
             var text = 'Email Us';
-            
+
             if (available) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');
@@ -766,10 +762,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $widget.removeClass('online');
                 VisitorChat.method = 'email';
             }
-            
+
             //Update the text of the visible prompt
             $('#visitorChat_header_text, #dcf-mobile-toggle-chat .dcf-nav-toggle-label').text(text);
-            
+
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Minimize the ' + text + ' widget').attr('aria-expanded', 'true');
