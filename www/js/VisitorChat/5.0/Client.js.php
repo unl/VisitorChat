@@ -665,7 +665,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                     "</div>" +
                     "<div id='visitor-chat-header-options'>" +
-                        "<button id='visitorChat_logout' aria-label='close and log out of chat'>" +
+                        "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5' id='visitorChat_logout' aria-label='close and log out of chat'>" +
                             "<span class='wdn-icon-cancel'></span>" +
                         "</button>" +
                     "</div>" +
