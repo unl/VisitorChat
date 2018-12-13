@@ -23,8 +23,29 @@ class ConfirmationEmail extends Email
         
         $email = new $class($conversation, $to, $fromId, $options);
         
-        $email->subject = "UNL VisitorChat System: Transcript (" . $conversation->id . ")";
+        $email->setReplyTo($email->getReplyTo());
+        
+        $email->subject = \UNL\VisitorChat\Conversation\Email::$default_subject . ": Transcript (" . $conversation->id . ")";
 
         return $email->send();
+    }
+    
+    public function getReplyTo()
+    {
+        if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->conversation->initial_url)) {
+            return false;
+        }
+
+        //Get only site members for the top level site.
+        $site    = $sites->current();
+        $emails  = $site->getEmail();
+
+        if (empty($emails)) {
+            //Use fallback emails if nothing was found
+            $emails = Email::$fallbackEmails;
+            $emails = implode(',', $emails);
+        }
+        
+        return $emails;
     }
 }

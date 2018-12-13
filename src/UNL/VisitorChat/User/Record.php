@@ -9,12 +9,13 @@ class Record extends \Epoch\Record
     public $email;
     public $date_created;
     public $date_updated;
-    public $ip;
     public $type; //Client or Operator
     public $max_chats;
-    public $status;
-    public $status_reason;
+    protected $status;        //Store current status here (as kind of a cache)
+    public $status_reason; //Store current status reason here (as kind of a cache)
     public $last_active;
+    public $popup_notifications; //1=show, 2=no show
+    public $alias; //custom name to be shown to clients
     
     public static function getByID($id)
     {
@@ -33,7 +34,12 @@ class Record extends \Epoch\Record
 
     function insert()
     {
-        return parent::insert();
+        if ($result = parent::insert()) {
+            //Store the status in the history table.
+            $this->setStatus($this->status);
+        }
+        
+        return $result;
     }
     
     function keys()
@@ -57,11 +63,14 @@ class Record extends \Epoch\Record
     
     public function update()
     {
-        parent::update();
+        $result = parent::update();
         
+        //Update the current user object in memory
         if (\UNL\VisitorChat\User\Service::getCurrentUser() && \UNL\VisitorChat\User\Service::getCurrentUser()->id == $this->id) {
             \UNL\VisitorChat\User\Service::setCurrentUser($this);
         }
+        
+        return $result;
     }
     
     public static function getCurrentUser()
@@ -104,10 +113,19 @@ class Record extends \Epoch\Record
         return $totals;
     }
     
+    function getSites()
+    {
+        if (empty($this->uid)) {
+            return array();
+        }
+        
+        return \UNL\VisitorChat\Controller::$registryService->getSitesForUser($this->uid);
+    }
+    
     function getManagedSites()
     {
         if (empty($this->uid)) {
-            return false;
+            return array();
         }
         
         $sites = array();
@@ -127,5 +145,87 @@ class Record extends \Epoch\Record
         }
         
         return $sites;
+    }
+    
+    function getFirstName()
+    {
+        $names = explode(" ", $this->name);
+        
+        return $names[0];
+    }
+    
+    function getAlias()
+    {
+        if (!empty($this->alias)) {
+            return $this->alias;
+        }
+        
+        return $this->getFirstName();
+    }
+    
+    /*
+     * Checks to see if this user is a manager for a given site.
+     */
+    function managesSite($url)
+    {
+        //Check if the current user has permission to view the site.
+        foreach ($this->getManagedSites() as $site) {
+            if ($site->getURL() == $url) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Sets the user's status.  If the user is an operator, the status is recorded in the
+     * history table.
+     * 
+     * @param        $status
+     * @param string $reason
+     *
+     * @return bool
+     */
+    function setStatus($status, $reason = "USER") 
+    {
+        //Don't allow the same status to be posted twice in a row. (Could happen when logging in/out).
+        if ($this->status == $status) {
+            return true;
+        }
+        
+        //Store the current status in this record (for caching and easy access).
+        $this->status        = $status;
+        $this->status_reason = $reason;
+        
+        //If we failed to save, exist early.
+        if (!$this->save()) {
+            return false;
+        }
+        
+        //We are not tracking client statuses so exit early...
+        if ($this->type == 'client') {
+            return true;
+        }
+        
+        if (!Status\Record::addStatus($this->id, $status, $reason)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    function getStatus()
+    {
+        if ($this->status == null) {
+            $this->status = "BUSY";
+        }
+        
+        //Format the current status as a user_status record for consistency
+        $status = new Status\Record();
+        $status->setStatus($this->status, $this->status_reason);
+        $status->users_id = $this->id;
+        
+        return $status;
     }
 }

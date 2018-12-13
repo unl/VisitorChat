@@ -57,28 +57,6 @@ class Controller
         if ($autoRoute) {
             $this->autoRoute();
         }
-        
-        try {
-            
-            if (!empty($_POST)) {
-                $this->handlePost();
-            }
-            
-            $this->run();
-        } catch(\Exception $e) {
-            if (isset($this->options['ajaxupload'])) {
-                echo $e->getMessage();
-                exit();
-            }
-
-            if (false == headers_sent()
-                && $code = $e->getCode()) {
-                header('HTTP/1.1 '.$code.' '.$e->getMessage());
-                header('Status: '.$code.' '.$e->getMessage());
-            }
-
-            $this->actionable = $e;
-        }
     }
     
     function namespaceToDirector($namespace) {
@@ -106,7 +84,11 @@ class Controller
         }
         
         //Do the routing.
-        $this->options = $this->router->route($_SERVER['REQUEST_URI'], $this->options);
+        $url = "";
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $url = $_SERVER['REQUEST_URI'];
+        }
+        $this->options = $this->router->route($url, $this->options);
     }
 
     public static function setDbSettings($settings = array())
@@ -141,10 +123,32 @@ class Controller
     
     function run()
     {
-         if (!isset($this->options['model'])) {
-             throw new \Exception('Un-registered view', 404);
-         }
-         $this->actionable = new $this->options['model']($this->options);
+        try {
+            //Handle Post
+            if (!empty($_POST)) {
+                $this->handlePost();
+            }
+
+            //Handle GET
+            if (!isset($this->options['model'])) {
+                throw new \Exception('Un-registered view', 404);
+            }
+
+            $this->actionable = new $this->options['model']($this->options);
+        } catch(\Exception $e) {
+            if (isset($this->options['ajaxupload'])) {
+                echo $e->getMessage();
+                exit();
+            }
+
+            if (false == headers_sent()
+                && $code = $e->getCode()) {
+                header('HTTP/1.1 '.$code.' '.$e->getMessage());
+                header('Status: '.$code.' '.$e->getMessage());
+            }
+
+            $this->actionable = $e;
+        }
     }
     
     /**
@@ -201,6 +205,6 @@ class Controller
     }
 
     public static function makeClickableLinks($text) {
-        return preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#%-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1" target="_blank">$1</a>', $text);
+        return preg_replace('@(https?://([-\w\.]+[-\w])+(:\d+)?(/([\w/_\.#+%-]*(\?\S+)?[^\.\s])?)?)@', '<a href="$1">$1</a>', $text);
     }
 }

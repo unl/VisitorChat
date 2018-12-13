@@ -6,7 +6,7 @@ class MockRegistryDriver implements OperatorRegistry\DriverInterface
 {
     function getSitesByURL($site)
     {
-        return new MockSites();
+        return new MockSites($site);
     }
 
     function getSitesForUser($member)
@@ -68,6 +68,16 @@ class MockSiteMember extends OperatorRegistry\SiteMemberInterface
     {
         return 'email@unl.com';
     }
+
+    /**
+     * Determine if a user can operate this site
+     *
+     * @return bool
+     */
+    function canOperate()
+    {
+        return true;
+    }
 }
 
 class MockSite extends OperatorRegistry\SiteInterface
@@ -86,6 +96,11 @@ class MockSite extends OperatorRegistry\SiteInterface
         return $this->data['support_email'];
     }
     
+    function getURL()
+    {
+        return $this->url;
+    }
+    
     function getTitle()
     {
         return $this->data['title'];
@@ -95,16 +110,45 @@ class MockSite extends OperatorRegistry\SiteInterface
     {
         return new MockSiteMembers($this->url, $this->data['members']);
     }
+    
+    function getSupportGroups()
+    {
+        return false;
+    }
 }
 
 class MockSites extends ArrayIterator implements OperatorRegistry\SitesIterator
 {
-    function __construct()
+    function __construct($site)
     {
-        parent::__construct(new ArrayIterator(array('http://www.unl.edu/' => array('support_email'=>'support@unl.edu', 
-                                                                                   'title'=>'UNL',
-                                                                                   'members'=>array('bbieber2'=>array('roles' => array('operator')),
-                                                                                                    's-mfairch4'=>array('roles' => array('manager')))))));
+        switch ($site) 
+        {
+            case "http://www.test.com/test/":
+                $sites = array('http://www.test.com/test/' => array('support_email'=>'test-test@test.com',
+                                                                    'title'=>'Test-test',
+                                                                    'members'=>array('OP1'=>array('roles' => array('operator')),
+                                                                                     'OP2'=>array('roles' => array('manager')))),
+                               'http://www.test.com/' => array('support_email'=>'test@test.com',
+                                                               'title'=>'Test',
+                                                               'members'=>array('OP3'=>array('roles' => array('operator')),
+                                                                                'OP4'=>array('roles' => array('manager')))),);
+                break;
+            case "http://www.test.com/":
+                $sites = array('http://www.test.com/' => array('support_email'=>'test@test.com',
+                                                               'title'=>'Test',
+                                                               'members'=>array('OP3'=>array('roles' => array('operator')),
+                                                                                'OP4'=>array('roles' => array('manager')))),);
+                break;
+            default:
+                $sites = array('http://www.unl.edu/' => array('support_email'=>'support@unl.edu',
+                                                              'title'=>'UNL',
+                                                              'members'=>array('bbieber2'=>array('roles' => array('operator')),
+                                                                               's-mfairch4'=>array('roles' => array('manager')))),);
+                break;
+            
+        }
+        
+        parent::__construct(new ArrayIterator($sites));
     }
     
     function current() {

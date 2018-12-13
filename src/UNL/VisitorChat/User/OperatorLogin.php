@@ -32,20 +32,25 @@ class OperatorLogin
             throw new \Exception('You must log in to view this resource!');
             exit();
         }
+        
+        $uid = strtolower($auth->getUser());
 
         //check if we have a user or need to make a new one.
-        if (!$user = \UNL\VisitorChat\User\Record::getByUID($auth->getUser())) {
+        if (!$user = \UNL\VisitorChat\User\Record::getByUID($uid)) {
             $user               = new \UNL\VisitorChat\User\Record();
-            $user->name         = $auth->getUser();
+            $user->name         = $uid;
             $user->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
             $user->type         = 'operator';
             $user->max_chats    = 3;
-            $user->uid          = $auth->getUser();
+            $user->uid          = $uid;
+            
+            //Set the status to BUSY for new user.
+            $user->setStatus("BUSY", "NEW_USER");
 
-            if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $auth->getUser() . "&format=json")) {
+            if ($json = file_get_contents("http://directory.unl.edu/?uid=" . $uid . "&format=json")) {
                 if ($data = json_decode($json, true)) {
                     //Default to an unknown name
-                    $user->name = "Unknown";
+                    $user->name = $uid;
 
                     //Try to get the name (displayName might be null or just 1 space)
                     if (isset($data['displayName'][0]) && $data['displayName'][0] !== " ") {
@@ -58,10 +63,11 @@ class OperatorLogin
                 }
             }
         }
-
-        $user->status = "BUSY";
-        $user->status_reason = "LOG_IN";
+        
         $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        
+        $user->setStatus("BUSY", "LOGIN");
+        
         $user->save();
 
         $_SESSION['id'] = $user->id;

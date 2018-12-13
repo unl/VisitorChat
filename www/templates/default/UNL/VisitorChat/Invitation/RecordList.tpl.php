@@ -1,36 +1,39 @@
+<h2>Invitations</h2>
 <ul id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
+    /**
+     * @var $invitation \UNL\VisitorChat\Invitation\Record
+     */
     $name  = $invitation->invitee;
     $class = strtolower($invitation->status);
-    
-    if ($invitation->isForSite()) {
-        $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($invitation->invitee);
-        
-        if ($site = $sites->current()) {
-            $name = $site->getTitle();
-        }
-    } else if ($account = \UNL\VisitorChat\User\Record::getByUID($invitation->invitee)) {
-        $name = $account->name;
-    }
+    $name = $invitation->getInviteeTitle();
     
     echo "<li class='$class'>
-              <span style='font-weight:bold;'>$name</span>
-			  <span style='display: block;font-size: 0.8em;'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."
-			  <span style='float:right;'>" .
+              <span class='name tooltip' title='This is who the invitation was sent to (can be either a site or a person)'>$name</span>
+			  <span class='sub'>
+			  <span class='source tooltip' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
+			  <span class='time tooltip' style='float:right;' title='Time the invitation was sent'>" .
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
-			"</span>
+			"</span>";
+	echo "<ul>";
               
-              <ul>";
     foreach ($invitation->getAssignments() as $assignment) {
-        $class = strtolower($assignment->status);
-        echo "<li class='$class'>
-                  " . $assignment->getUser()->name .
-                  /*"<span class='timestamp'>" . date("g:i:s A", strtotime($assignment->date_created)) . "</span>*/
-              "</li>";
+        /**
+         * @var $assignment \UNL\VisitorChat\Assignment\Record
+         */
+        $site = $assignment->getAnsweringSite();
+        
+        $siteTitle = ($site)?$site->getTitle():'unknown';
+        
+        $assignmentClass = strtolower($assignment->status);
+        echo "<li class='$assignmentClass'>" .
+                  "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
+                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $siteTitle . "</span></span>" .
+            "</li>";
     }
-    echo "</ul></li>";
+	echo "</ul>";
 }
 ?>
 </ul>

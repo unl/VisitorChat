@@ -1,6 +1,8 @@
 <?php
 namespace UNL\VisitorChat\Conversation;
 
+use UNL\VisitorChat\Controller;
+
 class Record extends \Epoch\Record
 {
     //The id of the current conversation
@@ -30,6 +32,8 @@ class Record extends \Epoch\Record
 
     public $closer_id; //The id of the user closing the chat.
     
+    public $auto_spam; //Did the system detect that this may be spam?
+    
     /* Does the client want a response via email if
      * we can't find an available operator
      * 
@@ -56,6 +60,13 @@ class Record extends \Epoch\Record
     //the user_agent of the client.
     public $user_agent;
     
+    public $ip_address;
+    
+    public $client_is_typing;
+    
+    const CLIENT_IS_TYPING = 'YES';
+    const CLIENT_IS_NOT_TYPING = 'NO';
+    
     /**
      * Returns a conversation record by ID.
      * 
@@ -72,8 +83,34 @@ class Record extends \Epoch\Record
      */
     function save()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_updated = Controller::epochToDateTime();;
         return parent::save();
+    }
+
+    /**
+     * Delete this conversation and everything about it.
+     * 
+     * @return bool|void
+     */
+    function delete()
+    {
+        //Delete all messages
+        foreach ($this->getMessages() as $message) {
+            $message->delete();
+        }
+        
+        //Delete all invitations (which should in turn delete all assignments)
+        foreach ($this->getInvitations() as $invitation) {
+            $invitation->delete();
+        }
+        
+        //Delete all emails related to this conversation
+        foreach ($this->getEmails() as $email) {
+            $email->delete();
+        }
+        
+        //finally, delete this bad boy.
+        return parent::delete();
     }
     
     /**
@@ -101,10 +138,8 @@ class Record extends \Epoch\Record
      */
     function getEditURL()
     {
-        return \UNL\VisitorChat\Controller::$url . "message/edit";
+        return Controller::$url . "conversation/" . $this->id . "/edit";
     }
-    
-
     
     /**
      * Returns the lastest conversation record for a given client.
@@ -160,7 +195,7 @@ class Record extends \Epoch\Record
      */
     function getLastMessage()
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         $sql = "SELECT id FROM messages WHERE conversations_id = " . (int)$this->id . " ORDER BY date_created DESC LIMIT 1";
         
         if (!$result = $db->query($sql)) {
@@ -202,6 +237,18 @@ class Record extends \Epoch\Record
     {
         return \UNL\VisitorChat\Message\RecordList::getAllMessagesForConversation($this->id, $options);
     }
+
+    /**
+     * retrieves all emails for this conversation.
+     *
+     * @param array $options
+     *
+     * @return \UNL\VisitorChat\Conversation\Email\RecordList
+     */
+    function getEmails($options = array())
+    {
+        return \UNL\VisitorChat\Conversation\Email\RecordList::getAllEmailsForConversation($this->id, $options);
+    }
     
     /**
      * (non-PHPdoc)
@@ -209,7 +256,9 @@ class Record extends \Epoch\Record
      */
     function insert()
     {
-        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_created = Controller::epochToDateTime();
+        $this->client_is_typing = self::CLIENT_IS_NOT_TYPING;
+        
         return parent::insert();
     }
     
@@ -220,7 +269,7 @@ class Record extends \Epoch\Record
      */
     function ping()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();;
+        $this->date_updated = Controller::epochToDateTime();;
         $this->save();
     }
     
@@ -245,11 +294,11 @@ class Record extends \Epoch\Record
     function getUnreadMessageCount()
     {
         if (!isset($_SESSION['last_viewed'][$this->id])) {
-            $_SESSION['last_viewed'][$this->id] = \UNL\VisitorChat\Controller::epochToDateTime(1);
+            $_SESSION['last_viewed'][$this->id] = Controller::epochToDateTime(1);
         }
         
-        $db  = \UNL\VisitorChat\Controller::getDB();
-        $sql = "SELECT count(id) as unread FROM messages WHERE conversations_id = " . (int)$this->id . " AND date_created > '" . mysql_escape_string($_SESSION['last_viewed'][$this->id]) . "'";
+        $db  = Controller::getDB();
+        $sql = "SELECT count(id) as unread FROM messages WHERE conversations_id = " . (int)$this->id . " AND date_created > '" . $db->real_escape_string($_SESSION['last_viewed'][$this->id]) . "'";
         
         if (!$result = $db->query($sql)) {
             return 0;
@@ -260,14 +309,21 @@ class Record extends \Epoch\Record
         return $row['unread'];
     }
 
+    /**
+     * Set the conversation as idle, and close it.
+     * 
+     * @return null
+     */
     function idle()
     {
-        //Create a new message
-        $message = new \UNL\VisitorChat\Message\Record();
-        $message->users_id = 1; //system
-        $message->conversations_id = $this->id;
-        $message->message = "This conversation has had no activity for " . \UNL\VisitorChat\Controller::$conversationTTL . " minutes and has been closed.";
-        $message->save();
+        if ($this->status == "CHATTING") {
+            //Create a new message
+            $message = new \UNL\VisitorChat\Message\Record();
+            $message->users_id = 1; //system
+            $message->conversations_id = $this->id;
+            $message->message = "This conversation has had no activity for " . Controller::$conversationTTL . " minutes and has been closed.";
+            $message->save();
+        }
 
         return $this->close('IDLE', 1);
     }
@@ -280,8 +336,18 @@ class Record extends \Epoch\Record
      */
     function close($closeStatus = false, $closerID = false)
     {
+        if ('CLOSED' === $this->status) {
+            return;
+        }
+        
         if (!$closerID) {
             $closerID = \UNL\VisitorChat\User\Service::getCurrentUser()->id;
+        }
+        
+        //Only send a transcript if a conversation actually took place.
+        $sendTranscript = false;
+        if ($this->status == 'CHATTING') {
+            $sendTranscript = true;
         }
 
         if (!$closeStatus) {
@@ -292,19 +358,37 @@ class Record extends \Epoch\Record
         }
 
         //Update the chat and mark it as closed.
-        $this->date_closed = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_closed = Controller::epochToDateTime();
         $this->status       = "CLOSED";
         $this->close_status = $closeStatus;
         $this->closer_id    = $closerID;
+        $this->client_is_typing = self::CLIENT_IS_NOT_TYPING;
         $this->save();
         
-        //Complete all assignments.
+        //Close all searching invitations
+        foreach(\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($this->id) as $invitation) {
+            $invitation->fail();
+        }
+
+        //complete all accepted assignments
         foreach(\UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForConversation($this->id) as $assignment) {
             $assignment->markAsCompleted();
         }
         
-        //Send a confirnation email to the client.
-        \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
+        //Send a transcript email to the client if we need to.
+        if ($sendTranscript) {
+            \UNL\VisitorChat\Conversation\ConfirmationEmail::sendConversation($this);
+
+            //Send an operator transcript email (usually used to log conversation in an external ticket system)
+            if ($sites = Controller::$registryService->getSitesByURL($this->initial_url)) {
+                $site = $sites->current();
+
+                //Only send it if the site is in the white list
+                if (in_array($site->getURL(), Controller::$sendOperatorTranscriptEmails)) {
+                    OperatorTranscriptEmail::sendConversation($this);
+                }
+            }
+        }
     }
     
     function getAssignments()
@@ -323,6 +407,11 @@ class Record extends \Epoch\Record
         return \UNL\VisitorChat\Assignment\RecordList::getAcceptedForConversation($this->id);
     }
     
+    function getPendingAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForConversation($this->id);
+    }
+    
     function getInvolvedUsers()
     {
         $users = array($this->users_id);
@@ -337,5 +426,59 @@ class Record extends \Epoch\Record
     function getInvitations()
     {
         return \UNL\VisitorChat\Invitation\RecordList::getAllForConversation($this->id);
+    }
+    
+    function ParseUserAgent() {
+        require_once 'UAParser/UAParser.php';
+        $ua = new \UA();
+        return $ua->parse($this->user_agent);
+    }
+
+    /**
+     * returns the total amount of time spent from conversation creation to end in seconds.
+     * 
+     * @return bool|int
+     */
+    function getDuration()
+    {
+        if (empty($this->date_closed)) {
+            return false;
+        }
+        
+        return strtotime($this->date_closed) - strtotime($this->date_created);
+    }
+
+    function canDelete(\UNL\Visitorchat\User\Record $user)
+    {
+        //Let admin delete it
+        if ($user->isAdmin()) {
+            return true;
+        }
+        
+        //Let managers delete it
+        foreach ($this->getAssignments() as $assignment) {
+            //Is the user a manager of the answering site?
+            foreach ($user->getManagedSites() as $site) {
+                if ($site->getURL() == $assignment->answering_site) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the client is typing
+     * 
+     * @return bool
+     */
+    function clientIsTyping()
+    {
+        if ($this->client_is_typing == self::CLIENT_IS_TYPING) {
+            return true;
+        }
+        
+        return false;
     }
 }

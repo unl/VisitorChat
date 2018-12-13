@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
   `invitations_id` int(11) NOT NULL,
   `date_finished` datetime,
   `date_accepted` datetime,
+  `is_typing` ENUM('YES','NO') NOT NULL DEFAULT 'NO',
   PRIMARY KEY (`id`),
   KEY `fk_assignments_users1` (`users_id`),
   KEY `fk_assignments_conversations1` (`conversations_id`),
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 --
 
 INSERT INTO `assignments` (`id`, `conversations_id`, `users_id`, `date_created`, `status`, `date_updated`, `answering_site`, `invitations_id`, `date_finished`, `date_accepted`) VALUES
-(1, 1, 2, '0000-00-00 00:00:00', 'PENDING', '2012-05-24 13:09:43', 'unl.edu', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 1, 2, NOW(), 'PENDING', NOW(), 'unl.edu', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -67,9 +68,12 @@ CREATE TABLE IF NOT EXISTS `conversations` (
   `status` enum('SEARCHING','OPERATOR_PENDING_APPROVAL','OPERATOR_LOOKUP_FAILED','CHATTING','CLOSED','EMAILED') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'SEARCHING',
   `emailed` int(1) DEFAULT NULL COMMENT '0 - did not fall though to email, 1 - fell though to email.',
   `email_fallback` int(1) DEFAULT NULL,
+  `auto_spam` int(1) DEFAULT 0,
   `close_status` ENUM('OPERATOR', 'CLIENT', 'IDLE') NULL ,
   `closer_id` INT NULL ,
+  `ip_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `method` enum('CHAT','EMAIL') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.',
+  `client_is_typing` ENUM('YES','NO') NOT NULL DEFAULT 'NO',
   PRIMARY KEY (`id`),
   KEY `fk_conversations_users` (`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -140,16 +144,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT '',
   `email` varchar(45) COLLATE utf8_unicode_ci DEFAULT '',
-  `ip` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `date_created` datetime DEFAULT NULL,
   `date_updated` datetime DEFAULT NULL,
   `type` enum('operator','client') COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Must be either client or operator',
-  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST') NULL DEFAULT 'USER' ,
+  `status_reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST', 'NEW_USER', 'MAINTENANCE', 'LOGIN', 'LOGOUT') NULL DEFAULT 'USER' ,
   `uid` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'UNL id to associate accounts',
   `max_chats` int(11) NOT NULL COMMENT 'The max amount of chats that the user (operator) can handle at any given time.',
   `status` enum('AVAILABLE','BUSY') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'BUSY' COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n',
   `Invitations_id` int(11) DEFAULT NULL,
   `last_active` datetime DEFAULT NULL,
+  `popup_notifications` int(1) NULL default 0,
+  `alias` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_UNIQUE` (`uid`),
   KEY `fk_users_Invitations1` (`Invitations_id`)
@@ -182,14 +187,33 @@ CREATE  TABLE IF NOT EXISTS `emails` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `user_statuses`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `user_statuses` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `users_id` INT(10) NOT NULL ,
+  `date_created` DATETIME NOT NULL ,
+  `status` ENUM('AVAILABLE','BUSY') NOT NULL DEFAULT "BUSY" COMMENT 'Current status.  Set to busy by default.  System will assign chats when set to available\n' ,
+  `reason` ENUM('USER', 'SERVER_IDLE', 'CLIENT_IDLE', 'EXPIRED_REQUEST', 'NEW_USER', 'MAINTENANCE', 'LOGIN', 'LOGOUT') NULL DEFAULT "USER" ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_user_statuses_users` (`users_id` ASC) ,
+  CONSTRAINT `fk_users_statuses_users`
+    FOREIGN KEY (`users_id` )
+    REFERENCES `users` (`id` )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE 
+)
+ENGINE = InnoDB;
+
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `ip`, `date_created`, `date_updated`, `type`, `uid`, `max_chats`, `status`) VALUES
-(1, 'System', NULL, NULL, '2012-05-14 14:44:02', '2012-05-14 14:44:02', 'operator', NULL, 0, 'BUSY'),
-(2, 'Test Operator', '', NULL, '2012-05-14 14:44:33', '2012-05-14 14:44:33', NULL, 'test_operator', 3, 'AVAILABLE'),
-(3, 'test client', '', NULL, '2012-05-14 14:45:17', '2012-05-14 14:45:17', 'client', NULL, 0, 'BUSY');
+INSERT INTO `users` (`id`, `name`, `email`, `date_created`, `date_updated`, `type`, `uid`, `max_chats`, `status`) VALUES
+(1, 'System', NULL, '2012-05-14 14:44:02', '2012-05-14 14:44:02', 'operator', NULL, 0, 'BUSY'),
+(2, 'Test Operator', '', '2012-05-14 14:44:33', '2012-05-14 14:44:33', NULL, 'test_operator', 3, 'AVAILABLE'),
+(3, 'test client', '', '2012-05-14 14:45:17', '2012-05-14 14:45:17', 'client', NULL, 0, 'BUSY');
 
 --
 -- Constraints for dumped tables
@@ -208,7 +232,7 @@ ALTER TABLE `assignments`
 --
 ALTER TABLE `conversations`
   ADD CONSTRAINT `fk_conversations_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `visitorchatapp`.`users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_conversations_users1` FOREIGN KEY (`closer_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `invitations`

@@ -1,18 +1,21 @@
 <?php 
 namespace UNL\VisitorChat\User;
 
-class ClientLogin extends \UNL\VisitorChat\User\Record
+use UNL\VisitorChat\Controller;
+use UNL\VisitorChat\Util;
+
+class ClientLogin
 {
     function __construct($options = array())
     {
         if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
-            \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("conversation", true, true));
+            \Epoch\Controller::redirect(Controller::$URLService->generateSiteURL("conversation", true, true));
         }
     }
     
     function getEditURL()
     {
-        return \UNL\VisitorChat\Controller::$url . "clientLogin";
+        return Controller::$url . "clientLogin";
     }
     
     function handlePost($post = array())
@@ -20,21 +23,37 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         if (!isset($post['initial_url']) || empty($post['initial_url'])) {
             throw new \Exception("No initial url was found", 400);
         }
+
+        //Check the domain.
+        if (!Util::isAllowedDomain($post['initial_url'], Controller::$allowedDomains)) {
+            throw new \Exception("This chat system can not run on the given domain.", 400);
+        }
         
         if (!isset($post['initial_pagetitle']) || empty($post['initial_pagetitle'])) {
-            throw new \Exception("No initial pagetitle url was found", 400);
+            throw new \Exception("No initial pagetitle was found", 400);
         }
         
         if (!isset($post['email']) || empty($post['email'])) {
             $post['email'] = null;
         }
         
-        if (!isset($post['name']) || empty($post['name'])) {
+        //no name? (check if name (optional) due to bug in <= ie9)
+        if (!isset($post['name']) || empty($post['name']) || strtolower($post['name']) == "name (optional)") {
             $post['name'] = "Guest";
         }
         
         if (!isset($post['message']) || empty($post['message'])) {
             throw new \Exception("No message was provided", 400);
+        }
+        
+        //Check if this needs to be blocked
+        $found = 0;
+        foreach (Controller::$badWords as $word) {
+            $found += substr_count(strtolower($post['message']), $word);
+        }
+
+        if (Controller::$badWordsBlockCount <= $found) {
+            throw new \Exception("Your message was blocked by our word filter.", 400);
         }
         
         $fallback = 1;
@@ -47,25 +66,39 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
             $method = "EMAIL";
         }
         
-        $user = new self();
-        $user->name         = $post['name'];
-        $user->email        = $post['email'];
-        $user->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
+        $user = new \UNL\VisitorChat\User\Record();
+        $user->name         = trim($post['name']);
+        $user->email        = trim($post['email']);
+        $user->date_created = Controller::epochToDateTime();
         $user->type         = 'client';
         $user->max_chats    = 3;
-        $user->status       = 'BUSY';
-        $user->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-        
-        if (isset($_SERVER['REMOTE_ADDR'])) {
-            $user->ip           = $_SERVER['REMOTE_ADDR'];
-        }
-        
+        $user->date_updated = Controller::epochToDateTime();
+        $user->setStatus("BUSY", "NEW_USER");
         $user->save();
-        
+
         //Append a unique ID to the end of an guest's user's name
         if ($user->name == "Guest") {
             $user->name = $user->name . $user->id;
             $user->save();
+        }
+
+        //The remote_addr server var is not always set, so default to an empty ip.
+        $ip = "";
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        
+        $ua = "";
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $ua = $_SERVER['HTTP_USER_AGENT'];
+        }
+        
+        //Check if this may be spam...
+        $status = "SEARCHING";
+        $spam   = 0;
+        if (\UNL\VisitorChat\Captcha\Service::isSpam($post['initial_url'], $post['message'], $ip, $ua)) {
+            $status = "CAPTCHA";
+            $spam   = true;
         }
         
         //Start up a new conversation for the user.
@@ -74,19 +107,18 @@ class ClientLogin extends \UNL\VisitorChat\User\Record
         $conversation->method            = $method;
         $conversation->initial_url       = $post['initial_url'];
         $conversation->initial_pagetitle = $post['initial_pagetitle'];
-        $conversation->status            = "SEARCHING";
+        $conversation->status            = $status;
         $conversation->email_fallback    = $fallback;
-        
-        if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            $conversation->user_agent        = $_SERVER['HTTP_USER_AGENT'];
-        }
+        $conversation->auto_spam         = $spam;
+        $conversation->ip_address        = $ip;
+        $conversation->user_agent        = $ua;
         
         $conversation->save();
         
         //Save the first message.
         $message = new \UNL\VisitorChat\Message\Record();
         $message->users_id         = $user->id;
-        $message->date_created     = \UNL\VisitorChat\Controller::epochToDateTime();
+        $message->date_created     = Controller::epochToDateTime();
         $message->conversations_id = $conversation->id;
         $message->message          = $post['message'];
         $message->save();

@@ -21,6 +21,7 @@ session_start();
 $_SESSION['id'] = 2;
 
 $app = new \UNL\VisitorChat\Controller($_GET);
+$app->run();
 ?>
 ===DONE===
 --EXPECT--

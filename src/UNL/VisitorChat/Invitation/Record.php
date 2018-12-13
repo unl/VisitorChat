@@ -25,6 +25,20 @@ class Record extends \Epoch\Record
     {
         return 'invitations';
     }
+
+    /**
+     * Delete the invitation and all assignments for the invitation
+     * 
+     * @return bool|void
+     */
+    public function delete()
+    {
+        foreach ($this->getAssignments() as $assignment) {
+            $assignment->delete();
+        }
+        
+        return parent::delete();
+    }
     
     function keys()
     {
@@ -75,7 +89,7 @@ class Record extends \Epoch\Record
      */
     function isForSite()
     {
-        if (filter_var($this->invitee, FILTER_VALIDATE_URL)) {
+        if (count($this->getInvitee()) == 1) {
             return true;
         }
         
@@ -84,9 +98,14 @@ class Record extends \Epoch\Record
     
     function getSiteURL()
     {
-        $data = explode('::', $this->invitee);
+        $invitee = $this->getInvitee();
         
-        return $data[0];
+        return urldecode($invitee[0]);
+    }
+    
+    function getInvitee()
+    {
+        return explode("::", $this->invitee);
     }
     
     function getAccountUID()
@@ -95,7 +114,7 @@ class Record extends \Epoch\Record
             return false;
         }
         
-        $data = explode('::', $this->invitee);
+        $data = $this->getInvitee();
         
         if (!isset($data[1])) {
             return false;
@@ -104,7 +123,7 @@ class Record extends \Epoch\Record
         return $data[1];
     }
     
-    public static function createNewInvitation($conversationID, $invitee, $inviter = 1)
+    public static function  createNewInvitation($conversationID, $invitee, $inviter = 1)
     {
         $invitation = new self();
         $invitation->conversations_id = $conversationID;
@@ -135,6 +154,11 @@ class Record extends \Epoch\Record
         //Update the conversation status if needed.
         $conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
         
+        //Make sure that all assignments for this invitation are marked as completed.
+        foreach ($this->getPendingAssignments() as $assignment) {
+            $assignment->markAsFailed();
+        }
+        
         //Was this invitation sent by the system?  if so, that means we need to fall though to email.
         if ($this->users_id == 1) {
             $conversation->status = "OPERATOR_LOOKUP_FAILED";
@@ -152,9 +176,41 @@ class Record extends \Epoch\Record
         
         return $conversation->status;
     }
+
+    /**
+     * Get the title of the invitee, either a name or a site name
+     * 
+     * @return false|string
+     */
+    public function getInviteeTitle()
+    {
+        if ($this->isForSite()) {
+            if (!$sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($this->getSiteURL())) {
+                return false;
+            }
+
+            if ($site = $sites->current()) {
+                $name = $site->getTitle();
+            }
+        } else if ($account = \UNL\VisitorChat\User\Record::getByUID($this->getAccountUID())) {
+            $name = $account->name;
+        }
+        
+        return $name;
+    }
     
     public function getAssignments()
     {
         return \UNL\VisitorChat\Assignment\RecordList::getAllAssignmentsForInvitation($this->id);
+    }
+    
+    public function getPendingAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getPendingAssignmentsForInvitation($this->id);
+    }
+
+    public function getAcceptedAssignments()
+    {
+        return \UNL\VisitorChat\Assignment\RecordList::getAcceptedAssignmentsForInvitation($this->id);
     }
 }

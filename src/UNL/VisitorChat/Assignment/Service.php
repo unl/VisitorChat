@@ -4,14 +4,14 @@ namespace UNL\VisitorChat\Assignment;
 class Service
 {
     /**
-     * Finds an avaiable operator from a set of operators and a conversation.
+     * Finds an available operator from a set of operators and a conversation.
      * 
      * @param array $operators
      * @param \UNL\VisitorChat\Invitation\Record $invitation
      * 
      * @return mixed (string $id, false if failed)
      */
-    function findAvaiableOperatorForInvitation($operators, \UNL\VisitorChat\Invitation\Record $invitation)
+    function findAvailableOperatorsForInvitation($operators, \UNL\VisitorChat\Invitation\Record $invitation)
     {
         //If there are no operators assigned to this site, bail out now.
         if (empty($operators)) {
@@ -48,10 +48,10 @@ class Service
                             = 0
                          AND (false";
         foreach ($operators as $operator) {
-            $sql .= " OR users1.uid = '" . mysql_escape_string($operator) . "'";
+            $sql .= " OR users1.uid = '" . $db->real_escape_string($operator) . "'";
         }
         
-        $sql .= ") GROUP BY users1.uid";
+        $sql .= ") GROUP BY users1.id";
         
         if (!$result = $db->query($sql)) {
             return false;
@@ -68,7 +68,7 @@ class Service
         }
         
         //Select a random operator
-        return $operators[rand(0,count($operators)-1)];
+        return $operators;
     }
     
     /* Finds an online operator and assigns them to this a chat/invitation.
@@ -81,27 +81,44 @@ class Service
      * 
      * @return bool
      */
-    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation)
+    function assignOperator(\UNL\VisitorChat\Invitation\Record $invitation, $operatorID = false)
     {
-        if (filter_var($invitation->invitee, FILTER_VALIDATE_URL)) {
-            //search for a url
-            if (!$operator = $this->findAvaiableOperatorForURL($invitation->invitee, $invitation)) {
+        $operators = array();
+        
+        if (!$operatorID) {
+            if ($invitation->isForSite()) {
+                //search for a url
+                if (!$operator = $this->findAvaiableOperatorForURL($invitation->getSiteURL(), $invitation)) {
+                    return false;
+                }
+                $operators += $operator;
+            } else if ($to = $invitation->getAccountUID()) {
+                //get a specific operator
+                if (!$operatorIDs = $this->findAvailableOperatorsForInvitation(array($to), $invitation)) {
+                    return false;
+                }
+                
+                //We expect to proceed with an array containing an operatorID and the responding site.
+                foreach ($operatorIDs as $id) {
+                    $operators[] = array('operatorID'=>$id, 'site'=>$invitation->invitee);
+                }
+            } else {
                 return false;
             }
-        } else if ($to = $invitation->getAccountUID()) {
-            //get a specific operator
-            if (!$operator = $this->findAvaiableOperatorForInvitation(array($to), $invitation)) {
-                return false;
-            }
-            
-            //We expect to proceed with an array containing an operatorID and the responding site.
-            $operator = array('operatorID'=>$operator, 'site'=>$invitation->invitee);
         } else {
-            return false;
+            $data = array();
+            $data['operatorID']  = $operatorID;
+            $data['site']        = $invitation->getSiteURL();
+            
+            $operators[] = $data;
         }
         
-        //Create a new assignment.
-        return \UNL\VisitorChat\Assignment\Record::createNewAssignment($operator['operatorID'], $operator['site'], $invitation->conversations_id, $invitation->id);
+        //Create a new assignments.
+        foreach($operators as $operator) {
+            \UNL\VisitorChat\Assignment\Record::createNewAssignment($operator['operatorID'], $operator['site'], $invitation->conversations_id, $invitation->id);
+        }
+        
+        return true;
     }
     
     function findAvaiableOperatorForURL($url, $invitation) {
@@ -113,13 +130,25 @@ class Service
         $sites = \UNL\VisitorChat\Controller::$registryService->getSitesByURL($url);
         
         //Loop though those sites until am avaiable member can be found.
+        $totalSearched = 0;
         foreach ($sites as $site) {
+            //For personal assignments, do not fall back. (only allow system assignments to fall back).
+            if ($totalSearched == 1 && $invitation->users_id != 1) {
+                return false;
+            }
+            
             $operators = $this->generateOperatorsArrayForSite($site);
             
             //Break out of the loop once we find someone.
-            if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
-                return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
+            if ($operatorIDs = $this->findAvailableOperatorsForInvitation($operators, $invitation)) {
+                $operators = array();
+                foreach ($operatorIDs as $id) {
+                    $operators[] = array('operatorID'=>$id, 'site'=> $site->getURL());
+                }
+                return $operators;
             }
+
+            $totalSearched++;
         }
         
         //Try to find an avaiable operator though other channels as a last resort.
@@ -131,8 +160,12 @@ class Service
                 $operators = $this->generateOperatorsArrayForSite($site);
                 
                 //Break out of the loop once we find someone.
-                if ($operatorID = $this->findAvaiableOperatorForInvitation($operators, $invitation)) {
-                    return array('operatorID'=>$operatorID, 'site'=> $site->getURL());
+                if ($operatorIDs = $this->findAvailableOperatorsForInvitation($operators, $invitation)) {
+                    $operators = array();
+                    foreach ($operatorIDs as $id) {
+                        $operators[] = array('operatorID'=>$id, 'site'=> $site->getURL());
+                    }
+                    return $operators;
                 }
             }
         }
@@ -146,7 +179,8 @@ class Service
         
         //Loop though each member and add it to the operators array.
         foreach ($site->getMembers() as $member) {
-            if ($member->getRole() != 'other') {
+            //Don't count non-operators and managers.  Managers can view history, but not operate. 
+            if ($member->canOperate()) {
                 $operators[] = $member->getUID();
             }
         }
@@ -154,24 +188,10 @@ class Service
         return $operators;
     }
     
-    function rejectAllExpiredRequests()
+    function expirePendingRequests()
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
-        $sql = "UPDATE assignments
-                LEFT JOIN (conversations, users)
-                ON (assignments.conversations_id = conversations.id AND users.id = assignments.users_id)
-                SET assignments.status = 'EXPIRED',
-                    users.status = 'BUSY',
-                    users.status_reason = 'EXPIRED_REQUEST',
-                    conversations.status = IF(conversations.status <> 'CHATTING', 'SEARCHING', 'CHATTING'),
-                    assignments.date_finished = '" . \Epoch\RecordList::escapeString(\UNL\VisitorChat\Controller::epochToDateTime()) . "'
-                WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
-                    AND assignments.status = 'PENDING'";
-
-        if ($db->query($sql)) {
-            return true;
+        foreach (RecordList::getAllPendingAndExpired() as $assignment) {
+            $assignment->expire();
         }
-        
-        return false;
     }
 }

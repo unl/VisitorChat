@@ -7,6 +7,8 @@ class Archived
     
     function __construct($options = array())
     {
+        \UNL\VisitorChat\Controller::$pagetitle = "History - Conversation";
+        
         \UNL\VisitorChat\Controller::requireOperatorLogin();
         
         //Get and set the conversation for viewing.
@@ -26,7 +28,7 @@ class Archived
         $this->messages = $this->conversation->getMessages(array('itemClass' => '\UNL\VisitorChat\Message\View'));
     }
     
-    /** Determins if the current user can view this conversation.
+    /** Determines if the current user can view this conversation.
      * 
      * The current user can view this conversation IF
      * 1) They were assigned to the conversation (and accepted the assignment)

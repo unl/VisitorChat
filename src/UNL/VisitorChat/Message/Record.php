@@ -86,4 +86,20 @@ class Record extends \Epoch\Record
     {
         return \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
     }
+
+    /**
+     * Check if this message contains title 9 words
+     * 
+     * @return bool
+     */
+    public function hasTitle9Words()
+    {
+        foreach (\UNL\VisitorChat\Controller::$title9Words as $word) {
+            if (preg_match('/\b('.$word.')\b/i', $this->message)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

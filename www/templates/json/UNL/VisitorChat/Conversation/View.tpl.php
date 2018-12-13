@@ -4,6 +4,7 @@ $data['status']                     = $context->conversation->status;
 $data['conversation_id']            = $context->conversation->id;
 $data['phpssid']                    = session_id();
 $data['operators']                  = $context->operators->getArrayCopy()->getRawObject();
+$data['client_is_typing']           = $context->conversation->clientIsTyping();
 
 //Save the current template path.
 $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
@@ -30,6 +31,22 @@ if ($context->sendHTML) {
     \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 }
 
+if ($data['status'] == 'CAPTCHA') {
+    //Save the current template path.
+    $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
+
+    //Set the path to the html directory.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath(array(\UNL\VisitorChat\Controller::$applicationDir . "/www/templates/default/"));
+
+    $captcha = new \UNL\VisitorChat\Captcha\Edit();
+    
+    //Render the conversation as html.
+    $data['html'] = \UNL\VisitorChat\Controller::$templater->render($captcha, 'UNL/VisitorChat/Captcha/Edit.tpl.php');
+
+    //Return to the original template path.
+    \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
+}
+
 if ($context->invitations) {
     //Save the current template path.
     $path = \UNL\VisitorChat\Controller::$templater->getTemplatePath();
@@ -39,7 +56,7 @@ if ($context->invitations) {
     
     //Render the conversation as html.
     $data['invitations_html'] = \UNL\VisitorChat\Controller::$templater->render($context->invitations, 'UNL/VisitorChat/Invitation/RecordList.tpl.php');
-    
+
     //Return to the original template path.
     \UNL\VisitorChat\Controller::$templater->setTemplatePath($path);
 }

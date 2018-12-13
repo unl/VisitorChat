@@ -4,26 +4,25 @@ $user = \UNL\VisitorChat\User\Service::getCurrentUser();
 
 <div id='visterChat_conversation'>
     <div id='visitorChat_conversation_header'>
+        <div id='clientInfo'>
+            <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject())); ?>
+        </div>
+        <?php if ($user->type == 'operator'): ?>
+            <div id='visitorChat_conversation_options'>
+                <ul>
+                    <li id='leaveConversation'><a href='#' title='Leave Conversation'><!--Leave Conversation--></a></li>
+                    <li id='shareConversation'><a href='#' title='Share Conversation'><!--Share--></a></li>
+                    <li id='closeConversation'><a href='#' title='End Conversation'><!--End Conversation--></a></li>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div id='visitorChat_url'>
-            <span id='visitorChat_url_title'><?php echo $context->conversation->getClient()->name;?></span>
-            <br />
-            on <a class="visitorChat_topicPage" href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a>
+            <span id='visitorChat_url_title'><span><?php echo $context->conversation->getClient()->name;?></span></span>
+            <span class="visitorChat_topicPage">
+            Conversation started at: <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
         </div>
-        <?php 
-        if ($user->type == 'operator') {
-        ?>
-        <div id='visitorChat_conversation_options'>
-            <ul>
-                <li><a href='#' id='shareConversation'>Share</a></li>
-                <li><a href='#' id='leaveConversation'>Leave Conversation</a></li>
-                <li><a href='#' id='closeConversation'>End Conversation</a></li>
-            </ul>
-        </div>
-        <?php 
-        }
-        ?>
     </div>
-    <div id='visitorChat_chatBox'>
+    <div id='visitorChat_chatBox' aria-live="polite" role="log">
         <ul>
         </ul>
     </div>

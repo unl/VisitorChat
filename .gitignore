@@ -4,3 +4,9 @@ www/.htaccess
 /.project
 /.settings/org.eclipse.php.core.prefs
 /.idea
+/spamRules.inc.php
+/UNL_Chat.sublime-workspace
+/UNL_Chat.sublime-project
+.DS_Store
+/vendor/
+www/node_modules

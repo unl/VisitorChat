@@ -1,5 +1,13 @@
-<?php 
-$title = "Chat Demo";
-$link = "<a href='page2.php'>page2</a>";
+<?php
+$title = 'Chat Demo';
+$main_content = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin maximus metus sit amet finibus sagittis. Sed et lectus risus. Nam euismod, ligula dignissim convallis elementum, quam leo hendrerit lacus, at interdum lorem neque vitae massa. Praesent maximus in metus et molestie. Curabitur hendrerit est odio. Vivamus vel erat mi. Vivamus placerat mauris eu purus dictum, vulputate pharetra mauris lacinia. Ut sagittis non sapien ut sollicitudin. Quisque orci nulla, tristique ac posuere a, rutrum sit amet erat. Integer pharetra velit massa, sit amet bibendum mi cursus vel. Cras non orci sed lectus iaculis bibendum. Duis pulvinar fermentum congue. Ut hendrerit est a vulputate pellentesque. Duis ligula dui, sodales non tellus sit amet, tristique luctus dui. Nam fringilla felis ex, quis mattis nisi aliquet eu. Phasellus congue ullamcorper hendrerit.</p>
+
+    <p>Vestibulum ornare luctus sagittis. Mauris nec lectus at nisl ultrices elementum sed eu velit. Nunc dapibus metus vitae consectetur lobortis. Integer ut commodo velit. Integer ut felis urna. Aliquam in molestie ex. In imperdiet tortor id mi ultricies pretium. Donec sapien nibh, interdum eu ex at, elementum convallis sapien.</p>
+
+    <p>Aliquam metus lacus, tempus ac lacus quis, euismod convallis dui. Nulla venenatis tempor mauris, vel lacinia velit porttitor a. Aliquam erat volutpat. Vivamus tempor odio fringilla ipsum pharetra condimentum. Integer a libero augue. Aenean lorem arcu, imperdiet eget cursus in, aliquet dapibus enim. Duis sem ante, rhoncus non feugiat sit amet, dignissim in neque. Vivamus non nisi quis massa molestie rutrum in ut mauris. Fusce eu venenatis enim, quis euismod ex. Vestibulum nec erat id metus porttitor malesuada non sit amet leo. Aliquam vel augue in enim dapibus gravida. Nullam eget finibus justo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed quis commodo nisi. Integer nec vehicula lectus. Nulla sed magna ac mauris efficitur placerat eu eget felis.</p>
+
+    <p>Sed dictum vehicula nisi ac viverra. Nullam et lectus ut massa faucibus consectetur in eget purus. Pellentesque dictum ipsum a orci elementum, at aliquam augue maximus. Nulla in viverra justo. Proin semper nibh ultricies tortor sagittis posuere. Vestibulum hendrerit id sem at vulputate. Quisque mattis dui tortor, sodales rutrum magna molestie sit amet.</p>
+
+    <p>Nunc ante odio, malesuada ut efficitur in, cursus sodales turpis. Nunc lobortis a turpis et ullamcorper. Aliquam sit amet malesuada urna. Phasellus tortor quam, rutrum sit amet ligula sit amet, ultrices maximus purus. Praesent condimentum sapien eu est rhoncus, id ultrices urna interdum. Nullam orci ligula, gravida ut dignissim ac, condimentum nec enim. Aenean rhoncus, ligula ut laoreet iaculis, nulla dui dignissim libero, euismod laoreet enim leo eu enim. Nam nisl enim, lobortis nec leo et, luctus iaculis nibh.</p>';
 
 require_once(dirname(__FILE__) . '/template.php');

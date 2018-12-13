@@ -18,6 +18,8 @@ set_include_path(
     .dirname(dirname(__FILE__)) . '/src'.PATH_SEPARATOR
 );
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 require_once dirname(__FILE__) . "/OperatorRegistry/MockRegistryDriver.php";
 require_once dirname(__FILE__) . "/Mail/MockMailDriver.php";
 require_once dirname(__FILE__) . "/Application/DBHelper.php";
@@ -34,7 +36,7 @@ $DBHelper = new DBHelper();
 
 ini_set('display_errors', true);
 
-error_reporting(E_ALL);
+error_reporting(E_ALL && ~E_STRICT);
 
 \Epoch\Controller::$cacheRoutes = false;
 
@@ -50,7 +52,7 @@ error_reporting(E_ALL);
 //Set session key to prevent man in the middle attacks.
 \UNL\VisitorChat\Controller::$sessionKey = "lol";
 
-\UNL\VisitorChat\Controller::$cacheJS = false;
+\UNL\VisitorChat\Asset\View::$cache = false;
 
 \Epoch\Controller::setDbSettings(array(
     'host'     => '127.0.0.1',

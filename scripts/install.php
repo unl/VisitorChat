@@ -9,6 +9,7 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
 {
     echo $message.'&hellip;'.PHP_EOL;
     try {
+        $result = true;
         if ($db->multi_query($sql)) {
             do {
                 /* store first result set */
@@ -16,14 +17,19 @@ function exec_sql($db, $sql, $message, $fail_ok = false)
                     $result->free();
                 }
             } while ($db->next_result());
+        } else {
+            echo "Query Failed: " . $db->error . PHP_EOL;
         }
     } catch (Exception $e) {
+        $result = false;
         if (!$fail_ok) {
             echo 'The query failed:'.$result->errorInfo();
             exit();
         }
     }
-    echo 'finished.<br />'.PHP_EOL;
+    echo 'finished.'.PHP_EOL;
+    echo '------------------------------------------'.PHP_EOL;
+    return $result;
 }
 
 $db = \UNL\VisitorChat\Controller::getDB();
@@ -50,6 +56,16 @@ exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.last_a
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.close_status.sql"), 'adding conversations.close_status');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.closer_id.sql"), 'adding conversations.closer_id');
 exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.status_reason.sql"), 'adding users.status_reason');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/conversations.ip_address.sql"), 'adding the ip address to the conversations table.');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.status_failed.sql"), 'adding the failed status to the assignments table');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.popup_notifications.sql"), 'adding the popup_notifcations to the users table');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/spam.sql"), 'adding spam info');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/users.alias.sql"), 'adding user alias');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/user_statuses.sql"), 'adding users_status table');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/indexes.sql"), 'adding indexes to tables');
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/status_reasons.sql"), 'adding status reasons');
+
+exec_sql($db, file_get_contents(dirname(dirname(__FILE__)) . "/data/assignments.is_typing.sql"), 'adding is_typing support');
 
 //1. Check if the system user is installed.
 if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
@@ -59,7 +75,10 @@ if (!$systemUser = \UNL\VisitorChat\User\Record::getByID(1)) {
     $systemUser->type         = "operator";
     $systemUser->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
     $systemUser->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
-    $systemUser->status       = "BUSY";
     $systemUser->max_chats    = 0;
+
+    $systemUser->setStatus("BUSY");
     $systemUser->save();
+
+
 }

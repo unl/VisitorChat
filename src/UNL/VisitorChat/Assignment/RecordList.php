@@ -28,6 +28,18 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+
+    public static function getPendingAssignmentsForConversation($conversationID, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE conversations_id = " . (int)$conversationID . "
+                               AND status = 'PENDING'
+                           ORDER BY date_created ASC";
+
+        return self::getBySql($options);
+    }
     
     public static function getAllAssignmentsForInvitation($invitationID, $options = array())
     {
@@ -52,16 +64,28 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
-    
-    public static function getPendingAssignmentsForUser($userID, $options = array())
+
+    public static function getPendingAssignmentsForInvitation($invitationId, $options = array())
     {
         $options = $options + self::getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'PENDING'
-                               AND users_id = " . (int)$userID . "
+                               AND invitations_id = " . (int)$invitationId . "
                            ORDER BY date_created ASC";
-        
+
+        return self::getBySql($options);
+    }
+
+    public static function getAcceptedAssignmentsForInvitation($invitationId, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE status = 'ACCEPTED'
+                               AND invitations_id = " . (int)$invitationId . "
+                           ORDER BY date_created ASC";
+
         return self::getBySql($options);
     }
     
@@ -76,6 +100,18 @@ class RecordList extends \Epoch\RecordList
         
         return self::getBySql($options);
     }
+
+    public static function getPendingForConversation($conversationID, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE status = 'PENDING'
+                               AND conversations_id = " . (int)$conversationID . "
+                           ORDER BY date_created ASC";
+
+        return self::getBySql($options);
+    }
     
     public static function getAcceptedAssignmentsForUser($userID, $options = array())
     {
@@ -86,6 +122,46 @@ class RecordList extends \Epoch\RecordList
                                AND users_id = " . (int)$userID . "
                            ORDER BY date_created ASC";
         
+        return self::getBySql($options);
+    }
+    
+    public static function getAssignmentsForSite($url = false, $start = false, $end = false, $status = false, $options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        
+        //Build sql
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE true ";
+        if ($url) {
+            $options['sql'] .= "AND answering_site = '" . self::escapeString($url) . "' ";
+        }
+
+        if ($start && $end) {
+            $options['sql'] .= "AND date_created BETWEEN '" . self::escapeString($start) . "' AND '" . self::escapeString($end) . "' ";
+        } else if ($start) {
+            $options['sql'] .= "AND date_created > '" . self::escapeString($start) . "' ";
+        } else if ($end) {
+            $options['sql'] .= "AND date_created < '" . self::escapeString($end) . "' ";
+        }
+
+        if ($status) {
+            $options['sql'] .= "AND status = '" . self::escapeString($status) . "' ";
+        }
+        
+        $options['sql'] .= "ORDER BY date_created ASC";
+        
+        return self::getBySql($options);
+    }
+    
+    public static function getAllPendingAndExpired($options = array())
+    {
+        $options = $options + self::getDefaultOptions();
+        $options['sql'] = "SELECT id
+                           FROM assignments
+                           WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
+                                 AND assignments.status = 'PENDING'";
+
         return self::getBySql($options);
     }
 }

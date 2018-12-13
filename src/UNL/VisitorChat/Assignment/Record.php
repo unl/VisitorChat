@@ -1,5 +1,17 @@
 <?php
 namespace UNL\VisitorChat\Assignment;
+use UNL\VisitorChat\Controller;
+
+/**
+ * Status Definitions
+ * 'PENDING' -> pending operator response
+ * 'REJECTED' -> rejected by operator
+ * 'ACCEPTED' -> accepted by operator
+ * 'EXPIRED' -> timed out (no response by operator)
+ * 'COMPLETED' -> accepted and completed.  This status is only reached when the conversation is closed.
+ * 'LEFT' -> left the conversation before it was completed
+ * 'FAILED' -> assignment failed, probably due to the invitation failing prematurely. (conversation was closed before the assignment was answered).
+ */
 
 class Record extends \Epoch\Record
 {
@@ -13,6 +25,10 @@ class Record extends \Epoch\Record
     public $invitations_id;
     public $date_finished;
     public $date_accepted;
+    public $is_typing;
+    
+    const IS_TYPING = 'YES';
+    const IS_NOT_TYPING = 'NO';
     
     function __construct($options = array()) {
         parent::__construct($options);
@@ -35,15 +51,30 @@ class Record extends \Epoch\Record
     
     public function insert()
     {
-        $this->date_created = \UNL\VisitorChat\Controller::epochToDateTime();
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_created = Controller::epochToDateTime();
+        $this->date_updated = Controller::epochToDateTime();
+        $this->is_typing = self::IS_NOT_TYPING;
         return parent::insert();
     }
     
     public function save()
     {
-        $this->date_updated = \UNL\VisitorChat\Controller::epochToDateTime();
+        $this->date_updated = Controller::epochToDateTime();
         return parent::save();
+    }
+
+    /**
+     * Determine if this person is currently typing or not
+     * 
+     * @return bool
+     */
+    public function isTyping()
+    {
+        if ($this->is_typing == self::IS_TYPING) {
+            return true;
+        }
+        
+        return false;
     }
     
     /**
@@ -53,11 +84,26 @@ class Record extends \Epoch\Record
      */
     public function markAsCompleted()
     {
+        //set all accepted or pending assignments as completed.
         if ($this->status == 'ACCEPTED') {
             return $this->updateStatus('COMPLETED');
         }
-        
+
+        if ($this->status == 'PENDING') {
+            return $this->updateStatus('FAILED');
+        }
+
         return true;
+    }
+
+    /**
+     * Mark this assignment as completed.
+     *
+     * @return bool
+     */
+    public function markAsFailed()
+    {
+        return $this->updateStatus('FAILED');
     }
     
     /**
@@ -74,13 +120,16 @@ class Record extends \Epoch\Record
     {
         $this->status = $status;
         
-        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED'))) {
-            $this->date_finished = \UNL\VisitorChat\Controller::epochToDateTime();
+        //Make sure that we show them as not typing when their status changes.
+        $this->is_typing = self::IS_NOT_TYPING;
+        
+        if (in_array($status, array('LEFT', 'COMPLETED', 'REJECTED', 'EXPIRED', 'FAILED'))) {
+            $this->date_finished = Controller::epochToDateTime();
         }
         
         if ($status == 'ACCEPTED') {
             $this->getInvitation()->complete();
-            $this->date_accepted = \UNL\VisitorChat\Controller::epochToDateTime();
+            $this->date_accepted = Controller::epochToDateTime();
         }
         
         return $this->save();
@@ -91,11 +140,11 @@ class Record extends \Epoch\Record
      * 
      * @param int $userID
      * 
-     * @return VisitorChat\Assignment\Record
+     * @return bool | \UNL\VisitorChat\Assignment\Record
      */
     public static function getOldestPendingRequestForUser($userID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE status = 'PENDING' 
@@ -120,7 +169,7 @@ class Record extends \Epoch\Record
     
     public static function getLatestForInvitation($invitionID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE invitations_id = " . (int)$invitionID . "
@@ -144,7 +193,7 @@ class Record extends \Epoch\Record
     
     public static function getLatestByStatusForUserAndConversation($status, $userID, $conversationID)
     {
-        $db = \UNL\VisitorChat\Controller::getDB();
+        $db = Controller::getDB();
         
         $sql = "SELECT * FROM assignments 
                 WHERE status = '" . \Epoch\RecordList::escapeString($status) . "'
@@ -193,9 +242,32 @@ class Record extends \Epoch\Record
         return $assignment->save();
     }
     
+    public function getConversation()
+    {
+        return \UNL\VisitorChat\Conversation\Record::getByID($this->conversations_id);
+    }
+    
     public function accept()
     {
-        return $this->updateStatus('ACCEPTED');
+        $conversation = $this->getConversation();
+        
+        if ($conversation->getAcceptedAssignments()->count() == 0) {
+            $messageText = "Hello, my name is " . $this->getUser()->getAlias() . ".  Please wait while I review your message so that I can assist you.";
+            
+            //Create a new message.
+            $message = new \UNL\VisitorChat\Message\Record();
+            $message->users_id         = $this->users_id;
+            $message->date_created     = Controller::epochToDateTime();
+            $message->conversations_id = $this->conversations_id;
+            $message->message          = $messageText;
+            $message->save();
+        }
+        
+        $this->updateStatus('ACCEPTED');
+
+        foreach ($conversation->getPendingAssignments() as $assignment) {
+            $assignment->updateStatus('OTHER_ANSWERED');
+        }
     }
     
     public function reject()
@@ -206,5 +278,48 @@ class Record extends \Epoch\Record
     public function getUser()
     {
         return \UNL\VisitorChat\User\Record::getByID($this->users_id);
+    }
+    
+    public function expire()
+    {
+        //Ensure that it can be expired.
+        if ($this->status != 'PENDING') {
+            return false;
+        }
+        
+        if (!$this->updateStatus('EXPIRED')) {
+            return false;
+        }
+        
+        //Update the conversation status if we need to.
+        $conversation = $this->getConversation();
+        if ($conversation->status != 'CHATTING') {
+            $conversation->status = 'SEARCHING';
+        }
+        
+        if (!$conversation->save()) {
+            return false;
+        }
+        
+        //Update the user status if we need to.
+        $user = $this->getUser();
+        if (!$user->setStatus('BUSY', 'EXPIRED_REQUEST')) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * @return false|\UNL\VisitorChat\OperatorRegistry\WDN\Site
+     */
+    public function getAnsweringSite()
+    {
+        $answeringSite = $this->answering_site;
+        if (!$site = Controller::$registryService->getSitesByURL($answeringSite)) {
+            return false;
+        }
+        
+        return $site->current();
     }
 }

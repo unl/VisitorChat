@@ -28,7 +28,7 @@ abstract class Record
     protected function prepareInsertSQL(&$sql)
     {
         $sql    = 'INSERT INTO '.$this->getTable();
-        $fields = get_object_vars($this);
+        $fields = $this->getFields();
         if (isset($fields['options'])) {
             unset($fields['options']);
         }
@@ -47,7 +47,7 @@ abstract class Record
     protected function prepareUpdateSQL(&$sql)
     {
         $sql    = 'UPDATE '.$this->getTable().' ';
-        $fields = get_class_vars(get_class($this));
+        $fields = $this->getFields();
 
         $sql .= 'SET `'.implode('`=?,`', array_keys($fields)).'`=? ';
 
@@ -58,7 +58,7 @@ abstract class Record
 
         $sql = substr($sql, 0, -4);
 
-        $fields = $fields + get_object_vars($this);
+        $fields = $fields + $this->getFields();
         return $fields;
     }
     
@@ -238,7 +238,7 @@ abstract class Record
             }
             $value = $this->$key;
             if ($this->getTypeString(array($key)) == 's') {
-                $value = '"'.$mysqli->escape_string($value).'"';
+                $value = '"'.$mysqli->real_escape_string($value).'"';
             }
             $sql .= $key.'='.$value.' AND ';
         }
@@ -291,7 +291,7 @@ abstract class Record
                     . $record->getTable()
                     . ' WHERE '
                     . $whereAdd
-                    . $field . ' = "' . $mysqli->escape_string($value) . '"';
+                    . $field . ' = "' . $mysqli->real_escape_string($value) . '"';
         $result = $mysqli->query($sql);
 
         if ($result === false
@@ -322,13 +322,27 @@ abstract class Record
      */
     function synchronizeWithArray($data)
     {
-        foreach (get_object_vars($this) as $key=>$default_value) {
+        foreach ($this->getFields() as $key=>$default_value) {
             if (isset($data[$key]) && !empty($data[$key])) {
                 $this->$key = $data[$key];
             }
         }
     }
-
+    
+    function getFields()
+    {
+        $object = new \ReflectionObject($this);
+        
+        $properties = array();
+        
+        foreach ($object->getProperties() as $property) {
+            $property->setAccessible(true);
+            $properties[$property->getName()] = $property->getValue($this);
+        }
+        
+        return $properties;
+    }
+    
     /**
      * Reload data from the database and refresh member variables
      * 
@@ -347,7 +361,7 @@ abstract class Record
      */
     function toArray()
     {
-        return get_object_vars($this);
+        return $this->getFields();
     }
     
     /**

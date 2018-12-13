@@ -30,27 +30,66 @@ class Edit extends \UNL\VisitorChat\Conversation\Record
     
     function handlePost($post = array())
     {
+        //Preform a check first to see if we are deleting it.
+        if (array_key_exists('delete', $post)) {
+            //You must be a manager to delete a conversation
+            if (!$this->canDelete(\UNL\VisitorChat\User\Service::getCurrentUser())) {
+                throw new \Exception("you do not have permission to delete this conversation.", 403);
+            }
+            
+            $this->delete();
+
+            \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
+        }
+        
+        //otherwise, check if we can edit it
         if (!$this->canEdit($_SESSION['id'])) {
             throw new \Exception("you do not have permission to edit this.", 403);
         }
         
+        if (isset($post['status'])) {
+            $this->handleStatus($post);
+        } else if (isset($post['client_is_typing'])) {
+            $this->handleClientIsTyping($post);
+        } else {
+            throw new \Exception("Invalid request.", 400);
+        }
+    }
+    
+    protected function handleStatus($post = array())
+    {
         //Handle status changes.
-        if (isset($post['status']) && !empty($post['status'])) {
+        if (!empty($post['status'])) {
             $accepted = array("CLOSED"); //Only allowe closing for now.
-            
+
             if (!in_array($post['status'], $accepted)) {
                 throw new \Exception("invalid status.", 400);
             }
-            
-            $this->status = $post['status'];
-            
+
             if ($post['status'] == 'CLOSED') {
                 $this->close();
             } else {
+                $this->status = $post['status'];
+
                 $this->save();
             }
         }
+
+        \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
+    }
+    
+    protected function handleClientIsTyping($post = array())
+    {
+        if (!in_array($post['client_is_typing'], array(
+            self::CLIENT_IS_NOT_TYPING,
+            self::CLIENT_IS_TYPING
+        ))) {
+            throw new \Exception("invalid client_is_typing value.", 400);
+        }
         
+        $this->client_is_typing = $post['client_is_typing'];
+        $this->save();
+
         \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
     }
 }

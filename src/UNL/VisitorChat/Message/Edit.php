@@ -31,12 +31,40 @@ class Edit extends \UNL\VisitorChat\Message\Record
         if (!$conversation = \UNL\VisitorChat\Conversation\Record::getByID($post['conversations_id'])) {
             throw new \Exception("Could not find that conversation", 400);
         }
+
+        $ip_address = $conversation->ip_address;
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip_address = $_SERVER['REMOTE_ADDR'];
+        }
+        
+        //check if the ip is blocked.
+        $blocks = \UNL\VisitorChat\BlockedIP\RecordList::getAllActiveForIP($ip_address);
+
+        if (count($blocks)) {
+            throw new \Exception("This user has been blocked", 400);
+        }
         
         $user = \UNL\VisitorChat\User\Service::getCurrentUser();
         
         //check if we have permission to post here.
         if ($user->id !== $conversation->users_id && $user->type == 'client') {
             throw new \Exception("You do not have permission to reply to this conversation", 400);
+        }
+        
+        if ($user->type == 'client') {
+            $conversation->client_is_typing = \UNL\VisitorChat\Conversation\Record::CLIENT_IS_NOT_TYPING;
+            $conversation->save();
+        } else {
+            //Stop typing status for the assignment
+            foreach ($conversation->getAcceptedAssignments() as $assignment) {
+                if ($assignment->users_id != $user->id) {
+                    continue;
+                }
+                
+                $assignment->is_typing = \UNL\VisitorChat\Assignment\Record::IS_NOT_TYPING;
+                $assignment->save();
+                break;
+            }
         }
         
         $this->users_id = $user->id;

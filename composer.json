@@ -1,0 +1,18 @@
+{
+  "autoload": {
+    "psr-0": {
+      "UNL": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/unlpear/UNL_Cache_Lite.git"
+    }
+  ],
+  "require": {
+    "saltybeagle/savvy": "^0.9.0",
+    "unl/php-wdn-templates": "~4.1",
+    "unl/unl_cache_lite": "0.1.*"
+  }
+}

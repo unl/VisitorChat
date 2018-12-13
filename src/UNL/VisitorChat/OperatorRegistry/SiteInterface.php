@@ -23,6 +23,13 @@ abstract class SiteInterface
      * @return string
      */
     abstract function getTitle();
+
+    /**
+     * Get the support groups for the site
+     * 
+     * @return string
+     */
+    abstract function getSupportGroups();
     
     /**
      * Determins the number of operators for this site that are current available.
@@ -42,7 +49,7 @@ abstract class SiteInterface
                 continue;
             }
             
-            if ($user->status != 'AVAILABLE') {
+            if ($user->getStatus()->status != 'AVAILABLE') {
                 continue;
             }
             

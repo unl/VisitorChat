@@ -1,24 +1,29 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
-class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
+class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
 {
-    public static $baseURI      = "http://www1.unl.edu/wdn/registry/";
+    public static $baseURI      = "https://webaudit.unl.edu/registry/";
     
     public static $cacheTimeout = 18000;  //seconds (5 hours)
     
-    function query($query)
+    function getQueryURL($query)
     {
-        $url       = self::$baseURI . "?u=" . urlencode($query) . "&output=json";
+        return self::$baseURI . "?query=" . urlencode($query) . "&format=json";
+    }
+    
+    function query($query, $doNotCache = false)
+    {
+        $url       = $this->getQueryURL($query);
         $cachePath = $this->getCachePath($url);
         
         //See if the query is cached, if it is, return it.
-        if ($sites = $this->getCache($cachePath)) {
+        if (!$doNotCache && $sites = $this->getCache($cachePath)) {
             return new SiteList($sites);
         }
         
         //data was not cached, get data and then cache it.
-        $data = @file_get_contents($url);
+        $data = $this->queryRegistry($url);
         
         if (!$data) {
             return false;
@@ -28,50 +33,123 @@ class Driver implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
             return false;
         }
         
-        //Set the cache.
-        $this->setCache($cachePath, $sites);
+        if (!$doNotCache) {
+            //Set the cache.
+            $this->setCache($cachePath, $sites);
+        }
         
         return new SiteList($sites);
     }
     
-    function getCachePath($url)
-    {
-        $path = sys_get_temp_dir();
-
-        //Some paths may not have a trailing separator.  Other may?  weird.
-        if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
-            $path = $path . DIRECTORY_SEPARATOR;
-        }
-
-        return $path . "unl_visitorchat_wdn_" . md5($url);
+    protected function queryRegistry($url) {
+        // create a new cURL resource
+        $ch = curl_init();
+        
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        // grab URL and pass it to the browser
+        $result = curl_exec($ch);
+        
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+        return $result;
     }
     
-    function getCache($path)
+    function getCacheTitle()
     {
-        if (file_exists($path) && (filemtime($path) + self::$cacheTimeout > time())) {
-            return unserialize(file_get_contents($path));
+        return "unl_visitorchat_wdn_";
+    }
+    
+    function getSitesByURL($site, $doNotCache = false)
+    {
+        return $this->query($site, $doNotCache);
+    }
+    
+    function getSitesForUser($user, $doNotCache = false)
+    {
+        $query = $user .'@unl.edu';
+        $cachePath = $this->getCachePath($this->getQueryURL($query));
+        
+        if (!$doNotCache && $sites = $this->getCache($cachePath)) {
+            return $sites;
         }
         
-        return false;
-    }
-    
-    function setCache($path, $data)
-    {
-        file_put_contents($path, serialize($data));
-    }
-    
-    function getSitesByURL($site)
-    {
-        return $this->query($site);
-    }
-    
-    function getSitesForUser($user)
-    {
-        return $this->query($user);
+        //All sites for a user.
+        $sites = $this->query($query, $doNotCache);
+        
+        if (!$sites) {
+            $sites = array();
+        }
+        
+        //Create an array of all sites that need to be removed.
+        $unsets = array();
+        foreach ($sites as $index=>$site) {
+            foreach ($site->getMembers() as $member) {
+                if ($member->getUID() == \UNL\VisitorChat\User\Service::getCurrentUser()->uid) {
+                    //Remove this site from the site list IF the user is not a chat user.
+                    if ($member->getRole() == 'other') {
+                        $unsets[] = $index;
+                        continue 2;
+                    }
+                }
+            }
+        }
+        
+        //remove the sites.
+        foreach ($unsets as $index) {
+            $sites->offsetUnset($index);
+        }
+        
+        //re-cache the results
+        if (!$doNotCache) {
+            //Set the cache.
+            $this->setCache($cachePath, $sites);
+        }
+        
+        return $sites;
     }
 
-    function getAllSites()
+    function getAllSites($doNotCache = false)
     {
-        return $this->query('*');
+        $cachePath = $this->getCachePath($this->getQueryURL('*'));
+
+        //Return a cached result if we have it.
+        if (!$doNotCache && $sites = $this->getCache($cachePath)) {
+            return $sites;
+        }
+
+        //get all sites
+        $sites = $this->query('*', $doNotCache);
+
+        //create an array of all sites that need to be unset
+        $unsets = array();
+        foreach ($sites as $index=>$site) {
+            foreach ($site->getMembers() as $member) {
+                //Remove this site from the site list IF the user is not a chat user.
+                if ($member->getRole() != 'other') {
+                    continue 2;
+                }
+                
+            }
+            
+            $unsets[] = $index;
+        }
+
+        //remove the sites.
+        foreach ($unsets as $index) {
+            $sites->offsetUnset($index);
+        }
+
+        //re-cache the results
+        if (!$doNotCache) {
+            //Set the cache.
+            $this->setCache($cachePath, $sites);
+        }
+
+        return $sites;
     }
 }

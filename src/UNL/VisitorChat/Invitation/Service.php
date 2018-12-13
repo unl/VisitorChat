@@ -16,7 +16,7 @@ class Service
     function handleInvitations(\UNL\VisitorChat\Conversation\Record $conversation)
     {
         //Determin if we need to handle assignments. If they are currently chatting however, we will check to see if their operator left and assign them a new one.
-        if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED'))) {
+        if (in_array($conversation->status, array('EMAILED', 'CLOSED', 'OPERATOR_LOOKUP_FAILED', 'CAPTCHA'))) {
             //We don't need to continue.
             return $conversation;
         }
@@ -66,24 +66,23 @@ class Service
         
         //Create a new invitation if there are no operators, we are searching and the last invitation was not created by the system.
         if (!$currentOperators && $conversation->status == 'SEARCHING' && $autoinvite) {
-            Record::createNewInvitation($conversation->id, $conversation->initial_url);
+            Record::createNewInvitation($conversation->id, urlencode($conversation->initial_url));
         }
         
         //Load the assignment service.
         $assignmentService = new \UNL\VisitorChat\Assignment\Service();
         
         //Loop over current searching invitations and assign operators based on those inviations.
-        foreach (\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($conversation->id) as $invitation) {
-            //Get the latest assignment for this invitation
-            $assignment = \UNL\VisitorChat\Assignment\Record::getLatestForInvitation($invitation->id);
-            
-            //Don't try to assign if we are currently pening.
-            if (is_object($assignment) && $assignment->status == "PENDING") {
+        foreach (\UNL\VisitorChat\Invitation\RecordList::getAllSearchingForConversation($conversation->id) as $invitation) {      
+            //Don't try to assign if we are currently pending.
+            $pendingAssignments = $invitation->getPendingAssignments();
+            if (count($pendingAssignments)) {
                 continue;
             }
             
             //If it was accepted, close this invitation
-            if (is_object($assignment) && $assignment->status == "ACCEPTED") {
+            $acceptedAssignments = $invitation->getAcceptedAssignments();
+            if (count($acceptedAssignments)) {
                 $invitation->complete();
                 continue;
             }

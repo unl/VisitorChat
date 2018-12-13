@@ -5,7 +5,11 @@ class Edit extends \UNL\VisitorChat\User\Record
 {
     function __construct($options = array())
     {
-        \UNL\VisitorChat\Controller::requireLogin();
+        \UNL\VisitorChat\Controller::$pagetitle = "User Settings";
+
+        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
+            throw new \Exception("You must be logged in to do this.", 401);
+        }
 
         if (isset($options['id']) && $object = \UNL\VisitorChat\User\Record::getByID($options['id'])) {
             $this->synchronizeWithArray($object->toArray());
@@ -16,10 +20,6 @@ class Edit extends \UNL\VisitorChat\User\Record
     
     function handlePost($post = array())
     {
-        if (!\UNL\VisitorChat\User\Service::getCurrentUser()) {
-            throw new \Exception("You must be logged in to do this.", 401);
-        }
-
         if (\UNL\VisitorChat\User\Service::getCurrentUser()->id !== $this->id) {
             throw new \Exception("you do not have permission to edit this.", 403);
         }
@@ -32,18 +32,15 @@ class Edit extends \UNL\VisitorChat\User\Record
                 $reason = strtoupper($post['reason']);
             }
 
-            if (!in_array($post['reason'], array('CLIENT_IDLE', 'USER'))) {
+            if (!in_array($post['reason'], \UNL\VisitorChat\User\Status\Record::getValidStatusReasons())) {
                 throw new \Exception("invalid status.", 400);
             }
 
-            $accepted = array("BUSY", "AVAILABLE");
-            
-            if (!in_array($post['status'], $accepted)) {
+            if (!in_array($post['status'], \UNL\VisitorChat\User\Status\Record::getValidStatuses())) {
                 throw new \Exception("invalid status.", 400);
             }
             
-            $this->status        = $post['status'];
-            $this->status_reason = $reason;
+            $this->setStatus($post['status'], $reason);
         }
         
         if (isset($post['max_chats'])) {
@@ -52,6 +49,18 @@ class Edit extends \UNL\VisitorChat\User\Record
             }
             
             $this->max_chats = $post['max_chats'];
+        }
+
+        if (isset($post['alias'])) {
+            $this->alias = $post['alias'];
+        }
+
+        if (isset($post['popup_notifications'])) {
+            if (!in_array($post['popup_notifications'], array('1', '0'))) {
+                throw new \Exception("Values for popup_notifications can be either 1 or 0", 400);
+            }
+
+            $this->popup_notifications = $post['popup_notifications'];
         }
         
         $this->save();

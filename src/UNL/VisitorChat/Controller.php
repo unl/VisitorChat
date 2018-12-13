@@ -10,11 +10,10 @@ class Controller extends \Epoch\Controller
     public static $chatRequestTimeout = 10000;
     
     public static $sessionKey = "key";
-    
-    //Should the sysem compress and cache JS output?
-    public static $cacheJS = true;
 
     public static $conversationTTL = 30;  //minutes
+    
+    public static $headerHTML = ""; //Header html to inject.
     
     /**
      * An array of possible roles.
@@ -24,12 +23,14 @@ class Controller extends \Epoch\Controller
      * @var array
      */
     public static $roles = array('other', 'operator', 'operator1', 'operator2', 'manager');
-    
+
     /**
      * uids of admins for the chat system.
      * @var array
      */
     public static $admins = array();
+    
+    public static $allowedDomains = array();
     
     /**
      * an array of default operators.  Must be the UIDs
@@ -50,12 +51,36 @@ class Controller extends \Epoch\Controller
     
     public static $environment = "PRODUCTION";
     
+    public static $pagetitle = "UNLchat";
+    
+    public static $badWords = array();
+    
+    public static $title9Words = array();
+    
+    public static $title9Emails = array();
+
+    /**
+     * Array of baseurls on which operator chat transcripts should be sent to
+     * 
+     * @var array
+     */
+    public static $sendOperatorTranscriptEmails = array();
+
+    /**
+     * Block a conversation if it had equal to or more than this number of 'bad' words.
+     * 
+     * @var int
+     */
+    public static $badWordsBlockCount = 3;
+    
     function __construct($options = array())
     {
         //Set the application dir for Epoch.
         self::$applicationDir = dirname(dirname(dirname(dirname(__FILE__))));
         
-        self::$customNamespace = "UNL\VisitorChat";
+        self::$customNamespace = "UNL\\VisitorChat";
+
+        parent::__construct($options);
         
         //1. Send CORS.
         $this->sendCORS();
@@ -68,7 +93,7 @@ class Controller extends \Epoch\Controller
         
         //reject all old requests.
         $assignmentService = new \UNL\VisitorChat\Assignment\Service();
-        $assignmentService->rejectAllExpiredRequests();
+        $assignmentService->expirePendingRequests();
         
         //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);
@@ -80,9 +105,25 @@ class Controller extends \Epoch\Controller
         if (!self::$mailService) {
             self::$mailService = new \UNL\VisitorChat\Mail\Driver();
         }
+    }
+
+    /**
+     * @static
+     * @param $url A full URL including protocol and trailing /
+     * 
+     * This function will set the url for the server.  If the request protocol is https,
+     * this function will attempt to convert the url to https.
+     */
+    public static function setURL($url)
+    {
+        //If we are requesting via https, change to https.
+        if ((isset($_SERVER["SERVER_PROTOCOL"]) && strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5)) == 'https')
+            //OR check to see if we are using HTTPS by checking Apache Env Variables
+            || (isset($_SERVER['USING_HTTPS']) && $_SERVER['USING_HTTPS'] == 1)) {
+            $url = str_replace('http://', 'https://', $url);
+        }
         
-        //4. Move along...
-        parent::__construct($options);
+        self::$url = $url;
     }
 
     /**
@@ -92,6 +133,11 @@ class Controller extends \Epoch\Controller
      */
     public static function requireClientLogin()
     {
+        if (self::$environment == "CLI") {
+            //Assume a client permission is always granted in CLI
+            return true;
+        }
+        
         if (!isset($_SESSION['id'])) {
             self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("clientLogin", true, true));
         }
@@ -109,7 +155,12 @@ class Controller extends \Epoch\Controller
     public static function requireLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+            $url = "";
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $url = $_SERVER['REQUEST_URI'];
+            }
+            
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, true));
         }
     }
 
@@ -122,7 +173,12 @@ class Controller extends \Epoch\Controller
     public static function requireOperatorLogin()
     {
         if (!isset($_SESSION['id'])) {
-            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $_SERVER['REQUEST_URI'], true, true));
+            $url = "";
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $url = $_SERVER['REQUEST_URI'];
+            }
+            
+            self::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("operatorLogin?redirect=" . $url, true, false));
         }
         
         if (empty(\UNL\VisitorChat\User\Service::getCurrentUser()->uid)) {
@@ -154,6 +210,8 @@ class Controller extends \Epoch\Controller
         //Check if the Origin header was set. If it was, make that the new origin.
         if (isset($headers['Origin'])) {
             $origin = $headers['Origin'];
+        } else if (isset($_SERVER['HTTP_ORIGIN'])) {
+            $origin = $_SERVER['HTTP_ORIGIN'];
         }
         
         // Specify domains from which requests are allowed (in this case, the same one that requested).
@@ -167,7 +225,13 @@ class Controller extends \Epoch\Controller
         
         // Additional headers which may be sent along with the CORS request
         // The X-Requested-With header allows jQuery requests to go through
-        header("Access-Control-Allow-Headers: 'X-Requested-With'");
+        if (isset($headers['Access-Control-Request-Headers'])) {
+            //Safari was sending some new headers which was causing things to break
+            header("Access-Control-Allow-Headers: " . $headers['Access-Control-Request-Headers']);
+        } else {
+            //Fall back to the old way we were doing things
+            header("Access-Control-Allow-Headers: 'X-Requested-With'");
+        }
         
         // Exit early so the page isn't fully loaded for options requests
         if (isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'options') {
@@ -183,11 +247,13 @@ class Controller extends \Epoch\Controller
      */
     function startSession()
     {
+        //Set the session cookie name.
+        session_name("UNL_Visitorchat_Session"); 
+        
         //has it already been started?
         if (session_id() !== "") {
             return true;
         }
-        
         
         /**
          * IE8+ does not allow for cookies to be passed with its XDomainRequest.
@@ -202,40 +268,87 @@ class Controller extends \Epoch\Controller
         if (!isset($_SERVER['HTTP_USER_AGENT'])) {
             $_SERVER['HTTP_USER_AGENT'] = "unknown";
         }
+
+        if (!isset($_SERVER['REMOTE_ADDR'])) {
+            $_SERVER['REMOTE_ADDR'] = "unknown";
+        }
         
         //Do we have a key in the session? (session hijacking prevention)
         if (!isset($_SESSION['key'])) {
-            $_SESSION['key'] = md5($_SERVER['HTTP_USER_AGENT']);
+            $_SESSION['key'] = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
         }
         
         //Check the key (session hijacking prevention)
-        if ($_SESSION['key'] != md5($_SERVER['HTTP_USER_AGENT'])) {
+        if ($_SESSION['key'] != md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR'])) {
             session_write_close();
             session_start();
+        }
+        
+        $sessionModels = array(
+            'UNL\VisitorChat\User\ClientLogin',
+            'UNL\VisitorChat\User\OperatorLogin',
+            'UNL\VisitorChat\User\Logout',
+            'UNL\VisitorChat\Conversation\View'
+        );
+        
+        //Close the session early so that it isn't locked... UNLESS we will be saving data to it.
+        if (isset($this->options['model']) && !in_array($this->options['model'], $sessionModels)) {
+            session_write_close();
         }
     }
     
     function run()
     {
-         if (!isset($this->options['model'])) {
-             throw new \Exception('Un-registered view', 404);
-         }
-         /**
-          * webkit cant follow cors redirects, so... if the user isn't logged in don't
-          * redirect, instead change the current model.
-          */
-         //are they already logged in?
-         if ($this->options['model'] =='UNL\VisitorChat\Conversation\View' && !isset($_SESSION['id'])) {
-            //redirect to client login
-            $this->options['model'] = '\UNL\VisitorChat\User\ClientLogin';
-         }
-         
-         if ($this->options['model'] =='UNL\VisitorChat\User\ClientLogin' && isset($_SESSION['id'])) {
-            //redirect to conversation view
-            $this->options['model'] = '\UNL\VisitorChat\Conversation\View';
-         }
-         
-         return parent::run();
+        //Don't try to run if we are running in cli.
+        if (self::$environment == "CLI") {
+            return false;
+        }
+
+        try {
+            if (!isset($this->options['model'])) {
+                throw new \Exception('Page Not Found', 404);
+            }
+            
+            //Handle Post
+            if (!empty($_POST)) {
+                $this->handlePost();
+            }
+
+            /**
+             * webkit cant follow cors redirects, so... if the user isn't logged in don't
+             * redirect, instead change the current model.
+             */
+            //are they already logged in?
+            if ($this->options['model'] =='UNL\VisitorChat\Conversation\View' && !isset($_SESSION['id'])) {
+                //redirect to client login
+                $this->options['model'] = '\UNL\VisitorChat\User\ClientLogin';
+            }
+            
+            if ($this->options['model'] =='UNL\VisitorChat\User\ClientLogin' && isset($_SESSION['id'])) {
+                //redirect to conversation view
+                $this->options['model'] = '\UNL\VisitorChat\Conversation\View';
+            }
+
+            //Handle GET
+            if (!isset($this->options['model'])) {
+                throw new \Exception('Un-registered view', 404);
+            }
+
+            $this->actionable = new $this->options['model']($this->options);
+        } catch(\Exception $e) {
+            if (isset($this->options['ajaxupload'])) {
+                echo $e->getMessage();
+                exit();
+            }
+
+            if (false == headers_sent()
+                && $code = $e->getCode()) {
+                header('HTTP/1.1 '.$code.' '.$e->getMessage());
+                header('Status: '.$code.' '.$e->getMessage());
+            }
+
+            $this->actionable = $e;
+        }
     }
     
     /**
@@ -272,11 +385,51 @@ class Controller extends \Epoch\Controller
     
     public static function redirect($url, $exit = true)
     {
+        if (self::$environment == "CLI") {
+            //Don't echo in CLI, this could expose the url in things like emails
+            return true;
+        }
+        
         if (self::$environment == "PHPT") {
             echo "Location: " . $url  . PHP_EOL;
             return true;
         }
         
         parent::redirect($url, $exit);
+    }
+
+    /**
+     * Render the actionable items for this controller via savvy.
+     *
+     * @return string the rendered output.
+     */
+    function render()
+    {
+        //Assets will always have the format of asset (to remove the wrapper)
+        if ($this->actionable instanceof \UNL\VisitorChat\Asset\View) {
+            $this->options['format'] = 'asset';
+        } else {
+            // Always escape output, use $context->getRaw('var'); to get the raw data.
+            self::$templater->setEscape('htmlentities');
+            //Don't html5 encode (too many issues and it isn't necessary)
+            self::$templater->setHTMLEscapeSettings(array('quotes'=>ENT_COMPAT));
+        }
+
+        if ($this->options['format'] != 'html') {
+            self::$templater->addTemplatePath(self::$applicationDir . '/www/templates/' . $this->options['format']);
+            self::$templater->addTemplatePath(dirname(dirname(dirname(__FILE__))).'/www/templates/Epoch/formats/' . $this->options['format']);
+            switch($this->options['format']) {
+                case 'json':
+                    header('Content-type:application/json;charset=UTF-8');
+                    break;
+                case 'asset':
+                    //Do not send a content-type.  That will be done by the asset.
+                    break;
+                default:
+                    header('Content-type:text/html;charset=UTF-8');
+            }
+        }
+
+        return self::$templater->render($this);
     }
 }

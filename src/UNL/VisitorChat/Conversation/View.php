@@ -13,6 +13,8 @@ class View
     
     public $invitations = false;
     
+    public $clientInfo = false;
+    
     public $sendHTML = false;
     
     public $operators = array();
@@ -33,6 +35,10 @@ class View
             if (!$this->conversation = \UNL\VisitorChat\Conversation\Record::getByID($this->conversation_id)) {
                 throw new \Exception("No conversation was found!", 500);
             }
+
+            if (isset($options['clientInfo'])) {
+                $this->clientInfo = \UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($this->conversation);
+            }
             
             $this->invitations = $this->conversation->getInvitations();
         } else {
@@ -49,7 +55,12 @@ class View
         
         foreach ($this->conversation->getAcceptedAssignments() as $assignment) {
             if ($operator = $assignment->getUser()) {
-                $this->operators[] = $operator->name;
+                $this->operators[] = array(
+                    'name' => $operator->name,
+                    'assignment' => $assignment->id,
+                    'id' => $operator->id,
+                    'is_typing' => $assignment->is_typing
+                );
             }
         }
 
