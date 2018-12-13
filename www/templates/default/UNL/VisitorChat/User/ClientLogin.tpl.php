@@ -1,4 +1,4 @@
-<form id='visitorchat_clientLogin' class='unl_visitorchat_form' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
+<form id='visitorchat_clientLogin' class='unl_visitorchat_form unl-darker-gray' name='input' method="post" action="<?php echo \UNL\VisitorChat\Controller::$url;?>clientLogin" style="display: block">
     <fieldset><legend id="visitorChat_footerHeader">Comments for this page</legend>
         <ul>
             <li class="visitorChat_center">
@@ -22,5 +22,5 @@
     <input type="hidden" name="initial_url" id="initial_url" value=""/>
     <input type="hidden" name="initial_pagetitle" id="initial_pagetitle" value=""/>
     <input id="visitorChat_login_chatmethod" type="hidden" name="method" value="EMAIL" />
-    <input id='visitorChat_login_submit' class="wdn-button wdn-button-triad" type="submit" value="Submit" name="visitorChat_login_submit" />
+    <input id='visitorChat_login_submit' class="dcf-btn dcf-btn-primary" type="submit" value="Submit" name="visitorChat_login_submit" />
 </form>
