@@ -74,7 +74,7 @@ $page->addScriptDeclaration("
                     person = \"people\";
                 }
                 
-                var user = \\";
+                var user = \"\";
                 if (original_data['statuses'][item]['user'] !== undefined) {
                     user = \" | \" + original_data['statuses'][item]['user'] + \" changed to \" + original_data['statuses'][item]['status'] + \" (\" + original_data['statuses'][item]['reason'] + \")\";
                 }
