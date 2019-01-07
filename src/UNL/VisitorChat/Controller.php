@@ -14,6 +14,10 @@ class Controller extends \Epoch\Controller
     public static $conversationTTL = 30;  //minutes
     
     public static $headerHTML = ""; //Header html to inject.
+
+    private $scriptDeclarations = array();
+    private $scripts = array();
+    private $styleSheets = array();
     
     /**
      * An array of possible roles.
@@ -432,4 +436,158 @@ class Controller extends \Epoch\Controller
 
         return self::$templater->render($this);
     }
+
+    /**
+     *  Load a script tag declaration to be applied to page later
+     *
+     * @param string $content Content of script tag
+     * @param string $type Type of script tag
+     * @param boolean $appendToHead whether to append tag to head
+     *
+     * @return void
+     */
+    function loadScriptDeclaration($content, $type = '', $appendToHead = FALSE) {
+        $this->scriptDeclarations[] = new ScriptDeclaration($content, $type, $appendToHead);
+    }
+
+    /**
+     *  Apply loaded script tags to page
+     *
+     * @param object $page Page to apply loaded script tags
+     *
+     * @return void
+     */
+    function applyScriptDeclarations(&$page) {
+        foreach ($this->scriptDeclarations as $declaration){
+            if ($declaration instanceof ScriptDeclaration) {
+                $page->addScriptDeclaration($declaration->content(), $declaration->type() , $declaration->appendToHead());
+            }
+        }
+    }
+
+    /**
+     *  Load a script file to be applied to page later
+     *
+     * @param string $url URL of script
+     * @param string $type Type of script tag
+     * @param boolean $appendToHead whether to append tag to head
+     *
+     * @return void
+     */
+    function loadScript($url, $type = '', $appendToHead = FALSE) {
+        $this->scripts[] = new Script($url, $type, $appendToHead);
+    }
+
+    /**
+     *  Apply loaded scripts to page
+     *
+     * @param object $page Page to apply loaded scripts
+     *
+     * @return void
+     */
+    function applyScripts(&$page) {
+        foreach ($this->scripts as $script){
+            if ($script instanceof Script) {
+                $page->addScript($script->url(), $script->type() , $script->appendToHead());
+            }
+        }
+    }
+
+    /**
+     *  Load a script file to be applied to page later
+     *
+     * @param string $url URL of script
+     * @param string $type Type of script tag
+     * @param boolean $appendToHead whether to append tag to head
+     *
+     * @return void
+     */
+    function loadStyleSheet($url, $media = '') {
+        $this->styleSheets[] = new StyleSheet($url, $media);
+    }
+
+    /**
+     *  Apply loaded scripts to page
+     *
+     * @param object $page Page to apply loaded scripts
+     *
+     * @return void
+     */
+    function applyStyleSheets(&$page) {
+        foreach ($this->styleSheets as $styleSheet){
+            if ($styleSheet instanceof StyleSheet) {
+                $page->addStyleSheet($styleSheet->url(), $styleSheet->media());
+            }
+        }
+    }
+}
+
+class ScriptDeclaration {
+    private $content;
+    private $type;
+    private $appendToHead;
+
+    public function __construct($content, $type = '', $appendToHead = FALSE)
+    {
+        $this->content = $content;
+        $this->type = $type;
+        $this->appendToHead = ($appendToHead === TRUE);
+    }
+
+    public function content() {
+        return $this->content;
+    }
+
+    public function type() {
+        return $this->type;
+    }
+
+    public function appendToHead() {
+        return $this->appendToHead;
+    }
+}
+
+class Script {
+    private $url;
+    private $type;
+    private $appendToHead;
+
+    public function __construct($url, $type = '', $appendToHead = FALSE)
+    {
+        $this->url = $url;
+        $this->type = $type;
+        $this->appendToHead = ($appendToHead === TRUE);
+    }
+
+    public function url() {
+        return $this->url;
+    }
+
+    public function type() {
+        return $this->type;
+    }
+
+    public function appendToHead() {
+        return $this->appendToHead;
+    }
+}
+
+class StyleSheet {
+    private $url;
+    private $media;
+
+    public function __construct($url, $media = '')
+    {
+        $this->url = $url;
+        $this->media = $media;
+    }
+
+    public function url() {
+        return $this->url;
+    }
+
+    public function media() {
+        return $this->media;
+    }
+
 }

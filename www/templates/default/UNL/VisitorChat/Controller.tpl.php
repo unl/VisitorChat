@@ -2,6 +2,8 @@
 use \UNL\Templates\Templates;
 $page = Templates::factory('Fixed', Templates::VERSION_5);
 
+$savvy->addGlobal('page', $page);
+
 /**
  * @var $page \UNL\Templates\Version4x1\Fixed
  */
