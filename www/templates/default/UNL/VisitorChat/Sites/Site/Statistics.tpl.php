@@ -38,7 +38,7 @@ $page->addScriptDeclaration("
         
         // Called when the Visualization API is loaded.
         WDN.jQuery(function(){
-            var original_data = <?php echo json_encode($statusStatistics); ?>
+            var original_data = " . json_encode($statusStatistics) . "
     
             // Create and populate a data table.
             var data = [];
