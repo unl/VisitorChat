@@ -1,10 +1,9 @@
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/timeline/timeline-min.js"></script>
-<script type="text/javascript" src="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/moment.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>js/timeline/timeline.css">
-<link rel="stylesheet" type="text/css" href="<?php echo \UNL\VisitorChat\Controller::$url; ?>css/timeline.css">
-
 <?php
+$page->addScript(\UNL\VisitorChat\Controller::$url ."js/timeline/timeline-min.js");
+$page->addScript(\UNL\VisitorChat\Controller::$url . "js/moment.min.js");
+$page->addStyleSheet(\UNL\VisitorChat\Controller::$url . "js/timeline/timeline.css");
+$page->addStyleSheet(\UNL\VisitorChat\Controller::$url . "css/timeline.css");
+
 $statusStatistics = $context->getRawObject()->getStatusStatistics();
 
 $page->addScriptDeclaration("
@@ -142,7 +141,6 @@ $page->addScriptDeclaration("
         });
     }]);");
 ?>
-
 
 <div class='grid12 first stats-table'>
     <h2>Site Availability</h2>
