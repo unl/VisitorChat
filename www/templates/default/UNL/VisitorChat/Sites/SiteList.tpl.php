@@ -1,4 +1,4 @@
-<div class="bp960-wdn-grid-set-halves wdn-grid-clear wdn-center centered">
+<div class="dcf-grid-full dcf-grid-halves@sm dcf-txt-center centered">
     <?php foreach ($context->sites as $site): ?>
         <?php
         $role = "none";
@@ -16,16 +16,14 @@
         }
         
         ?>
-        <div class="wdn-col">
-            <div class='visual-island site-box <?php echo $class ?>'>
-                <h2>
-                    <a href="<?php echo $site->getURL()  ?>"><?php echo $site->getTitle() ?></a>
-                </h2>
-                <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getRawObject()->getURL())) ?>">View Details</a>
-                <p>
-                    Your chat role: <strong><?php echo $role ?></strong>
-                </p>
-            </div>
+        <div class='visual-island site-box <?php echo $class ?>'>
+          <h2>
+            <a href="<?php echo $site->getURL()  ?>"><?php echo $site->getTitle() ?></a>
+          </h2>
+          <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getRawObject()->getURL())) ?>">View Details</a>
+          <p>
+            Your chat role: <strong><?php echo $role ?></strong>
+          </p>
         </div>
     <?php endforeach; ?>
 </div>

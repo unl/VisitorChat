@@ -12,14 +12,14 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 
 
 use \UNL\Templates\Templates;
-$page = Templates::factory('Fixed', Templates::VERSION_4_1);
+$page = Templates::factory('Fixed', Templates::VERSION_5);
 
 /**
  * @var $page \UNL\Templates\Version4x1\Fixed
  */
 
 $wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
-if (file_exists($wdn_include_path . '/wdn/templates_4.1')) {
+if (file_exists($wdn_include_path . '/wdn/templates_5.0')) {
     $page->setLocalIncludePath($wdn_include_path);
 }
 
@@ -37,8 +37,8 @@ $page->breadcrumbs = "";
 $page->navlinks = '<ul><li><a href="index.php">Home</a></li><li><a href="page2.php">Page 2</a></li></ul>';
 
 //Main content
-$page->maincontentarea = '<div class="wdn-band">
-  <div class="wdn-inner-wrapper">
+$page->maincontentarea = '<div class="dcf-bleed">
+  <div class="dcf-wrapper">
     '. $main_content .'
   </div>
 </div>';
