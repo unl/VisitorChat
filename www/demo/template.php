@@ -24,10 +24,8 @@ if (file_exists($wdn_include_path . '/wdn/templates_5.0')) {
 }
 
 //Titles
-
-
 $page->doctitle = '<title>' . $title . ' | University of Nebraska-Lincoln</title>';
-$page->titlegraphic = 'Chat Demo';
+$page->titlegraphic = '<a href=' . \UNL\VisitorChat\Controller::$url . ' class="dcf-txt-h5">Chat Demo</a>';
 $page->pagetitle = '<h1>'. $title . '</h1>';
 $page->affiliation = '';
 

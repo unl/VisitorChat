@@ -32,7 +32,7 @@ $page->jsbody .= \UNL\VisitorChat\Controller::$headerHTML;
 //Titles
 $siteTitle = 'UNLchat';
 $page->doctitle = '<title>' . $siteTitle . ' | University of Nebraska-Lincoln</title>';
-$page->titlegraphic = $siteTitle;
+$page->titlegraphic = '<a href=' . \UNL\VisitorChat\Controller::$url . ' class="dcf-txt-h5">' . $siteTitle . '</a>';
 $page->pagetitle = '<h1>' . \UNL\VisitorChat\Controller::$pagetitle . '</h1>';
 $page->affiliation = '';
 
