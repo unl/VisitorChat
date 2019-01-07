@@ -144,7 +144,7 @@ $page->addScriptDeclaration("
 
 <div class='grid12 first stats-table'>
     <h2>Site Availability</h2>
-    <div id='dateRange'>
+    <div id='dateRange' class="dcf-pb-6">
         <form action='<?php echo $context->getURL(); ?>' class="stats-form">
           <div class="dcf-input-group">
             <label class="dcf-label" for="from">From</label>
