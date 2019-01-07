@@ -6,9 +6,8 @@
 
 <?php
 $statusStatistics = $context->getRawObject()->getStatusStatistics();
-?>
-    
-<script>
+
+$page->addScriptDeclaration("
     WDN.initializePlugin('jqueryui', [function () {
         var $ = require('jquery');
         /**
@@ -35,7 +34,7 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
                 default: R = 0; G = 0; B = 0; break;
             }
     
-            return "RGB(" + parseInt(R*255) + "," + parseInt(G*255) + "," + parseInt(B*255) + ")";
+            return /"RGB(/" + parseInt(R*255) + /",/" + parseInt(G*255) + /",/" + parseInt(B*255) + /")/";
         };
         
         // Called when the Visualization API is loaded.
@@ -70,21 +69,21 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
                 style = 'height:' + height + '%;' +
                         'background-color: ' + color + ';';
                 
-                var person = "person";
+                var person = /"person/";
                 
                 if (num > 0) {
-                    person = "people";
+                    person = /"people/";
                 }
                 
-                var user = "";
+                var user = /"/";
                 if (original_data['statuses'][item]['user'] !== undefined) {
-                    user = " | " + original_data['statuses'][item]['user'] + " changed to " + original_data['statuses'][item]['status'] + " (" + original_data['statuses'][item]['reason'] + ")";
+                    user = /" | /" + original_data['statuses'][item]['user'] + /" changed to /" + original_data['statuses'][item]['status'] + /" (/" + original_data['statuses'][item]['reason'] + /")/";
                 }
                 
                 var totalPeopleOnline = (num)?num:'';
     
-                var content = '<div class="bar" style="' + style + '" ' +
-                        ' title="' + num + ' ' + person + ' available for ' + diff + user + '">' + totalPeopleOnline + '</div>';
+                var content = '<div class=/"bar/" style=/"' + style + '/" ' +
+                        ' title=/"' + num + ' ' + person + ' available for ' + diff + user + '/">' + totalPeopleOnline + '</div>';
     
                 //add to array
                 data.push({
@@ -98,18 +97,18 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
             
             // specify options
             options = {
-                "width":  "100%",
-                "height": "200px",
-                "style": "box", // optional
-                "stackEvents": false,
-                "animateZoom": false,
-                "animate": false,
-                "intervalMin": 10000,
-                "max": max,
-                "min": min,
-                "showNavigation": true,
-                "showCurrentTime": false,
-                "start": min
+                /"width/":  /"100%/",
+                /"height/": /"200px/",
+                /"style/": /"box/", // optional
+                /"stackEvents/": false,
+                /"animateZoom/": false,
+                /"animate/": false,
+                /"intervalMin/": 10000,
+                /"max/": max,
+                /"min/": min,
+                /"showNavigation/": true,
+                /"showCurrentTime/": false,
+                /"start/": min
             };
     
             // Instantiate our timeline object.
@@ -120,41 +119,41 @@ $statusStatistics = $context->getRawObject()->getStatusStatistics();
         });
     
         WDN.jQuery(function() {
-            WDN.jQuery( "#from" ).datepicker({
-                defaultDate    : "+1w",
+            WDN.jQuery( /"#from/" ).datepicker({
+                defaultDate    : /"+1w/",
                 changeMonth    : true,
                 changeYear     : true,
                 numberOfMonths : 1,
-                dateFormat     : "yy-mm-dd",
+                dateFormat     : /"yy-mm-dd/",
                 onClose: function( selectedDate ) {
-                    WDN.jQuery( "#to" ).datepicker( "option", "minDate", selectedDate );
+                    WDN.jQuery( /"#to/" ).datepicker( /"option/", /"minDate/", selectedDate );
                 }
             });
-            WDN.jQuery( "#to" ).datepicker({
-                defaultDate    : "+1w",
+            WDN.jQuery( /"#to/" ).datepicker({
+                defaultDate    : /"+1w/",
                 changeMonth    : true,
                 changeYear     : true,
                 numberOfMonths : 1,
-                dateFormat     : "yy-mm-dd",
+                dateFormat     : /"yy-mm-dd/",
                 onClose: function( selectedDate ) {
-                    WDN.jQuery( "#from" ).datepicker( "option", "maxDate", selectedDate );
+                    WDN.jQuery( /"#from/" ).datepicker( /"option/", /"maxDate/", selectedDate );
                 }
             });
         });
-    }]);
-</script>
+    }]);");
+?>
 
 
 <div class='grid12 first stats-table'>
     <h2>Site Availability</h2>
     <div id='dateRange'>
         <form action='<?php echo $context->getURL(); ?>' class="stats-form">
-            <label for="from">From</label>
-            <input type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
-            <label for="to">to</label>
-            <input type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
+            <label class="dcf-label" for="from">From</label>
+            <input class="dcf-input-text" type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
+            <label class="dcf-label" for="to">to</label>
+            <input class="dcf-input-text" type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
             <input type='hidden' name='url' value='<?php echo $context->url ?>' />
-            <input type='submit' value='Submit' />
+            <input class="dcf-btn dcf-btn-primary" type='submit' value='Submit' />
         </form>
     </div>
     <div id="statustimeline"></div>
