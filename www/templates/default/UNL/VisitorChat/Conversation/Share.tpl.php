@@ -1,14 +1,14 @@
 <h2>Share this conversation</h2>
 <form id='shareForm' name="share action="<?php UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->id . '/share', true)?>" method="POST">
     <fieldset>
-        <legend>Select sharing method</legend>
-        <ul>
-            <li><input type='radio' name='method' value='invite' checked='checked' />Invite to conversation</li>
+        <legend class="dcf-legend">Select sharing method</legend>
+        <ul class="dcf-list-bare">
+            <li><input class="dcf-input-control" type='radio' name='method' value='invite' checked='checked' />Invite to conversation</li>
         </ul>
     </fieldset>
     
     <fieldset>
-        <legend>Select who you want to share with</legend>
+        <legend class="dcf-legend">Select who you want to share with</legend>
         <fieldset>
             <?php 
             //Display a list of all sites next.
@@ -19,5 +19,5 @@
         </fieldset>
     </fieldset>
     
-    <input type="submit" class='submit' value="Submit"/>
+    <input class="dcf-btn dcf-btn-primary" type="submit" class='submit' value="Submit"/>
 </form>
