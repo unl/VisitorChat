@@ -33,7 +33,7 @@ $page->addScriptDeclaration("
                 default: R = 0; G = 0; B = 0; break;
             }
     
-            return /"RGB(/" + parseInt(R*255) + /",/" + parseInt(G*255) + /",/" + parseInt(B*255) + /")/";
+            return \"RGB(\" + parseInt(R*255) + \",\" + parseInt(G*255) + \",\" + parseInt(B*255) + \")\";
         };
         
         // Called when the Visualization API is loaded.
@@ -68,21 +68,21 @@ $page->addScriptDeclaration("
                 style = 'height:' + height + '%;' +
                         'background-color: ' + color + ';';
                 
-                var person = /"person/";
+                var person = \"person\";
                 
                 if (num > 0) {
-                    person = /"people/";
+                    person = \"people\";
                 }
                 
-                var user = /"/";
+                var user = \\";
                 if (original_data['statuses'][item]['user'] !== undefined) {
-                    user = /" | /" + original_data['statuses'][item]['user'] + /" changed to /" + original_data['statuses'][item]['status'] + /" (/" + original_data['statuses'][item]['reason'] + /")/";
+                    user = \" | \" + original_data['statuses'][item]['user'] + \" changed to \" + original_data['statuses'][item]['status'] + \" (\" + original_data['statuses'][item]['reason'] + \")\";
                 }
                 
                 var totalPeopleOnline = (num)?num:'';
     
-                var content = '<div class=/"bar/" style=/"' + style + '/" ' +
-                        ' title=/"' + num + ' ' + person + ' available for ' + diff + user + '/">' + totalPeopleOnline + '</div>';
+                var content = '<div class=\"bar\" style=\"' + style + '\" ' +
+                        ' title=\"' + num + ' ' + person + ' available for ' + diff + user + '\">' + totalPeopleOnline + '</div>';
     
                 //add to array
                 data.push({
@@ -96,18 +96,18 @@ $page->addScriptDeclaration("
             
             // specify options
             options = {
-                /"width/":  /"100%/",
-                /"height/": /"200px/",
-                /"style/": /"box/", // optional
-                /"stackEvents/": false,
-                /"animateZoom/": false,
-                /"animate/": false,
-                /"intervalMin/": 10000,
-                /"max/": max,
-                /"min/": min,
-                /"showNavigation/": true,
-                /"showCurrentTime/": false,
-                /"start/": min
+                \"width\":  \"100%\",
+                \"height\": \"200px\",
+                \"style\": \"box\", // optional
+                \"stackEvents\": false,
+                \"animateZoom\": false,
+                \"animate\": false,
+                \"intervalMin\": 10000,
+                \"max\": max,
+                \"min\": min,
+                \"showNavigation\": true,
+                \"showCurrentTime\": false,
+                \"start\": min
             };
     
             // Instantiate our timeline object.
@@ -118,24 +118,24 @@ $page->addScriptDeclaration("
         });
     
         WDN.jQuery(function() {
-            WDN.jQuery( /"#from/" ).datepicker({
-                defaultDate    : /"+1w/",
+            WDN.jQuery( \"#from\" ).datepicker({
+                defaultDate    : \"+1w\",
                 changeMonth    : true,
                 changeYear     : true,
                 numberOfMonths : 1,
-                dateFormat     : /"yy-mm-dd/",
+                dateFormat     : \"yy-mm-dd\",
                 onClose: function( selectedDate ) {
-                    WDN.jQuery( /"#to/" ).datepicker( /"option/", /"minDate/", selectedDate );
+                    WDN.jQuery( \"#to\" ).datepicker( \"option\", \"minDate\", selectedDate );
                 }
             });
-            WDN.jQuery( /"#to/" ).datepicker({
-                defaultDate    : /"+1w/",
+            WDN.jQuery( \"#to\" ).datepicker({
+                defaultDate    : \"+1w\",
                 changeMonth    : true,
                 changeYear     : true,
                 numberOfMonths : 1,
-                dateFormat     : /"yy-mm-dd/",
+                dateFormat     : \"yy-mm-dd\",
                 onClose: function( selectedDate ) {
-                    WDN.jQuery( /"#from/" ).datepicker( /"option/", /"maxDate/", selectedDate );
+                    WDN.jQuery( \"#from\" ).datepicker( \"option\", \"maxDate\", selectedDate );
                 }
             });
         });
