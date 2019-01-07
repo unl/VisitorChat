@@ -146,12 +146,14 @@ $page->addScriptDeclaration("
     <h2>Site Availability</h2>
     <div id='dateRange'>
         <form action='<?php echo $context->getURL(); ?>' class="stats-form">
+          <div class="dcf-input-group">
             <label class="dcf-label" for="from">From</label>
             <input class="dcf-input-text" type="text" id="from" name="start" value="<?php echo $context->start; ?>" />
             <label class="dcf-label" for="to">to</label>
             <input class="dcf-input-text" type="text" id="to" name="end" value="<?php echo $context->end; ?>" />
             <input type='hidden' name='url' value='<?php echo $context->url ?>' />
             <input class="dcf-btn dcf-btn-primary" type='submit' value='Submit' />
+          </div>
         </form>
     </div>
     <div id="statustimeline"></div>
