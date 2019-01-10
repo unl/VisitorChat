@@ -14,10 +14,6 @@ class Controller extends \Epoch\Controller
     public static $conversationTTL = 30;  //minutes
     
     public static $headerHTML = ""; //Header html to inject.
-
-    private $scriptDeclarations = array();
-    private $scripts = array();
-    private $styleSheets = array();
     
     /**
      * An array of possible roles.
