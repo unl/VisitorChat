@@ -16,7 +16,7 @@
         }
         
         ?>
-        <div class=""wdn-col">
+        <div class="wdn-col">
           <div class='visual-island site-box <?php echo $class ?>'>
             <h2>
               <a href="<?php echo $site->getURL()  ?>"><?php echo $site->getTitle() ?></a>
