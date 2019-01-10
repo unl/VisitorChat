@@ -26,5 +26,6 @@
               Your chat role: <strong><?php echo $role ?></strong>
             </p>
           </div>
+        </div>
     <?php endforeach; ?>
 </div>
