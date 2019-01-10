@@ -6,13 +6,17 @@
         <div id="clientList"></div>
     </div>
 
-    <div class="dcf-col-100% dcf-col-50%@md" id='clientChatContainer'>
-        <div id="clientChat">
+    <div class="dcf-col-100% dcf-col-75%-end">
+      <div class="dcf-grid dcf-col-gap-vw">
+        <div class="dcf-col-100% dcf-col-67-start%@md" id='clientChatContainer'>
+            <div id="clientChat">
+            </div>
         </div>
-    </div>
 
-    <div class="dcf-col-100% dcf-col-25%-end@md" id="clientChatInfoContainer">
-        <div id="clientChat_Invitations">
+        <div class="dcf-col-100% dcf-col-33%-end@md" id="clientChatInfoContainer">
+            <div id="clientChat_Invitations">
+            </div>
         </div>
+      </div>
     </div>
 </div>
