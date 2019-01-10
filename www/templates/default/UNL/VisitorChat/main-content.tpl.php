@@ -1,6 +1,6 @@
-<div class="dcf-bleed">
+<div class="dcf-bleed dcf-pb-8">
     <?php if (!($context->actionable->getRawObject() instanceof UNL\VisitorChat\Manage\View)): ?>
-        <div class="dcf-wrapper dcf-pt-0 dcf-pb-8 ">
+        <div class="dcf-wrapper dcf-pt-0">
     <?php endif; ?>
         <div id='visitorChat_container'>
             <?php
