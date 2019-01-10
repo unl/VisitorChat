@@ -1,14 +1,14 @@
 <a id="toggleOperatorStatus" href="#"><span id="currentOperatorStatus"></span></a>
 
-<div class="dcf-grid dcf-col-gap-vw">
+<div class="dcf-grid dcf-col-gap-vw dcf-row-gap-6">
     <div class="dcf-col-100% dcf-col-25%-start@md" id="visitorChat_clients">
         <h2>Conversations</h2>
         <div id="clientList"></div>
     </div>
 
-    <div class="dcf-col-100% dcf-col-75%-end">
-      <div class="dcf-grid dcf-col-gap-vw">
-        <div class="dcf-col-100% dcf-col-67-start%@md" id='clientChatContainer'>
+    <div class="dcf-col-100% dcf-col-75%-end@md">
+      <div class="dcf-grid dcf-col-gap-vw dcf-row-gap-4">
+        <div class="dcf-col-100% dcf-col-67%-start@md" id='clientChatContainer'>
             <div id="clientChat">
             </div>
         </div>
