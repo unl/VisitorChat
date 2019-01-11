@@ -1,5 +1,5 @@
-<h2>Invitations</h2>
-<ul id="visitorChat_InvitationList">
+<h2 class="dcf-txt-lg">Invitations</h2>
+<ul class="dcf-list-bare" id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
     /**
