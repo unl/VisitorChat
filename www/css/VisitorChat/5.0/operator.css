@@ -240,6 +240,9 @@ h1 {
   margin-top: 10px;
   padding: 0 5px;
 }
+#clientList ul {
+  list-style-type: none;
+}
 #clientList ul li {
   color: #664f1e;
   margin-bottom: .35em;
