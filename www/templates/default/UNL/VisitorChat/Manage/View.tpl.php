@@ -2,7 +2,7 @@
 
 <div class="dcf-grid dcf-col-gap-vw dcf-row-gap-6">
     <div class="dcf-col-100% dcf-col-25%-start@md" id="visitorChat_clients">
-        <h2>Conversations</h2>
+        <h2 class=""dcf-txt-lg">Conversations</h2>
         <div id="clientList"></div>
     </div>
 
