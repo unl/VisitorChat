@@ -1,5 +1,5 @@
 <h2 class="dcf-txt-lg">Invitations</h2>
-<ul class="dcf-list-bare wrap-url dcf-txt-sm" id="visitorChat_InvitationList">
+<ul class="dcf-list-bare dcf-txt-sm" id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
     /**
@@ -17,7 +17,7 @@ foreach ($context as $invitation) {
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
 			"</span>";
-	echo '<ul lass=\"dcf-list-bare\">';
+	echo '<ul class=\"dcf-list-bare\">';
               
     foreach ($invitation->getAssignments() as $assignment) {
         /**
@@ -30,7 +30,7 @@ foreach ($context as $invitation) {
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
                   "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
-                  "<span class='sub'><span class='source tooltip' title='The site they are from'>" . $siteTitle . "</span></span>" .
+                  "<span class='sub force-wrap'><span class='source tooltip' title='The site they are from'>" . $siteTitle . "</span></span>" .
             "</li>";
     }
 	echo "</ul>";

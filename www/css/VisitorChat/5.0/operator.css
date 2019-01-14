@@ -711,7 +711,12 @@ p.sub-head {
 #maincontent .archived-chat h2 {
   margin-top: 0;
 }
-.wrap-url {
+.force-wrap {
+  overflow-wrap: break-word;
   word-wrap: break-word;
-  /* IE */
+  -ms-word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
