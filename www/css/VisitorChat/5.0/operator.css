@@ -711,3 +711,7 @@ p.sub-head {
 #maincontent .archived-chat h2 {
   margin-top: 0;
 }
+.wrap-url {
+  word-wrap: break-word;
+  /* IE */
+}
