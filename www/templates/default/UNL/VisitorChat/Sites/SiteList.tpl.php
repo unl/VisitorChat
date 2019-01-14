@@ -1,4 +1,4 @@
-<div class="dcf-grid-full dcf-grid-halves@md dcf-col-gap-vw dcf-txt-center centered">
+<div class="dcf-grid-full dcf-grid-halves@sm dcf-grid-thirds@md dcf-col-gap-vw dcf-txt-center centered">
     <?php foreach ($context->sites as $site): ?>
         <?php
         $role = "none";
