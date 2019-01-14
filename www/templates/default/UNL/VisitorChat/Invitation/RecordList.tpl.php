@@ -17,7 +17,7 @@ foreach ($context as $invitation) {
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 				
 			"</span>";
-	echo '<ul class=\"dcf-list-bare\">';
+	echo '<ul class="dcf-list-bare">';
               
     foreach ($invitation->getAssignments() as $assignment) {
         /**

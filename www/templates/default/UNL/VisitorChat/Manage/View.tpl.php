@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="dcf-col-100% dcf-col-33%-end@md" id="clientChatInfoContainer">
+        <div class="dcf-col-100% dcf-col-33%-end@md  dcf-pr-4" id="clientChatInfoContainer">
             <div id="clientChat_Invitations">
             </div>
         </div>
