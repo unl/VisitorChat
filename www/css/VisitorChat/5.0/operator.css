@@ -42,9 +42,6 @@ h1 {
 }
 #clientChat {
   height: 100%;
-  margin-left: -10px;
-  margin-right: 2px;
-  box-shadow: -11px 0 0 -10px #4096ee;
 }
 #clientChatInfoContainer {
   border-radius: 10px 0 0 10px;
@@ -53,9 +50,7 @@ h1 {
   overflow: auto;
   max-height: 20em;
   background: white;
-  border-left: 2px solid #7abcff;
   margin-bottom: 5px;
-  padding-left: 10px;
   position: relative;
   z-index: 10;
 }
@@ -168,7 +163,7 @@ h1 {
   text-shadow: 0 1px white;
   line-height: 130%;
   list-style: none;
-  margin-bottom: 2px;
+  border-bottom: #c7c8ca solid thin;
 }
 #visitorChat_chatBox ul li .stamp {
   color: #aaa;
@@ -186,13 +181,11 @@ h1 {
   margin-right: 5px;
 }
 .visitorChat_client {
-  border-left: 2px solid #76cc52;
   font-weight: bold;
+  border-left: 2px solid #d00000;
 }
 .visitorChat_me {
-  background-color: #f8f8f8;
-  border-left: 2px solid transparent;
-  border-radius: 4px;
+  background-color: #ebebea;
 }
 .visitorChat_them {
   border-left: 2px solid #e0e0e0;
@@ -212,11 +205,7 @@ h1 {
   box-shadow: 0 0 6px #ccc;
 }
 #visitorChat_messageBox {
-  border-color: #cdcdcd;
-  border-radius: 3px;
-  display: block;
-  margin: 0 9px;
-  padding: 2px;
+  margin: 0 auto;
   overflow-y: auto;
   resize: none;
   height: 60px;
@@ -270,39 +259,13 @@ h1 {
 #clientList ul li .conversationLink:active {
   box-shadow: inset 0 0 5px 2px rgba(0, 0, 0, 0.25);
 }
-#clientList ul li.selected {
-  box-shadow: 0 2px 9px 1px rgba(0, 0, 0, 0.2);
-}
 #clientList ul li.selected .conversationLink {
-  background: #7abcff;
+  background: #d00000;
   color: #fff;
-  border: 1px solid #4096ee;
-  border-right: 0;
-  box-shadow: inset 5px 0 10px -5px white;
-  text-shadow: 0 -1px 2px #0f529b;
-  margin-right: -20px;
-  position: relative;
-  z-index: 10;
-  border-radius: 5px 0 0 0;
-  margin-left: -12px;
 }
 #clientList ul li.selected .conversationLink:hover {
-  background: #7abcff;
+  background: #d00000;
   color: #fff;
-  border-top: 1px solid #4096ee;
-  border-bottom: 1px solid #4096ee;
-  text-shadow: 0 -1px 2px #0f529b;
-}
-#clientList ul li.selected .conversationLink:before {
-  content: '';
-  position: absolute;
-  left: -1px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 6px 7px 0;
-  border-color: transparent #4096ee transparent transparent;
-  bottom: -8px;
 }
 #clientList .unread_count {
   display: none;
@@ -312,9 +275,7 @@ h1 {
   background: #f02e2e;
   padding: 1px 3px;
   border-radius: 3px;
-  box-shadow: inset 0 6px 5px -5px white;
   border: 1px solid #f02e2e;
-  text-shadow: 0 1px 2px #d30000;
   margin-left: .2em;
   position: absolute;
   top: .4em;
@@ -352,21 +313,14 @@ h1 {
 }
 #visitorChat_conversation_header {
   /*overflow: hidden; So we can round-out url corner */
-  background: #7abcff;
+  background: #d00000;
   padding: 5px 10px 5px 10px;
   border-radius: 10px 10px 0 0;
-  box-shadow: 0 0 0 1px #4096ee, inset 0 5px 5px -5px white;
   color: white;
-  text-shadow: 0 1px 2px #0f529b;
   position: relative;
 }
-#visitorChat_conversation_header p {
-  margin: 0;
-  font-size: .8em;
-}
-#visitorChat_conversation_header .client-name {
-  font-size: 1.25em;
-  font-weight: bold;
+#visitorChat_conversation_header a:link {
+  color: #fff;
 }
 #visitorChat_url_title {
   display: none;

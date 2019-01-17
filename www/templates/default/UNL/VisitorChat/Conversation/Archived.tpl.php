@@ -2,7 +2,7 @@
 <div class="dcf-grid dcf-col-gap-vw archived-chat">
     <div class="dcf-col-100% dcf-col-67%-start@md" id='clientChatContainer'>
         <div id="clientChat">
-            <div id='visterChat_conversation'>
+            <div id='visterChat_conversation' class="dcf-txt-sm">
                 <div id='visitorChat_conversation_header'>
                     <div id='visitorChat_url'>
                         <span id='visitorChat_url_title'>

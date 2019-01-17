@@ -2,7 +2,7 @@
 $user = \UNL\VisitorChat\User\Service::getCurrentUser();
 ?>
 
-<div id='visterChat_conversation'>
+<div id='visterChat_conversation' class="dcf-txt-sm">
     <div id='visitorChat_conversation_header'>
         <div id='clientInfo'>
             <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject())); ?>
