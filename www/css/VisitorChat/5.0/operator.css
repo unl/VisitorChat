@@ -129,14 +129,6 @@ h1 {
 #visitorChat_InvitationList > li > ul {
   margin-top: .4em;
 }
-#visitorChat_InvitationList > li > ul > li {
-  border-radius: 5em;
-  box-shadow: 0 1px 10px -4px black;
-  margin-bottom: 4px;
-  padding: 0 8px;
-  width: 100%;
-  margin-left: -9px;
-}
 #visitorChat_InvitationList > li > ul > .pending:before {
   content: 'inviting...';
   float: right;
