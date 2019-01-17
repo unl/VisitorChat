@@ -79,7 +79,6 @@ h1 {
   font-size: .8em;
 }
 #maincontent #visitorChat_InvitationList > li {
-  box-shadow: 0 3px 18px -7px black;
   margin: 0 9px 9px;
   padding: 2px;
   border-radius: 3px;
@@ -164,6 +163,7 @@ h1 {
   line-height: 130%;
   list-style: none;
   border-bottom: #c7c8ca solid thin;
+  margin: 0;
 }
 #visitorChat_chatBox ul li .stamp {
   color: #aaa;
@@ -320,6 +320,9 @@ h1 {
   position: relative;
 }
 #visitorChat_conversation_header a:link {
+  color: #fff;
+}
+#visitorChat_conversation_header a:visited {
   color: #fff;
 }
 #visitorChat_url_title {
