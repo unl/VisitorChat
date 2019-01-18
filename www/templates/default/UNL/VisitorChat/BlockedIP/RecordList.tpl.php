@@ -1,18 +1,18 @@
 <form method="get" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks");?>" >
     <fieldset>
-        <legend>Filters</legend>
-        <ul>
+        <legend class="dcf-legend">Filters</legend>
+        <ul class="dcf-list-bare">
             <li>
                 <label for="ip_address">IP address:</label>
-                <input type="text" name="ip_address" id="ip_address" value="<?php echo (isset($_GET['ip_address']))?$_GET['ip_address']:'' ?>" />
+                <input class="dcf-input-text" type="text" name="ip_address" id="ip_address" value="<?php echo (isset($_GET['ip_address']))?$_GET['ip_address']:'' ?>" />
 
-                <label for="enabled">Current State:</label>
-                <select name="state" id="state">
+                <label class="dcf-label" for="enabled">Current State:</label>
+                <select class="dcf-input-select" name="state" id="state">
                     <option value="active" <?php echo (isset($_GET['state']) && $_GET['state'] == 'active')?'selected="selected"':'';?>>Active</option>
                     <option value="inactive" <?php echo (isset($_GET['state']) && $_GET['state'] == 'inactive')?'selected="selected"':'';?>>Inactive</option>
                     <option value="all" <?php echo (isset($_GET['state']) && $_GET['state'] == 'all')?'selected="selected"':'';?>>All</option>
                 </select>
-                <input type="submit" value="Submit" />
+                <input class="dcf-btn dcf-btn-primary" type="submit" value="Submit" />
             </li>
         </ul>
     </fieldset>

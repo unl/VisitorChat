@@ -2,11 +2,11 @@
     Enter your email address to receive a transcript of this conversation.
     <form id='visitorChat_confirmationEmailForm' action="<?php echo UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->conversation->id . '/sendConfirmEmail', true, true)?>" class='unl_visitorchat_form unl-darker-gray' method="POST">
         <fieldset>
-            <legend>Email Address</legend>
-            <ul>
+            <legend class="dcf-legend">Email Address</legend>
+            <ul class="dcf-list-bare">
                 <li class='visitorChat_center'>
-                    <label for="visitorChat_confiramtionEmail">Your Email</label>
-                    <input type='text' id='visitorChat_confiramtionEmail' class='validate-email required-entry' name='email' />
+                    <label class="dcf-label" for="visitorChat_confiramtionEmail">Your Email</label>
+                    <input class="dcf-input-text" type='text' id='visitorChat_confiramtionEmail' class='validate-email required-entry' name='email' />
                 </li>
             </ul>
         </fieldset>

@@ -4,11 +4,9 @@ if (false == headers_sent()
     header('HTTP/1.1 '.$code.' '.$context->getMessage());
     header('Status: '.$code.' '.$context->getMessage());
 }
-?>
 
-<script type="text/javascript">
-    WDN.initializePlugin('notice');
-</script>
+$page->addScriptDeclaration("WDN.initializePlugin('notice');");
+?>
 <div class="wdn_notice alert">
     <div class="message">
         <h4>Whoops! Sorry, there was an error:</h4>

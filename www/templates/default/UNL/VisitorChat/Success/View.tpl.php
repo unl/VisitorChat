@@ -1,7 +1,7 @@
-<script type="text/javascript">
+<?php
 // This plugin is only needed for the demo.
-WDN.initializePlugin('notice');
-</script>
+$page->addScriptDeclartion("WDN.initializePlugin('notice');");
+?>
 <div class="wdn_notice affirm">
     <div class="close">
         <a href="#">Close this notice</a>

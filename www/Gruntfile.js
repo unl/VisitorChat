@@ -23,11 +23,11 @@ module.exports = function(grunt) {
         'curl-dir': {
             mixins: {
                 src: [
-                'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/breakpoints.less',
-                'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/colors.less',
-                'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/fonts.less',
-                'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/functions.less',
-                'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/vars.less'
+                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/breakpoints.less',
+                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/colors.less',
+                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/fonts.less',
+                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/functions.less',
+                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/vars.less'
                 ],
                 dest: 'less/mixins'
             }
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: {
-                    'css/VisitorChat/4.0/client.css': 'less/client.less'
+                    'css/VisitorChat/5.0/client.css': 'less/client.less'
                 }
             },
             operator: {
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: {
-                    'css/VisitorChat/4.0/operator.css': 'less/operator.less'
+                    'css/VisitorChat/5.0/operator.css': 'less/operator.less'
                 }
             }
         },
