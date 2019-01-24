@@ -20,7 +20,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAllAssignmentsForConversation($conversationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE conversations_id = " . (int)$conversationID . "
@@ -31,7 +31,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getPendingAssignmentsForConversation($conversationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE conversations_id = " . (int)$conversationID . "
@@ -43,7 +43,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAllAssignmentsForInvitation($invitationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE invitations_id = " . (int)$invitationID . "
@@ -54,7 +54,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAcceptedAndCompletedAssignmentsForConversation($conversationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE conversations_id = " . (int)$conversationID . "
@@ -67,7 +67,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getPendingAssignmentsForInvitation($invitationId, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'PENDING'
@@ -79,7 +79,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getAcceptedAssignmentsForInvitation($invitationId, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'ACCEPTED'
@@ -91,7 +91,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAcceptedForConversation($conversationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'ACCEPTED'
@@ -103,7 +103,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getPendingForConversation($conversationID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'PENDING'
@@ -115,7 +115,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAcceptedAssignmentsForUser($userID, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE status = 'ACCEPTED'
@@ -127,7 +127,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAssignmentsForSite($url = false, $start = false, $end = false, $status = false, $options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         
         //Build sql
         $options['sql'] = "SELECT id
@@ -156,7 +156,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAllPendingAndExpired($options = array())
     {
-        $options = $options + (new RecordList)->getDefaultOptions();
+        $options = $options + (new RecordList(['array' => []]))->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM assignments
                            WHERE NOW() >= (assignments.date_created + INTERVAL " . (int)(\UNL\VisitorChat\Controller::$chatRequestTimeout / 1000)  . " SECOND)
