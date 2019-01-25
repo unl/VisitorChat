@@ -49,7 +49,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: {
-                    'css/VisitorChat/4.0/client.css': 'less/client.less'
+                    'css/VisitorChat/5.0/client.css': 'less/client.less'
                 }
             },
             operator: {
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: {
-                    'css/VisitorChat/4.0/operator.css': 'less/operator.less'
+                    'css/VisitorChat/5.0/operator.css': 'less/operator.less'
                 }
             }
         },
