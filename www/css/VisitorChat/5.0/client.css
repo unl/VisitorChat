@@ -27,7 +27,7 @@
             filter: drop-shadow(0 0 5px rgba(71, 71, 70, 0.25)) drop-shadow(0 0 1px rgba(71, 71, 70, 0.6));
   }
 }
-#visitorChat:after {
+#visitorChat::after {
   border-color: #137cbd transparent transparent transparent;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
@@ -42,7 +42,7 @@
   -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
-#visitorChat.offline:after {
+#visitorChat.offline::after {
   border-color: #d5d5d2 transparent transparent transparent;
   -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
@@ -52,7 +52,7 @@
   -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
-#visitorChat.online:after {
+#visitorChat.online::after {
   border-color: #137cbd transparent transparent transparent;
   -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
@@ -62,7 +62,7 @@
   -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
-#visitorChat:hover.offline:after {
+#visitorChat:hover.offline::after {
   border-color: #c4c3bf transparent transparent transparent;
   -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
@@ -72,7 +72,7 @@
   -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
-#visitorChat:hover.online:after {
+#visitorChat:hover.online::after {
   border-color: #10679d transparent transparent transparent;
   -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
@@ -187,16 +187,16 @@
   display: block;
   padding-left: 0;
 }
-#dcf-footer #visitorChat_logout [class*='wdn-icon-']:before {
+#dcf-footer #visitorChat_logout [class*='wdn-icon-']::before {
   font-size: .75em;
   margin-right: 0;
   position: relative;
   top: 0;
 }
-#dcf-footer .offline #visitorChat_logout [class*='wdn-icon-']:before {
+#dcf-footer .offline #visitorChat_logout [class*='wdn-icon-']::before {
   color: #474746;
 }
-#dcf-footer .online #visitorChat_logout [class*='wdn-icon-']:before {
+#dcf-footer .online #visitorChat_logout [class*='wdn-icon-']::before {
   color: #fff;
 }
 #visitorChat_container:focus,
@@ -233,7 +233,7 @@
   position: relative;
   width: calc(100% - 1em);
 }
-#visitorChat_chatBox li:after {
+#visitorChat_chatBox li::after {
   border-style: solid;
   bottom: 0;
   content: '';
@@ -258,7 +258,7 @@
 .visitorChat_me {
   float: right;
 }
-.visitorChat_me:after {
+.visitorChat_me::after {
   border-color: #fff transparent transparent transparent;
   border-width: .75em 0 .75em .75em;
   right: 1em;
@@ -266,7 +266,7 @@
 .visitorChat_them {
   float: left;
 }
-.visitorChat_them:after {
+.visitorChat_them::after {
   border-color: #fff transparent transparent transparent;
   border-width: .75em .75em .75em 0;
   left: 1em;
