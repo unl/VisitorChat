@@ -54,7 +54,8 @@ module.exports = function(grunt) {
                           "Android >= 4.0",
                           "BlackBerry >= 4.0",
                           "iOS >= 10",
-                        ]})
+                        ]}),
+                        new (require('less-plugin-clean-css'))
                     ]
                 },
                 files: {
@@ -65,7 +66,17 @@ module.exports = function(grunt) {
                 options: {
                     paths: ['./less'],
                     plugins: [
-                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]})
+                        new (require('less-plugin-autoprefix'))({browsers: [
+                          "last 1 Chrome version",
+                          "last 1 Explorer version",
+                          "last 1 Firefox version",
+                          "Firefox ESR",
+                          "last 1 Safari version",
+                          "Android >= 4.0",
+                          "BlackBerry >= 4.0",
+                          "iOS >= 10",
+                        ]}),
+                        new (require('less-plugin-clean-css'))
                     ]
                 },
                 files: {
