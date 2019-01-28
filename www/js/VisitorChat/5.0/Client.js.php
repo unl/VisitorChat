@@ -660,7 +660,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         init:function (serverURL, refreshRate) {
             $('#dcf-footer').append("" +
-                "<div id='visitorChat' class='offline'>" +
+                "<div id='visitorChat' class='dcf-d-none@print offline'>" +
                     "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                     "</div>" +

@@ -398,8 +398,3 @@
     font-size: .75rem;
   }
 }
-@media print {
-  #visitorChat {
-    display: none;
-  }
-}
