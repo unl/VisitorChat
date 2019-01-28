@@ -9,7 +9,9 @@
   font-weight: 400;
   font-style: normal;
   border-radius: 3px;
-  box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.25);
+  -webkit-box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.25);
+          box-shadow: 0 5px 10px 0 rgba(10, 10, 10, 0.25);
+  -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
 @supports not(right: calc(1.333em + 1vw)) {
@@ -17,10 +19,12 @@
     right: 1.333em;
   }
 }
-@supports (filter: drop-shadow(0 1px 3px rgba(71, 71, 70, .25))) {
+@supports ((-webkit-filter: drop-shadow(0 1px 3px rgba(71, 71, 70, .25))) or (filter: drop-shadow(0 1px 3px rgba(71, 71, 70, .25)))) {
   #visitorChat {
-    box-shadow: none;
-    filter: drop-shadow(0 0 5px rgba(71, 71, 70, 0.25)) drop-shadow(0 0 1px rgba(71, 71, 70, 0.6));
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    -webkit-filter: drop-shadow(0 0 5px rgba(71, 71, 70, 0.25)) drop-shadow(0 0 1px rgba(71, 71, 70, 0.6));
+            filter: drop-shadow(0 0 5px rgba(71, 71, 70, 0.25)) drop-shadow(0 0 1px rgba(71, 71, 70, 0.6));
   }
 }
 #visitorChat:after {
@@ -35,34 +39,42 @@
 }
 #visitorChat.offline {
   background-color: #d5d5d2;
+  -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
 #visitorChat.offline:after {
   border-color: #d5d5d2 transparent transparent transparent;
+  -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
 }
 #visitorChat.online {
   background-color: #137cbd;
+  -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
 #visitorChat.online:after {
   border-color: #137cbd transparent transparent transparent;
+  -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
 }
 #visitorChat:hover.offline {
   background-color: #c4c3bf;
+  -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
 #visitorChat:hover.offline:after {
   border-color: #c4c3bf transparent transparent transparent;
+  -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
 }
 #visitorChat:hover.online {
   background-color: #10679d;
+  -webkit-transition: background-color 0.3s ease-out;
   transition: background-color 0.3s ease-out;
 }
 #visitorChat:hover.online:after {
   border-color: #10679d transparent transparent transparent;
+  -webkit-transition: border-color 0.3s ease-out;
   transition: border-color 0.3s ease-out;
 }
 #visitorChat h2 {
@@ -124,14 +136,15 @@
   border: 0;
 }
 #visitorChat_header {
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -ms-flex-flow: row nowrap;
-      flex-flow: row nowrap;
-  -ms-flex-pack: justify;
-      justify-content: space-between;
-  -ms-flex-align: center;
-      align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+          align-items: center;
   width: 100%;
   padding: .75em 1.333em;
   line-height: 1;
@@ -196,6 +209,8 @@
   position: relative;
   margin-bottom: .563em;
   padding: 1em 1.333em;
+  background: -webkit-gradient(linear, left top, left bottom, from(#f9f8f5), color-stop(60%, #eae9e6));
+  background: -webkit-linear-gradient(top, #f9f8f5 0%, #eae9e6 60%);
   background: linear-gradient(to bottom, #f9f8f5 0%, #eae9e6 60%);
 }
 #visitorChat_chatBox {
@@ -222,7 +237,8 @@
   content: '';
   position: absolute;
   bottom: 0;
-  transform: translateY(100%);
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
   border-style: solid;
 }
 #visitorChat_chatBox li .timestamp,
@@ -358,10 +374,9 @@
   margin-top: .75em;
 }
 #visitorChat_failedOptions {
-  display: -ms-flexbox;
+  display: -webkit-box;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
   margin-top: 1em;
 }
 #visitorChat_sound_container {
