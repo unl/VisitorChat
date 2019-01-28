@@ -1,7 +1,6 @@
-<script type="text/javascript">
-WDN.loadCSS('/wdn/templates_3.0/css/content/pagination.css');
-</script>
 <?php
+$page->addScriptDeclaration("WDN.loadCSS('/wdn/templates_3.0/css/content/pagination.css');");
+
 $base_url = $context->getRawObject()->url;
 function addParam($url, $param)
 {

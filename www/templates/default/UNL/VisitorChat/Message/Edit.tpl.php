@@ -1,10 +1,10 @@
 <div id="visitorChat_is_typing"></div>
 <form class='unl_visitorchat_form unl-darker-gray' id='visitorChat_messageForm' name="input" action="<?php echo $context->getEditURL();?>" method="post">
     <fieldset>
-          <ul>
+          <ul class="dcf-list-bare">
             <li class='visitorChat_center'>
-                <label for="visitorChat_messageBox">Your Message</label>
-                <textarea rows="3" cols="25"  id='visitorChat_messageBox' name="message"></textarea>
+                <label class="dcf-label" for="visitorChat_messageBox">Your Message</label>
+                <textarea class="dcf-input-text" rows="3" cols="25"  id='visitorChat_messageBox' name="message"></textarea>
             </li>
           </ul>
     </fieldset>

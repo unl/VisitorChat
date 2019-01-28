@@ -2,14 +2,14 @@
 $user = \UNL\VisitorChat\User\Service::getCurrentUser();
 ?>
 
-<div id='visterChat_conversation'>
-    <div id='visitorChat_conversation_header'>
+<div id='visterChat_conversation' class="dcf-txt-sm">
+    <div id='visitorChat_conversation_header'class="dcf-txt-xs">
         <div id='clientInfo'>
             <?php echo \Epoch\Controller::$templater->render(\UNL\VisitorChat\Conversation\ClientInfo::getFromConversationRecord($context->conversation->getRawObject())); ?>
         </div>
         <?php if ($user->type == 'operator'): ?>
             <div id='visitorChat_conversation_options'>
-                <ul>
+                <ul class="dcf-list-bare">
                     <li id='leaveConversation'><a href='#' title='Leave Conversation'><!--Leave Conversation--></a></li>
                     <li id='shareConversation'><a href='#' title='Share Conversation'><!--Share--></a></li>
                     <li id='closeConversation'><a href='#' title='End Conversation'><!--End Conversation--></a></li>

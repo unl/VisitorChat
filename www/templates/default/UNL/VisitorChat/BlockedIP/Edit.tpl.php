@@ -15,27 +15,27 @@ function get_var($var, $context) {
 <?php endif; ?>
 
 <form method="post" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks/" . (($context->id)?$context->id . '/':'')  . "edit");?>" >
-    <ul>
+    <ul class="dcf-list-bare">
         <li>
-            <label for="ip_address">Block IP address</label><br />
-            <input type="text" name="ip_address" id="ip_address" value="<?php echo get_var('ip_address', $context);?>" required />
+            <label class="dcf-legend" for="ip_address">Block IP address</label><br />
+            <input class="dcf-input-text" type="text" name="ip_address" id="ip_address" value="<?php echo get_var('ip_address', $context);?>" required />
         </li>
         <li>
-            <label for="time">For</label>
+            <label class="dcf-label" for="time">For</label>
             <input type="text" name="time" id="time" value="<?php echo $context->getTimeLength();?>" required />
-            <label for="time_units">Time Units</label>
-            <select name="time_units" id="time_units">
+            <label class="dcf-label" for="time_units">Time Units</label>
+            <select class="dcf-input-select" name="time_units" id="time_units">
                 <option value="hours" <?php echo ($context->getTimeUnit()=='hours')?'selected="selected"':'';?>>Hours</option>
                 <option value="days" <?php echo ($context->getTimeUnit()=='days')?'selected="selected"':'';?>>Days</option>
             </select>
         </li>
         <li>
-            <label for="enabled">Status</label><br />
-            <select name="status" id="status">
+            <label class="dcf-label" for="enabled">Status</label><br />
+            <select class="dcf-input-select" name="status" id="status">
                 <option value="ENABLED" <?php echo (get_var('enabled', $context)=='ENABLED')?'selected="selected"':'';?>>Enabled</option>
                 <option value="DISABLED" <?php echo (get_var('enabled', $context)=='DISABLED')?'selected="selected"':'';?>>Disabled</option>
             </select>
         </li>
     </ul>
-    <input type="submit" value="Submit" />
+    <input class="dcf-btn dcf-btn-primary" type="submit" value="Submit" />
 </form>

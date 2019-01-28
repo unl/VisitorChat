@@ -51,7 +51,7 @@ class Controller extends \Epoch\Controller
     
     public static $environment = "PRODUCTION";
     
-    public static $pagetitle = "UNLchat";
+    public static $pagetitle = "Chat";
     
     public static $badWords = array();
     

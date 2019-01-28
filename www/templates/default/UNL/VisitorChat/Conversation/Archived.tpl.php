@@ -1,9 +1,9 @@
 <?php  $ua = $context->conversation->parseUserAgent();?>
-<div class="wdn-gridset archived-chat">
-    <div class="bp960-wdn-col-two-thirds" id='clientChatContainer'>
+<div class="dcf-grid dcf-col-gap-vw archived-chat">
+    <div class="dcf-col-100% dcf-col-67%-start@md" id='clientChatContainer'>
         <div id="clientChat">
-            <div id='visterChat_conversation'>
-                <div id='visitorChat_conversation_header'>
+            <div id='visterChat_conversation' class="dcf-txt-sm">
+                <div id='visitorChat_conversation_header'class="dcf-txt-xs">
                     <div id='visitorChat_url'>
                         <span id='visitorChat_url_title'>
                             <span><?php echo $context->conversation->getClient()->name;?></span>
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="bp960-wdn-col-one-third" id="clientChatInfoContainer">
+    <div class="dcf-col-100% dcf-col-33%-end@md" id="clientChatInfoContainer">
         <div id="clientChat_GeneralInformation">
             <h2>Details</h2>
             <?php
