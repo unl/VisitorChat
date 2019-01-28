@@ -188,28 +188,28 @@ h1 {
 }
 
 
-#visitorChat_InvitationList > li > ul > .pending:before {
+#visitorChat_InvitationList > li > ul > .pending::before {
   content: 'inviting...';
   float: right;
   font-size: .85em;
 }
 
 
-#visitorChat_InvitationList > li > ul > .expired:before {
+#visitorChat_InvitationList > li > ul > .expired::before {
   content: 'expired';
   float: right;
   font-size: .85em;
 }
 
 
-#visitorChat_InvitationList > li > ul > .rejected:before {
+#visitorChat_InvitationList > li > ul > .rejected::before {
   content: 'rejected';
   float: right;
   font-size: .85em;
 }
 
 
-#visitorChat_InvitationList > li > ul > .left:before {
+#visitorChat_InvitationList > li > ul > .left::before {
   content: 'left';
   float: right;
   font-size: .85em;
@@ -389,7 +389,7 @@ h1 {
 }
 
 
-#clientList .unread_message:after {
+#clientList .unread_message::after {
   border-bottom: 5px solid transparent;
   border-right: 5px solid #f02e2e;
   border-top: 5px solid transparent;
