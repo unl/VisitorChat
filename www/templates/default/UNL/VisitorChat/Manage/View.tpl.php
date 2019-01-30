@@ -1,4 +1,4 @@
-<a id="toggleOperatorStatus" href="#"><span id="currentOperatorStatus"></span></a>
+<a class="dcf-txt-2xs dcf-btn dcf-btn-primary" id="toggleOperatorStatus" href="#"><span id="currentOperatorStatus"></span></a>
 
 <div class="dcf-wrapper dcf-grid dcf-col-gap-vw dcf-row-gap-6">
     <div class="dcf-col-100% dcf-col-25%-start@sm" id="visitorChat_clients">
