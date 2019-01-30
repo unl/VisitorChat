@@ -60,27 +60,21 @@ h1 {
 
 
 #clientChatContainer {
-  border-radius: 10px 10px 10px 10px;
-  min-height: 485px;
+  min-height: 31.57em;
 }
 
 
 #clientChat {
+  font-size: .84em;
   height: 100%;
-}
-
-
-#clientChatInfoContainer {
-	border-radius: 10px 0 0 10px;
 }
 
 
 #visitorChat_chatBox {
   background-color: #fff;
-  margin-bottom: 5px;
-  max-height: 20em;
+  border: 1px solid #e3e3e2;
+  max-height: 23.68em;
   overflow: auto;
-  position: relative;
   z-index: 10;
 }
 
@@ -94,13 +88,6 @@ h1 {
 #operatorOptions {
   display: block;
   margin-bottom: 5px;
-}
-
-
-#dcf-main #visitorChat_InvitationList,
-#dcf-main #visitorChat_InvitationList ul {
-  list-style: none;
-  padding: 0;
 }
 
 
@@ -120,18 +107,7 @@ h1 {
 
 
 #dcf-main #visitorChat_InvitationList > li {
-  border-radius: 3px;
-  margin: 0 9px 9px;
   padding: 2px;
-}
-
-
-#dcf-main #visitorChat_InvitationList .completed,
-#dcf-main #visitorChat_InvitationList > li > ul > .accepted {
-  background-image: linear-gradient(top, #a5e17a 0%, #77cb52 100%);
-  border: 1px solid #77cb52;
-  color: #0a7561;
-  text-shadow: 0 1px #d0e4c7;
 }
 
 
@@ -169,22 +145,8 @@ h1 {
 }
 
 
-#visitorChat_InvitationList li .name {
-  font-weight: bold;
-  text-decoration: none;
-}
-
-
-#visitorChat_InvitationList li .sub {
-  display: block;
-  font-size: .85em;
-  font-weight: normal;
-  text-decoration: none;
-}
-
-
 #visitorChat_InvitationList > li > ul {
-  margin-top: .4em;
+  margin-top: .43em;
 }
 
 
@@ -217,47 +179,44 @@ h1 {
 
 
 #visitorChat_chatBox ul li {
-  border-bottom: #c7c8ca solid thin;
-  line-height: 130%;
-  list-style: none;
-  margin: 0;
-  padding: 6px 6px 6px 20px;
-  text-shadow: 0 1px #fff;
+  line-height: 1.33;
+  margin-bottom: 0;
+  padding: .5625em 1.3333em;
+}
+
+
+#visitorChat_chatBox ul li:not(:last-child) {
+  border-bottom: 1px solid #c7c8ca;
+}
+
+
+#visitorChat_chatBox ul li .stamp,
+#visitorChat_chatBox ul li .timestamp {
+  color: #6d6d69;
+  font-size: .75em;
+  font-weight: 400;
+  margin-top: .43em;
 }
 
 
 #visitorChat_chatBox ul li .stamp {
-  color: #aaa;
   display: block;
-  font-size: 11px;
-  font-weight: normal;
-  padding-left: 1em;
-  padding-top: .35em;
 }
 
 
 #visitorChat_chatBox ul li .timestamp {
-  color: #ccc;
   float: right;
-  font-size: .8em;
-  font-weight: normal;
-  margin-right: 5px;
 }
 
 
 .visitorChat_client {
-  border-left: 2px solid #d00000;
   font-weight: bold;
 }
 
 
 .visitorChat_me {
   background-color: #ebebea;
-}
-
-
-.visitorChat_them {
-  border-left: 2px solid #e0e0e0;
+  color: #6d6d69;
 }
 
 
@@ -278,11 +237,7 @@ h1 {
 
 
 #visitorChat_messageBox {
-  height: 60px;
-  margin: 0 auto;
-  overflow-y: auto;
   resize: none;
-  width: 98%;
 }
 
 
@@ -293,49 +248,14 @@ h1 {
 
 
 #visitorChat_clients {
-  background-color: #fff9ea;
-  border: 1px solid #bbad8c;
-  border-radius: 10px;
-  box-shadow: inset 0 2px 5px -2px #b1a078;
-  height: 350px;
   overflow-x: visible !important;
-  text-shadow: 0 1px #fff;
-}
-
-
-#visitorChat_clients h2 {
-  color: #664f1e !important;
-  font-size: 1.5em;
-  padding: .4em 5px 0 5px;
-}
-
-
-#clientList {
-  margin-top: 10px;
-  padding: 0 5px;
-}
-
-
-#clientList ul {
-  list-style-type: none;
-}
-
-
-#clientList ul li {
-  color: #664f1e;
-  margin-bottom: .35em;
-  position: relative;
 }
 
 
 #clientList ul li .conversationLink {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  color: #664f1e;
   display: block;
-  margin: 0 -5px;
-  padding: 5px;
-  position: relative;
+  padding: .5625em;
+  font-size: .75em;
 }
 
 
@@ -344,29 +264,14 @@ h1 {
 }
 
 
-#clientList ul li .conversationLink:hover {
-  background-color: #fff9ea;
-  background-image: linear-gradient(top, #fff9ea, #ddd2b7);
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  text-shadow: 0 1px 0 #fff;
-}
-
-
-#clientList ul li .conversationLink:active {
-  box-shadow: inset 0 0 5px 2px rgba(0,0,0,.25);
-}
-
-
 #clientList ul li.selected .conversationLink {
   background-color: #d00000;
-  color: #fff;
+  color: #fefdfa;
 }
 
 
 #clientList ul li.selected .conversationLink:hover {
-  background-color: #d00000;
-  color: #fff;
+  background-color: #9e0900;
 }
 
 
@@ -377,28 +282,6 @@ h1 {
 
 #clientList .unread_message {
   background-color: #f02e2e;
-  border: 1px solid #f02e2e;
-  border-radius: 3px;
-  color: #fff;
-  display: inline;
-  margin-left: .2em;
-  padding: 1px 3px;
-  position: absolute;
-  right: 0;
-  top: .4em;
-}
-
-
-#clientList .unread_message::after {
-  border-bottom: 5px solid transparent;
-  border-right: 5px solid #f02e2e;
-  border-top: 5px solid transparent;
-  content: '';
-  height: 0;
-  left: -.3em;
-  position: absolute;
-  top: .3em;
-  width: 0;
 }
 
 
@@ -425,16 +308,6 @@ h1 {
   background-position: center center;
   background-repeat: no-repeat;
   width: 100%;
-}
-
-
-#visitorChat_conversation_header {
-  background-color: #d00000;
-  border-radius: 10px 10px 0 0;
-  color: #fff;
-  /*overflow: hidden; So we can round-out url corner */
-  padding: 5px 10px 5px 10px;
-  position: relative;
 }
 
 
@@ -544,41 +417,9 @@ h1 {
 }
 
 
-#visitorChat_conversation_options {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-}
-
-
-#visitorChat_conversation_options ul {
-  margin: 0;
-}
-
-
-#visitorChat_conversation_options ul li {
-  border: 1px solid transparent;
-  border-radius: 6px 6px 0 0;
-  float: left;
-  margin-left: 10px;
-  padding: 2px 0 5px;
-  transition: all .15s ease-in-out;
-}
-
-
-#visitorChat_conversation_options ul li:hover {
-  background-color: #d00000;
-}
-
-
 #visitorChat_conversation_options ul li a {
   display: block;
   height: 24px;
-}
-
-
-#visitorChat_conversation_options a {
-  border: 0;
 }
 
 
@@ -684,16 +525,6 @@ h1 {
   list-style-type: circle;
   margin-left: 2px;
   margin-right: 2px;
-}
-
-
-#dcf-main .visitorChat_topicPage {
-  color: #fff;
-  display: block;
-  font-size: .8em;
-  overflow: hidden;
-  padding: 1px 3px;
-  text-overflow: ellipsis;
 }
 
 

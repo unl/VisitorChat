@@ -2,8 +2,8 @@
 <div class="dcf-grid dcf-col-gap-vw archived-chat">
     <div class="dcf-col-100% dcf-col-67%-start@md" id='clientChatContainer'>
         <div id="clientChat">
-            <div id='visterChat_conversation' class="dcf-txt-sm">
-                <div id='visitorChat_conversation_header'class="dcf-txt-xs">
+            <div id='visitorChat_conversation'>
+                <div class="dcf-relative dcf-pt-6 dcf-pr-5 dcf-pb-5 dcf-pl-5 unl-cream unl-bg-darker-gray" id='visitorChat_conversation_header'>
                     <div id='visitorChat_url'>
                         <span id='visitorChat_url_title'>
                             <span><?php echo $context->conversation->getClient()->name;?></span>
@@ -12,8 +12,8 @@
                         at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
                     </div>
                 </div>
-                <div id='visitorChat_chatBox'>
-                    <ul>
+                <div class="dcf-relative dcf-mb-3" id='visitorChat_chatBox'>
+                    <ul class="dcf-list-bare dcf-mb-0">
                         <?php
                         foreach ($context->messages as $message) {
                             echo "<li class='" . $message->getDisplayclass() . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
@@ -33,12 +33,12 @@
             if (!empty($context->conversation->closer_id)) {
                 $name = \UNL\VisitorChat\User\Record::getByID($context->conversation->closer_id)->name;
             }
-            
+
             $duration = "Unknown";
             if ($duration = $context->conversation->getDuration()) {
                 $duration = round($duration/60) . " min";
             }
-            
+
             ?>
             <table class='zentable neutral'>
                 <thead>
