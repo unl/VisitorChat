@@ -163,10 +163,10 @@ require(['jquery', 'jqueryui'], function($) {
                     var clientName = $(this).children('span').text();
 
                     // Find selected, remove class and transition
-                    prevSelected.removeClass('selected unl-bg-lighter-gray');
+                    prevSelected.removeClass('selected unl-bg-lightest-gray');
 
                     // Add 'selected' class
-                    nowSelected.addClass('selected unl-bg-lighter-gray');
+                    nowSelected.addClass('selected unl-bg-lightest-gray');
                 }
 
                 return false;
@@ -737,9 +737,6 @@ require(['jquery', 'jqueryui'], function($) {
                 success:$.proxy(function (data) {
                     $("#clientList").html(data);
                     $("#conversationId_" + this.conversationID).addClass('selected');
-                    $("#conversationId_" + this.conversationID).children().children('span').css({
-                        paddingLeft:"20px"
-                    });
                     this.updateConversationListWithUnreadMessages();
                     this.initWatchers();
                 }, this)
