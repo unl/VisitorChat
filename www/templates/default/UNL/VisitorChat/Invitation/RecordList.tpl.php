@@ -1,5 +1,5 @@
 <h2 class="dcf-txt-xs dcf-subhead dcf-bold unl-dark-gray">Invitations</h2>
-<ul class="dcf-list-bare dcf-txt-sm unl-font-sans" id="visitorChat_InvitationList">
+<ul class="dcf-list-bare dcf-mb-0 dcf-txt-xs unl-font-sans" id="visitorChat_InvitationList">
 <?php
 foreach ($context as $invitation) {
     /**
@@ -17,7 +17,7 @@ foreach ($context as $invitation) {
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
 
 			"</span>";
-	echo '<ul class="dcf-list-bare">';
+	echo '<ul>';
 
     foreach ($invitation->getAssignments() as $assignment) {
         /**

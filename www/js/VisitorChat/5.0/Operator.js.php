@@ -162,25 +162,11 @@ require(['jquery', 'jqueryui'], function($) {
                     var nowSelected = $(this).parent();
                     var clientName = $(this).children('span').text();
 
-                    // Add transitions to newly selected, take out from old.
-                    prevSelected.children('a').removeClass('transition');
-                    $(this).addClass('transition');
-
-                    // Slide <span> back
-                    prevSelected.children().children('span').animate({
-                        paddingLeft:"5px"
-                    }, 250);
-
                     // Find selected, remove class and transition
-                    prevSelected.removeClass('selected');
-
-                    // Slide out new client
-                    nowSelected.children().children('span').animate({
-                        paddingLeft:"20px"
-                    }, 250);
+                    prevSelected.removeClass('selected unl-bg-lighter-gray');
 
                     // Add 'selected' class
-                    nowSelected.addClass('selected');
+                    nowSelected.addClass('selected unl-bg-lighter-gray');
                 }
 
                 return false;
