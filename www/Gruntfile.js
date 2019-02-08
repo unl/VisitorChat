@@ -23,11 +23,11 @@ module.exports = function(grunt) {
         'curl-dir': {
             mixins: {
                 src: [
-                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/breakpoints.less',
-                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/colors.less',
-                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/fonts.less',
-                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/functions.less',
-                //'https://raw.githubusercontent.com/unl/wdntemplates/master/wdn/templates_4.1/less/_mixins/vars.less'
+                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/breakpoints.less',
+                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/colors.less',
+                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/fonts.less',
+                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/functions.less',
+                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/vars.less'
                 ],
                 dest: 'less/mixins'
             }
@@ -45,7 +45,17 @@ module.exports = function(grunt) {
                 options: {
                     paths: ['./less'],
                     plugins: [
-                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]})
+                        new (require('less-plugin-autoprefix'))({browsers: [
+                          "last 1 Chrome version",
+                          "last 1 Explorer version",
+                          "last 1 Firefox version",
+                          "Firefox ESR",
+                          "last 1 Safari version",
+                          "Android >= 4.0",
+                          "BlackBerry >= 4.0",
+                          "iOS >= 10",
+                        ]}),
+                        new (require('less-plugin-clean-css'))
                     ]
                 },
                 files: {
@@ -56,7 +66,17 @@ module.exports = function(grunt) {
                 options: {
                     paths: ['./less'],
                     plugins: [
-                        new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]})
+                        new (require('less-plugin-autoprefix'))({browsers: [
+                          "last 1 Chrome version",
+                          "last 1 Explorer version",
+                          "last 1 Firefox version",
+                          "Firefox ESR",
+                          "last 1 Safari version",
+                          "Android >= 4.0",
+                          "BlackBerry >= 4.0",
+                          "iOS >= 10",
+                        ]}),
+                        new (require('less-plugin-clean-css'))
                     ]
                 },
                 files: {
