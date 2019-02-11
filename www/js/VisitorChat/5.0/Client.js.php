@@ -664,7 +664,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
                         "<span id='visitorChat_header_text'>Email Us</span>" +
                     "</div>" +
-                    "<div id='visitor-chat-header-options'>" +
+                    "<div class='dcf-absolute dcf-pin-top dcf-pin-right' id='visitor-chat-header-options'>" +
                         "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent' id='visitorChat_logout' aria-label='close and log out of chat'>" +
                             "<span class='wdn-icon-cancel'></span>" +
                         "</button>" +
