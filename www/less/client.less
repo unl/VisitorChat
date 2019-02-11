@@ -20,15 +20,6 @@
 }
 
 
-@supports not(right: calc(1.333em + 1vw)) {
-
-  #visitorChat {
-    right: 1.333em;
-  }
-
-}
-
-
 @supports (filter: drop-shadow(0 1px 3px rgba(71,71,70,.25))) {
 
   #visitorChat {
@@ -53,49 +44,21 @@
 
 #visitorChat.offline {
   background-color: @ui04;
-  transition: background-color .3s ease-out;
 }
 
 
 #visitorChat.offline::after {
   border-color: @ui04 transparent transparent transparent;
-  transition: border-color .3s ease-out;
 }
 
 
 #visitorChat.online {
   background-color: @triad;
-  transition: background-color .3s ease-out;
 }
 
 
 #visitorChat.online::after {
   border-color: @triad transparent transparent transparent;
-  transition: border-color .3s ease-out;
-}
-
-
-#visitorChat:hover.offline {
-  background-color: darken(@ui04,7%);
-  transition: background-color .3s ease-out;
-}
-
-
-#visitorChat:hover.offline::after {
-  border-color: darken(@ui04,7%) transparent transparent transparent;
-  transition: border-color .3s ease-out;
-}
-
-
-#visitorChat:hover.online {
-  background-color: darken(@triad,7%);
-  transition: background-color .3s ease-out;
-}
-
-
-#visitorChat:hover.online::after {
-  border-color: darken(@triad,7%) transparent transparent transparent;
-  transition: border-color .3s ease-out;
 }
 
 
@@ -188,13 +151,22 @@
 }
 
 
-#dcf-footer .offline #visitorChat_logout {
+#visitorChat_header,
+#visitorChat_header_text,
+#visitorChat_logout,
+#visitor-chat-header-options {
+  background-color: inherit;
+}
+
+
+.offline #visitorChat_header_text,
+.offline #visitorChat_logout {
   color: #424240;
 }
 
 
-#dcf-footer .online #visitorChat_header,
-#dcf-footer .online #visitorChat_logout {
+.online #visitorChat_header_text,
+.online #visitorChat_logout {
   color: #fefdfa;
 }
 
@@ -206,14 +178,6 @@
 
 #visitorChat_header:focus #visitorChat_header_text {
   outline: thin dotted currentColor;
-}
-
-
-#visitor-chat-header-options {
-  line-height: 1;
-  position: absolute;
-  right: 0;
-  top: 0;
 }
 
 
@@ -313,6 +277,19 @@
 #visitorChat_chatBox li .timestamp {
   float: right;
   padding-left: 1em;
+}
+
+
+.unl .dcf-footer #visitorChat_chatBox a,
+.unl .dcf-footer #visitorChat_chatBox a:link {
+  color: #d00000;
+}
+
+
+.unl .dcf-footer #visitorChat_chatBox a:visited,
+.unl .dcf-footer #visitorChat_chatBox a:hover,
+.unl .dcf-footer #visitorChat_chatBox a:active {
+  color: #9e0900;
 }
 
 
