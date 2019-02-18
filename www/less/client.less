@@ -42,8 +42,18 @@
 }
 
 
-#visitorChat.offline {
+#visitorChat.offline,
+#visitorChat.offline #visitorChat_header,
+#visitorChat.offline #visitorChat_header_text,
+#visitorChat.offline #visitorChat_logout,
+#visitorChat.offline #visitor-chat-header-options {
   background-color: @ui04;
+}
+
+
+#visitorChat.offline #visitorChat_header_text,
+#visitorChat.offline #visitorChat_logout {
+  color: #424240;
 }
 
 
@@ -52,8 +62,18 @@
 }
 
 
-#visitorChat.online {
+#visitorChat.online,
+#visitorChat.online #visitorChat_header,
+#visitorChat.online #visitorChat_header_text,
+#visitorChat.online #visitorChat_logout,
+#visitorChat.online #visitor-chat-header-options {
   background-color: @triad;
+}
+
+
+#visitorChat.online #visitorChat_header_text,
+#visitorChat.online #visitorChat_logout {
+  color: #fefdfa;
 }
 
 
@@ -148,26 +168,6 @@
 
 #visitorChat_header:hover {
   cursor: pointer;
-}
-
-
-#visitorChat_header,
-#visitorChat_header_text,
-#visitorChat_logout,
-#visitor-chat-header-options {
-  background-color: inherit;
-}
-
-
-.offline #visitorChat_header_text,
-.offline #visitorChat_logout {
-  color: #424240;
-}
-
-
-.online #visitorChat_header_text,
-.online #visitorChat_logout {
-  color: #fefdfa;
 }
 
 
