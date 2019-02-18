@@ -11,6 +11,18 @@ h1 {
 }
 
 
+// Hide Dashboard page site title
+#dashboard_0 {
+  clip: rect(0 0 0 0); // Fallback for older browsers
+  clip-path: inset(50%); // Make content disappear with inset rectangle
+  height: 1px; // Some screen readers ignore zero height
+  overflow: hidden; // Hide resized content
+  position: absolute; // Remove item from normal flow
+  width: 1px; // Some screen readers ignore zero width
+  white-space: nowrap; // Fix smushed, falsely pronounced text
+}
+
+
 #dcf-main #clientChat ul,
 #dcf-main #clientList ul {
   list-style: none;
@@ -297,6 +309,12 @@ h1 {
 #toggleOperatorStatus.dcf-btn-primary.open {
   background-color: #00892c;
   border-color: #00892c;
+}
+
+
+#toggleOperatorStatus.dcf-btn-primary.open:hover,
+#toggleOperatorStatus.dcf-btn-primary.open:focus {
+  box-shadow: 0 1px .5625000003em rgba(0,137,44,.6);
 }
 
 
