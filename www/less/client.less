@@ -7,6 +7,7 @@
 
 
 #visitorChat {
+  background-color: @ui04;
   border-radius: 3px;
   bottom: 1em;
   box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
@@ -31,7 +32,7 @@
 
 
 #visitorChat::after {
-  border-color: @triad transparent transparent transparent;
+  border-color: @ui04 transparent transparent transparent;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
   content: '';
@@ -39,16 +40,6 @@
   right: 1.333em;
   top: 100%;
   z-index: 299;
-}
-
-
-#visitorChat.offline {
-  background-color: @ui04;
-}
-
-
-#visitorChat.offline::after {
-  border-color: @ui04 transparent transparent transparent;
 }
 
 
