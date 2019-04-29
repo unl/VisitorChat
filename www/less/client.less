@@ -77,6 +77,8 @@
 
 #visitorChat fieldset {
   margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 
@@ -283,12 +285,18 @@
   color: #9e0900;
 }
 
+.force-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
+}
 
 .visitorChat_me,
 .visitorChat_them {
   background-color: #fff;
 }
-
 
 .visitorChat_me {
   float: right;
