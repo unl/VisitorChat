@@ -1,7 +1,13 @@
-require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
+require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.41.0.min.js'], function($, idm, analytics) {
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
     ?>
+
+    // Initialize the Amazon Cognito credentials provider
+    AWS.config.region = 'us-west-2';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-west-2:32c1c29d-8735-4bac-8a47-2468178d8acb',
+    });
 
     var VisitorChat_Client = VisitorChat_ChatBase.extend({
         loginHTML: false,
@@ -18,6 +24,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             site_title: false
         },
         widgetIsOpen: false,
+        lexruntime: new AWS.LexRuntime(),
+        chatbotID: 38,
+        chatbotName: 'UNLBot',
+        chatbotRequest: '',
+        sessionAttributes: {},
 
         startEmail:function () {
             this.method = 'email';
@@ -55,12 +66,23 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
                     return false;
                 });
+            } else if (this.lexruntime) {
+                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
+
+                $('#visitorChat_methods_chat').one('click', function() {
+                  VisitorChat.stop(function(){
+                    VisitorChat.startChatBot();
+                    $('#visitorChat_messageBox').keyup();
+                  });
+
+                  return false;
+                });
             }
         },
 
         startChat:function (chatInProgress) {
             this.method = 'chat';
-            this.displaySiteAvailability(true);
+            this.displaySiteAvailability();
             this.launchChatContainer();
 
             if (chatInProgress && this.chatStatus == "LOGIN") {
@@ -91,6 +113,41 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 });
                 return false;
             });
+        },
+
+        startChatBot:function (chatInProgress) {
+          this.method = 'chatbot';
+          this.displaySiteAvailability();
+          this.launchChatContainer();
+
+          if (chatInProgress && this.chatStatus == "LOGIN") {
+            this.chatStatus = "CHATING";
+            return this.start();
+          }
+
+          $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+
+          this.start();
+
+          var title = this.getSiteTitle();
+
+          $('#visitorChat_footerHeader').html('Chat with ' + title + ' (Chatbot)');
+
+          $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
+          //Submit as chat
+          $('#visitorChat_login_chatmethod').val("CHATBOT");
+
+          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+
+          VisitorChat.displayWelcomeMessage();
+
+          $('#visitorChat_methods_email').one('click', function() {
+            VisitorChat.stop(function(){
+              VisitorChat.startEmail();
+              $('#visitorChat_messageBox').keyup();
+            });
+            return false;
+          });
         },
 
         displayWelcomeMessage: function() {
@@ -368,6 +425,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     //Otherwise start chat/email forms
                     if (VisitorChat.method == 'chat') {
                         VisitorChat.startChat();
+                    } else if (VisitorChat.method == 'chatbot') {
+                      VisitorChat.startChatBot();
                     } else {
                         VisitorChat.startEmail();
                     }
@@ -611,7 +670,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Handle the rest of the data.
             if (data['conversationID'] && this.chatStatus == false) {
-                this.startChat(true);
+                if (this.method == 'chat') {
+                  this.startChat(true);
+                } else {
+                  this.startChatBot(true);
+                }
             }
 
             this.displaySiteAvailability();
@@ -752,11 +815,17 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             var text = 'Email Us';
 
+            console.log(available);
             if (available) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
+            } else if (this.lexruntime) {
+                $widget.addClass('online');
+                $widget.removeClass('offline');
+                text = 'Let\'s Chat';
+                VisitorChat.method = 'chatbot';
             } else {
                 $widget.addClass('offline');
                 $widget.removeClass('online');

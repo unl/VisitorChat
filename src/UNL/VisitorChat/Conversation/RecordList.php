@@ -33,7 +33,7 @@ class RecordList extends \Epoch\RecordList
     public static function getConversationsForSite($url, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
@@ -47,7 +47,7 @@ class RecordList extends \Epoch\RecordList
     public static function getConversationsForSiteAndUser($url, $users_id, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
@@ -70,7 +70,7 @@ class RecordList extends \Epoch\RecordList
      */
     public static function getAllIdleConversations($options = array()) {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id, message
                            FROM conversations
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
@@ -92,7 +92,7 @@ class RecordList extends \Epoch\RecordList
      */
     public static function getAllSearchingEmailConversations($options = array()) {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id, message
                            FROM conversations
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
@@ -113,7 +113,7 @@ class RecordList extends \Epoch\RecordList
         }
         
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
@@ -128,7 +128,7 @@ class RecordList extends \Epoch\RecordList
     public static function getAllConversationsWithStatus($status, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            WHERE status = '" . self::escapeString($status) ."'
@@ -139,7 +139,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getCompletedConversationsForSite($url = false, $start = false, $end, $result = false, $options = array())
     {
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
 
         //Build sql
         $options['sql'] = "SELECT conv1.id

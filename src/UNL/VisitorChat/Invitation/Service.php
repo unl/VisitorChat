@@ -39,6 +39,20 @@ class Service
             }
             return $conversation;
         }
+
+        //Are we communicating via chatbot?
+        if ($conversation->method == 'CHATBOT') {
+
+            // set status to chatting if not
+            if ($conversation->status != 'CHATTING') {
+                $conversation->status = 'CHATTING';
+                $conversation->save();
+            }
+
+            // don't need invitation since handle via chatbot
+            return $conversation;
+        }
+
         
         //Check if there are no current operators.
         $currentOperators = false;

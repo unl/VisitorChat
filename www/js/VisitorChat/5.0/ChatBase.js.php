@@ -225,7 +225,9 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     handleUserDataResponse:function (data) {
-        this.userID = data['userID'];
+        if (typeof data['userID'] !== 'undefined') {
+          this.userID = data['userID'];
+        }
 
         this.updatePHPSESSID(data['phpssid']);
 
@@ -595,7 +597,7 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                    $('#visitorchat_clientLogin').submit();
+                     $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
                     $('#visitorChat_messageForm').submit();
                     $('#visitorChat_messageBox').val('');
@@ -603,7 +605,93 @@ var VisitorChat_ChatBase = Class.extend({
             }
         });
 
+        $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
+          var message = $('#visitorChat_messageBox').val();
+
+          if (message.trim().length == 0) {
+            // ignore empty messages
+            return false;
+          }
+
+          // check if chatting with chatbot
+          if (VisitorChat.method == 'chatbot') {
+            // set chatbot message to be sent once processed by VisitorChat
+            if (VisitorChat.userID === false) {
+              VisitorChat.updateUserInfo();
+            }
+            VisitorChat.sendChatbotMessage(message.trim());
+          }
+        });
+
         this.initAjaxForms();
+    },
+
+    doSearch: function() {
+      var searchEvent = new CustomEvent('doSearch', {detail: {query: VisitorChat.chatbotRequest}});
+      document.dispatchEvent(searchEvent);
+      return false;
+    },
+
+    sendChatbotMessage: function(message) {
+      var clientUserID = 'foo';
+      if (this.userID) {
+        clientUserID = this.userID;
+      }
+      // send it to the Lex runtime
+      var params = {
+        botAlias: '$LATEST',
+        botName: VisitorChat.chatbotName,
+        inputText: message,
+        userId: clientUserID,
+        sessionAttributes: VisitorChat.sessionAttributes
+      };
+      console.log(params);
+
+      VisitorChat.lexruntime.postText(params, function(err, data) {
+        if (err) {
+          VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)')
+        }
+        if (data) {
+          // capture the sessionAttributes for the next cycle
+          VisitorChat.sessionAttributes = data.sessionAttributes;
+          VisitorChat.chatbotRequest = message;
+          VisitorChat.recordChatbotResponse(data);
+        }
+      });
+    },
+
+    recordChatbotError: function (errorMessage) {
+        //TODO display error in chat and record in log
+      console.log(errorMessage);
+    },
+
+    recordChatbotResponse: function(lexResponse) {
+      var searchBtn = document.getElementById('visitorChat_SearchBtn');
+      searchBtn.style.display = 'none';
+      console.log(lexResponse);
+      var message = lexResponse.message;
+      //if (lexResponse.intentName === null) {
+      //  message = message + ' Not liking my responses? Try the search button below.';
+      //  searchBtn.style.display = 'inline-block';
+      //}
+      var data = {
+        'users_id': this.chatbotID,
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+        //'dialogState': lexResponse.dialogState,
+        //'readyForFulfillment': (lexResponse.dialogState === 'ReadyForFulfillment')
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data
+      });
     },
 
     handleIsTyping:function () {
@@ -856,6 +944,7 @@ var VisitorChat_ChatBase = Class.extend({
             this.updatePHPSESSID(data['phpssid']);
         }
 
+        console.log(data);
         return this.updateChatWithData(data);
     },
 

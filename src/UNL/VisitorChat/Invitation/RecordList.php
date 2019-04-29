@@ -8,7 +8,7 @@ class RecordList extends \Epoch\RecordList
         
         parent::__construct($options);
     }
-    
+
     function getDefaultOptions()
     {
         $options = array();
@@ -20,7 +20,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAllSearchingForConversation($conversationID, $options = array())
     {
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM invitations
                            WHERE conversations_id = " . (int)$conversationID . "
@@ -32,7 +32,7 @@ class RecordList extends \Epoch\RecordList
     
     public static function getAllForConversation($conversationID, $options = array())
     {
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT id
                            FROM invitations
                            WHERE conversations_id = " . (int)$conversationID . "
