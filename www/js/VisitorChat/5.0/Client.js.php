@@ -4,9 +4,9 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
     ?>
 
     // Initialize the Amazon Cognito credentials provider
-    AWS.config.region = 'us-west-2';
+    AWS.config.region = 'us-east-1'; // Region
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: 'us-west-2:32c1c29d-8735-4bac-8a47-2468178d8acb',
+      IdentityPoolId: 'us-east-1:b409ceff-f0a1-4fcb-b52f-5c7ec94c7e23',
     });
 
     var VisitorChat_Client = VisitorChat_ChatBase.extend({
@@ -149,6 +149,50 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
             return false;
           });
         },
+
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}) {
+
+        if (introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
+          // invalid intent info so launch chatbot without intent instead
+          this.startChatBot();
+          return;
+        }
+
+        this.method = 'chatbot';
+        this.displaySiteAvailability();
+        this.launchChatContainer();
+
+        $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+
+        this.start();
+
+        var title = this.getSiteTitle();
+
+        $('#visitorChat_footerHeader').html('Chat with ' + title + ' (Chatbot)');
+
+        //Submit as chat
+        $('#visitorChat_login_chatmethod').val("CHATBOT");
+
+        $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+
+        VisitorChat.displayWelcomeMessage();
+
+        $('#visitorChat_methods_email').one('click', function() {
+          VisitorChat.stop(function(){
+            VisitorChat.startEmail();
+            $('#visitorChat_messageBox').keyup();
+          });
+          return false;
+        });
+
+        $('#visitorChatbot_intent').val(intentMsg);
+        $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
+        $('#visitorChat_messageBox').keyup();
+        $('#visitorChatbot_messageBoxContainer').hide();
+        $('#visitorChatbot_intent_message').text(introMsg);
+        $('#visitorChatbot_intent_message').show();
+
+      },
 
         displayWelcomeMessage: function() {
             if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
@@ -815,7 +859,6 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
 
             var text = 'Email Us';
 
-            console.log(available);
             if (available) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');

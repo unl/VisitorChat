@@ -49,6 +49,9 @@ var VisitorChat_ChatBase = Class.extend({
     //The current user id.
     userID:false,
 
+    //The chatbot user id.
+    chatbotUserID:false,
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
@@ -606,6 +609,17 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
+          var chatbotIntentMessage = $('#visitorChatbot_intent').val();
+          var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
+
+          // Handle chatbot intent message as a message from user
+          if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
+            $('#visitorChat_messageBox').val(chatbotIntentMessage);
+            if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
+              VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
+            }
+          }
+
           var message = $('#visitorChat_messageBox').val();
 
           if (message.trim().length == 0) {
@@ -632,20 +646,53 @@ var VisitorChat_ChatBase = Class.extend({
       return false;
     },
 
-    sendChatbotMessage: function(message) {
-      var clientUserID = 'foo';
-      if (this.userID) {
-        clientUserID = this.userID;
+    generateUUID: function() { // Public Domain/MIT
+      var d = new Date().getTime();
+      if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+        d += performance.now(); //use high-precision timer if available
       }
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    },
+
+    getChatbotUserID: function() {
+      if (sessionStorage.chatbotUserID) {
+        return sessionStorage.getItem('chatbotUserID');
+      } else {
+        var chatbotUserID = this.generateUUID();
+        sessionStorage.setItem('chatbotUserID', chatbotUserID);
+        return chatbotUserID;
+      }
+    },
+
+    sendChatbotMessage: function(message) {
+      if (VisitorChat.chatbotUserID === false) {
+        VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
+      }
+
+      if (VisitorChat.userID) {
+        VisitorChat.sessionAttributes.userID = VisitorChat.userID;
+      }
+
+      if (VisitorChat.name) {
+        VisitorChat.sessionAttributes.name = VisitorChat.name;
+      }
+
+      if (VisitorChat.email) {
+        VisitorChat.sessionAttributes.email = VisitorChat.email;
+      }
+
       // send it to the Lex runtime
       var params = {
         botAlias: '$LATEST',
         botName: VisitorChat.chatbotName,
         inputText: message,
-        userId: clientUserID,
+        userId: VisitorChat.chatbotUserID,
         sessionAttributes: VisitorChat.sessionAttributes
       };
-      console.log(params);
 
       VisitorChat.lexruntime.postText(params, function(err, data) {
         if (err) {
@@ -667,8 +714,10 @@ var VisitorChat_ChatBase = Class.extend({
 
     recordChatbotResponse: function(lexResponse) {
       var searchBtn = document.getElementById('visitorChat_SearchBtn');
-      searchBtn.style.display = 'none';
-      console.log(lexResponse);
+      if (searchBtn) {
+        searchBtn.style.display = 'none';
+      }
+      //console.log(lexResponse);
       var message = lexResponse.message;
       //if (lexResponse.intentName === null) {
       //  message = message + ' Not liking my responses? Try the search button below.';
@@ -944,7 +993,6 @@ var VisitorChat_ChatBase = Class.extend({
             this.updatePHPSESSID(data['phpssid']);
         }
 
-        console.log(data);
         return this.updateChatWithData(data);
     },
 
@@ -992,6 +1040,7 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         //3. clear vars.
+        sessionStorage.removeItem('chatbotUserID');
         this.latestMessageId = 0;
         this.chatStatus = false;
     },
