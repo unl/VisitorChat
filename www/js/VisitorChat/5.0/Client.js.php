@@ -173,9 +173,44 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
         //Submit as chat
         $('#visitorChat_login_chatmethod').val("CHATBOT");
 
-        $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
-
         VisitorChat.displayWelcomeMessage();
+
+        // setup intent display
+        $('#visitorChatbot_intent').val(intentMsg);
+        $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
+        $('#visitorChat_messageBox').keyup();
+        $('#visitorChatbot_messageBoxContainer').hide();
+        $('#visitorChatbot_intent_message').text(introMsg);
+        $('#visitorChatbot_intent_message').show();
+
+        if (VisitorChat.operatorsAvailable) {
+
+          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+
+          $('#visitorChat_methods_chat').one('click', function() {
+            VisitorChat.stop(function(){
+              VisitorChat.startChat();
+              $('#visitorChat_messageBox').keyup();
+            });
+
+            return false;
+          });
+        } else if (this.lexruntime) {
+
+          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+
+          $('#visitorChat_methods_chat').one('click', function() {
+            VisitorChat.stop(function(){
+              VisitorChat.startChatBot();
+              $('#visitorChat_messageBox').keyup();
+            });
+
+            return false;
+          });
+
+        } else {
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+        }
 
         $('#visitorChat_methods_email').one('click', function() {
           VisitorChat.stop(function(){
@@ -184,13 +219,6 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
           });
           return false;
         });
-
-        $('#visitorChatbot_intent').val(intentMsg);
-        $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
-        $('#visitorChat_messageBox').keyup();
-        $('#visitorChatbot_messageBoxContainer').hide();
-        $('#visitorChatbot_intent_message').text(introMsg);
-        $('#visitorChatbot_intent_message').show();
 
       },
 
