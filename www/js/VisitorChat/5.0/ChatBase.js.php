@@ -210,9 +210,11 @@ var VisitorChat_ChatBase = Class.extend({
             checkOperators = "&checkOperators=" + escape(document.URL);
         }
 
+        var checkChatbots = "&checkChatbots=" + escape(document.URL);;
+
         //Start the chat.
         $.ajax({
-            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
+            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators + checkChatbots,
             xhrFields:{
                 withCredentials:true
             },
@@ -236,6 +238,14 @@ var VisitorChat_ChatBase = Class.extend({
 
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
+        }
+
+        if ((typeof data['chatbotID'] !== 'undefined') &&
+            (data['chatbotID'] !== null) &&
+            (typeof data['chatbotName'] !== 'undefined') &&
+            (data['chatbotName'] !== null)) {
+          sessionStorage.setItem('chatbotID', parseInt(data['chatbotID']));
+          sessionStorage.setItem('chatbotName', data['chatbotName']);
         }
 
         this.blocked = data['blocked'];
@@ -658,6 +668,22 @@ var VisitorChat_ChatBase = Class.extend({
       });
     },
 
+    getChatbotID: function() {
+      if (sessionStorage.chatbotID) {
+        return sessionStorage.getItem('chatbotID');
+      } else {
+        return 0;
+      }
+    },
+
+    getChatbotName: function() {
+      if (sessionStorage.chatbotName) {
+        return sessionStorage.getItem('chatbotName');
+      } else {
+        return false;
+      }
+    },
+
     getChatbotUserID: function() {
       if (sessionStorage.chatbotUserID) {
         return sessionStorage.getItem('chatbotUserID');
@@ -688,7 +714,7 @@ var VisitorChat_ChatBase = Class.extend({
       // send it to the Lex runtime
       var params = {
         botAlias: '$LATEST',
-        botName: VisitorChat.chatbotName,
+        botName: VisitorChat.getChatbotName(),
         inputText: message,
         userId: VisitorChat.chatbotUserID,
         sessionAttributes: VisitorChat.sessionAttributes
@@ -724,7 +750,7 @@ var VisitorChat_ChatBase = Class.extend({
       //  searchBtn.style.display = 'inline-block';
       //}
       var data = {
-        'users_id': this.chatbotID,
+        'users_id': this.getChatbotID(),
         'conversations_id': this.conversationID,
         'message': message,
         '_class': 'UNL\\VisitorChat\\Message\\Edit'
@@ -1040,7 +1066,10 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         //3. clear vars.
+        sessionStorage.removeItem('chatbotID');
+        sessionStorage.removeItem('chatbotName');
         sessionStorage.removeItem('chatbotUserID');
+
         this.latestMessageId = 0;
         this.chatStatus = false;
     },

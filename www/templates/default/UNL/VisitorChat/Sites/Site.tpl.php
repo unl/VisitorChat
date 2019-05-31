@@ -51,5 +51,22 @@
                 <?php endforeach; ?>
             </ul>
         </dd>
+      <dt>Chatbot</dt>
+      <?php $chatbots = \UNL\VisitorChat\Chatbot\Record::getSiteChatbots($context->site->getURL()); ?>
+      <dd>
+        <ul>
+            <?php
+             if (count($chatbots) > 0) {
+               foreach ($chatbots as $chatbot): ?>
+                   <li>
+                     <span class="dcf-bold"><?php echo $chatbot->name; ?></span> - <?php echo $chatbot->description; ?>
+                   </li>
+               <?php endforeach;
+             } else {
+               echo "<li>None</li>";
+             }
+             ?>
+        </ul>
+      </dd>
     </dl>
 </div>

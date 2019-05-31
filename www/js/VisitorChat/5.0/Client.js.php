@@ -25,10 +25,12 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
         },
         widgetIsOpen: false,
         lexruntime: new AWS.LexRuntime(),
-        chatbotID: 38,
-        chatbotName: 'UNLBot',
         chatbotRequest: '',
         sessionAttributes: {},
+
+        isChatbotAvailable: function() {
+          return this.lexruntime && this.getChatbotID() && this.getChatbotName();
+        },
 
         startEmail:function () {
             this.method = 'email';
@@ -66,7 +68,7 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
 
                     return false;
                 });
-            } else if (this.lexruntime) {
+            } else if (this.isChatbotAvailable()) {
                 $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
 
                 $('#visitorChat_methods_chat').one('click', function() {
@@ -152,10 +154,16 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
 
       startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}) {
 
-        if (introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
+        if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
           // invalid intent info so launch chatbot without intent instead
-          this.startChatBot();
-          return;
+          if (VisitorChat.operatorsAvailable) {
+            this.startChatBot();
+            $('#visitorChat_messageBox').keyup();
+          } else {
+            VisitorChat.startEmail();
+            $('#visitorChat_messageBox').keyup();
+          }
+          return false;
         }
 
         this.method = 'chatbot';
@@ -195,7 +203,7 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
 
             return false;
           });
-        } else if (this.lexruntime) {
+        } else if (this.isChatbotAvailable()) {
 
           $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
 
@@ -892,7 +900,7 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
                 $widget.removeClass('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
-            } else if (this.lexruntime) {
+            } else if (this.isChatbotAvailable()) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');
                 text = 'Let\'s Chat';
