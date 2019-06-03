@@ -338,23 +338,17 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     return;
                 }
 
-                var $header = $(this);
-
                 if (!$('#visitorChat_container').is(':visible')) {
                     //Open the container
                     VisitorChat.widgetIsOpen = true;
                     $('#visitorChat').addClass('visitorChat_open');
                     $('#visitorChat_container').slideDown(320);
-                    $header.attr('aria-label', 'Minimize the ' + $header.text() + ' widget');
-                    $('.dcf-nav-toggle-label-chat').text('Close');
                     $('#dcf-nav-toggle-icon-open-chat').addClass('dcf-d-none');
                     $('#dcf-nav-toggle-icon-close-chat').removeClass('dcf-d-none');
                 } else {
                     //Close the container
                     VisitorChat.widgetIsOpen = false;
                     $('#visitorChat_container').slideUp(320);
-                    $header.attr('aria-label', 'Open the ' + $header.text() + ' widget');
-                    $('.dcf-nav-toggle-label-chat').text($header.text());
                     $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
                     $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
 
@@ -779,9 +773,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
-                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Minimize the ' + text + ' widget').attr('aria-expanded', 'true');
+                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the ' + text + ' widget').attr('aria-expanded', 'true');
+                $('.dcf-nav-toggle-label-chat').text('Close');
             } else {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Open the ' + text + ' widget').attr('aria-expanded', 'false');
+                $('.dcf-nav-toggle-label-chat').text(text);
             }
 
             return true;
