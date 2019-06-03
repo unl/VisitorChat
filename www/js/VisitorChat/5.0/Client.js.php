@@ -346,11 +346,17 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     $('#visitorChat').addClass('visitorChat_open');
                     $('#visitorChat_container').slideDown(320);
                     $header.attr('aria-label', 'Minimize the ' + $header.text() + ' widget');
+                    $('.dcf-nav-toggle-label-chat').text('Close');
+                    $('#dcf-nav-toggle-icon-open-chat').addClass('dcf-d-none');
+                    $('#dcf-nav-toggle-icon-close-chat').removeClass('dcf-d-none');
                 } else {
                     //Close the container
                     VisitorChat.widgetIsOpen = false;
                     $('#visitorChat_container').slideUp(320);
                     $header.attr('aria-label', 'Open the ' + $header.text() + ' widget');
+                    $('.dcf-nav-toggle-label-chat').text($header.text());
+                    $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
+                    $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
 
                     if (VisitorChat.chatStatus == "LOGIN") {
                         //If the user hasn't done anything yet, simply stop everything and exit early
@@ -682,7 +688,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"/>' +
                       '</g>' +
                     '</svg>' +
-                    '<span class="dcf-nav-toggle-label dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
+                    '<span class="dcf-nav-toggle-label-chat dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
                 '</button>');
 
             //Handle cookies. (IE session handling);
@@ -774,14 +780,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Minimize the ' + text + ' widget').attr('aria-expanded', 'true');
-                $('#dcf-mobile-toggle-chat').text('Close');
-                $('#dcf-nav-toggle-icon-open-chat').addClass('dcf-d-none');
-                $('#dcf-nav-toggle-icon-close-chat').removeClass('dcf-d-none');
             } else {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Open the ' + text + ' widget').attr('aria-expanded', 'false');
-                $('#dcf-mobile-toggle-chat').text(text);
-                $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
-                $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
             }
 
             return true;
