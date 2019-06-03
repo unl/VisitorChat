@@ -769,7 +769,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             //Update the text of the visible prompt
-            $('#visitorChat_header_text, .dcf-nav-toggle-label-chat').text(text);
+            $('#visitorChat_header_text').text(text);
 
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
