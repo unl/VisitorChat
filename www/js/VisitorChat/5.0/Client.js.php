@@ -155,7 +155,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mb-2 dcf-p-1' id='visitorChat_container' tabindex='-1'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
@@ -661,13 +661,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#dcf-footer').append("" +
                 "<div id='visitorChat' class='dcf-d-none@print offline'>" +
-                    "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
-                        "<span id='visitorChat_header_text'>Email Us</span>" +
-                    "</div>" +
-                    "<div class='dcf-absolute dcf-pin-top dcf-pin-right' id='visitor-chat-header-options'>" +
-                        "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent' id='visitorChat_logout' aria-label='close and log out of chat'>" +
-                            "<span class='wdn-icon-cancel'></span>" +
-                        "</button>" +
+                    "<div class='dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-txt-xs dcf-lh-1' id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
+                        "<span class='dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase' id='visitorChat_header_text'>Email Us</span>" +
+                        "<div id='visitor-chat-header-options'>" +
+                            "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent' id='visitorChat_logout' aria-label='close and log out of chat'>" +
+                                "<span class='wdn-icon-cancel'></span>" +
+                            "</button>" +
+                        "</div>" +
                     "</div>" +
                     "<div id='visitorChat_sound_container'></div>" +
                 "</div>");
