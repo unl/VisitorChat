@@ -14,13 +14,13 @@
         $editMembersLink = $site->getEditSiteMembersLink();
     ?>
     <tr>
-      <td><a href="<?php echo $site->getURL(); ?>"><?php echo truncate($site->getTitle(), 60); ?></a></td>
-      <td class="dcf-txt-center"><?php echo getChatAvailbility($site); ?></td>
-      <td><?php echo $role; ?></td>
-      <td class="dcf-txt-sm">
-        <a class="dcf-btn dcf-mb-2 dcf-txt-decor-none" href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getRawObject()->getURL())) ?>">View Details</a>
+      <td class="dcf-txt-middle"><a href="<?php echo $site->getURL(); ?>"><?php echo truncate($site->getTitle(), 60); ?></a></td>
+      <td class="dcf-txt-middle dcf-txt-center"><?php echo getChatAvailbility($site); ?></td>
+      <td class="dcf-txt-middle"><?php echo $role; ?></td>
+      <td class="dcf-txt-middle">
+        <a href="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL('sites/site?url=' . urlencode($site->getRawObject()->getURL())) ?>" class="dcf-btn dcf-btn-secondary">View Details</a>
         <?php if (!empty($editMembersLink)) { ?>
-        <a class="dcf-btn dcf-mb-2 dcf-txt-decor-none" href="<?php echo $editMembersLink; ?>">Edit Roles</a>
+        <a href="<?php echo $editMembersLink; ?>" class="dcf-btn dcf-btn-secondary">Edit Roles</a>
         <?php } ?>
       </td>
     </tr>
