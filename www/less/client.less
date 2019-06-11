@@ -9,7 +9,6 @@
 #visitorChat {
   background-color: @ui04;
   border-radius: 3px;
-  bottom: 1em;
   box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
   color: #424240;
   .sans-serif-font();
@@ -45,6 +44,12 @@
 
 #visitorChat.online {
   background-color: @triad;
+}
+
+
+#visitorChat.online #visitorChat_header_text,
+#visitorChat.online #visitorChat_logout {
+  color: #fefdfa;
 }
 
 
@@ -128,44 +133,12 @@
 
 
 #visitorChat_header {
-  align-items: center;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  line-height: 1;
   outline: none;
-  padding: .75em 1.333em;
-  width: 100%;
 }
 
 
 #visitorChat_header:hover {
   cursor: pointer;
-}
-
-
-#visitorChat_header,
-#visitorChat_header_text,
-#visitorChat_logout,
-#visitor-chat-header-options {
-  background-color: inherit;
-}
-
-
-.offline #visitorChat_header_text,
-.offline #visitorChat_logout {
-  color: #424240;
-}
-
-
-.online #visitorChat_header_text,
-.online #visitorChat_logout {
-  color: #fefdfa;
-}
-
-
-#visitorChat_header_text {
-  text-transform: uppercase;
 }
 
 
@@ -218,8 +191,8 @@
 
 #visitorChat_container {
   background-image: linear-gradient(to bottom, @ui01 0%, @ui03 60%);
-  margin-bottom: .563em;
-  padding: 1em 1.333em;
+  margin-bottom: .56em;
+  padding: 1em;
   position: relative;
 }
 
@@ -285,6 +258,7 @@
   color: #9e0900;
 }
 
+
 .force-wrap {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -293,10 +267,12 @@
   hyphens: auto;
 }
 
+
 .visitorChat_me,
 .visitorChat_them {
   background-color: #fff;
 }
+
 
 .visitorChat_me {
   float: right;
@@ -485,6 +461,19 @@
 
 
 // !Media Queries
+@media (max-width: 56.11em) {
+
+  #visitorChat {
+    bottom: 5.21em; // 4.21em (height of mobile toolbar) + 1em (allow room for chat balloon arrow)
+    visibility: hidden;
+  }
+
+  #visitorChat.visitorChat_open {
+    visibility: visible;
+  }
+
+}
+
 
 @media (min-width: 600px) { // ?
 
@@ -495,15 +484,10 @@
 }
 
 
-@media @bp768 {
+@media (min-width: 56.12em) {
 
   #visitorChat {
-    font-size: .802rem;
-  }
-
-
-  #visitorChat_header_text {
-    font-size: .75rem;
+    bottom: 1em;
   }
 
 }
