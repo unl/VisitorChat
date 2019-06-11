@@ -744,6 +744,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         closeChatContainer: function() {
             $('#visitorChat').removeClass('visitorChat_open');
             $('#visitorChat_logout').css({'display':'none'});
+            $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
+            $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
             this.widgetIsOpen = false;
             this.displaySiteAvailability();
         },
