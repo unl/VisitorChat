@@ -50,6 +50,12 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <?php
+              $editMembersLink = $context->site->getEditSiteMembersLink();
+              if (!empty($editMembersLink)) {
+            ?>
+            <a class="dcf-btn dcf-btn-primary dcf-mb-2 dcf-txt-decor-none dcf-txt-3xs" href="<?php echo $editMembersLink; ?>">Edit Members</a>
+            <?php } ?>
         </dd>
     </dl>
 </div>
