@@ -610,10 +610,10 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                     $('#visitorchat_clientLogin').submit();
+                  $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                    $('#visitorChat_messageForm').submit();
-                    $('#visitorChat_messageBox').val('');
+                  $('#visitorChat_messageForm').submit();
+                  $('#visitorChat_messageBox').val('');
                 }
             }
         });
@@ -648,12 +648,6 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         this.initAjaxForms();
-    },
-
-    doSearch: function() {
-      var searchEvent = new CustomEvent('doSearch', {detail: {query: VisitorChat.chatbotRequest}});
-      document.dispatchEvent(searchEvent);
-      return false;
     },
 
     generateUUID: function() { // Public Domain/MIT
@@ -739,23 +733,12 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     recordChatbotResponse: function(lexResponse) {
-      var searchBtn = document.getElementById('visitorChat_SearchBtn');
-      if (searchBtn) {
-        searchBtn.style.display = 'none';
-      }
-      //console.log(lexResponse);
       var message = lexResponse.message;
-      //if (lexResponse.intentName === null) {
-      //  message = message + ' Not liking my responses? Try the search button below.';
-      //  searchBtn.style.display = 'inline-block';
-      //}
       var data = {
         'users_id': this.getChatbotID(),
         'conversations_id': this.conversationID,
         'message': message,
         '_class': 'UNL\\VisitorChat\\Message\\Edit'
-        //'dialogState': lexResponse.dialogState,
-        //'readyForFulfillment': (lexResponse.dialogState === 'ReadyForFulfillment')
       }
 
       //Send a post response.

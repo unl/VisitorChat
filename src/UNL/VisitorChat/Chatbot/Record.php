@@ -28,13 +28,6 @@ class Record extends \Epoch\Record
         return \UNL\VisitorChat\Chatbot\RecordList::getSiteChatbots($site_url);
     }
 
-/*
-    function insert()
-    {
-        $result = parent::insert();
-        return $result;
-    }
-*/
     function keys()
     {
         return array('id');
@@ -44,11 +37,4 @@ class Record extends \Epoch\Record
     {
         return 'chatbots';
     }
-/*
-    public function update()
-    {
-        $result = parent::update();
-        return $result;
-    }
-*/
 }
