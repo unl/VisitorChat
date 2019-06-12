@@ -1,4 +1,5 @@
-ALTER TABLE conversations MODIFY method enum('CHAT','CHATBOT','EMAIL');
+-- ADD 'CHATBOT' to ENUM for table conversations
+ALTER TABLE `conversations` CHANGE `method` `method` ENUM('CHAT','CHATBOT','EMAIL') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CHAT' COMMENT 'The method of the conversation.  Either chat or email, depending on what the user wants.';
 
 CREATE TABLE IF NOT EXISTS `chatbots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
