@@ -1049,8 +1049,6 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         //3. clear vars.
-        sessionStorage.removeItem('chatbotID');
-        sessionStorage.removeItem('chatbotName');
         sessionStorage.removeItem('chatbotUserID');
 
         this.latestMessageId = 0;
