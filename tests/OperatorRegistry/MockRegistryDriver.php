@@ -115,6 +115,11 @@ class MockSite extends OperatorRegistry\SiteInterface
     {
         return false;
     }
+
+    function getID()
+    {
+        return $this->data['site_id'];
+    }
 }
 
 class MockSites extends ArrayIterator implements OperatorRegistry\SitesIterator
