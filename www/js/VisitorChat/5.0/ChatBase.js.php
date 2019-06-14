@@ -210,7 +210,7 @@ var VisitorChat_ChatBase = Class.extend({
             checkOperators = "&checkOperators=" + escape(document.URL);
         }
 
-        var checkChatbots = "&checkChatbots=" + escape(document.URL);;
+        var checkChatbots = "&checkChatbots=" + escape(document.URL);
 
         //Start the chat.
         $.ajax({

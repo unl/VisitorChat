@@ -38,7 +38,7 @@ class Info
         }
 
         if (isset($options['checkChatbots'])) {
-            $chatbots = \UNL\VisitorChat\Chatbot\Record::getSiteChatbots($options['checkOperators']);
+            $chatbots = \UNL\VisitorChat\Chatbot\Record::getSiteChatbots($options['checkChatbots']);
             if (count($chatbots) > 0) {
                 foreach ($chatbots as $chatbot) {
                     $this->chatbotID = $chatbot->user_id;
