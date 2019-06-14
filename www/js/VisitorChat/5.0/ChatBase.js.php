@@ -640,7 +640,7 @@ var VisitorChat_ChatBase = Class.extend({
           // check if chatting with chatbot
           if (VisitorChat.method == 'chatbot') {
             // set chatbot message to be sent once processed by VisitorChat
-            if (VisitorChat.userID === false) {
+            if (VisitorChat.userID === false || VisitorChat.conversationID === false) {
               VisitorChat.updateUserInfo();
             }
             VisitorChat.sendChatbotMessage(message.trim());
