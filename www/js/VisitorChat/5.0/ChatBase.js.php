@@ -52,6 +52,8 @@ var VisitorChat_ChatBase = Class.extend({
     //The chatbot user id.
     chatbotUserID:false,
 
+    chatbotClientMessage: false,
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
@@ -329,6 +331,10 @@ var VisitorChat_ChatBase = Class.extend({
                 this.onConversationStatus_OperatorLookupFailed(data);
                 break;
             case 'CHATTING':
+                if (VisitorChat.chatbotClientMessage) {
+                  VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
+                  VisitorChat.chatbotClientMessage = false;
+                }
                 this.onConversationStatus_Chatting(data);
                 break;
             case 'CLOSED':
@@ -639,13 +645,13 @@ var VisitorChat_ChatBase = Class.extend({
             return false;
           }
 
-          // check if chatting with chatbot
+          // check if chatting with chatbot and capture client message
           if (VisitorChat.method == 'chatbot') {
             // set chatbot message to be sent once processed by VisitorChat
-            if (VisitorChat.userID === false || VisitorChat.conversationID === false) {
+            if (VisitorChat.userID === false) {
               VisitorChat.updateUserInfo();
             }
-            VisitorChat.sendChatbotMessage(message.trim());
+            VisitorChat.chatbotClientMessage = message.trim();
           }
         });
 
@@ -727,7 +733,6 @@ var VisitorChat_ChatBase = Class.extend({
           console.log(data);
           // capture the sessionAttributes for the next cycle
           VisitorChat.sessionAttributes = data.sessionAttributes;
-          VisitorChat.chatbotRequest = message;
           VisitorChat.recordChatbotResponse(data);
         }
       });

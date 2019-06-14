@@ -25,7 +25,6 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
         },
         widgetIsOpen: false,
         lexruntime: new AWS.LexRuntime(),
-        chatbotRequest: '',
         sessionAttributes: {},
 
         isChatbotAvailable: function() {
