@@ -735,6 +735,7 @@ require(['jquery', 'idm', 'analytics', 'https://sdk.amazonaws.com/js/aws-sdk-2.4
         },
 
         handleUserDataResponse:function (data) {
+            console.log(data);
             this.conversationID = data['conversationID'];
 
             this.userType = data['userType'];
