@@ -230,6 +230,7 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     handleUserDataResponse:function (data) {
+        console.log(data);
         if (typeof data['userID'] !== 'undefined') {
           this.userID = data['userID'];
         }
@@ -310,6 +311,7 @@ var VisitorChat_ChatBase = Class.extend({
      * conversation status and fires off a related function.
      */
     updateChatWithData:function (data) {
+        console.log(data);
         if (data['status'] !== undefined) {
             this.chatStatus = data['status'];
         }
@@ -740,6 +742,7 @@ var VisitorChat_ChatBase = Class.extend({
         'message': message,
         '_class': 'UNL\\VisitorChat\\Message\\Edit'
       }
+      console.log(data);
 
       //Send a post response.
       $.ajax({
