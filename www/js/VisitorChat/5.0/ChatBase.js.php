@@ -232,7 +232,6 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     handleUserDataResponse:function (data) {
-        console.log(data);
         if (typeof data['userID'] !== 'undefined') {
           this.userID = data['userID'];
         }
@@ -313,7 +312,6 @@ var VisitorChat_ChatBase = Class.extend({
      * conversation status and fires off a related function.
      */
     updateChatWithData:function (data) {
-        console.log(data);
         if (data['status'] !== undefined) {
             this.chatStatus = data['status'];
         }
@@ -722,15 +720,11 @@ var VisitorChat_ChatBase = Class.extend({
         sessionAttributes: VisitorChat.sessionAttributes
       };
 
-      console.log(params);
-
       VisitorChat.lexruntime.postText(params, function(err, data) {
         if (err) {
-          console.log(err);
           VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)')
         }
         if (data) {
-          console.log(data);
           // capture the sessionAttributes for the next cycle
           VisitorChat.sessionAttributes = data.sessionAttributes;
           VisitorChat.recordChatbotResponse(data);
@@ -751,7 +745,6 @@ var VisitorChat_ChatBase = Class.extend({
         'message': message,
         '_class': 'UNL\\VisitorChat\\Message\\Edit'
       }
-      console.log(data);
 
       //Send a post response.
       $.ajax({
