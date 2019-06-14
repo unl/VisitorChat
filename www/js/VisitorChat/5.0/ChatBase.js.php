@@ -716,11 +716,15 @@ var VisitorChat_ChatBase = Class.extend({
         sessionAttributes: VisitorChat.sessionAttributes
       };
 
+      console.log(params);
+
       VisitorChat.lexruntime.postText(params, function(err, data) {
         if (err) {
+          console.log(err);
           VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)')
         }
         if (data) {
+          console.log(data);
           // capture the sessionAttributes for the next cycle
           VisitorChat.sessionAttributes = data.sessionAttributes;
           VisitorChat.chatbotRequest = message;
