@@ -532,7 +532,6 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Searching:function (data) {
         var html = '<div class="chat_notify visitorChat_loading" tabindex="-1">Please wait while we find someone to help you.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
-
     },
 
     /**
@@ -694,7 +693,7 @@ var VisitorChat_ChatBase = Class.extend({
       }
     },
 
-    sendChatbotMessage: function(message) {
+  sendChatbotMessage: function(message) {
       if (VisitorChat.chatbotUserID === false) {
         VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
       }
@@ -720,16 +719,34 @@ var VisitorChat_ChatBase = Class.extend({
         sessionAttributes: VisitorChat.sessionAttributes
       };
 
-      VisitorChat.lexruntime.postText(params, function(err, data) {
-        if (err) {
-          VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)')
+      // Attempt up to three times to send message to lex and notify user
+      // if all attempts fail
+      var attempts = 1;
+      while (attempts <= 3) {
+
+        var success = VisitorChat.lexruntime.postText(params, function(err, data) {
+          if (err) {
+            VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)');
+            return false;
+          }
+          if (data) {
+            // capture the sessionAttributes for the next cycle
+            VisitorChat.sessionAttributes = data.sessionAttributes;
+            VisitorChat.recordChatbotResponse(data);
+            return true;
+          }
+        });
+
+        if (success) {
+          break;
         }
-        if (data) {
-          // capture the sessionAttributes for the next cycle
-          VisitorChat.sessionAttributes = data.sessionAttributes;
-          VisitorChat.recordChatbotResponse(data);
+
+        attempts++;
+
+        if (attempts > 3) {
+          VisitorChat.recordChatbotResponse({'message': 'Sorry I was not able to process your message: \'' + message + '\'. Try again.'});
         }
-      });
+      }
     },
 
     recordChatbotError: function (errorMessage) {
