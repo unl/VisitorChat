@@ -331,6 +331,8 @@ var VisitorChat_ChatBase = Class.extend({
             case 'CHATTING':
                 if (VisitorChat.chatbotClientMessage) {
                   VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
+                  $('#visitorChat_message_submit').disabled = false;
+                  $('#visitorChat_message_submit').val('Submit');
                   VisitorChat.chatbotClientMessage = false;
                 }
                 this.onConversationStatus_Chatting(data);
@@ -648,6 +650,8 @@ var VisitorChat_ChatBase = Class.extend({
             if (VisitorChat.userID === false) {
               VisitorChat.updateUserInfo();
             }
+            $('#visitorChat_message_submit').disabled = true;
+            $('#visitorChat_message_submit').val('Waiting on chatbot...');
             VisitorChat.chatbotClientMessage = message.trim();
           }
         });
@@ -719,39 +723,37 @@ var VisitorChat_ChatBase = Class.extend({
         sessionAttributes: VisitorChat.sessionAttributes
       };
 
-      // Attempt up to three times to send message to lex and notify user
-      // if all attempts fail
-      var attempts = 1;
-      while (attempts <= 3) {
-
-        var success = VisitorChat.lexruntime.postText(params, function(err, data) {
-          if (err) {
-            VisitorChat.recordChatbotError('Error:  ' + err.message + ' (see console for details)');
-            return false;
-          }
-          if (data) {
-            // capture the sessionAttributes for the next cycle
-            VisitorChat.sessionAttributes = data.sessionAttributes;
-            VisitorChat.recordChatbotResponse(data);
-            return true;
-          }
-        });
-
-        if (success) {
-          break;
+      VisitorChat.lexruntime.postText(params, function(err, data) {
+        if (err) {
+          VisitorChat.recordChatbotError(err);
         }
-
-        attempts++;
-
-        if (attempts > 3) {
-          VisitorChat.recordChatbotResponse({'message': 'Sorry I was not able to process your message: \'' + message + '\'. Try again.'});
+        if (data) {
+          // capture the sessionAttributes for the next cycle
+          VisitorChat.sessionAttributes = data.sessionAttributes;
+          VisitorChat.recordChatbotResponse(data);
         }
-      }
+      });
     },
 
-    recordChatbotError: function (errorMessage) {
-        //TODO display error in chat and record in log
-      console.log(errorMessage);
+    recordChatbotError: function (err) {
+      console.log('Error sending message to AWS', err.stack);
+      var message = 'Error processing meassage to chatbot:  ' + err.message + '(see console log for details)';
+      var data = {
+        'users_id': this.getChatbotID(),
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data
+      });
     },
 
     recordChatbotResponse: function(lexResponse) {
