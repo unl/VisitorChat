@@ -698,6 +698,9 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
   sendChatbotMessage: function(message) {
+
+      WDN.jQuery('#visitorChat_is_typing').text("The chatbot is typing").show(500);
+
       if (VisitorChat.chatbotUserID === false) {
         VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
       }
@@ -733,11 +736,13 @@ var VisitorChat_ChatBase = Class.extend({
           VisitorChat.recordChatbotResponse(data);
         }
       });
+
+      WDN.jQuery('#visitorChat_is_typing').hide(500);
     },
 
     recordChatbotError: function (err) {
       console.log('Error sending message to AWS', err.stack);
-      var message = 'Error processing meassage to chatbot:  ' + err.message + '(see console log for details)';
+      var message = 'Error processing message to chatbot:  ' + err.message + '(see console log for details)';
       var data = {
         'users_id': this.getChatbotID(),
         'conversations_id': this.conversationID,
@@ -752,7 +757,12 @@ var VisitorChat_ChatBase = Class.extend({
         xhrFields:{
           withCredentials:true
         },
-        data: data
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          console.log('recordChatbotError data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
       });
     },
 
@@ -772,7 +782,12 @@ var VisitorChat_ChatBase = Class.extend({
         xhrFields:{
           withCredentials:true
         },
-        data: data
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          console.log('recordChatbotResponse data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
       });
     },
 
@@ -796,6 +811,7 @@ var VisitorChat_ChatBase = Class.extend({
             timeout:3000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
+                console.log('initAjaxForms client data', data);
                 this.handleAjaxResponse(data, textStatus);
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
