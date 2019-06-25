@@ -329,12 +329,6 @@ var VisitorChat_ChatBase = Class.extend({
                 this.onConversationStatus_OperatorLookupFailed(data);
                 break;
             case 'CHATTING':
-                if (VisitorChat.chatbotClientMessage) {
-                  VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
-                  $('#visitorChat_message_submit').disabled = false;
-                  $('#visitorChat_message_submit').val('Submit');
-                  VisitorChat.chatbotClientMessage = false;
-                }
                 this.onConversationStatus_Chatting(data);
                 break;
             case 'CLOSED':
@@ -651,7 +645,7 @@ var VisitorChat_ChatBase = Class.extend({
               VisitorChat.updateUserInfo();
             }
             $('#visitorChat_message_submit').disabled = true;
-            $('#visitorChat_message_submit').val('Waiting on chatbot...');
+            $('#visitorChat_message_submit').attr('disabled', 'disabled');
             VisitorChat.chatbotClientMessage = message.trim();
           }
         });
@@ -699,7 +693,7 @@ var VisitorChat_ChatBase = Class.extend({
 
   sendChatbotMessage: function(message) {
 
-      WDN.jQuery('#visitorChat_is_typing').text("The chatbot is typing").show(500);
+      WDN.jQuery('#visitorChat_is_typing').text("The chatbot is processing.").show(500);
 
       if (VisitorChat.chatbotUserID === false) {
         VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
@@ -813,6 +807,15 @@ var VisitorChat_ChatBase = Class.extend({
             success:$.proxy(function (data, textStatus, jqXHR) {
                 console.log('initAjaxForms client data', data);
                 this.handleAjaxResponse(data, textStatus);
+
+                // handle chatbot message if set
+                if (VisitorChat.chatbotClientMessage) {
+                  VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
+                  $('#visitorChat_message_submit').disabled = false;
+                  $('#visitorChat_message_submit').removeAttr("disabled");
+                  VisitorChat.chatbotClientMessage = false;
+                }
+
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
             error:$.proxy(function (data, textStatus, jqXHR) {
