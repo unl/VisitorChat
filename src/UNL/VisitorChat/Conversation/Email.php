@@ -145,16 +145,6 @@ class Email
         
         if ($site) {
             $this->support_assignments = $site->getSupportGroups();
-            
-            //Set the UIDs for mysupport integration
-            if (empty($this->support_assignments) && $members) {
-                $to_UIDs = array();
-                foreach ($members as $member) {
-                    $to_UIDs[] = $member->getUID();
-                }
-                
-                $this->support_assignments = implode(' ', $to_UIDs);
-            }
         }
         
         if (count($to) == 1 && $to[0] == $this->conversation->getClient()->email) {
