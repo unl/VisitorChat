@@ -18,6 +18,7 @@ if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->
   if (!empty($client->email)) {
     echo 'Email Address=' . $client->email . "\n";
   }
+}  
 
 ?>
 
