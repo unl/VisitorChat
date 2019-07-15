@@ -15,9 +15,23 @@ if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->
       echo 'Other Assignees=' . implode(", ", $supportAssignments) . "\n";
   }
   
-  if (!empty($client->email)) {
-    echo 'Email Address=' . $client->email . "\n";
+  if (!empty(trim($client->email))) {
+    echo 'Email Address=' . trim($client->email) . "\n";
   }
+
+  $firstName = 'Website';
+  $lastName = 'User';
+  if (!empty(trim($client->name))) {
+    $nameParts = explode(" ", trim($client->name), 2);
+    if (!empty($nameParts[0])) {
+      $firstName = $nameParts[0];
+    }
+    if (!empty($nameParts[1])) {
+        $lastName = $nameParts[1];
+    }
+  }
+  echo 'First Name=' . $firstName . "\n";
+  echo 'Last Name=' . $lastName . "\n";
 }  
 
 ?>
