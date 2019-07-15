@@ -14,7 +14,10 @@ if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->
   if (count($supportAssignments)) {
       echo 'Other Assignees=' . implode(", ", $supportAssignments) . "\n";
   }
-}
+  
+  if (!empty($client->email)) {
+    echo 'Email Address=' . $client->email . "\n";
+  }
 
 ?>
 
