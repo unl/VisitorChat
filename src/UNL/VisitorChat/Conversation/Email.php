@@ -62,9 +62,9 @@ class Email
         return true;
     }
     
-    function isMySupportEmail()
+    function isNUSupportEmail()
     {
-        return in_array('mysupport@unl.edu', $this->to_emails);
+        return in_array('support@nebraska.edu', $this->to_emails);
     }
 
     /**
@@ -145,16 +145,6 @@ class Email
         
         if ($site) {
             $this->support_assignments = $site->getSupportGroups();
-            
-            //Set the UIDs for mysupport integration
-            if (empty($this->support_assignments) && $members) {
-                $to_UIDs = array();
-                foreach ($members as $member) {
-                    $to_UIDs[] = $member->getUID();
-                }
-                
-                $this->support_assignments = implode(' ', $to_UIDs);
-            }
         }
         
         if (count($to) == 1 && $to[0] == $this->conversation->getClient()->email) {
@@ -207,8 +197,8 @@ class Email
             $this->from = self::$default_from;
         }
         
-        if ($this->isMySupportEmail()) {
-            $this->from = 'mysupportform@unl.edu';
+        if ($this->isNUSupportEmail()) {
+            $this->from = 'webform@unl.edu';
         }
 
         if (empty($this->reply_to)) {
