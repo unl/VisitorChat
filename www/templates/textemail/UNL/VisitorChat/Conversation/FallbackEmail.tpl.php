@@ -1,8 +1,8 @@
 <?php
 $client = $context->conversation->getClient();
 
-// Include assignee info if mysupport and assignments are defined
-if ($context->isMySupportEmail() && !empty($supportGroupString = trim($context->support_assignments))) {
+// Include assignee info if nu support and assignments are defined
+if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->support_assignments))) {
 
   // Parse assigments by space allowing for single quote enclosure into array
   $supportAssignments = str_getcsv($supportGroupString, ' ', "'");

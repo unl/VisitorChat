@@ -62,9 +62,9 @@ class Email
         return true;
     }
     
-    function isMySupportEmail()
+    function isNUSupportEmail()
     {
-        return in_array('mysupport@unl.edu', $this->to_emails);
+        return in_array('support@nebraska.edu', $this->to_emails);
     }
 
     /**
@@ -197,8 +197,8 @@ class Email
             $this->from = self::$default_from;
         }
         
-        if ($this->isMySupportEmail()) {
-            $this->from = 'mysupportform@unl.edu';
+        if ($this->isNUSupportEmail()) {
+            $this->from = 'webform@unl.edu';
         }
 
         if (empty($this->reply_to)) {
