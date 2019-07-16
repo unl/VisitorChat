@@ -1,6 +1,8 @@
 require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
+    // https://sdk.amazonaws.com/builder/js/#
+    // Currently only need AWS.CongnitoIdentity and AWS.LexRuntime
     require_once(__DIR__ . "/aws-sdk-2.493.0.min.js");
     ?>
 
