@@ -1,4 +1,4 @@
-require(['jquery', 'idm', 'analytics', 'http://iimjsturek.unl.edu/VisitorChat/www/js/VisitorChat/5.0/aws-sdk-2.493.0.min.js'], function($, idm, analytics) {
+require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
     require_once(__DIR__ . "/aws-sdk-2.493.0.min.js");
