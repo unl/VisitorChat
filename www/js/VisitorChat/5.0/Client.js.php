@@ -186,6 +186,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         VisitorChat.displayWelcomeMessage();
 
         // setup intent display
+        $('#visitorChat').addClass('visitorChat_open');
         $('#visitorChatbot_intent').val(intentMsg);
         $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
         $('#visitorChat_messageBox').keyup();
