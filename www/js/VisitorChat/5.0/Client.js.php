@@ -154,7 +154,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           });
         },
 
-      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}) {
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}, displayChatMethods = true) {
 
         if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
           // invalid intent info so launch chatbot without intent instead
@@ -196,33 +196,35 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         $('#visitorChatbot_intent_message').text(introMsg);
         $('#visitorChatbot_intent_message').show();
 
-        if (VisitorChat.operatorsAvailable) {
+        if (displayChatMethods === true) {
+          if (VisitorChat.operatorsAvailable) {
 
-          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
 
-          $('#visitorChat_methods_chat').one('click', function() {
-            VisitorChat.stop(function(){
-              VisitorChat.startChat();
-              $('#visitorChat_messageBox').keyup();
+            $('#visitorChat_methods_chat').one('click', function () {
+              VisitorChat.stop(function () {
+                VisitorChat.startChat();
+                $('#visitorChat_messageBox').keyup();
+              });
+
+              return false;
+            });
+          } else if (this.isChatbotAvailable()) {
+
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+
+            $('#visitorChat_methods_chat').one('click', function () {
+              VisitorChat.stop(function () {
+                VisitorChat.startChatBot();
+                $('#visitorChat_messageBox').keyup();
+              });
+
+              return false;
             });
 
-            return false;
-          });
-        } else if (this.isChatbotAvailable()) {
-
-          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
-
-          $('#visitorChat_methods_chat').one('click', function() {
-            VisitorChat.stop(function(){
-              VisitorChat.startChatBot();
-              $('#visitorChat_messageBox').keyup();
-            });
-
-            return false;
-          });
-
-        } else {
+          } else {
             $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+          }
         }
 
         $('#visitorChat_methods_email').one('click', function() {
