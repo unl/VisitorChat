@@ -187,6 +187,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         // setup intent display
         $('#visitorChat').addClass('visitorChat_open');
+        $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the Let\'s Chat widget').attr('aria-expanded', 'true');
+        $('.dcf-nav-toggle-label-chat').text('Close');
         $('#visitorChatbot_intent').val(intentMsg);
         $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
         $('#visitorChat_messageBox').keyup();
