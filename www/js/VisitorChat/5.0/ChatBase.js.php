@@ -54,8 +54,8 @@ var VisitorChat_ChatBase = Class.extend({
 
     chatbotClientMessage: false,
 
-    // 'STAG' or 'PROD'
-    chatbotEnv: 'STAG',
+    // 'TEST' or 'PROD'
+    chatbotEnv: 'TEST',
 
     blocked:false,
 
