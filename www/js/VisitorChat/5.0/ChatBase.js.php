@@ -54,6 +54,9 @@ var VisitorChat_ChatBase = Class.extend({
 
     chatbotClientMessage: false,
 
+    // 'STAG' or 'PROD'
+    chatbotEnv: 'STAG',
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
@@ -713,7 +716,7 @@ var VisitorChat_ChatBase = Class.extend({
 
       // send it to the Lex runtime
       var params = {
-        botAlias: '$LATEST',
+        botAlias: VisitorChat.getChatbotName() + '_' + VisitorChat.chatbotEnv,
         botName: VisitorChat.getChatbotName(),
         inputText: message,
         userId: VisitorChat.chatbotUserID,
