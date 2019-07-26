@@ -135,7 +135,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
           var title = this.getSiteTitle();
 
-          $('#visitorChat_footerHeader').html('Chat with ' + title + ' (Chatbot)');
+          var testNotice = '';
+          if (VisitorChat.chatbotEnv != 'PROD') {
+            testNotice = ' (Test Env)';
+          }
+          $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
 
           $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
           //Submit as chat
@@ -178,7 +182,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         var title = this.getSiteTitle();
 
-        $('#visitorChat_footerHeader').html('Chat with ' + title + ' (Chatbot)');
+        var testNotice = '';
+        if (VisitorChat.chatbotEnv != 'PROD') {
+          testNotice = ' (Test Env)';
+        }
+        $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
 
         //Submit as chat
         $('#visitorChat_login_chatmethod').val("CHATBOT");
