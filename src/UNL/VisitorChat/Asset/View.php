@@ -132,7 +132,8 @@ class View
     
     function getData()
     {
-        if (self::$cache && file_exists($this->getCacheFileName())) {
+        // Cache JS if set and cache exists
+        if (self::$cache && $this->type == 'js' && file_exists($this->getCacheFileName())) {
             $this->sendCacheHeaders();
             
             return file_get_contents($this->getCacheFileName());
@@ -175,17 +176,9 @@ class View
         $data = ob_get_contents();
         ob_end_clean();
 
-        //Cache if we have to.
-        if (self::$cache) {
-            switch ($this->type) {
-                case 'js':
-                    $data = \JSMin::minify($data);
-                    break;
-                case 'css':
-                    $data = \Minify_CSS::minify($data);
-                    break;
-            }
-            
+        //Cache JS if we have to.
+        if (self::$cache && $this->type == 'js') {
+            $data = \JSMin::minify($data);
             file_put_contents($this->getCacheFileName(), $data);
         }
         
