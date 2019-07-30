@@ -8,6 +8,8 @@ For example, if a chat was started at http://www.unl.edu/WDN/index.php the chat 
 
 The system aims to bring advanced functionality of a live chat solution while keeping the interface clean and intuitive.
 
+The system also supports integration with AWS Lex chatbot. A site will always default to the live chat if an operator is available.  If chatbot is enable for a site url and no operator is available it will behave like live chat but interact with specified AWS Lex chatbot.
+
 Requirements
 ------------
  - PHP 5.3+
@@ -24,6 +26,16 @@ Install
  - From command line run scripts/install.php (This will install the database)
  - Copy the www/sample.htaccess to www/.htaccess
  - Edit www/.htaccess to fit your own environment.
+
+Chatbot Management
+------------------
+Two tables control whether a site url has chatbot as an option:
+1. chatbots - defines the AWS chatbots available. The name must match the AWS Lex chatbot name.  There is also a chatbot alias which currently is chatbot name and either TEST or PROD version. The botalias used is controlled by the chatbotEnv variable defined in Client.js.php.  It should always be PROD unless in test environment and you need to point to test version of chatbot.
+2. chatbot_sites - defines which sites have a chatbot and which chatbot.  The system currently only supports on chatbot per site url.
+
+Access to the AWS chatbot is controlled via AWS Cognito.  This is currently hardcoded in the Client.js.php file.  The correct region and creditials need to be defined to allow access to the AWS Chatbot.
+
+The AWS javascript need to run the chatbot is currently in aws-sdk-2.493.0.min.js and is referenced in Client.js.php.  This file was generated at https://sdk.amazonaws.com/builder/js/# and may need to be manually updated from time to time to get the current AWS SDK code to run the chatbot.  The only AWS services needed are AWS.CongnitoIdentity and AWS.LexRuntime.
 
 
 BSD License Agreement
