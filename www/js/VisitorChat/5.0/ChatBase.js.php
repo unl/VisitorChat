@@ -722,6 +722,7 @@ var VisitorChat_ChatBase = Class.extend({
         userId: VisitorChat.chatbotUserID,
         sessionAttributes: VisitorChat.sessionAttributes
       };
+      console.log('sendChatbotMessage params', params);
 
       VisitorChat.lexruntime.postText(params, function(err, data) {
         if (err) {
@@ -1096,6 +1097,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         //3. clear vars.
         sessionStorage.removeItem('chatbotUserID');
+        this.chatbotUserID = false;
 
         this.latestMessageId = 0;
         this.chatStatus = false;
