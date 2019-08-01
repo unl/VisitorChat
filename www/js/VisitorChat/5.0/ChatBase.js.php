@@ -49,6 +49,14 @@ var VisitorChat_ChatBase = Class.extend({
     //The current user id.
     userID:false,
 
+    //The chatbot user id.
+    chatbotUserID:false,
+
+    chatbotClientMessage: false,
+
+    // 'TEST' or 'PROD'
+    chatbotEnv: 'PROD',
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
@@ -207,9 +215,11 @@ var VisitorChat_ChatBase = Class.extend({
             checkOperators = "&checkOperators=" + escape(document.URL);
         }
 
+        var checkChatbots = "&checkChatbots=" + escape(document.URL);
+
         //Start the chat.
         $.ajax({
-            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
+            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators + checkChatbots,
             xhrFields:{
                 withCredentials:true
             },
@@ -225,12 +235,22 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     handleUserDataResponse:function (data) {
-        this.userID = data['userID'];
+        if (typeof data['userID'] !== 'undefined') {
+          this.userID = data['userID'];
+        }
 
         this.updatePHPSESSID(data['phpssid']);
 
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
+        }
+
+        if ((typeof data['chatbotID'] !== 'undefined') &&
+            (data['chatbotID'] !== null) &&
+            (typeof data['chatbotName'] !== 'undefined') &&
+            (data['chatbotName'] !== null)) {
+          sessionStorage.setItem('chatbotID', parseInt(data['chatbotID']));
+          sessionStorage.setItem('chatbotName', data['chatbotName']);
         }
 
         this.blocked = data['blocked'];
@@ -511,7 +531,6 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Searching:function (data) {
         var html = '<div class="chat_notify visitorChat_loading" tabindex="-1">Please wait while we find someone to help you.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
-
     },
 
     /**
@@ -595,15 +614,179 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                    $('#visitorchat_clientLogin').submit();
+                  $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                    $('#visitorChat_messageForm').submit();
-                    $('#visitorChat_messageBox').val('');
+                  $('#visitorChat_messageForm').submit();
+                  $('#visitorChat_messageBox').val('');
                 }
             }
         });
 
+        $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
+          var chatbotIntentMessage = $('#visitorChatbot_intent').val();
+          var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
+
+          // Handle chatbot intent message as a message from user
+          if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
+            $('#visitorChat_messageBox').val(chatbotIntentMessage);
+            if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
+              VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
+            }
+          }
+
+          var message = $('#visitorChat_messageBox').val();
+
+          if (message.trim().length == 0) {
+            // ignore empty messages
+            return false;
+          }
+
+          // check if chatting with chatbot and capture client message
+          if (VisitorChat.method == 'chatbot') {
+            // set chatbot message to be sent once processed by VisitorChat
+            if (VisitorChat.userID === false) {
+              VisitorChat.updateUserInfo();
+            }
+            $('#visitorChat_message_submit').disabled = true;
+            $('#visitorChat_message_submit').attr('disabled', 'disabled');
+            VisitorChat.chatbotClientMessage = message.trim();
+          }
+        });
+
         this.initAjaxForms();
+    },
+
+    generateUUID: function() { // Public Domain/MIT
+      var d = new Date().getTime();
+      if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+        d += performance.now(); //use high-precision timer if available
+      }
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    },
+
+    getChatbotID: function() {
+      if (sessionStorage.chatbotID) {
+        return sessionStorage.getItem('chatbotID');
+      } else {
+        return 0;
+      }
+    },
+
+    getChatbotName: function() {
+      if (sessionStorage.chatbotName) {
+        return sessionStorage.getItem('chatbotName');
+      } else {
+        return false;
+      }
+    },
+
+    getChatbotUserID: function() {
+      if (sessionStorage.chatbotUserID) {
+        return sessionStorage.getItem('chatbotUserID');
+      } else {
+        var chatbotUserID = this.generateUUID();
+        sessionStorage.setItem('chatbotUserID', chatbotUserID);
+        return chatbotUserID;
+      }
+    },
+
+  sendChatbotMessage: function(message) {
+
+      WDN.jQuery('#visitorChat_is_typing').text("The chatbot is processing.").show(500);
+
+      if (VisitorChat.chatbotUserID === false) {
+        VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
+      }
+
+      if (VisitorChat.userID) {
+        VisitorChat.sessionAttributes.userID = VisitorChat.userID;
+      }
+
+      if (VisitorChat.name) {
+        VisitorChat.sessionAttributes.name = VisitorChat.name;
+      }
+
+      if (VisitorChat.email) {
+        VisitorChat.sessionAttributes.email = VisitorChat.email;
+      }
+
+      // send it to the Lex runtime
+      var params = {
+        botAlias: VisitorChat.getChatbotName() + '_' + VisitorChat.chatbotEnv,
+        botName: VisitorChat.getChatbotName(),
+        inputText: message,
+        userId: VisitorChat.chatbotUserID,
+        sessionAttributes: VisitorChat.sessionAttributes
+      };
+      console.log('sendChatbotMessage params', params);
+
+      VisitorChat.lexruntime.postText(params, function(err, data) {
+        if (err) {
+          VisitorChat.recordChatbotError(err);
+        }
+        if (data) {
+          // capture the sessionAttributes for the next cycle
+          VisitorChat.sessionAttributes = data.sessionAttributes;
+          VisitorChat.recordChatbotResponse(data);
+        }
+      });
+
+      WDN.jQuery('#visitorChat_is_typing').hide(500);
+    },
+
+    recordChatbotError: function (err) {
+      console.log('Error sending message to AWS', err.stack);
+      var message = 'Error processing message to chatbot:  ' + err.message + '(see console log for details)';
+      var data = {
+        'users_id': this.getChatbotID(),
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          console.log('recordChatbotError data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
+      });
+    },
+
+    recordChatbotResponse: function(lexResponse) {
+      var message = lexResponse.message;
+      var data = {
+        'users_id': this.getChatbotID(),
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          console.log('recordChatbotResponse data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
+      });
     },
 
     handleIsTyping:function () {
@@ -626,7 +809,17 @@ var VisitorChat_ChatBase = Class.extend({
             timeout:3000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
+                console.log('initAjaxForms client data', data);
                 this.handleAjaxResponse(data, textStatus);
+
+                // handle chatbot message if set
+                if (VisitorChat.chatbotClientMessage) {
+                  VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
+                  $('#visitorChat_message_submit').disabled = false;
+                  $('#visitorChat_message_submit').removeAttr("disabled");
+                  VisitorChat.chatbotClientMessage = false;
+                }
+
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
             error:$.proxy(function (data, textStatus, jqXHR) {
@@ -903,6 +1096,9 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         //3. clear vars.
+        sessionStorage.removeItem('chatbotUserID');
+        this.chatbotUserID = false;
+
         this.latestMessageId = 0;
         this.chatStatus = false;
     },

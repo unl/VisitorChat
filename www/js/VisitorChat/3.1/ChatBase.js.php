@@ -233,7 +233,7 @@ var VisitorChat_ChatBase = Class.extend({
         if (!this.operatorsChecked) {
             this.operatorsAvailable = data['operatorsAvailable'];
         }
-        
+
         this.blocked = data['blocked'];
         
         this.operatorsChecked = true;

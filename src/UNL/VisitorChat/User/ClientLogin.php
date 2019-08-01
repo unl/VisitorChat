@@ -62,7 +62,9 @@ class ClientLogin
         }
         
         $method = "CHAT";
-        if (isset($post['method']) && $post['method'] == "EMAIL") {
+        if (isset($post['method']) && $post['method'] == "CHATBOT") {
+            $method = "CHATBOT";
+        } elseif (isset($post['method']) && $post['method'] == "EMAIL") {
             $method = "EMAIL";
         }
         
