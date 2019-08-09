@@ -62,6 +62,9 @@ var VisitorChat_ChatBase = Class.extend({
     //True if operators have been checked (so that they will only be checked once)
     operatorsChecked:false,
 
+    //True if chatbots have been checked (so that they will only be checked once)
+    chatbotsChecked:false,
+
     //True if there are operators currently available
     operatorsAvailable:false,
 
@@ -215,7 +218,12 @@ var VisitorChat_ChatBase = Class.extend({
             checkOperators = "&checkOperators=" + escape(document.URL);
         }
 
-        var checkChatbots = "&checkChatbots=" + escape(document.URL);
+        var checkChatbots = "";
+        if (!this.chatbotsChecked) {
+          sessionStorage.removeItem('chatbotID');
+          sessionStorage.removeItem('chatbotName');
+          checkChatbots = "&checkChatbots=" + escape(document.URL);
+        }
 
         //Start the chat.
         $.ajax({
@@ -256,6 +264,7 @@ var VisitorChat_ChatBase = Class.extend({
         this.blocked = data['blocked'];
 
         this.operatorsChecked = true;
+        this.chatbotsChecked = true;
 
         if (data['popupNotifications'] != undefined) {
             this.popupNotifications = data['popupNotifications'];

@@ -55,6 +55,12 @@ error_reporting(E_ALL);
  */
 \UNL\VisitorChat\Controller::$allowedDomains = array('mysite.edu', 'mysite2.org');
 
+/* Configure the allowed chatbot domains
+ *
+ * @var array - an array of domains where chatbots are allowed to be started.
+ */
+\UNL\VisitorChat\Controller::$allowedChatbotDomains = array('mysite.edu');
+
 /* Current environment of the chat service
  * PRODUCTION - Live production.
  * PHPT       - Unit Testing environment
