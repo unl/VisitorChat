@@ -15,7 +15,15 @@ class RecordList extends \Epoch\RecordList
     public static function getSiteChatbots($site_url, $options = array())
     {
         $urlParts = parse_url($site_url);
-        $url = $urlParts['scheme'] . '://'. $urlParts['host'] . '/';
+        $scheme = isset($urlParts['scheme']) ? $urlParts['scheme'] : '';
+        $host = isset($urlParts['host']) ? $urlParts['host'] : '';
+        $url = $scheme . '://'. $host . '/';
+
+        // Skip lookup if domain not whitelisted for chatbot
+        if (!in_array($host, \UNL\VisitorChat\Controller::$allowedChatbotDomains)) {
+            return array();
+        }
+
         //Build the list
         $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT c.id
