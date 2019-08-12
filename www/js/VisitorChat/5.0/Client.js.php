@@ -123,10 +123,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           this.method = 'chatbot';
           this.displaySiteAvailability();
           this.launchChatContainer();
-          //sessionStorage.removeItem('chatbotUserID');
-          //VisitorChat.chatbotUserID = false;
-          console.log('starting chatbot: ' + VisitorChat.chatbotUserID);
-          console.log('starting chatbot: ' + VisitorChat.getChatbotUserID());
+          //console.log('starting chatbot: ' + VisitorChat.chatbotUserID);
+          //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID());
 
           if (chatInProgress && this.chatStatus == "LOGIN") {
             this.chatStatus = "CHATING";
@@ -163,9 +161,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
       startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}, displayChatMethods = true) {
-        //sessionStorage.removeItem('chatbotUserID');
-        console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
-        console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
+        //console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
+        //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
         if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
           // invalid intent info so launch chatbot without intent instead
           if (VisitorChat.operatorsAvailable) {
