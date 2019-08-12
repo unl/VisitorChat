@@ -731,7 +731,7 @@ var VisitorChat_ChatBase = Class.extend({
         userId: VisitorChat.chatbotUserID,
         sessionAttributes: VisitorChat.sessionAttributes
       };
-      console.log('sendChatbotMessage params', params);
+      //console.log('sendChatbotMessage params', params);
 
       VisitorChat.lexruntime.postText(params, function(err, data) {
         if (err) {
@@ -748,8 +748,8 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     recordChatbotError: function (err) {
-      console.log('Error sending message to AWS', err.stack);
-      var message = 'Error processing message to chatbot:  ' + err.message + '(see console log for details)';
+      //console.log('Error sending message to AWS', err.stack);
+      var message = 'There was an error processing message to chatbot, please try message again.';
       var data = {
         'users_id': this.getChatbotID(),
         'conversations_id': this.conversationID,
@@ -766,7 +766,7 @@ var VisitorChat_ChatBase = Class.extend({
         },
         data: data,
         success:$.proxy(function (data, textStatus, jqXHR) {
-          console.log('recordChatbotError data', data);
+          //console.log('recordChatbotError data', data);
           this.handleAjaxResponse(data, textStatus);
           $('#visitorChat_chatBox').removeClass('visitorChat_loading');
         }, this)
@@ -791,7 +791,7 @@ var VisitorChat_ChatBase = Class.extend({
         },
         data: data,
         success:$.proxy(function (data, textStatus, jqXHR) {
-          console.log('recordChatbotResponse data', data);
+          //console.log('recordChatbotResponse data', data);
           this.handleAjaxResponse(data, textStatus);
           $('#visitorChat_chatBox').removeClass('visitorChat_loading');
         }, this)
@@ -818,7 +818,7 @@ var VisitorChat_ChatBase = Class.extend({
             timeout:3000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
-                console.log('initAjaxForms client data', data);
+                //console.log('initAjaxForms client data', data);
                 this.handleAjaxResponse(data, textStatus);
 
                 // handle chatbot message if set
