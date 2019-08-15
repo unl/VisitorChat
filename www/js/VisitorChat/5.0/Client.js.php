@@ -160,7 +160,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           });
         },
 
-      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = {}, displayChatMethods = true) {
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes = null, displayChatMethods = true) {
         //console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
         //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
         if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
