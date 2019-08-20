@@ -10,8 +10,8 @@
     "grunt-svgmin": "^6.0.0",
     "less-plugin-autoprefix": "^2.0.0",
     "less-plugin-clean-css": "^1.5.1",
-    "load-grunt-tasks": "^5.0.0",
-    "lodash": "^4.17.14",
+    "load-grunt-tasks": "^5.1.0",
+    "lodash": "^4.17.15",
     "lodash.merge": "^4.6.2"
   }
 }
