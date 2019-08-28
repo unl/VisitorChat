@@ -818,7 +818,6 @@ var VisitorChat_ChatBase = Class.extend({
             timeout:3000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
-                //console.log('initAjaxForms client data', data);
                 this.handleAjaxResponse(data, textStatus);
 
                 // handle chatbot message if set
@@ -832,9 +831,22 @@ var VisitorChat_ChatBase = Class.extend({
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
             error:$.proxy(function (data, textStatus, jqXHR) {
-                if (VisitorChat.chatStatus == 'LOGIN' && typeof data.responseJSON.message !== undefined) {
-                    //display word filter error (and other errors during login)
-                    $('#visitorChat_container').text(data.responseJSON.message);
+                // Temp logging to help debug error
+                console.log('initAjaxForms fail data', data);
+                console.log('initAjaxForms fail textStatus', textStatus);
+                console.log('initAjaxForms fail jqXHR', jqXHR);
+
+                if (VisitorChat.chatStatus == 'LOGIN') {
+                  var errorMessage = 'An error occurred. Please try again.'
+                  if (data.hasOwnProperty('responseJSON') && typeof data.responseJSON.message !== undefined) {
+                    errorMessage = data.responseJSON.message;
+                  }
+                  //display word filter error (and other errors during login)
+                  $('#visitorChat_container').text(errorMessage);
+
+                } else {
+                  // Reset chat so does not hang
+                  this.updateChat(this.generateChatURL(), true);
                 }
             }, this),
             beforeSubmit:$.proxy(function (arr, $form, options) {
