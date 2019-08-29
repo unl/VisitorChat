@@ -837,14 +837,20 @@ var VisitorChat_ChatBase = Class.extend({
                 console.log('initAjaxForms fail jqXHR', jqXHR);
 
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                  var errorMessage = 'An error occurred. Please try again.'
-                  if (data.hasOwnProperty('responseJSON') && typeof data.responseJSON.message !== undefined) {
-                    errorMessage = data.responseJSON.message;
+
+                  var errorMessage = 'An error occurred. Please try again.';
+
+                  if (textStatus == 'error') {
+                    errorMessage = jqXHR;
+                  } else if (textStatus == 'timeout') {
+                    errorMessage = 'A timeout error occurred. Close and try again. If the error occurs repeatedly, please again try later.';
                   }
+
                   //display word filter error (and other errors during login)
                   $('#visitorChat_container').text(errorMessage);
 
                 } else {
+                  console.log('reloading chat...');
                   // Reset chat so does not hang
                   this.updateChat(this.generateChatURL(), true);
                 }
