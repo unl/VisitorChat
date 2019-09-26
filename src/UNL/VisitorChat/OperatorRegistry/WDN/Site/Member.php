@@ -28,7 +28,7 @@ class Member extends \UNL\VisitorChat\OperatorRegistry\SiteMemberInterface
             return false;
         }
         
-        return $details['mail'][0];;
+        return $details['mail'][0];
     }
     
     function getSite()

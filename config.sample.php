@@ -77,7 +77,7 @@ error_reporting(E_ALL);
 \UNL\VisitorChat\Controller::$refreshRate = 2000;  //(every 2 seconds)
 
 //TTL for pending chat requests
-\UNL\VisitorChat\Controller::$chatRequestTimeout = 10000;;  //(10 seconds)
+\UNL\VisitorChat\Controller::$chatRequestTimeout = 10000;  //(10 seconds)
 
 /* Set fallback URLs
  * Conversations that fail to be answered will fall back to these sites.
