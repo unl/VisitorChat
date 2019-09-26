@@ -815,7 +815,7 @@ var VisitorChat_ChatBase = Class.extend({
     initAjaxForms:function () {
         var options = {
             clearForm:true,
-            timeout:3000,
+            timeout: 10000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
                 this.handleAjaxResponse(data, textStatus);
