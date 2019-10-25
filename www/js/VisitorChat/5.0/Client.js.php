@@ -160,12 +160,12 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           });
         },
 
-      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes, displayChatMethods) {
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes,  t) {
         // Default parameters
         var introMsg = introMsg || '';
         var intentMsg = intentMsg || '';
         var intentSessionAttributes = intentSessionAttributes || {};
-        var displayChatMethods = displayChatMethods || true;
+        var displayChatMethods = displayChatMethods || false;
         //console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
         //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
         if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
