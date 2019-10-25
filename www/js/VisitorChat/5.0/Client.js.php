@@ -160,7 +160,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           });
         },
 
-      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes,  t) {
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes, displayChatMethods) {
         // Default parameters
         var introMsg = introMsg || '';
         var intentMsg = intentMsg || '';
