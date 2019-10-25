@@ -165,7 +165,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         var introMsg = introMsg || '';
         var intentMsg = intentMsg || '';
         var intentSessionAttributes = intentSessionAttributes || {};
-        var displayChatMethods = displayChatMethods || true;
+        var displayChatMethods = displayChatMethods || false;
         //console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
         //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
         if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
