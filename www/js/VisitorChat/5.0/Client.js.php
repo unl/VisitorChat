@@ -838,7 +838,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     "<div id='visitorChat_sound_container'></div>" +
                 "</div>");
 
-            $('nav.dcf-pin-bottom').append("" +
+            $('#dcf-nav-toggle-group').append("" +
                 '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                       '<g id="dcf-nav-toggle-icon-open-chat" class="">' +
