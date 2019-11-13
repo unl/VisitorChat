@@ -825,20 +825,20 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append("" +
-                "<div id='visitorChat' class='dcf-d-none@print offline'>" +
-                    "<div class='dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-txt-xs dcf-lh-1' id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
-                        "<span class='dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase' id='visitorChat_header_text'>Email Us</span>" +
-                        "<div id='visitor-chat-header-options'>" +
-                            "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent' id='visitorChat_logout' aria-label='close and log out of chat'>" +
-                                "<span class='wdn-icon-cancel'></span>" +
-                            "</button>" +
-                        "</div>" +
-                    "</div>" +
-                    "<div id='visitorChat_sound_container'></div>" +
-                "</div>");
+            $('#dcf-footer').append('' +
+                '<div id="visitorChat" class="dcf-d-none@print offline">' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-txt-xs dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
+                        '<span class="dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
+                        '<div id="visitor-chat-header-options">' +
+                            '<button class="dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
+                                '<span class="wdn-icon-cancel"></span>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div id="visitorChat_sound_container"></div>' +
+                '</div>');
 
-            $('#dcf-nav-toggle-group').append("" +
+            $('#dcf-nav-toggle-group').append('' +
                 '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                         '<g id="dcf-nav-toggle-icon-open-chat" class="">' +
