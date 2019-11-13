@@ -827,11 +827,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#dcf-footer').append('' +
                 '<div id="visitorChat" class="dcf-d-none@print offline">' +
-                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-txt-xs dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
-                        '<span class="dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
+                        '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
                         '<div id="visitor-chat-header-options">' +
-                            '<button class="dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
-                                '<span class="wdn-icon-cancel"></span>' +
+                            '<button class="dcf-pl-4 dcf-pr-4 dcf-lh-1 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
+                                '<svg class="dcf-d-block dcf-h-4 dcf-w-4 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
+                                    '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
+                                '</svg>' +
                             '</button>' +
                         '</div>' +
                     '</div>' +
