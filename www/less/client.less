@@ -1,9 +1,5 @@
-// !Framework Mixins
-@import (reference) 'mixins/colors';
-
-
 #visitorChat {
-  background-color: @ui04;
+  background-color: #e3e3e2;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
   color: #424240;
@@ -19,14 +15,14 @@
 
   #visitorChat {
     box-shadow: none;
-    filter: drop-shadow(0 0 5px fadeout(@ui09,75%)) drop-shadow(0 0 1px fadeout(@ui09,40%));
+    filter: drop-shadow(0 0 5px fadeout(#424240,75%)) drop-shadow(0 0 1px fadeout(#424240,40%));
   }
 
 }
 
 
 #visitorChat::after {
-  border-color: @ui04 transparent transparent transparent;
+  border-color: #e3e3e2 transparent transparent transparent;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
   content: '';
@@ -54,7 +50,7 @@
 
 
 #visitorChat h2 {
-  border-top: 1px solid @ui04;
+  border-top: 1px solid #e3e3e2;
   font-size: 1em;
   line-height: 1.425;
   margin-bottom: .75em;
@@ -170,7 +166,7 @@
 
 
 #visitorChat_container {
-  background-image: linear-gradient(to bottom, @ui01 0%, @ui03 60%);
+  background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
   margin-bottom: .56em;
   padding: 1em;
   position: relative;
@@ -341,7 +337,7 @@
 
 
 #visitorchat_clientLogin_anonwaning {
-  color: @energetic;
+  color: #e72c0c;
 }
 
 
@@ -380,7 +376,7 @@
 
 
 #VisitorChat_captcha_img {
-  border: 1px solid @ui04;
+  border: 1px solid #e3e3e2;
   margin-bottom: .317em;
   width: 100%;
 }
@@ -402,7 +398,7 @@
   border-color: transparent transparent currentColor transparent;
   border-style: dotted;
   border-width: 1px;
-  color: @scarlet;
+  color: #d00000;
   line-height: normal;
   padding: 0;
 }

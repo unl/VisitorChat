@@ -20,14 +20,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        'curl-dir': {
-            mixins: {
-                src: [
-                  'https://raw.githubusercontent.com/unl/wdntemplates/4.1/wdn/templates_4.1/less/_mixins/colors.less',
-                ],
-                dest: 'less/mixins'
-            }
-        },
         lesshint: {
             options: {
                 lesshintrc: true
