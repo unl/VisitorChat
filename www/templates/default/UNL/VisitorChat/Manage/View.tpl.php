@@ -11,7 +11,7 @@
         <div class="unl-font-sans" id="clientList">
         </div>
       </div>
-      <div class="dcf-col-100% dcf-col-67%-end@sm chat-op-chat unl-font-sans" id='clientChat'>
+      <div class="dcf-col-100% dcf-col-67%-end@sm chat-op-chat unl-font-sans" id="clientChat">
       </div>
     </div>
   </div>

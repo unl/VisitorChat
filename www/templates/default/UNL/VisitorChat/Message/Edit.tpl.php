@@ -1,14 +1,14 @@
 <div id="visitorChat_is_typing"></div>
-<form class='unl_visitorchat_form unl-darker-gray' id='visitorChat_messageForm' name="input" action="<?php echo $context->getEditURL();?>" method="post">
-    <fieldset>
-          <ul class="dcf-list-bare">
-            <li class='visitorChat_center'>
-                <label class="dcf-label" for="visitorChat_messageBox">Your Message</label>
-                <textarea class="dcf-input-text" rows="3" cols="25"  id='visitorChat_messageBox' name="message"></textarea>
+<form class="dcf-form unl_visitorchat_form unl-darker-gray" id="visitorChat_messageForm" name="input" action="<?php echo $context->getEditURL();?>" method="post">
+    <fieldset class="dcf-m-0 dcf-p-0 dcf-b-0">
+        <ul class="dcf-list-bare">
+            <li class="visitorChat_center">
+                <label for="visitorChat_messageBox">Your Message</label>
+                <textarea id="visitorChat_messageBox" name="message" rows="3" cols="25"></textarea>
             </li>
-          </ul>
+        </ul>
     </fieldset>
-    <input type="hidden" name="conversations_id" value='<?php echo $context->conversations_id ?>'/>
-    <input type="hidden" name="_class" value='<?php echo get_class($context->getRawObject()); ?>'/>
-    <input id='visitorChat_message_submit' class="dcf-btn dcf-btn-primary" type="submit" value="Submit" name="visitorChat_message_submit" />
+    <input name="conversations_id" type="hidden" value="<?php echo $context->conversations_id ?>">
+    <input name="_class" type="hidden" value="<?php echo get_class($context->getRawObject()); ?>">
+    <input class="dcf-btn dcf-btn-primary" id="visitorChat_message_submit" name="visitorChat_message_submit" type="submit" value="Submit">
 </form>

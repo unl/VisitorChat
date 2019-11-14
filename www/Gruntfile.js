@@ -79,7 +79,7 @@ module.exports = function(grunt) {
             },
             less: {
                 files: ['less/*', 'less/*/*'],
-                tasks: ['curl-dir', 'lesshint', 'less']
+                tasks: ['lesshint', 'less']
             }
         }
     });

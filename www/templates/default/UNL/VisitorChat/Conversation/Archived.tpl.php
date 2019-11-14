@@ -1,18 +1,18 @@
 <?php  $ua = $context->conversation->parseUserAgent();?>
 <div class="dcf-grid dcf-col-gap-vw archived-chat">
-    <div class="dcf-col-100% dcf-col-67%-start@md" id='clientChatContainer'>
+    <div class="dcf-col-100% dcf-col-67%-start@md" id="clientChatContainer">
         <div id="clientChat">
-            <div id='visitorChat_conversation'>
-                <div class="dcf-relative dcf-pt-6 dcf-pr-5 dcf-pb-5 dcf-pl-5 unl-cream unl-bg-darker-gray" id='visitorChat_conversation_header'>
-                    <div id='visitorChat_url'>
-                        <span id='visitorChat_url_title'>
+            <div id="visitorChat_conversation">
+                <div class="dcf-relative dcf-pt-6 dcf-pr-5 dcf-pb-5 dcf-pl-5 unl-cream unl-bg-darker-gray" id="visitorChat_conversation_header">
+                    <div id="visitorChat_url">
+                        <span id="visitorChat_url_title">
                             <span><?php echo $context->conversation->getClient()->name;?></span>
                         </span>
                         <span class="visitorChat_topicPage">
-                        at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
+                        at <a href="<?php echo $context->conversation->initial_url;?>" target="_new"><?php echo $context->conversation->initial_pagetitle;?></a></span>
                     </div>
                 </div>
-                <div class="dcf-relative dcf-mb-3" id='visitorChat_chatBox'>
+                <div class="dcf-relative dcf-mb-3 dcf-pr-4 dcf-overflow-x-hidden dcf-overflow-y-scroll dcf-z-0" id="visitorChat_chatBox">
                     <ul class="dcf-list-bare dcf-mb-0">
                         <?php
                         foreach ($context->messages as $message) {
@@ -40,7 +40,7 @@
             }
 
             ?>
-            <table class='zentable neutral'>
+            <table class="zentable neutral">
                 <thead>
                     <tr>
                         <th colspan="2"><?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?></th>
@@ -86,7 +86,7 @@
             ?>
             <div id="options">
                 <form action="<?php echo $context->conversation->getEditURL(); ?>" method="post">
-                    <input type="submit" value="Delete this Conversation" name="delete" id="delete_conversation">
+                    <input id="delete_conversation" name="delete" type="submit" value="Delete this Conversation">
                 </form>
             </div>
             <?php

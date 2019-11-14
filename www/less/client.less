@@ -9,7 +9,6 @@
   box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
   color: #424240;
   max-width: 17.713em;
-  position: fixed;
   right: calc(~'1.333em + 1vw');
   transition: background-color .3s ease-out;
   z-index: 99999;
@@ -75,46 +74,6 @@
 }
 
 
-#visitorChat fieldset {
-  margin: 0;
-  border: 0;
-  padding: 0;
-}
-
-
-#visitorChat legend {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  text-transform: none;
-}
-
-
-#visitorChat label,
-#visitorChat input[type='email'],
-#visitorChat input[type='text'],
-#visitorChat textarea,
-#visitorChat select {
-  display: block;
-}
-
-
-#visitorChat label {
-  font-size: .75em;
-  line-height: 1.333;
-  margin-bottom: .317em;
-}
-
-
-#visitorChat input[type='email'],
-#visitorChat input[type='text'],
-#visitorChat textarea,
-#visitorChat select {
-  appearance: none;
-  padding: .563em;
-}
-
-
 #visitorChat #visitorChat_messageForm label[for='visitorChat_messageBox'] {
   border: 0;
   clip: rect(0 0 0 0);
@@ -172,31 +131,17 @@
 
 #visitorChat_container {
   background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
-  margin-bottom: .56em;
-  padding: 1em;
-  position: relative;
 }
 
 
 #visitorChat_chatBox {
   font-size: .935em;
   height: 14.204rem;
-  margin-bottom: .75em;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-  z-index: 0;
-}
-
-
-#visitorChat_chatBox ul {
-	padding: 0 1em 0 0;
 }
 
 
 #visitorChat_chatBox li {
   border-radius: 3px;
-  line-height: 1.425;
   margin-bottom: 1em;
   padding: .75em 1em;
   position: relative;
@@ -279,25 +224,8 @@
 
 
 #visitorChat_messageBox {
-  line-height: 1.425;
   overflow-y: auto;
   resize: none;
-}
-
-
-#visitorChat_login_submit,
-#visitorChat_message_submit,
-#visitorChat_confirmEmail_submit {
-  margin-top: .75em;
-  padding: .8em 1em .75em;
-  white-space: normal;
-}
-
-
-#visitorChat_footerHeader, // legend
-.chat_notify,
-.welcome-message {
-  line-height: 1.425;
 }
 
 
