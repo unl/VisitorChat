@@ -5,7 +5,7 @@
             <li>
                 <label for="ip_address">IP address:</label>
                 <input id="ip_address" name="ip_address" type="text" value="<?php echo (isset($_GET['ip_address']))?$_GET['ip_address']:'' ?>">
-                <label for="enabled">Current State:</label>
+                <label for="state">Current State:</label>
                 <select class="dcf-input-select" id="state" name="state">
                     <option value="active" <?php echo (isset($_GET['state']) && $_GET['state'] == 'active')?'selected="selected"':'';?>>Active</option>
                     <option value="inactive" <?php echo (isset($_GET['state']) && $_GET['state'] == 'inactive')?'selected="selected"':'';?>>Inactive</option>
