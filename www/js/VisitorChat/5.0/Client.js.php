@@ -315,15 +315,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4' id='visitorChat_container' tabindex='-1'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
 
             //set up a container.
-            var html = "<div id='visitorChat_container'>Please Wait...</div>";
+            var html = "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'>Please Wait...</div>";
 
-            $('#visitorchat_clientLogin').replaceWith("<div id='visitorChat_container'></div>");
+            $('#visitorchat_clientLogin').replaceWith("<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'></div>");
 
             $('#visitorChat_container').show();
         },
@@ -334,7 +334,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
@@ -474,7 +474,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    $('#visitorChat_confirmationContainer').html("The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".<br /><button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
+                    $('#visitorChat_confirmationContainer').html("<p class='dcf-txt-xs'>The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>").focus();
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
 
@@ -749,7 +749,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             if (is_typing) {
-                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing").show(500);
+                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing.").show(500);
             } else {
                 WDN.jQuery('#visitorChat_is_typing').hide(500);
             }
@@ -794,8 +794,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
-            var html = "<div class='chat_notify' >Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
-                "<div id='visitorChat_failedOptions'><button id='visitorChat_failedOptions_yes'>Yes</button> <button id='visitorChat_failedOptions_no'>No</button></div></div>";
+            var html = "<div class='chat_notify'><p class='dcf-txt-sm'>Unfortunately all of our operators are currently busy. Would you like to send an email instead?</p>" +
+                "<div class='dcf-d-flex dcf-jc-around dcf-mt-4' id='visitorChat_failedOptions'><button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_yes'>Yes</button> <button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_no'>No</button></div></div>";
             this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
 
@@ -825,28 +825,30 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append("" +
-                "<div id='visitorChat' class='dcf-d-none@print offline'>" +
-                    "<div class='dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-txt-xs dcf-lh-1' id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
-                        "<span class='dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase' id='visitorChat_header_text'>Email Us</span>" +
-                        "<div id='visitor-chat-header-options'>" +
-                            "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5 dcf-b-0 dcf-bg-transparent' id='visitorChat_logout' aria-label='close and log out of chat'>" +
-                                "<span class='wdn-icon-cancel'></span>" +
-                            "</button>" +
-                        "</div>" +
-                    "</div>" +
-                    "<div id='visitorChat_sound_container'></div>" +
-                "</div>");
+            $('#dcf-footer').append('' +
+                '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
+                        '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
+                        '<div id="visitor-chat-header-options">' +
+                            '<button class="dcf-pl-4 dcf-pr-4 dcf-lh-1 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
+                                '<svg class="dcf-d-block dcf-h-4 dcf-w-4 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
+                                    '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
+                                '</svg>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div id="visitorChat_sound_container"></div>' +
+                '</div>');
 
-            $('#dcf-nav-toggle-group').append("" +
+            $('#dcf-nav-toggle-group').append('' +
                 '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
-                      '<g id="dcf-nav-toggle-icon-open-chat" class="">' +
-                        '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"/>' +
-                      '</g>' +
-                      '<g id="dcf-nav-toggle-icon-close-chat" class="dcf-d-none">' +
-                        '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"/>' +
-                      '</g>' +
+                        '<g class="" id="dcf-nav-toggle-icon-open-chat">' +
+                            '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
+                        '</g>' +
+                        '<g class="dcf-d-none" id="dcf-nav-toggle-icon-close-chat">' +
+                            '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
+                        '</g>' +
                     '</svg>' +
                     '<span class="dcf-nav-toggle-label-chat dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
                 '</button>');

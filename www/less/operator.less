@@ -1,9 +1,6 @@
-// !Framework Mixins
-@import (reference) 'mixins/breakpoints';
-@import (reference) 'mixins/colors';
-@import (reference) 'mixins/fonts';
-@import (reference) 'mixins/functions';
-@import (reference) 'mixins/vars';
+///////////
+// OPERATOR
+///////////
 
 
 h1 {
@@ -166,31 +163,12 @@ h1 {
 #visitorChat_chatBox ul li {
   line-height: 1.33;
   margin-bottom: 0;
-  padding: .5625em 1.3333em;
+  padding: .56em 1.33em;
 }
 
 
 #visitorChat_chatBox ul li:not(:last-child) {
   border-bottom: 1px solid #e3e3e2;
-}
-
-
-#visitorChat_chatBox ul li .stamp,
-#visitorChat_chatBox ul li .timestamp {
-  color: #6d6d69;
-  font-size: .75em;
-  font-weight: 400;
-  margin-top: .43em;
-}
-
-
-#visitorChat_chatBox ul li .stamp {
-  display: block;
-}
-
-
-#visitorChat_chatBox ul li .timestamp {
-  float: right;
 }
 
 
@@ -202,6 +180,12 @@ h1 {
 .visitorChat_me {
   background-color: #f6f6f5;
   color: #6d6d69;
+}
+
+
+#visitorChat_chatBox ul li .stamp,
+#visitorChat_chatBox ul li .timestamp {
+  font-weight: 400;
 }
 
 
@@ -239,7 +223,7 @@ h1 {
 
 #clientList ul li .conversationLink {
   display: block;
-  padding: .5625em;
+  padding: .56em;
   font-size: .75em;
 }
 

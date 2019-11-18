@@ -487,7 +487,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     appendMessage:function (id, message) {
         $("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
-            "<br /><span class='timestamp'>" + message['date'] + "</span><span class='stamp'>from " + message['poster']['name'] + "</span>" +
+            "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
             "</li>");
     },
 
@@ -507,7 +507,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         clearTimeout(VisitorChat.loopID);
 
-        var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1">This conversation has ended.</div>';
+        var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1"><p class="dcf-mb-1">This conversation has ended.</p></div>';
         this.updateChatContainerWithHTML(".visitorChat_center", html);
 
         if (data['messages'] == undefined) {

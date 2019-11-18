@@ -1,19 +1,14 @@
-// !Framework Mixins
-@import (reference) 'mixins/breakpoints';
-@import (reference) 'mixins/colors';
-@import (reference) 'mixins/fonts';
-@import (reference) 'mixins/functions';
-@import (reference) 'mixins/vars';
+/////////
+// CLIENT
+/////////
 
 
 #visitorChat {
-  background-color: @ui04;
+  background-color: #e3e3e2;
   border-radius: 3px;
   box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
   color: #424240;
-  .sans-serif-font();
-  max-width: 17.713em;
-  position: fixed;
+  max-width: 17.76em;
   right: calc(~'1.333em + 1vw');
   transition: background-color .3s ease-out;
   z-index: 99999;
@@ -24,19 +19,19 @@
 
   #visitorChat {
     box-shadow: none;
-    filter: drop-shadow(0 0 5px fadeout(@ui09,75%)) drop-shadow(0 0 1px fadeout(@ui09,40%));
+    filter: drop-shadow(0 0 5px fadeout(#424240,75%)) drop-shadow(0 0 1px fadeout(#424240,40%));
   }
 
 }
 
 
 #visitorChat::after {
-  border-color: @ui04 transparent transparent transparent;
+  border-color: #e3e3e2 transparent transparent transparent;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
   content: '';
   position: absolute;
-  right: 1.333em;
+  right: 1.33em;
   top: 100%;
   z-index: 299;
 }
@@ -59,10 +54,9 @@
 
 
 #visitorChat h2 {
-  border-top: 1px solid @ui04;
-  .sans-serif-font();
+  border-top: 1px solid #e3e3e2;
   font-size: 1em;
-  line-height: 1.425;
+  line-height: 1.43;
   margin-bottom: .75em;
   padding-top: .75em;
 }
@@ -75,60 +69,7 @@
 
 #visitorChat li {
   list-style: none;
-  margin-top: .563em;
-  margin-bottom: .563em;
-}
-
-
-#visitorChat fieldset {
-  margin: 0;
-  border: 0;
-  padding: 0;
-}
-
-
-#visitorChat legend {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  text-transform: none;
-}
-
-
-#visitorChat label,
-#visitorChat input[type='email'],
-#visitorChat input[type='text'],
-#visitorChat textarea,
-#visitorChat select {
-  display: block;
-}
-
-
-#visitorChat label {
-  font-size: .75em;
-  line-height: 1.333;
-  margin-bottom: .317em;
-}
-
-
-#visitorChat input[type='email'],
-#visitorChat input[type='text'],
-#visitorChat textarea,
-#visitorChat select {
-  appearance: none;
-  padding: .563em;
-}
-
-
-#visitorChat #visitorChat_messageForm label[for='visitorChat_messageBox'] {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+  margin-bottom: .56em;
 }
 
 
@@ -162,20 +103,6 @@
 }
 
 
-#dcf-footer #visitorChat_logout [class*='wdn-icon-'] {
-  display: block;
-  padding-left: 0;
-}
-
-
-#dcf-footer #visitorChat_logout [class*='wdn-icon-']::before {
-  font-size: .75em;
-  margin-right: 0;
-  position: relative;
-  top: 0;
-}
-
-
 #visitorChat_container:focus,
 #visitorChat_conversation:focus,
 #visitorChat_confirmationContainer:focus,
@@ -190,59 +117,36 @@
 
 
 #visitorChat_container {
-  background-image: linear-gradient(to bottom, @ui01 0%, @ui03 60%);
-  margin-bottom: .56em;
-  padding: 1em;
-  position: relative;
+  background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
 }
 
 
 #visitorChat_chatBox {
-  font-size: .935em;
-  height: 14.204rem;
-  margin-bottom: .75em;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-  z-index: 0;
+  height: 14.2rem;
 }
 
 
 #visitorChat_chatBox ul {
-	padding: 0 1em 0 0;
+	padding-right: 1em; // Account for vertical scroll bar
 }
 
 
 #visitorChat_chatBox li {
   border-radius: 3px;
-  line-height: 1.425;
-  margin-bottom: 1em;
+  margin-bottom: 1.33em;
   padding: .75em 1em;
   position: relative;
   width: calc(~'100% - 1em');
 }
 
 
+// Conversation bubble arrow
 #visitorChat_chatBox li::after {
   border-style: solid;
-  bottom: 0;
+  bottom: 1px; // Overlap 1px to ensure there is no gap between bubble and arrow
   content: '';
   position: absolute;
   transform: translateY(100%);
-}
-
-
-#visitorChat_chatBox li .timestamp,
-#visitorChat_chatBox li .stamp {
-  display: block;
-  font-size: .75em;
-  padding-top: 0.422em;
-}
-
-
-#visitorChat_chatBox li .timestamp {
-  float: right;
-  padding-left: 1em;
 }
 
 
@@ -298,25 +202,8 @@
 
 
 #visitorChat_messageBox {
-  line-height: 1.425;
   overflow-y: auto;
   resize: none;
-}
-
-
-#visitorChat_login_submit,
-#visitorChat_message_submit,
-#visitorChat_confirmEmail_submit {
-  margin-top: .75em;
-  padding: .8em 1em .75em;
-  white-space: normal;
-}
-
-
-#visitorChat_footerHeader, // legend
-.chat_notify,
-.welcome-message {
-  line-height: 1.425;
 }
 
 
@@ -327,7 +214,6 @@
 
 #clientInfo,
 #visitorChat_url,
-#visitorChat_confirmationEmailForm legend,
 .unl_visitorchat_submit,
 .visitorChat_info {
 	display: none;
@@ -343,25 +229,27 @@
   background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif');
   background-position: 50% 0;
   background-repeat: no-repeat;
-  padding-top: 1.777em;
+  padding-top: 1.78em;
 }
 
 
-#visitorChat_confirmationContainer {
-  margin-top: .75em;
-}
-
-
-/* Validation Stylings */
+// Validation stylings
 #visitorChat .validation-advice li,
 #visitorchat_clientLogin_anonwaning {
   font-size: .75em;
-  line-height: 1.333;
+}
+
+
+// Override display of icon font in form validation
+#visitorChat ul.validation-advice li::before {
+  content: '' !important;
+  margin-right: 0 !important;
+  width: 0 !important;
 }
 
 
 #visitorchat_clientLogin_anonwaning {
-  color: @energetic;
+  color: #e72c0c;
 }
 
 
@@ -395,57 +283,41 @@
 
 
 #visitorChat_captchaForm input[type='submit'] {
-  margin-top: 1.333em;
+  margin-top: 1.33em;
 }
 
 
 #VisitorChat_captcha_img {
-  border: 1px solid @ui04;
-  margin-bottom: .317em;
+  border: 1px solid #e3e3e2;
+  margin-bottom: .32em;
   width: 100%;
 }
 
 
 #visitorChat_methods {
-  bottom: 1.333rem;
+  bottom: 1.33rem;
   font-size: .75em;
   position: absolute;
-  right: 1.333rem;
+  right: 1.33rem;
 }
 
 
 #visitorChat_methods_email,
-#visitorChat_methods_chat,
-#visitorChat_sendAnotherConfirmation,
-#visitorChat_failedOptions button {
+#visitorChat_methods_chat {
   background-color: transparent;
   border-color: transparent transparent currentColor transparent;
   border-style: dotted;
   border-width: 1px;
-  color: @scarlet;
+  color: #d00000;
   line-height: normal;
   padding: 0;
 }
 
 
 #visitorChat_methods_email:focus,
-#visitorChat_methods_chat:focus,
-#visitorChat_sendAnotherConfirmation:focus,
-#visitorChat_failedOptions button:focus {
+#visitorChat_methods_chat:focus {
   border-color: currentColor;
   outline: 0;
-}
-
-
-#visitorChat_sendAnotherConfirmation {
-  margin-top: .75em;
-}
-
-
-#visitorChat_failedOptions {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1em;
 }
 
 
