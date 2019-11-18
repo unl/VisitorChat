@@ -474,7 +474,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    $('#visitorChat_confirmationContainer').html("The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".<br /><button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
+                    $('#visitorChat_confirmationContainer').html("<p class='dcf-txt-xs'>The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>").focus();
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
 
