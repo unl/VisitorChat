@@ -794,8 +794,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
-            var html = "<div class='chat_notify' >Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
-                "<div id='visitorChat_failedOptions'><button id='visitorChat_failedOptions_yes'>Yes</button> <button id='visitorChat_failedOptions_no'>No</button></div></div>";
+            var html = "<div class='chat_notify'><p class='dcf-txt-sm'>Unfortunately all of our operators are currently busy. Would you like to send an email instead?</p>" +
+                "<div class='dcf-d-flex dcf-jc-around dcf-mt-4' id='visitorChat_failedOptions'><button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_yes'>Yes</button> <button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_no'>No</button></div></div>";
             this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
 
