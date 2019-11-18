@@ -245,11 +245,18 @@
 }
 
 
-/* Validation Stylings */
+// Validation stylings
 #visitorChat .validation-advice li,
 #visitorchat_clientLogin_anonwaning {
   font-size: .75em;
-  line-height: 1.33;
+}
+
+
+// Override display of icon font in form validation
+#visitorChat ul.validation-advice li::before {
+  content: '' !important;
+  margin-right: 0 !important;
+  width: 0 !important;
 }
 
 
