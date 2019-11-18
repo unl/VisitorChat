@@ -749,7 +749,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             if (is_typing) {
-                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing").show(500);
+                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing.").show(500);
             } else {
                 WDN.jQuery('#visitorChat_is_typing').hide(500);
             }
