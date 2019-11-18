@@ -69,7 +69,6 @@
 
 #visitorChat li {
   list-style: none;
-  margin-top: .56em;
   margin-bottom: .56em;
 }
 
@@ -129,41 +128,37 @@
 }
 
 
+#visitorChat_container {
+  background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
+}
+
+
 #visitorChat_chatBox {
-  font-size: .94em;
   height: 14.2rem;
+}
+
+
+#visitorChat_chatBox ul {
+	padding-right: 1em; // Account for vertical scroll bar
 }
 
 
 #visitorChat_chatBox li {
   border-radius: 3px;
-  margin-bottom: 1em;
+  margin-bottom: 1.33em;
   padding: .75em 1em;
   position: relative;
   width: calc(~'100% - 1em');
 }
 
 
+// Conversation bubble arrow
 #visitorChat_chatBox li::after {
   border-style: solid;
-  bottom: 0;
+  bottom: 1px; // Overlap 1px to ensure there is no gap between bubble and arrow
   content: '';
   position: absolute;
   transform: translateY(100%);
-}
-
-
-#visitorChat_chatBox li .timestamp,
-#visitorChat_chatBox li .stamp {
-  display: block;
-  font-size: .75em;
-  padding-top: 0.43em;
-}
-
-
-#visitorChat_chatBox li .timestamp {
-  float: right;
-  padding-left: 1em;
 }
 
 
