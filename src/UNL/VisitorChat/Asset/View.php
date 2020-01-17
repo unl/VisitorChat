@@ -15,7 +15,7 @@ class View
     
     public $protocol = 'http';
     
-    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0');
+    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1');
     
     //Set to true to start caching.
     public static $cache = false;
@@ -31,8 +31,8 @@ class View
         if (isset($this->options['version'])) {
             $this->version = $this->options['version'];
         }
-        
-        //parse the version. (handle the case that 4.0 is sent as 4
+
+        //parse the version. (handle the case that x.0 is sent as x
         if (!substr_count($this->version, '.')) {
             $this->version = $this->version . '.0';
         }
