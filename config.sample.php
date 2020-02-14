@@ -27,7 +27,12 @@ require_once __DIR__ . '/vendor/autoload.php';
  * php related settings
  */
 //Session life in seconds.
-ini_set("session.gc_maxlifetime", 7200); 
+ini_set("session.gc_maxlifetime", 7200);
+
+// Support third-party cookie to support chats on affiliate sites
+// NOTE for DEV site without HTTPS set samesite to 'strict' or 'lax' and secure to false;
+ini_set("session.cookie_samesite", 'none');
+ini_set("session.cookie_secure", true);
 
 ini_set('display_errors', false);
 
