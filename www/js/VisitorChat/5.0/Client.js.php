@@ -30,7 +30,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         lexruntime: new AWS.LexRuntime(),
         sessionAttributes: {},
 
-        setSessionCookie(name, value, expiresInSeconds, path) {
+        setSessionCookie: function(name, value, expiresInSeconds, path) {
           WDN.setCookie(name, value, expiresInSeconds, path, null, 'none', true);
         },
 
