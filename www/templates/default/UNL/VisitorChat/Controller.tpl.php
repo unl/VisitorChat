@@ -16,7 +16,7 @@ if (file_exists($wdn_include_path . '/wdn/templates_5.1')) {
 $url = \UNL\VisitorChat\Controller::$url;
 
 // Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="/wdn/templates_5.0/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.0/css/deprecated.css"></noscript>';
+$page->head .= '<link rel="preload" href="/wdn/templates_5.1/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.1/css/deprecated.css"></noscript>';
 
 $page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0');
 
