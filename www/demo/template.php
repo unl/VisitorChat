@@ -12,14 +12,14 @@ if (file_exists(dirname(dirname(dirname(__FILE__))) . '/config.inc.php')) {
 
 
 use \UNL\Templates\Templates;
-$page = Templates::factory('Fixed', Templates::VERSION_5);
+$page = Templates::factory('Local', Templates::VERSION_5_1);
 
 /**
- * @var $page \UNL\Templates\Version4x1\Fixed
+ * @var $page \UNL\Templates\Version5x1\Local
  */
 
 $wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
-if (file_exists($wdn_include_path . '/wdn/templates_5.0')) {
+if (file_exists($wdn_include_path . '/wdn/templates_5.1')) {
     $page->setLocalIncludePath($wdn_include_path);
 }
 
@@ -30,7 +30,7 @@ $page->pagetitle = '<h1>'. $title . '</h1>';
 $page->affiliation = '';
 
 // Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="https://unlcms.unl.edu/wdn/templates_5.0/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="https://unlcms.unl.edu/wdn/templates_5.0/css/deprecated.css"></noscript>';
+$page->head .= '<link rel="preload" href="/wdn/templates_5.1/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.1/css/deprecated.css"></noscript>';
 
 //Navigation
 $page->breadcrumbs = "";
