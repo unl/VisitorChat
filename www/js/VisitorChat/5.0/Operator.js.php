@@ -63,9 +63,6 @@ require(['jquery', 'jqueryui'], function($) {
                 VisitorChat.lastActiveTime = new Date();
             });
 
-            // Initialize Tooltip for stuff!
-            WDN.initializePlugin('tooltip');
-
             VisitorChat.idleWatchLoopID = setTimeout("VisitorChat.idleWatch()", this.idleWatchLoopTime);
 
             this._super();
@@ -199,23 +196,6 @@ require(['jquery', 'jqueryui'], function($) {
                     VisitorChat.leaveConversation();
                 }
             });
-
-            if ($().qtip !== undefined) {
-                var elems = $('#visitorChat_InvitationList .tooltip[title]');
-
-                //TODO: Fix tooltip
-                //WDN.tooltip.addTooltip(elems);
-
-                /**
-                 * There is a bug with qTip.  If you apply qTips to elements that were dynamically loaded,
-                 * they won't show their tool tip on the first 'hover'.  Below is a small hack to force loading
-                 * of the tooltip.
-                 */
-                if ($('#ui-tooltip-0').length == 0) {
-                    elems.trigger('mouseover');
-                }
-            }
-
 
             this._super();
         },
