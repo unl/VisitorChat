@@ -10,12 +10,11 @@ foreach ($context as $invitation) {
     $name = $invitation->getInviteeTitle();
 
     echo "<li class='$class'>
-              <span class='name tooltip' title='This is who the invitation was sent to (can be either a site or a person)'>$name</span>
+              <span class='name' style='cursor:pointer;' title='This is who the invitation was sent to (can be either a site or a person)'>$name</span>
 			  <span class='sub dcf-d-block dcf-txt-xs'>
-			  <span class='source tooltip' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
-			  <span class='time tooltip' style='float:right;' title='Time the invitation was sent'>" .
+			  <span class='source' style='cursor:pointer;' title='Who called the invitation'>". \UNL\VisitorChat\User\Record::getByID($invitation->users_id)->name ."</span>
+			  <span class='time' style='cursor:pointer;' style='float:right;' title='Time the invitation was sent'>" .
 			    date("g:i:s A", strtotime($invitation->date_created)) . "</span>" .
-
 			"</span>";
 	echo '<ul>';
 
@@ -29,8 +28,8 @@ foreach ($context as $invitation) {
 
         $assignmentClass = strtolower($assignment->status);
         echo "<li class='$assignmentClass'>" .
-                  "<span class='name tooltip' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
-                  "<span class='sub force-wrap dcf-d-block dcf-txt-xs'><span class='source tooltip' title='The site they are from'>" . $siteTitle . "</span></span>" .
+                  "<span class='name' style='cursor:pointer;' title='The person invited'>" . $assignment->getUser()->name . "</span>" .
+                  "<span class='sub force-wrap dcf-d-block dcf-txt-xs'><span class='source' style='cursor:pointer;' title='The site they are from'>" . $siteTitle . "</span></span>" .
             "</li>";
     }
 	echo "</ul>";
