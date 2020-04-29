@@ -39,7 +39,7 @@ class RecordList extends \Epoch\RecordList
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
                            WHERE assignments.answering_site = '" . self::escapeString($url) . "'
                            GROUP BY conversations.id
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
         
         return self::getBySql($options);
     }
@@ -55,7 +55,7 @@ class RecordList extends \Epoch\RecordList
                              AND assignments.users_id = '" . (int)$users_id . "'
                              AND assignments.status IN ('LEFT', 'COMPLETED')
                            GROUP BY conversations.id
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
 
         return self::getBySql($options);
     }
@@ -120,7 +120,7 @@ class RecordList extends \Epoch\RecordList
                            WHERE assignments.users_id = " . (int)$userID . "
                                AND (assignments.status = 'ACCEPTED' OR assignments.status = 'COMPLETED')
                                $constraint
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
         
         return self::getBySql($options);
     }
