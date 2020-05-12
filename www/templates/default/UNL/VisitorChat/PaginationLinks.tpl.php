@@ -1,5 +1,4 @@
 <?php
-$page->addScriptDeclaration("WDN.loadCSS('/wdn/templates_3.0/css/content/pagination.css');");
 
 $base_url = $context->getRawObject()->url;
 function addParam($url, $param)
@@ -12,13 +11,13 @@ function addParam($url, $param)
 }
 ?>
 
-<ul class="wdn_pagination">
+<ul class="dcf-txt-sm dcf-list-bare dcf-list-inline">
     <?php if ($context->offset != 0) :?>
         <?php
         $url = addParam($base_url, 'limit='.$context->limit);
         $url = addParam($url, 'offset='.($context->offset-$context->limit));
         ?>
-    <li class="arrow"><a href="<?php echo $url?>" title="Go to the previous page">&larr; prev</a></li>
+    <li class="dcf-mr-1 dcf-mb-1"><a class="dcf-btn dcf-btn-secondary dcf-p-1" href="<?php echo $url?>" title="Go to the previous page">&larr; prev</a></li>
     <?php endif; ?>
     <?php for ($page = 1; $page*$context->limit < $context->total+$context->limit; $page++ ) {
         $url = addParam($base_url, 'limit='.$context->limit);
@@ -30,14 +29,13 @@ function addParam($url, $param)
             $class = 'selected';
         }
     ?>
-    <li class="<?php echo $class; ?>">
+    <li class="dcf-mr-1 <?php echo $class; ?>">
         <?php
         if ($class !== 'selected') { ?>
-            <a href="<?php echo $link; ?>" title="Go to page <?php echo $page; ?>"><?php echo $page; ?></a>
-        <?php
-        } else {
-            echo $page;
-        } ?>
+            <a class="dcf-btn dcf-btn-secondary dcf-p-1 dcf-mr-1" href="<?php echo $link; ?>" title="Go to page <?php echo $page; ?>"><?php echo $page; ?></a>
+        <?php } else { ?>
+            <span class="dcf-bold dcf-txt-lg dcf-p-0"><?php echo $page; ?></span>
+        <?php } ?>
     </li>
     <?php } ?>
     <?php if (($context->offset+$context->limit) < $context->total) :?>
@@ -45,6 +43,6 @@ function addParam($url, $param)
         $url = addParam($base_url, 'limit='.$context->limit);
         $url = addParam($url, 'offset='.($context->offset+$context->limit));
         ?>
-    <li class="arrow"><a href="<?php echo $url ?>" title="Go to the next page">next &rarr;</a></li>
+    <li class="dcf-mr-1"><a class="dcf-btn dcf-btn-secondary dcf-p-1" href="<?php echo $url ?>" title="Go to the next page">next &rarr;</a></li>
     <?php endif; ?>
 </ul>
