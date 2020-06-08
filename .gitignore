@@ -10,3 +10,4 @@ www/.htaccess
 .DS_Store
 /vendor/
 www/node_modules
+www/wdn

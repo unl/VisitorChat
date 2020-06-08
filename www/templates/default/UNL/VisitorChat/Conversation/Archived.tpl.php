@@ -1,19 +1,19 @@
 <?php  $ua = $context->conversation->parseUserAgent();?>
-<div class="wdn-gridset archived-chat">
-    <div class="bp960-wdn-col-two-thirds" id='clientChatContainer'>
+<div class="dcf-grid dcf-col-gap-vw archived-chat">
+    <div class="dcf-col-100% dcf-col-67%-start@md" id="clientChatContainer">
         <div id="clientChat">
-            <div id='visterChat_conversation'>
-                <div id='visitorChat_conversation_header'>
-                    <div id='visitorChat_url'>
-                        <span id='visitorChat_url_title'>
+            <div id="visitorChat_conversation">
+                <div class="dcf-relative dcf-pt-6 dcf-pr-5 dcf-pb-5 dcf-pl-5 unl-cream unl-bg-darker-gray" id="visitorChat_conversation_header">
+                    <div id="visitorChat_url">
+                        <span id="visitorChat_url_title">
                             <span><?php echo $context->conversation->getClient()->name;?></span>
                         </span>
                         <span class="visitorChat_topicPage">
-                        at <a href='<?php echo $context->conversation->initial_url;?>' target='_new'><?php echo $context->conversation->initial_pagetitle;?></a></span>
+                        at <a href="<?php echo $context->conversation->initial_url;?>" target="_new"><?php echo $context->conversation->initial_pagetitle;?></a></span>
                     </div>
                 </div>
-                <div id='visitorChat_chatBox'>
-                    <ul>
+                <div class="dcf-relative dcf-mb-3 dcf-pr-4 dcf-overflow-x-hidden dcf-overflow-y-scroll dcf-z-0" id="visitorChat_chatBox">
+                    <ul class="dcf-list-bare dcf-mb-0">
                         <?php
                         foreach ($context->messages as $message) {
                             echo "<li class='" . $message->getDisplayclass() . "'>" . \Epoch\Controller::$templater->render($message) . "</li>";
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="bp960-wdn-col-one-third" id="clientChatInfoContainer">
+    <div class="dcf-col-100% dcf-col-33%-end@md" id="clientChatInfoContainer">
         <div id="clientChat_GeneralInformation">
             <h2>Details</h2>
             <?php
@@ -33,14 +33,14 @@
             if (!empty($context->conversation->closer_id)) {
                 $name = \UNL\VisitorChat\User\Record::getByID($context->conversation->closer_id)->name;
             }
-            
+
             $duration = "Unknown";
             if ($duration = $context->conversation->getDuration()) {
                 $duration = round($duration/60) . " min";
             }
-            
+
             ?>
-            <table class='zentable neutral'>
+            <table class="zentable neutral">
                 <thead>
                     <tr>
                         <th colspan="2"><?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?></th>
@@ -86,7 +86,7 @@
             ?>
             <div id="options">
                 <form action="<?php echo $context->conversation->getEditURL(); ?>" method="post">
-                    <input type="submit" value="Delete this Conversation" name="delete" id="delete_conversation">
+                    <input id="delete_conversation" name="delete" type="submit" value="Delete this Conversation">
                 </form>
             </div>
             <?php

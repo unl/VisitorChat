@@ -30,6 +30,13 @@ abstract class SiteInterface
      * @return string
      */
     abstract function getSupportGroups();
+
+    /**
+     * Get the webaudit for the site
+     *
+     * @return string
+     */
+    abstract function getID();
     
     /**
      * Determins the number of operators for this site that are current available.

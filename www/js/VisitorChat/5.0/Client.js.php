@@ -1,7 +1,16 @@
 require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
     <?php
     require_once(__DIR__ . "/ChatBase.js.php");
+    // https://sdk.amazonaws.com/builder/js/#
+    // Currently only need AWS.CongnitoIdentity and AWS.LexRuntime
+    require_once(__DIR__ . "/aws-sdk-2.493.0.min.js");
     ?>
+
+    // Initialize the Amazon Cognito credentials provider
+    AWS.config.region = 'us-east-1'; // Region
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-east-1:b409ceff-f0a1-4fcb-b52f-5c7ec94c7e23',
+    });
 
     var VisitorChat_Client = VisitorChat_ChatBase.extend({
         loginHTML: false,
@@ -18,6 +27,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             site_title: false
         },
         widgetIsOpen: false,
+        lexruntime: new AWS.LexRuntime(),
+        sessionAttributes: {},
+
+        setSessionCookie: function(name, value, expiresInSeconds, path) {
+          WDN.setCookie(name, value, expiresInSeconds, path, null, 'none', true);
+        },
+
+        isChatbotAvailable: function() {
+          return this.lexruntime && this.getChatbotID() && this.getChatbotName();
+        },
 
         startEmail:function () {
             this.method = 'email';
@@ -55,12 +74,23 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
                     return false;
                 });
+            } else if (this.isChatbotAvailable()) {
+                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
+
+                $('#visitorChat_methods_chat').one('click', function() {
+                  VisitorChat.stop(function(){
+                    VisitorChat.startChatBot();
+                    $('#visitorChat_messageBox').keyup();
+                  });
+
+                  return false;
+                });
             }
         },
 
         startChat:function (chatInProgress) {
             this.method = 'chat';
-            this.displaySiteAvailability(true);
+            this.displaySiteAvailability();
             this.launchChatContainer();
 
             if (chatInProgress && this.chatStatus == "LOGIN") {
@@ -92,6 +122,140 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return false;
             });
         },
+
+        startChatBot:function (chatInProgress) {
+          this.method = 'chatbot';
+          this.displaySiteAvailability();
+          this.launchChatContainer();
+          //console.log('starting chatbot: ' + VisitorChat.chatbotUserID);
+          //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID());
+
+          if (chatInProgress && this.chatStatus == "LOGIN") {
+            this.chatStatus = "CHATING";
+            return this.start();
+          }
+
+          $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+
+          this.start();
+
+          var title = this.getSiteTitle();
+
+          var testNotice = '';
+          if (VisitorChat.chatbotEnv != 'PROD') {
+            testNotice = ' (Test Env)';
+          }
+          $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
+
+          $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
+          //Submit as chat
+          $('#visitorChat_login_chatmethod').val("CHATBOT");
+
+          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+
+          VisitorChat.displayWelcomeMessage();
+
+          $('#visitorChat_methods_email').one('click', function() {
+            VisitorChat.stop(function(){
+              VisitorChat.startEmail();
+              $('#visitorChat_messageBox').keyup();
+            });
+            return false;
+          });
+        },
+
+      startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes, displayChatMethods) {
+        // Default parameters
+        var introMsg = introMsg || '';
+        var intentMsg = intentMsg || '';
+        var intentSessionAttributes = intentSessionAttributes || {};
+        var displayChatMethods = displayChatMethods || false;
+        //console.log('starting chatbot intent: ' + VisitorChat.chatbotUserID);
+        //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID())
+        if (VisitorChat.operatorsAvailable || !this.isChatbotAvailable() || introMsg.trim().length == 0 || intentMsg.trim().length == 0) {
+          // invalid intent info so launch chatbot without intent instead
+          if (VisitorChat.operatorsAvailable) {
+            this.startChatBot();
+            $('#visitorChat_messageBox').keyup();
+          } else {
+            VisitorChat.startEmail();
+            $('#visitorChat_messageBox').keyup();
+          }
+          return false;
+        }
+
+        this.method = 'chatbot';
+        this.displaySiteAvailability();
+        this.launchChatContainer();
+
+        $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+
+        this.start();
+
+        var title = this.getSiteTitle();
+
+        var testNotice = '';
+        if (VisitorChat.chatbotEnv != 'PROD') {
+          testNotice = ' (Test Env)';
+        }
+        $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
+
+        //Submit as chat
+        $('#visitorChat_login_chatmethod').val("CHATBOT");
+
+        VisitorChat.displayWelcomeMessage();
+
+        // setup intent display
+        $('#visitorChat').addClass('visitorChat_open');
+        $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the Let\'s Chat widget').attr('aria-expanded', 'true');
+        $('.dcf-nav-toggle-label-chat').text('Close');
+        $('#visitorChatbot_intent').val(intentMsg);
+        $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
+        $('#visitorChat_messageBox').keyup();
+        $('#visitorChatbot_messageBoxContainer').hide();
+        $('#visitorChatbot_intent_message').text(introMsg);
+        $('#visitorChatbot_intent_message').show();
+
+        if (displayChatMethods === true) {
+          if (VisitorChat.operatorsAvailable) {
+
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+
+            $('#visitorChat_methods_chat').one('click', function () {
+              VisitorChat.stop(function () {
+                VisitorChat.startChat();
+                $('#visitorChat_messageBox').keyup();
+              });
+
+              return false;
+            });
+          } else if (this.isChatbotAvailable()) {
+
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+
+            $('#visitorChat_methods_chat').one('click', function () {
+              VisitorChat.stop(function () {
+                VisitorChat.startChatBot();
+                $('#visitorChat_messageBox').keyup();
+              });
+
+              return false;
+            });
+
+          } else {
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+          }
+        }
+
+        $('#visitorChat_methods_email').one('click', function() {
+          VisitorChat.stop(function(){
+            VisitorChat.startEmail();
+            $('#visitorChat_messageBox').keyup();
+          });
+          return false;
+        });
+
+      },
 
         displayWelcomeMessage: function() {
             if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
@@ -143,7 +307,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 analytics.callTrackEvent('WDN Chat', 'Response', 'Received', difference);
 
                 //Set a cookie so that we don't call this if we have to reload the chat (page refresh or move to another page).
-                WDN.setCookie('UNL_Visitorchat_FirstOperatorResponse', difference, null, '/');
+                this.setSessionCookie('UNL_Visitorchat_FirstOperatorResponse', difference, null, '/');
             }
         },
 
@@ -155,15 +319,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4' id='visitorChat_container' tabindex='-1'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
 
             //set up a container.
-            var html = "<div id='visitorChat_container'>Please Wait...</div>";
+            var html = "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'>Please Wait...</div>";
 
-            $('#visitorchat_clientLogin').replaceWith("<div id='visitorChat_container'></div>");
+            $('#visitorchat_clientLogin').replaceWith("<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'></div>");
 
             $('#visitorChat_container').show();
         },
@@ -174,7 +338,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
@@ -314,7 +478,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                 if (result) {
-                    $('#visitorChat_confirmationContainer').html("The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".<br /><button id='visitorChat_sendAnotherConfirmation'>Send another one</button>.").focus();
+                    $('#visitorChat_confirmationContainer').html("<p class='dcf-txt-xs'>The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>").focus();
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
 
@@ -338,19 +502,19 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     return;
                 }
 
-                var $header = $(this);
-
                 if (!$('#visitorChat_container').is(':visible')) {
                     //Open the container
                     VisitorChat.widgetIsOpen = true;
                     $('#visitorChat').addClass('visitorChat_open');
                     $('#visitorChat_container').slideDown(320);
-                    $header.attr('aria-label', 'Minimize the ' + $header.text() + ' widget');
+                    $('#dcf-nav-toggle-icon-open-chat').addClass('dcf-d-none');
+                    $('#dcf-nav-toggle-icon-close-chat').removeClass('dcf-d-none');
                 } else {
                     //Close the container
                     VisitorChat.widgetIsOpen = false;
                     $('#visitorChat_container').slideUp(320);
-                    $header.attr('aria-label', 'Open the ' + $header.text() + ' widget');
+                    $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
+                    $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
 
                     if (VisitorChat.chatStatus == "LOGIN") {
                         //If the user hasn't done anything yet, simply stop everything and exit early
@@ -368,6 +532,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     //Otherwise start chat/email forms
                     if (VisitorChat.method == 'chat') {
                         VisitorChat.startChat();
+                    } else if (VisitorChat.method == 'chatbot') {
+                      VisitorChat.startChatBot();
                     } else {
                         VisitorChat.startEmail();
                     }
@@ -542,7 +708,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Set a cookie.
             date = new Date();
-            WDN.setCookie('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), null, '/');
+            this.setSessionCookie('UNL_Visitorchat_Start', (Math.round(date.getTime() / 1000)), null, '/');
 
             //Mark as started
             analytics.callTrackEvent('WDN Chat', 'Started');
@@ -587,7 +753,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             if (is_typing) {
-                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing").show(500);
+                WDN.jQuery('#visitorChat_is_typing').text("The other party is typing.").show(500);
             } else {
                 WDN.jQuery('#visitorChat_is_typing').hide(500);
             }
@@ -611,7 +777,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Handle the rest of the data.
             if (data['conversationID'] && this.chatStatus == false) {
-                this.startChat(true);
+                if (this.method == 'chat') {
+                  this.startChat(true);
+                } else {
+                  this.startChatBot(true);
+                }
             }
 
             this.displaySiteAvailability();
@@ -628,8 +798,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         onConversationStatus_OperatorLookupFailed:function (data) {
             clearTimeout(VisitorChat.loopID);
             VisitorChat.operatorsAvailable = false;
-            var html = "<div class='chat_notify' >Unfortunately all of our operators are currently busy. Would you like to send an email instead?" +
-                "<div id='visitorChat_failedOptions'><button id='visitorChat_failedOptions_yes'>Yes</button> <button id='visitorChat_failedOptions_no'>No</button></div></div>";
+            var html = "<div class='chat_notify'><p class='dcf-txt-sm'>Unfortunately all of our operators are currently busy. Would you like to send an email instead?</p>" +
+                "<div class='dcf-d-flex dcf-jc-around dcf-mt-4' id='visitorChat_failedOptions'><button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_yes'>Yes</button> <button class='dcf-btn dcf-btn-secondary' id='visitorChat_failedOptions_no'>No</button></div></div>";
             this.updateChatContainerWithHTML('#visitorChat_container', html);
         },
 
@@ -638,7 +808,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set the cookie (IE ONLY).
             if (navigator.userAgent.indexOf("MSIE") !== -1) {
-                WDN.setCookie('UNL_Visitorchat_Session', phpsessid, null, '/');
+                this.setSessionCookie('UNL_Visitorchat_Session', phpsessid, null, '/');
             }
         },
 
@@ -659,25 +829,32 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append("" +
-                "<div id='visitorChat' class='offline'>" +
-                    "<div id='visitorChat_header' tabindex='0' role='button' aria-label='Open the Email Us widget'>" +
-                        "<span id='visitorChat_header_text'>Email Us</span>" +
-                    "</div>" +
-                    "<div id='visitor-chat-header-options'>" +
-                        "<button class='dcf-pt-1 dcf-pl-4 dcf-pb-1 dcf-pr-5' id='visitorChat_logout' aria-label='close and log out of chat'>" +
-                            "<span class='wdn-icon-cancel'></span>" +
-                        "</button>" +
-                    "</div>" +
-                    "<div id='visitorChat_sound_container'></div>" +
-                "</div>");
+            $('#dcf-footer').append('' +
+                '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
+                        '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
+                        '<div id="visitor-chat-header-options">' +
+                            '<button class="dcf-pl-4 dcf-pr-4 dcf-lh-1 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
+                                '<svg class="dcf-d-block dcf-h-4 dcf-w-4 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
+                                    '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
+                                '</svg>' +
+                            '</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div id="visitorChat_sound_container"></div>' +
+                '</div>');
 
-            $('nav.dcf-pin-bottom').append("" +
-                '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
+            $('#dcf-nav-toggle-group').append('' +
+                '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
-                        '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
+                        '<g class="" id="dcf-nav-toggle-icon-open-chat">' +
+                            '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
+                        '</g>' +
+                        '<g class="dcf-d-none" id="dcf-nav-toggle-icon-close-chat">' +
+                            '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
+                        '</g>' +
                     '</svg>' +
-                    '<span class="dcf-nav-toggle-label dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
+                    '<span class="dcf-nav-toggle-label-chat dcf-mt-1 dcf-txt-2xs">Email Us</span>' +
                 '</button>');
 
             //Handle cookies. (IE session handling);
@@ -731,14 +908,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         deleteAnalyticsCookies: function() {
             //Delete the current cookie.
-            WDN.setCookie('UNL_Visitorchat_Start', '0', -1, '/');
-            WDN.setCookie('UNL_Visitorchat_Session', '0', -1, '/');
-            WDN.setCookie('UNL_Visitorchat_FirstOperatorResponse', '0', -1, '/');
+            this.setSessionCookie('UNL_Visitorchat_Start', '0', -1, '/');
+            this.setSessionCookie('UNL_Visitorchat_Session', '0', -1, '/');
+            this.setSessionCookie('UNL_Visitorchat_FirstOperatorResponse', '0', -1, '/');
         },
 
         closeChatContainer: function() {
             $('#visitorChat').removeClass('visitorChat_open');
             $('#visitorChat_logout').css({'display':'none'});
+            $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
+            $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
             this.widgetIsOpen = false;
             this.displaySiteAvailability();
         },
@@ -757,6 +936,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 $widget.removeClass('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
+            } else if (this.isChatbotAvailable()) {
+                $widget.addClass('online');
+                $widget.removeClass('offline');
+                text = 'Let\'s Chat';
+                VisitorChat.method = 'chatbot';
             } else {
                 $widget.addClass('offline');
                 $widget.removeClass('online');
@@ -764,13 +948,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             }
 
             //Update the text of the visible prompt
-            $('#visitorChat_header_text, #dcf-mobile-toggle-chat .dcf-nav-toggle-label').text(text);
+            $('#visitorChat_header_text').text(text);
 
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
-                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Minimize the ' + text + ' widget').attr('aria-expanded', 'true');
+                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the ' + text + ' widget').attr('aria-expanded', 'true');
+                $('.dcf-nav-toggle-label-chat').text('Close');
             } else {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Open the ' + text + ' widget').attr('aria-expanded', 'false');
+                $('.dcf-nav-toggle-label-chat').text(text);
             }
 
             return true;

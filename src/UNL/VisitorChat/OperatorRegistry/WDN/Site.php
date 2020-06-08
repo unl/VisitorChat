@@ -4,6 +4,8 @@ namespace UNL\VisitorChat\OperatorRegistry\WDN;
 class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
 {
     private $url     = null;
+
+    private $id      = null;
     
     private $members = array();
     
@@ -16,6 +18,10 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     function __construct($url, $data)
     {
         $this->url = $url;
+
+        if (isset($data['site_id'])) {
+            $this->id = $data['site_id'];
+        }
         
         if (isset($data['title'])) {
             $this->title = $data['title'];
@@ -37,6 +43,11 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
     function getURL()
     {
         return $this->url;
+    }
+
+    function getID()
+    {
+        return $this->id;
     }
 
     function getSupportGroups()
@@ -107,4 +118,27 @@ class Site extends \UNL\VisitorChat\OperatorRegistry\SiteInterface
         
         return 0;
     }
+
+    function getCurrentUserRole() {
+        $role = "none";
+        $currentUserID = \UNL\VisitorChat\User\Service::getCurrentUser()->uid;
+        if (!empty($currentUserID)) {
+            foreach ($this->getMembers() as $member) {
+                if ($member->getUID() != $currentUserID) {
+                    continue;
+                }
+                $role = $member->getRole();
+                break;
+            }
+        }
+        return $role;
+    }
+
+    function getEditSiteMembersLink(){
+        if (strtolower($this->getCurrentUserRole()) == 'manager' && !empty($this->id)) {
+            return 'https://webaudit.unl.edu/sites/' . $this->id . '/members/';
+        }
+        return null;
+    }
+
 }

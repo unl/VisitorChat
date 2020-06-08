@@ -31,6 +31,8 @@ class Controller extends \Epoch\Controller
     public static $admins = array();
     
     public static $allowedDomains = array();
+
+    public static $allowedChatbotDomains = array();
     
     /**
      * an array of default operators.  Must be the UIDs
@@ -51,7 +53,7 @@ class Controller extends \Epoch\Controller
     
     public static $environment = "PRODUCTION";
     
-    public static $pagetitle = "UNLchat";
+    public static $pagetitle = "Chat";
     
     public static $badWords = array();
     
@@ -92,8 +94,13 @@ class Controller extends \Epoch\Controller
         $this->retrievePostData();
         
         //reject all old requests.
-        $assignmentService = new \UNL\VisitorChat\Assignment\Service();
-        $assignmentService->expirePendingRequests();
+        try {
+            $assignmentService = new \UNL\VisitorChat\Assignment\Service();
+            $assignmentService->expirePendingRequests();
+        } catch (Exception $e) {
+            // Do nothing just ignore any exceptions
+            //TODO: Add application logging and log at appropriate level (ERROR most likely)
+        }
         
         //Create a URL service.
         self::$URLService = new \UNL\VisitorChat\URL\Service($options);

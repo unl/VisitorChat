@@ -49,10 +49,21 @@ var VisitorChat_ChatBase = Class.extend({
     //The current user id.
     userID:false,
 
+    //The chatbot user id.
+    chatbotUserID:false,
+
+    chatbotClientMessage: false,
+
+    // 'TEST' or 'PROD'
+    chatbotEnv: 'PROD',
+
     blocked:false,
 
     //True if operators have been checked (so that they will only be checked once)
     operatorsChecked:false,
+
+    //True if chatbots have been checked (so that they will only be checked once)
+    chatbotsChecked:false,
 
     //True if there are operators currently available
     operatorsAvailable:false,
@@ -207,9 +218,16 @@ var VisitorChat_ChatBase = Class.extend({
             checkOperators = "&checkOperators=" + escape(document.URL);
         }
 
+        var checkChatbots = "";
+        if (!this.chatbotsChecked) {
+          sessionStorage.removeItem('chatbotID');
+          sessionStorage.removeItem('chatbotName');
+          checkChatbots = "&checkChatbots=" + escape(document.URL);
+        }
+
         //Start the chat.
         $.ajax({
-            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators,
+            url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators + checkChatbots,
             xhrFields:{
                 withCredentials:true
             },
@@ -225,7 +243,9 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     handleUserDataResponse:function (data) {
-        this.userID = data['userID'];
+        if (typeof data['userID'] !== 'undefined') {
+          this.userID = data['userID'];
+        }
 
         this.updatePHPSESSID(data['phpssid']);
 
@@ -233,9 +253,18 @@ var VisitorChat_ChatBase = Class.extend({
             this.operatorsAvailable = data['operatorsAvailable'];
         }
 
+        if ((typeof data['chatbotID'] !== 'undefined') &&
+            (data['chatbotID'] !== null) &&
+            (typeof data['chatbotName'] !== 'undefined') &&
+            (data['chatbotName'] !== null)) {
+          sessionStorage.setItem('chatbotID', parseInt(data['chatbotID']));
+          sessionStorage.setItem('chatbotName', data['chatbotName']);
+        }
+
         this.blocked = data['blocked'];
 
         this.operatorsChecked = true;
+        this.chatbotsChecked = true;
 
         if (data['popupNotifications'] != undefined) {
             this.popupNotifications = data['popupNotifications'];
@@ -458,7 +487,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     appendMessage:function (id, message) {
         $("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
-            "<br /><span class='timestamp'>" + message['date'] + "</span><span class='stamp'>from " + message['poster']['name'] + "</span>" +
+            "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
             "</li>");
     },
 
@@ -478,7 +507,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         clearTimeout(VisitorChat.loopID);
 
-        var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1">This conversation has ended.</div>';
+        var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1"><p class="dcf-mb-1">This conversation has ended.</p></div>';
         this.updateChatContainerWithHTML(".visitorChat_center", html);
 
         if (data['messages'] == undefined) {
@@ -511,7 +540,6 @@ var VisitorChat_ChatBase = Class.extend({
     onConversationStatus_Searching:function (data) {
         var html = '<div class="chat_notify visitorChat_loading" tabindex="-1">Please wait while we find someone to help you.</div>';
         this.updateChatContainerWithHTML("#visitorChat_container", html);
-
     },
 
     /**
@@ -595,15 +623,179 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                    $('#visitorchat_clientLogin').submit();
+                  $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                    $('#visitorChat_messageForm').submit();
-                    $('#visitorChat_messageBox').val('');
+                  $('#visitorChat_messageForm').submit();
+                  $('#visitorChat_messageBox').val('');
                 }
             }
         });
 
+        $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
+          var chatbotIntentMessage = $('#visitorChatbot_intent').val();
+          var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
+
+          // Handle chatbot intent message as a message from user
+          if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
+            $('#visitorChat_messageBox').val(chatbotIntentMessage);
+            if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
+              VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
+            }
+          }
+
+          var message = $('#visitorChat_messageBox').val();
+
+          if (message.trim().length == 0) {
+            // ignore empty messages
+            return false;
+          }
+
+          // check if chatting with chatbot and capture client message
+          if (VisitorChat.method == 'chatbot') {
+            // set chatbot message to be sent once processed by VisitorChat
+            if (VisitorChat.userID === false) {
+              VisitorChat.updateUserInfo();
+            }
+            $('#visitorChat_message_submit').disabled = true;
+            $('#visitorChat_message_submit').attr('disabled', 'disabled');
+            VisitorChat.chatbotClientMessage = message.trim();
+          }
+        });
+
         this.initAjaxForms();
+    },
+
+    generateUUID: function() { // Public Domain/MIT
+      var d = new Date().getTime();
+      if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+        d += performance.now(); //use high-precision timer if available
+      }
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    },
+
+    getChatbotID: function() {
+      if (sessionStorage.chatbotID) {
+        return sessionStorage.getItem('chatbotID');
+      } else {
+        return 0;
+      }
+    },
+
+    getChatbotName: function() {
+      if (sessionStorage.chatbotName) {
+        return sessionStorage.getItem('chatbotName');
+      } else {
+        return false;
+      }
+    },
+
+    getChatbotUserID: function() {
+      if (sessionStorage.chatbotUserID) {
+        return sessionStorage.getItem('chatbotUserID');
+      } else {
+        var chatbotUserID = this.generateUUID();
+        sessionStorage.setItem('chatbotUserID', chatbotUserID);
+        return chatbotUserID;
+      }
+    },
+
+  sendChatbotMessage: function(message) {
+
+      WDN.jQuery('#visitorChat_is_typing').text("The chatbot is processing.").show(500);
+
+      if (VisitorChat.chatbotUserID === false) {
+        VisitorChat.chatbotUserID = VisitorChat.getChatbotUserID();
+      }
+
+      if (VisitorChat.userID) {
+        VisitorChat.sessionAttributes.userID = VisitorChat.userID;
+      }
+
+      if (VisitorChat.name) {
+        VisitorChat.sessionAttributes.name = VisitorChat.name;
+      }
+
+      if (VisitorChat.email) {
+        VisitorChat.sessionAttributes.email = VisitorChat.email;
+      }
+
+      // send it to the Lex runtime
+      var params = {
+        botAlias: VisitorChat.getChatbotName() + '_' + VisitorChat.chatbotEnv,
+        botName: VisitorChat.getChatbotName(),
+        inputText: message,
+        userId: VisitorChat.chatbotUserID,
+        sessionAttributes: VisitorChat.sessionAttributes
+      };
+      //console.log('sendChatbotMessage params', params);
+
+      VisitorChat.lexruntime.postText(params, function(err, data) {
+        if (err) {
+          VisitorChat.recordChatbotError(err);
+        }
+        if (data) {
+          // capture the sessionAttributes for the next cycle
+          VisitorChat.sessionAttributes = data.sessionAttributes;
+          VisitorChat.recordChatbotResponse(data);
+        }
+      });
+
+      WDN.jQuery('#visitorChat_is_typing').hide(500);
+    },
+
+    recordChatbotError: function (err) {
+      //console.log('Error sending message to AWS', err.stack);
+      var message = 'There was an error processing message to chatbot, please try message again.';
+      var data = {
+        'users_id': this.getChatbotID(),
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          //console.log('recordChatbotError data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
+      });
+    },
+
+    recordChatbotResponse: function(lexResponse) {
+      var message = lexResponse.message;
+      var data = {
+        'users_id': this.getChatbotID(),
+        'conversations_id': this.conversationID,
+        'message': message,
+        '_class': 'UNL\\VisitorChat\\Message\\Edit'
+      }
+
+      //Send a post response.
+      $.ajax({
+        type:"POST",
+        url: this.generateChatURL(),
+        xhrFields:{
+          withCredentials:true
+        },
+        data: data,
+        success:$.proxy(function (data, textStatus, jqXHR) {
+          //console.log('recordChatbotResponse data', data);
+          this.handleAjaxResponse(data, textStatus);
+          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+        }, this)
+      });
     },
 
     handleIsTyping:function () {
@@ -623,16 +815,44 @@ var VisitorChat_ChatBase = Class.extend({
     initAjaxForms:function () {
         var options = {
             clearForm:true,
-            timeout:3000,
+            timeout: 10000,
             dataType:"json",
             success:$.proxy(function (data, textStatus, jqXHR) {
                 this.handleAjaxResponse(data, textStatus);
+
+                // handle chatbot message if set
+                if (VisitorChat.chatbotClientMessage) {
+                  VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
+                  $('#visitorChat_message_submit').disabled = false;
+                  $('#visitorChat_message_submit').removeAttr("disabled");
+                  VisitorChat.chatbotClientMessage = false;
+                }
+
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
             }, this),
             error:$.proxy(function (data, textStatus, jqXHR) {
-                if (VisitorChat.chatStatus == 'LOGIN' && typeof data.responseJSON.message !== undefined) {
-                    //display word filter error (and other errors during login)
-                    $('#visitorChat_container').text(data.responseJSON.message);
+                // Temp logging to help debug error
+                console.log('initAjaxForms fail data', data);
+                console.log('initAjaxForms fail textStatus', textStatus);
+                console.log('initAjaxForms fail jqXHR', jqXHR);
+
+                if (VisitorChat.chatStatus == 'LOGIN') {
+
+                  var errorMessage = 'An error occurred. Please try again.';
+
+                  if (textStatus == 'error') {
+                    errorMessage = jqXHR;
+                  } else if (textStatus == 'timeout') {
+                    errorMessage = 'A timeout error occurred. Close and try again. If the error occurs repeatedly, please again try later.';
+                  }
+
+                  //display word filter error (and other errors during login)
+                  $('#visitorChat_container').text(errorMessage);
+
+                } else {
+                  console.log('reloading chat...');
+                  // Reset chat so does not hang
+                  this.updateChat(this.generateChatURL(), true);
                 }
             }, this),
             beforeSubmit:$.proxy(function (arr, $form, options) {
@@ -903,6 +1123,9 @@ var VisitorChat_ChatBase = Class.extend({
         });
 
         //3. clear vars.
+        sessionStorage.removeItem('chatbotUserID');
+        this.chatbotUserID = false;
+
         this.latestMessageId = 0;
         this.chatStatus = false;
     },

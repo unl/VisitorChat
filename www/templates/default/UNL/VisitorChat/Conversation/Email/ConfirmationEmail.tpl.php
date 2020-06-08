@@ -1,17 +1,11 @@
-<div id='visitorChat_confirmationContainer' tabindex="-1">
-    Enter your email address to receive a transcript of this conversation.
-    <form id='visitorChat_confirmationEmailForm' action="<?php echo UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->conversation->id . '/sendConfirmEmail', true, true)?>" class='unl_visitorchat_form unl-darker-gray' method="POST">
-        <fieldset>
-            <legend>Email Address</legend>
-            <ul>
-                <li class='visitorChat_center'>
-                    <label for="visitorChat_confiramtionEmail">Your Email</label>
-                    <input type='text' id='visitorChat_confiramtionEmail' class='validate-email required-entry' name='email' />
-                </li>
-            </ul>
-        </fieldset>
-
-        <input type='hidden' name='conversations_id' value='<?php echo $context->conversation->id ?>'/>
-        <input id='visitorChat_confirmEmail_submit' class="dcf-btn dcf-btn-primary" type="submit" value="Submit" name="visitorChat_confirmEmail_submit" />
+<div id="visitorChat_confirmationContainer" tabindex="-1">
+    <p class="dcf-txt-sm">Enter your email address to receive a transcript of this conversation.</p>
+    <form class="dcf-form unl_visitorchat_form unl-darker-gray" id="visitorChat_confirmationEmailForm" action="<?php echo UNL\VisitorChat\Controller::$URLService->generateSiteURL('conversation/' . $context->conversation->id . '/sendConfirmEmail', true, true)?>" method="POST">
+        <div class="dcf-form-group">
+            <label class="dcf-txt-xs" for="visitorChat_confiramtionEmail">Your Email</label>
+            <input class="validate-email required-entry dcf-w-100%" id="visitorChat_confiramtionEmail" name="email" type="text" required>
+        </div>
+        <input name="conversations_id" type="hidden" value="<?php echo $context->conversation->id ?>">
+        <input class="dcf-btn dcf-btn-primary" id="visitorChat_confirmEmail_submit" name="visitorChat_confirmEmail_submit" type="submit" value="Submit">
     </form>
 </div>

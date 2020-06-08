@@ -31,7 +31,7 @@ class RecordList extends \Epoch\RecordList
     public static function getAllForIP($ip, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options +(new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips
                            WHERE blocked_ips.ip_address = '" . self::escapeString($ip) . "'
@@ -43,7 +43,7 @@ class RecordList extends \Epoch\RecordList
     public static function getAllActiveForIP($ip, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips
                            WHERE NOW() BETWEEN blocked_ips.block_start and blocked_ips.block_end
@@ -57,7 +57,7 @@ class RecordList extends \Epoch\RecordList
     public static function getAllActive($options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips
                            WHERE NOW() BETWEEN blocked_ips.block_start and blocked_ips.block_end
@@ -74,7 +74,7 @@ class RecordList extends \Epoch\RecordList
                 'state' => 'active'
             );
         
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         
         $options['sql'] = "SELECT blocked_ips.id
                            FROM blocked_ips";

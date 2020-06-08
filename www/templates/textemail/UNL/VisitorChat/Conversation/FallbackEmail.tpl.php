@@ -1,12 +1,41 @@
 <?php
 $client = $context->conversation->getClient();
+
+// Include assignee info if nu support and assignments are defined
+if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->support_assignments))) {
+
+  // Parse assigments by space allowing for single quote enclosure into array
+  $supportAssignments = str_getcsv($supportGroupString, ' ', "'");
+
+  // Get first assignee as primary
+  echo 'Primary Assignee=' . array_shift($supportAssignments) . "\n";
+
+  // List any other assignees delimited by commas
+  if (count($supportAssignments)) {
+      echo 'Other Assignees=' . implode(", ", $supportAssignments) . "\n";
+  }
+  
+  if (!empty(trim($client->email))) {
+    echo 'Email Address=' . trim($client->email) . "\n";
+  }
+
+  $firstName = 'Website';
+  $lastName = 'User';
+  if (!empty(trim($client->name))) {
+    $nameParts = explode(" ", trim($client->name), 2);
+    if (!empty($nameParts[0])) {
+      $firstName = $nameParts[0];
+    }
+    if (!empty($nameParts[1])) {
+        $lastName = $nameParts[1];
+    }
+  }
+  echo 'First Name=' . $firstName . "\n";
+  echo 'Last Name=' . $lastName . "\n";
+}  
+
 ?>
-<?php if ($context->isMySupportEmail()) :?>
-assignees=<?php echo str_replace("'", '"', $context->support_assignments) . "\n" ?>
-<?php if (!empty($client->email)): ?>
-contact=<?php echo $client->email ?>
-<?php endif; ?>
-<?php endif; ?>
+
 
 <?php
 $context->messages->rewind();

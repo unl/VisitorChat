@@ -9,17 +9,17 @@ function get_var($var, $context) {
 ?>
 
 <form id='visitorchat_maxChats' class='zenform' name='input' method="post" action="<?php  echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("user/settings", false, false);?>" >
-    <ul>
+    <ul class="dcf-list-bare">
         <li>
-            <label for="alias">Alias (the name that will be displayed to clients.  If empty, your first name will be displayed.</label><br />
-            <input type="text" name="alias" id="alias" value="<?php echo get_var('alias', $context);?>"/>
+            <label class="dcf-label" for="alias">Alias (the name that will be displayed to clients.  If empty, your first name will be displayed.</label><br />
+            <input class="dcf-input-text" type="text" name="alias" id="alias" value="<?php echo get_var('alias', $context);?>"/>
         </li>
         <li>
-            <label for="max_chats">Max Chats</label><br />
-            <input type="text" name="max_chats" id="max_chats" required value="<?php echo get_var('max_chats', $context);?>"/>
+            <label class="dcf-label" for="max_chats">Max Chats</label><br />
+            <input class="dcf-input-text" type="text" name="max_chats" id="max_chats" required value="<?php echo get_var('max_chats', $context);?>"/>
         </li>
     </ul>
-    <input id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
+    <input class="dcf-btn dcf-btn-primary" id='visitorChat_login_sumbit' type="submit" value="Submit" name="visitorChat_login_sumbit" />
 </form>
 
 <div>

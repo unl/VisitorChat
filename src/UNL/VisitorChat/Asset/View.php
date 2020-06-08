@@ -15,7 +15,7 @@ class View
     
     public $protocol = 'http';
     
-    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0');
+    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1');
     
     //Set to true to start caching.
     public static $cache = false;
@@ -31,8 +31,8 @@ class View
         if (isset($this->options['version'])) {
             $this->version = $this->options['version'];
         }
-        
-        //parse the version. (handle the case that 4.0 is sent as 4
+
+        //parse the version. (handle the case that x.0 is sent as x
         if (!substr_count($this->version, '.')) {
             $this->version = $this->version . '.0';
         }
@@ -132,7 +132,8 @@ class View
     
     function getData()
     {
-        if (self::$cache && file_exists($this->getCacheFileName())) {
+        // Cache JS if set and cache exists
+        if (self::$cache && $this->type == 'js' && file_exists($this->getCacheFileName())) {
             $this->sendCacheHeaders();
             
             return file_get_contents($this->getCacheFileName());
@@ -175,17 +176,9 @@ class View
         $data = ob_get_contents();
         ob_end_clean();
 
-        //Cache if we have to.
-        if (self::$cache) {
-            switch ($this->type) {
-                case 'js':
-                    $data = \JSMin::minify($data);
-                    break;
-                case 'css':
-                    $data = \Minify_CSS::minify($data);
-                    break;
-            }
-            
+        //Cache JS if we have to.
+        if (self::$cache && $this->type == 'js') {
+            $data = \JSMin::minify($data);
             file_put_contents($this->getCacheFileName(), $data);
         }
         

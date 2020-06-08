@@ -1,482 +1,364 @@
-// !Framework Mixins
-@import (reference) 'mixins/breakpoints';
-@import (reference) 'mixins/colors';
-@import (reference) 'mixins/fonts';
-@import (reference) 'mixins/functions';
-@import (reference) 'mixins/vars';
+/////////
+// CLIENT
+/////////
+
 
 #visitorChat {
-    position: fixed;
-    right: calc(~'1.333em + 1vw');
-    bottom: 1em;
-    max-width: 17.713em;
-    z-index: 300;
-    .sans-serif-font();
-    border-radius: 3px;
-    box-shadow: 0 5px 10px 0 rgba(10, 10, 10, .25);
-    transition: background-color .3s ease-out;
-
-    @supports not(right: calc(1.333em + 1vw)) {
-        right: 1.333em;
-    }
-
-    @supports (filter: drop-shadow(0 1px 3px rgba(71, 71, 70, .25))) {
-        box-shadow: none;
-        filter: drop-shadow(0 0 5px fadeout(@ui09, 75%)) drop-shadow(0 0 1px fadeout(@ui09, 40%));
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        right: 1.333em;
-        z-index: 299;
-        border-style: solid;
-        border-width: .75em 0 .75em .75em;
-        border-color: @triad transparent transparent transparent;
-    }
-
-    &.offline {
-        background-color: @ui04;
-        transition: background-color .3s ease-out;
-
-        &:after {
-            border-color: @ui04 transparent transparent transparent;
-        	transition: border-color .3s ease-out;
-        }
-    }
-
-    &.online {
-        background-color: @triad;
-        transition: background-color .3s ease-out;
-
-        &:after {
-            border-color: @triad transparent transparent transparent;
-            transition: border-color .3s ease-out;
-        }
-    }
-
-    &:hover {
-
-        &.offline {
-            background-color: darken(@ui04, 7%);
-            transition: background-color .3s ease-out;
-
-            &:after {
-                border-color: darken(@ui04, 7%) transparent transparent transparent;
-                transition: border-color .3s ease-out;
-            }
-        }
-
-        &.online {
-            background-color: darken(@triad, 7%);
-            transition: background-color .3s ease-out;
-
-            &:after {
-                border-color: darken(@triad, 7%) transparent transparent transparent;
-                transition: border-color .3s ease-out;
-            }
-        }
-    }
-
-    h2 {
-        margin-bottom: .75em;
-        padding-top: .75em;
-        font-size: 1em;
-        .sans-serif-font();
-        line-height: 1.425;
-        border-top: 1px solid @ui04;
-    }
-
-    h3 {
-        font-size: .75em;
-    }
-
-    li {
-        list-style: none;
-        margin-top: .563em;
-        margin-bottom: .563em;
-    }
-
-    fieldset {
-        margin: 0;
-    }
-
-    legend {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        text-transform: none;
-    }
-
-    label,
-    input[type='email'],
-    input[type='text'],
-    textarea,
-    select {
-        display: block;
-    }
-
-    label {
-        margin-bottom: .317em;
-        font-size: .75em;
-        line-height: 1.333;
-    }
-
-    input[type='email'],
-    input[type='text'],
-    textarea,
-    select {
-        padding: .563em;
-        appearance: none;
-    }
-
-    #visitorChat_messageForm label[for='visitorChat_messageBox'] {
-        position: absolute;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        width: 1px;
-        margin: -1px;
-        padding: 0;
-        border: 0;
-    }
+  background-color: #e3e3e2;
+  border-radius: 3px;
+  box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
+  color: #424240;
+  max-width: 17.76em;
+  right: calc(~'1.333em + 1vw');
+  transition: background-color .3s ease-out;
+  z-index: 99999;
 }
+
+
+@supports (filter: drop-shadow(0 1px 3px rgba(71,71,70,.25))) {
+
+  #visitorChat {
+    box-shadow: none;
+    filter: drop-shadow(0 0 5px fadeout(#424240,75%)) drop-shadow(0 0 1px fadeout(#424240,40%));
+  }
+
+}
+
+
+#visitorChat::after {
+  border-color: #e3e3e2 transparent transparent transparent;
+  border-style: solid;
+  border-width: .75em 0 .75em .75em;
+  content: '';
+  position: absolute;
+  right: 1.33em;
+  top: 100%;
+  z-index: 299;
+}
+
+
+#visitorChat.online {
+  background-color: #00784e;
+}
+
+
+#visitorChat.online #visitorChat_header_text,
+#visitorChat.online #visitorChat_logout {
+  color: #fefdfa;
+}
+
+
+#visitorChat.online::after {
+  border-color: #00784e transparent transparent transparent;
+}
+
+
+#visitorChat h2 {
+  border-top: 1px solid #e3e3e2;
+  font-size: 1em;
+  line-height: 1.43;
+  margin-bottom: .75em;
+  padding-top: .75em;
+}
+
+
+#visitorChat h3 {
+	font-size: .75em;
+}
+
+
+#visitorChat li {
+  list-style: none;
+  margin-bottom: .56em;
+}
+
 
 #visitorChat_header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: .75em 1.333em;
-    line-height: 1;
-    outline: none;
-
-    &:hover {
-        cursor: pointer;
-    }
-
-    .offline & {
-        color: @ui09;
-    }
-
-    .online & {
-        color: #fff;
-    }
+  outline: none;
 }
 
-#visitorChat_header_text {
-    text-transform: uppercase;
 
-    #visitorChat_header:focus & {
-        outline: thin dotted currentColor;
-    }
+#visitorChat_header:hover {
+  cursor: pointer;
 }
 
-#visitor-chat-header-options {
-    position: absolute;
-    top: 0;
-    right: 0;
-    line-height: 1;
+
+#visitorChat_header:focus #visitorChat_header_text {
+  outline: thin dotted currentColor;
 }
+
 
 #visitorChat_logout {
-    display: none;
-    padding: .75em 1.333em .75em .422em;
-    border: 0;
-    background-color: transparent;
-
-    &:focus {
-        outline: thin dotted currentColor;
-    }
-
-    .online & {
-
-        &:focus {
-            outline: thin dotted #fff;
-        }
-    }
-
-    [class*='wdn-icon-'] {
-
-        #footer & {
-            display: block;
-            padding-left: 0;
-
-            &:before {
-                position: relative;
-                top: 0;
-                margin-right: 0;
-                font-size: .75em;
-            }
-        }
-
-        #footer .offline & {
-
-            &:before {
-                color: @ui09;
-            }
-        }
-
-        #footer .online & {
-
-            &:before {
-                color: #fff;
-            }
-        }
-    }
+  display: none;
 }
 
-#visitorChat_container,
-#visterChat_conversation,
-#visitorChat_confirmationContainer,
+
+#visitorChat_logout:focus {
+  outline: thin dotted currentColor;
+}
+
+
+.online #visitorChat_logout:focus {
+  outline: thin dotted #fff;
+}
+
+
+#visitorChat_container:focus,
+#visitorChat_conversation:focus,
+#visitorChat_confirmationContainer:focus,
 .chat_notify {
-
-    &:focus {
-        outline: 0;
-    }
+  outline: 0;
 }
+
+
+#visitorChat #visitorChat_conversation_header {
+  display: none;
+}
+
 
 #visitorChat_container {
-    position: relative;
-    margin-bottom: .563em;
-    padding: 1em 1.333em;
-    background: linear-gradient(to bottom, @ui01 0%, @ui03 60%);
+  background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
 }
+
 
 #visitorChat_chatBox {
-    position: relative;
-    height: 14.204rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    z-index: 0;
-    margin-bottom: .75em;
-    font-size: .935em;
-
-    ul {
-        padding: 0 1em 0 0;
-    }
-
-    li {
-        position: relative;
-        width: calc(~'100% - 1em');
-        margin-bottom: 1em;
-        padding: .75em 1em;
-        line-height: 1.425;
-        border-radius: 3px;
-
-        &:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            transform: translateY(100%);
-            border-style: solid;
-        }
-
-        .timestamp,
-        .stamp {
-            display: block;
-            padding-top: 0.422em;
-            font-size: .75em;
-        }
-
-        .timestamp {
-            float: right;
-            padding-left: 1em;
-        }
-    }
+  height: 14.2rem;
 }
+
+
+#visitorChat_chatBox ul {
+	padding-right: 1em; // Account for vertical scroll bar
+}
+
+
+#visitorChat_chatBox li {
+  border-radius: 3px;
+  margin-bottom: 1.33em;
+  padding: .75em 1em;
+  position: relative;
+  width: calc(~'100% - 1em');
+}
+
+
+// Conversation bubble arrow
+#visitorChat_chatBox li::after {
+  border-style: solid;
+  bottom: 1px; // Overlap 1px to ensure there is no gap between bubble and arrow
+  content: '';
+  position: absolute;
+  transform: translateY(100%);
+}
+
+
+.unl .dcf-footer #visitorChat_chatBox a,
+.unl .dcf-footer #visitorChat_chatBox a:link {
+  color: #d00000;
+}
+
+
+.unl .dcf-footer #visitorChat_chatBox a:visited,
+.unl .dcf-footer #visitorChat_chatBox a:hover,
+.unl .dcf-footer #visitorChat_chatBox a:active {
+  color: #9e0900;
+}
+
+
+.force-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+}
+
 
 .visitorChat_me,
 .visitorChat_them {
-    background-color: #fff;
+  background-color: #fff;
 }
+
 
 .visitorChat_me {
-    float: right;
-
-    &:after {
-        right: 1em;
-        border-width: .75em 0 .75em .75em;
-        border-color: #fff transparent transparent transparent;
-    }
+  float: right;
 }
+
+
+.visitorChat_me::after {
+  border-color: #fff transparent transparent transparent;
+  border-width: .75em 0 .75em .75em;
+  right: 1em;
+}
+
 
 .visitorChat_them {
-    float: left;
-
-    &:after {
-        left: 1em;
-        border-width: .75em .75em .75em 0;
-        border-color: #fff transparent transparent transparent;
-    }
+  float: left;
 }
+
+
+.visitorChat_them::after {
+  border-color: #fff transparent transparent transparent;
+  border-width: .75em .75em .75em 0;
+  left: 1em;
+}
+
 
 #visitorChat_messageBox {
-    overflow-y: auto;
-    resize: none;
-    line-height: 1.425;
+  overflow-y: auto;
+  resize: none;
 }
 
-#visitorChat_login_submit,
-#visitorChat_message_submit,
-#visitorChat_confirmEmail_submit {
-    margin-top: .75em;
-    padding: .8em 1em .75em;
-    white-space: normal;
-}
-
-#visitorChat_footerHeader, // legend
-.chat_notify,
-.welcome-message {
-    line-height: 1.425;
-}
 
 .welcome-message {
-    margin-top: 0;
+	margin-top: 0;
 }
+
 
 #clientInfo,
 #visitorChat_url,
-#visitorChat_confirmationEmailForm legend,
 .unl_visitorchat_submit,
 .visitorChat_info {
-    display: none;
+	display: none;
 }
+
 
 #chat_button img {
-    vertical-align: bottom;
+  vertical-align: bottom;
 }
+
 
 .visitorChat_loading {
-    padding-top: 1.777em;
-    background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif');
-    background-repeat: no-repeat;
-    background-position: 50% 0;
-}
-
-#visitorChat_confirmationContainer {
-    margin-top: .75em;
+  background-image: url('<?php echo \UNL\VisitorChat\Controller::$url ?>images/ajax.gif');
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  padding-top: 1.78em;
 }
 
 
-/* Validation Stylings */
+// Validation stylings
 #visitorChat .validation-advice li,
 #visitorchat_clientLogin_anonwaning {
-    font-size: .75em;
-    line-height: 1.333;
+  font-size: .75em;
 }
+
+
+// Override display of icon font in form validation
+#visitorChat ul.validation-advice li::before {
+  content: '' !important;
+  margin-right: 0 !important;
+  width: 0 !important;
+}
+
 
 #visitorchat_clientLogin_anonwaning {
-    color: @energetic;
+  color: #e72c0c;
 }
+
 
 #visitorChat_email_fallback {
-    float: left;
+  float: left;
 }
 
+
 #visitorChat_email_fallback_text {
-    padding-left: 1rem;
+  padding-left: 1rem;
 }
+
 
 /* hide all email related settings for now */
 #visitorChat_email_fallback,
 #visitorchat_clientLogin #visitorChat_email_fallback_text {
-    display: none;
+  display: none;
 }
+
 
 // !Captcha
-#visitorChat_captchaForm {
-
-    a {
-        float: right;
-    }
-
-    strong {
-        font-size: .75em;
-        font-weight: normal;
-    }
-
-    input[type='submit'] {
-        margin-top: 1.333em;
-    }
+#visitorChat_captchaForm a {
+  float: right;
 }
+
+
+#visitorChat_captchaForm strong {
+  font-size: .75em;
+  font-weight: normal;
+}
+
+
+#visitorChat_captchaForm input[type='submit'] {
+  margin-top: 1.33em;
+}
+
 
 #VisitorChat_captcha_img {
-    width: 100%;
-    margin-bottom: .317em;
-    border: 1px solid @ui04;
+  border: 1px solid #e3e3e2;
+  margin-bottom: .32em;
+  width: 100%;
 }
+
 
 #visitorChat_methods {
-    position: absolute;
-    right: 1.333rem;
-    bottom: 1.333rem;
-    font-size: .75em;
+  bottom: 1.33rem;
+  font-size: .75em;
+  position: absolute;
+  right: 1.33rem;
 }
+
 
 #visitorChat_methods_email,
-#visitorChat_methods_chat,
-#visitorChat_sendAnotherConfirmation,
-#visitorChat_failedOptions button {
-    padding: 0;
-    line-height: normal;
-    color: @scarlet;
-    border-width: 1px;
-    border-style: dotted;
-    border-color: transparent transparent currentColor transparent;
-    background-color: transparent;
-
-    &:focus {
-        outline: 0;
-        border-color: currentColor;
-    }
+#visitorChat_methods_chat {
+  background-color: transparent;
+  border-color: transparent transparent currentColor transparent;
+  border-style: dotted;
+  border-width: 1px;
+  color: #d00000;
+  line-height: normal;
+  padding: 0;
 }
 
-#visitorChat_sendAnotherConfirmation {
-    margin-top: .75em;
 
+#visitorChat_methods_email:focus,
+#visitorChat_methods_chat:focus {
+  border-color: currentColor;
+  outline: 0;
 }
 
-#visitorChat_failedOptions {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 1em;
-}
 
 #visitorChat_sound_container {
-    height: 0;
+  height: 0;
 }
 
+
 #visitorChat_is_typing {
-    font-size: .75em;
+  font-size: .75em;
 }
 
 
 // !Media Queries
+@media (max-width: 56.11em) {
+
+  #visitorChat {
+    bottom: 5.21em; // 4.21em (height of mobile toolbar) + 1em (allow room for chat balloon arrow)
+    visibility: hidden;
+  }
+
+  #visitorChat.visitorChat_open {
+    visibility: visible;
+  }
+
+}
+
 
 @media (min-width: 600px) { // ?
 
-    #visitorChat_footercontainer {
-        display: block;
-    }
+  #visitorChat_footercontainer {
+    display: block;
+  }
+
 }
 
-@media @bp768 {
 
-    #visitorChat {
-        font-size: .802rem;
-    }
+@media (min-width: 56.12em) {
 
-    #visitorChat_header_text {
-        font-size: .75rem;
-    }
-}
+  #visitorChat {
+    bottom: 1em;
+  }
 
-@media print {
-
-    #visitorChat {
-        display: none;
-    }
 }

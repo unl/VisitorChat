@@ -28,7 +28,7 @@
                             <?php continue; //we don't know anything else about this user, so move to the next one ?>
                         <?php endif; ?>
                         <span class="user-status <?php echo strtolower($chatUser->getStatus()->status) ?>"></span>
-                        <span class="wdn-text-hidden">(<?php echo strtolower($chatUser->getStatus()->status) ?>)</span>
+                        <span class="dcf-sr-only">(<?php echo strtolower($chatUser->getStatus()->status) ?>)</span>
                         <?php
                         $alias = "";
                         if (!empty($chatUser->alias)) {
@@ -50,6 +50,29 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <?php
+              $editMembersLink = $context->site->getEditSiteMembersLink();
+              if (!empty($editMembersLink)) {
+            ?>
+            <a class="dcf-btn dcf-btn-primary dcf-mb-2 dcf-txt-decor-none dcf-txt-3xs" href="<?php echo $editMembersLink; ?>">Edit Members</a>
+            <?php } ?>
         </dd>
+      <dt>Chatbot</dt>
+      <?php $chatbots = \UNL\VisitorChat\Chatbot\Record::getSiteChatbots($context->site->getURL()); ?>
+      <dd>
+        <ul>
+            <?php
+             if (count($chatbots) > 0) {
+               foreach ($chatbots as $chatbot): ?>
+                   <li>
+                     <span class="dcf-bold"><?php echo $chatbot->name; ?></span> - <?php echo $chatbot->description; ?>
+                   </li>
+               <?php endforeach;
+             } else {
+               echo "<li>None</li>";
+             }
+             ?>
+        </ul>
+      </dd>
     </dl>
 </div>

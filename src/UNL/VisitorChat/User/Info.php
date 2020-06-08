@@ -17,6 +17,8 @@ class Info
     public $userType           = false;
     public $userStatusReason   = false;
     public $popupNotifications = false;
+    public $chatbotID          = null;
+    public $chatbotName        = null;
     
     function __construct($options = array())
     {
@@ -34,7 +36,18 @@ class Info
                 $this->blocked = true;
             }
         }
-        
+
+        if (isset($options['checkChatbots'])) {
+            $chatbots = \UNL\VisitorChat\Chatbot\Record::getSiteChatbots($options['checkChatbots']);
+            if (count($chatbots) > 0) {
+                foreach ($chatbots as $chatbot) {
+                    $this->chatbotID = $chatbot->user_id;
+                    $this->chatbotName = $chatbot->name;
+                    break;
+                }
+            }
+        }
+
         if (isset($options['checkOperators'])) {
             $this->operatorsAvailable = $this->areOperatorsAvailable($options['checkOperators']);
 

@@ -33,13 +33,13 @@ class RecordList extends \Epoch\RecordList
     public static function getConversationsForSite($url, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
                            WHERE assignments.answering_site = '" . self::escapeString($url) . "'
                            GROUP BY conversations.id
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
         
         return self::getBySql($options);
     }
@@ -47,7 +47,7 @@ class RecordList extends \Epoch\RecordList
     public static function getConversationsForSiteAndUser($url, $users_id, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
@@ -55,7 +55,7 @@ class RecordList extends \Epoch\RecordList
                              AND assignments.users_id = '" . (int)$users_id . "'
                              AND assignments.status IN ('LEFT', 'COMPLETED')
                            GROUP BY conversations.id
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
 
         return self::getBySql($options);
     }
@@ -70,12 +70,12 @@ class RecordList extends \Epoch\RecordList
      */
     public static function getAllIdleConversations($options = array()) {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id, message
                            FROM conversations
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
                            WHERE (SELECT id FROM messages WHERE conversations_id = conversations.id ORDER BY date_created DESC LIMIT 1) = messages.id
-                               AND conversations.method = 'CHAT'
+                               AND (conversations.method = 'CHAT' OR conversations.method = 'CHATBOT')
                                AND messages.date_created < now() + INTERVAL -" . (int)\UNL\VisitorChat\Controller::$conversationTTL . " MINUTE
                                AND (conversations.status = 'CHATTING' OR conversations.status = 'SEARCHING')";
 
@@ -92,7 +92,7 @@ class RecordList extends \Epoch\RecordList
      */
     public static function getAllSearchingEmailConversations($options = array()) {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id, message
                            FROM conversations
                            LEFT JOIN messages ON (conversations.id = messages.conversations_id)
@@ -113,14 +113,14 @@ class RecordList extends \Epoch\RecordList
         }
         
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            LEFT JOIN assignments ON (conversations.id = assignments.conversations_id)
                            WHERE assignments.users_id = " . (int)$userID . "
                                AND (assignments.status = 'ACCEPTED' OR assignments.status = 'COMPLETED')
                                $constraint
-                           ORDER BY conversations.date_created ASC";
+                           ORDER BY conversations.date_created DESC";
         
         return self::getBySql($options);
     }
@@ -128,7 +128,7 @@ class RecordList extends \Epoch\RecordList
     public static function getAllConversationsWithStatus($status, $options = array())
     {
         //Build the list
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
         $options['sql'] = "SELECT conversations.id
                            FROM conversations
                            WHERE status = '" . self::escapeString($status) ."'
@@ -139,7 +139,7 @@ class RecordList extends \Epoch\RecordList
 
     public static function getCompletedConversationsForSite($url = false, $start = false, $end, $result = false, $options = array())
     {
-        $options = $options + self::getDefaultOptions();
+        $options = $options + (new RecordList)->getDefaultOptions();
 
         //Build sql
         $options['sql'] = "SELECT conv1.id
