@@ -13,6 +13,7 @@
     "load-grunt-tasks": "^5.1.0",
     "lodash": "^4.17.15",
     "lodash.merge": "^4.6.2",
+    "minimist": ">=1.2.3",
     "websocket-extensions": ">=0.1.4"
   }
 }
