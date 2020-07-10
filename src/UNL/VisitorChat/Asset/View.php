@@ -15,7 +15,7 @@ class View
     
     public $protocol = 'http';
     
-    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1');
+    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1', '5.2');
     
     //Set to true to start caching.
     public static $cache = false;
