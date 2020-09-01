@@ -82,6 +82,8 @@ var VisitorChat_ChatBase = Class.extend({
 
     version: 5.0,
 
+    nonCORSDomain: 'unl.edu',
+
     config: {},
 
     //timeout for the is_typing status
@@ -142,8 +144,15 @@ var VisitorChat_ChatBase = Class.extend({
         });
     },
 
+    usePhpSessIdCookie: function() {
+      var domainName = window.location.hostname;
+      var nonCORSDomainLength = this.nonCORSDomain.length;
+      // Use cookie if MSIE browser or CORSDomain
+      return navigator.userAgent.indexOf("MSIE") !== -1 || (domainName.length >= nonCORSDomainLength && domainName.substr(domainName.length-nonCORSDomainLength, nonCORSDomainLength) != this.nonCORSDomain);
+    },
+
     getURLSessionParam: function() {
-        if (navigator.userAgent.indexOf("MSIE") == -1) {
+        if (!this.usePhpSessIdCookie()) {
             return '';
         }
 
