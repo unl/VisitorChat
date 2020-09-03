@@ -806,8 +806,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         updatePHPSESSID:function (phpsessid) {
             this.phpsessid = phpsessid;
 
-            //set the cookie (IE ONLY).
-            if (navigator.userAgent.indexOf("MSIE") !== -1) {
+            //set the cookie (IE ONLY) or CORS Domain.
+            if (this.usePhpSessIdCookie()) {
                 this.setSessionCookie('UNL_Visitorchat_Session', phpsessid, null, '/');
             }
         },
