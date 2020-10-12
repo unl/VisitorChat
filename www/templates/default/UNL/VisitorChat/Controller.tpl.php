@@ -18,7 +18,10 @@ $url = \UNL\VisitorChat\Controller::$url;
 // Add WDN Deprecated Styles
 $page->head .= '<link rel="preload" href="/wdn/templates_5.2/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.2/css/deprecated.css"></noscript>';
 
-$page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0');
+// Cache bust
+$cb = '20201012';
+
+$page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0&cb=' . $cb);
 
 //load model-specific css.
 if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller::$applicationDir . "/www/css/" . str_replace("\\", "/", $context->options['model']) . ".css")) {
@@ -29,7 +32,7 @@ if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller
 $page->addScriptDeclaration('var VisitorChat = true;');
 
 if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
-    $page->addScript(\UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '&v=5.0');
+    $page->addScript(\UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '&v=5.2&cb=' . $cb);
 };
 
 $page->jsbody .= \UNL\VisitorChat\Controller::$headerHTML;
