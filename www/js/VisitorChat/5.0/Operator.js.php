@@ -360,18 +360,18 @@ require(['jquery', 'jqueryui'], function($) {
 
         updateConversationListWithUnreadMessages:function () {
             //Do we need to display a notice?
+
             for (conversation in this.unreadMessages) {
                 var html = "";
                 if (this.unreadMessages[conversation]) {
                     html = this.unreadMessages[conversation];
                 }
-
                 // Don't display if '0' unread messages
                 if (html === '0' || html === '') {
-                    $("#visitorChat_UnreadMessages_" + conversation).removeClass('unread_message');
+                    $("#visitorChat_UnreadMessages_" + conversation).hide();
                 } else {
                     $("#visitorChat_UnreadMessages_" + conversation).html(html);
-                    $("#visitorChat_UnreadMessages_" + conversation).addClass('unread_message');
+                  $("#visitorChat_UnreadMessages_" + conversation).show();
                 }
             }
         },
