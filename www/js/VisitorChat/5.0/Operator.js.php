@@ -371,7 +371,7 @@ require(['jquery', 'jqueryui'], function($) {
                     $("#visitorChat_UnreadMessages_" + conversation).hide();
                 } else {
                     $("#visitorChat_UnreadMessages_" + conversation).html(html);
-                  $("#visitorChat_UnreadMessages_" + conversation).show();
+                    $("#visitorChat_UnreadMessages_" + conversation).show();
                 }
             }
         },
