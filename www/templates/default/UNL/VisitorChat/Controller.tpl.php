@@ -1,6 +1,6 @@
 <?php
 use \UNL\Templates\Templates;
-$page = Templates::factory('Local', Templates::VERSION_5_2);
+$page = Templates::factory('Local', Templates::VERSION_5_3);
 
 $savvy->addGlobal('page', $page);
 
@@ -9,14 +9,14 @@ $savvy->addGlobal('page', $page);
  */
 
 $wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
-if (file_exists($wdn_include_path . '/wdn/templates_5.2')) {
+if (file_exists($wdn_include_path . '/wdn/templates_5.3')) {
     $page->setLocalIncludePath($wdn_include_path);
 }
 
 $url = \UNL\VisitorChat\Controller::$url;
 
 // Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="/wdn/templates_5.2/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.2/css/deprecated.css"></noscript>';
+$page->head .= '<link rel="preload" href="/wdn/templates_5.3/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.3/css/deprecated.css"></noscript>';
 
 // Cache bust
 $cb = '20201012';
@@ -32,7 +32,7 @@ if (isset($context->options['model']) && file_exists(\UNL\VisitorChat\Controller
 $page->addScriptDeclaration('var VisitorChat = true;');
 
 if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
-    $page->addScript(\UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '&v=5.2&cb=' . $cb);
+    $page->addScript(\UNL\VisitorChat\Controller::$url . 'assets/js?for=' . \UNL\VisitorChat\User\Service::getCurrentUser()->type . '&v=5.3&cb=' . $cb);
 };
 
 $page->jsbody .= \UNL\VisitorChat\Controller::$headerHTML;
