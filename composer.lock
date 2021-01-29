@@ -158,16 +158,16 @@
         },
         {
             "name": "unl/unl_cache_lite",
-            "version": "v0.1.1",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unlpear/UNL_Cache_Lite.git",
-                "reference": "ead1a59700a52f84250de2820d650e207ee7d698"
+                "reference": "5aa07f2add74ae3864b45a03a1f7fe37a01ac4b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unlpear/UNL_Cache_Lite/zipball/ead1a59700a52f84250de2820d650e207ee7d698",
-                "reference": "ead1a59700a52f84250de2820d650e207ee7d698",
+                "url": "https://api.github.com/repos/unlpear/UNL_Cache_Lite/zipball/5aa07f2add74ae3864b45a03a1f7fe37a01ac4b4",
+                "reference": "5aa07f2add74ae3864b45a03a1f7fe37a01ac4b4",
                 "shasum": ""
             },
             "type": "library",
@@ -178,10 +178,10 @@
             },
             "description": "a speedy and safe caching library",
             "support": {
-                "source": "https://github.com/unlpear/UNL_Cache_Lite/tree/v0.1.1",
+                "source": "https://github.com/unlpear/UNL_Cache_Lite/tree/v0.1.2",
                 "issues": "https://github.com/unlpear/UNL_Cache_Lite/issues"
             },
-            "time": "2014-08-25T20:13:04+00:00"
+            "time": "2020-12-10T21:17:32+00:00"
         },
         {
             "name": "zaininnari/html-minifier",
