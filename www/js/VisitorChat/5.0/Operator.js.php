@@ -286,15 +286,12 @@ require(['jquery', 'jqueryui'], function($) {
                     }
                 },
                 success:$.proxy(function (data) {
-
-                    $("#visitorChat_brightBox").html(data);
-                    this.showBrightBox();
-                    this.loadShareWatchers();
-                    //start a new dialog box.
+                    // Populate content in DCF modal
+                    $("#share-conversation-modal-content").html(data);
+                    // Trigger click on hidden button to open DCF Modal
+                    $(".share-conversation-modal-toggle-btn").click();
                 }, this)
             });
-
-            $('#visitorChat_brightBox').height('350px');
         },
 
         loadShareWatchers:function () {
