@@ -19,7 +19,7 @@
 
                     //Do not display yourself.
                     if ($account->id == \UNL\VisitorChat\User\Service::getCurrentUser()->id) {
-                        //continue;
+                        continue;
                     }
 
                     $disabled = "disabled='disabled'";
