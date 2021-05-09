@@ -13,7 +13,7 @@
     "less-plugin-autoprefix": "^2.0.0",
     "less-plugin-clean-css": "^1.5.1",
     "load-grunt-tasks": "^5.1.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "minimist": ">=1.2.3",
     "websocket-extensions": ">=0.1.4"
