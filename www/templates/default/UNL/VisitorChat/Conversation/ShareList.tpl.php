@@ -1,5 +1,5 @@
-<div id='visitorChat_shareList'>
-    <label for="share_to">Select who you want to share with</label>
+<div class="dcf-form-group">
+    <label for="share_to">Select operator to share with</label>
     <select id='share_to' name='to' data-placeholder='Select a team or group' class='chzn-select dcf-input-select'>
         <option value='default'></option>
         <?php
@@ -9,8 +9,8 @@
                 $disabled = "";
             }
             ?>
-            <optgroup label='<?php echo $site->getTitle();?>' <?php echo $disabled?>>
-                <option value='<?php echo urlencode($site->getURL());?>'>All Operators for <?php echo $site->getTitle();?></option>
+            <optgroup class='share_option' label='<?php echo $site->getTitle();?>' <?php echo $disabled?>>
+                <option class='share_option' value='<?php echo urlencode($site->getURL());?>'>All Operators for <?php echo $site->getTitle();?></option>
                 <?php
                 foreach ($site->getMembers() as $member) {
                     if (!$account = $member->getAccount()) {
@@ -27,7 +27,7 @@
                         $disabled = "";
                     }
 
-                    echo "<option value='" . urlencode($site->getURL()) . "::" . $account->uid . "' " . $disabled . ">" . $account->name . "</option>";
+                    echo "<option class='share_option' value='" . urlencode($site->getURL()) . "::" . $account->uid . "' " . $disabled . ">" . $account->name . "</option>";
                 }
                 ?>
                 </ul>
