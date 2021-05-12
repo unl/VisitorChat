@@ -37,18 +37,21 @@ class Share extends \UNL\VisitorChat\Conversation\Record
         if (!isset($post['method']) || !in_array($post['method'], array('invite'))) {
             throw new \Exception('A valid method was not given.', 400);
         }
-        
-        if (!isset($post['to'])) {
+
+        if (!isset($post['to']) || strtolower($post['to']) === 'default') {
             throw new \Exception('No one was specified to share this conversation with.', 400);
         }
         
         switch ($post['method']) {
-            case 'invite': 
+            case 'invite':
                 //Start a new invitation.
                 if (!\UNL\VisitorChat\Invitation\Record::createNewInvitation($this->id, $post['to'], \UNL\VisitorChat\User\Service::getCurrentUser()->id)) {
                     throw new \Exception('Failed to send invite', 500);
                 }
                 break;
+
+	        default:
+		        throw new \Exception('A valid method was not given.', 400);
         }
         
         \Epoch\Controller::redirect(\UNL\VisitorChat\Controller::$URLService->generateSiteURL("success", true));
