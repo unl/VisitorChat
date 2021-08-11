@@ -16,6 +16,7 @@
     "lodash": "^4.17.21",
     "lodash.merge": "^4.6.2",
     "minimist": ">=1.2.3",
+    "path-parse": ">=1.0.7",
     "websocket-extensions": ">=0.1.4"
   }
 }
