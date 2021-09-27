@@ -31,12 +31,12 @@ ini_set("session.gc_maxlifetime", 7200);
 
 // Support third-party cookie to support chats on affiliate sites
 // NOTE for DEV site without HTTPS set samesite to 'strict' or 'lax' and secure to false;
-// ini_set("session.cookie_samesite", 'none');
-// ini_set("session.cookie_secure", true);
+ini_set("session.cookie_samesite", 'none');
+ini_set("session.cookie_secure", true);
 
-ini_set('display_errors', false);
+ini_set('display_errors', 0);
 
-error_reporting(E_ALL);
+error_reporting(0);
 
 /**********************************************************************************************************************
  * General settings
