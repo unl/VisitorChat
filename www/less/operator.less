@@ -291,14 +291,23 @@ h1 {
 
 
 #toggleOperatorStatus.dcf-btn-primary.open {
-  background-color: #00892c;
-  border-color: #00892c;
+  background-color: #00784e;
+  border-color: #00784e;
 }
 
 
-#toggleOperatorStatus.dcf-btn-primary.open:hover,
-#toggleOperatorStatus.dcf-btn-primary.open:focus {
-  box-shadow: 0 1px .5625000003em rgba(0,137,44,.6);
+@media (prefers-color-scheme: dark) {
+
+  #toggleOperatorStatus.dcf-btn-primary.open {
+    color: #fefdfa;
+  }
+
+}
+
+
+#toggleOperatorStatus.dcf-btn-primary.open:hover {
+  background-color: darken(#00784e, 3%);
+  border-color: darken(#00784e, 3%);
 }
 
 
