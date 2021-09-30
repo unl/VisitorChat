@@ -12,7 +12,7 @@
                         at <a href="<?php echo $context->conversation->initial_url;?>" target="_new"><?php echo $context->conversation->initial_pagetitle;?></a></span>
                     </div>
                 </div>
-                <div class="dcf-relative dcf-mb-3 dcf-pr-4 dcf-overflow-x-hidden dcf-overflow-y-scroll dcf-z-0" id="visitorChat_chatBox">
+                <div class="dcf-relative dcf-mb-3 dcf-pr-4 dcf-overflow-x-hidden dcf-overflow-y-scroll dcf-z-0" id="visitorChat_chatBox" tabindex="0">
                     <ul class="dcf-list-bare dcf-mb-0">
                         <?php
                         foreach ($context->messages as $message) {
