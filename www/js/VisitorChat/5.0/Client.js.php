@@ -319,13 +319,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4' id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
                 "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                 "</div>"
             );
 
             //set up a container.
-            var html = "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'>Please Wait...</div>";
+            var html = "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container'>Please wait...</div>";
 
             $('#visitorchat_clientLogin').replaceWith("<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'></div>");
 
@@ -338,7 +338,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //set up a container.
             $('#visitorChat').append(
-                "<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
+                "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
                     "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
                     "</div>"
             );
@@ -831,7 +831,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#dcf-footer').append('' +
                 '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
-                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" aria-label="Open the Email Us widget">' +
                         '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
                         '<div id="visitor-chat-header-options">' +
                             '<button class="dcf-pl-4 dcf-pr-4 dcf-lh-1 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +

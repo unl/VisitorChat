@@ -8,11 +8,11 @@
         <div class="dcf-form-group dcf-mt-4 dcf-mb-4 dcf-txt-md dcf-bold" id="visitorChatbot_intent_message" style="display:none">
         </div>
         <div class="dcf-mt-2 visitorChat_info">
-            <label class="dcf-txt-xs" for="visitorChat_name">Your Name (Optional)</label>
+            <label class="dcf-txt-xs" for="visitorChat_name">Your Name <small class="dcf-ml-1 dcf-txt-xs unl-dark-gray">(Optional)</small></label>
             <input class="dcf-w-100%" id="visitorChat_name" name="name" type="text">
         </div>
         <div class="dcf-mt-2 visitorChat_info">
-            <label class="dcf-txt-xs" for="visitorChat_email">Your Email (Optional)</label>
+            <label class="dcf-txt-xs" for="visitorChat_email">Your Email <small class="dcf-ml-1 dcf-txt-xs unl-dark-gray">(Optional)</small></label>
             <input class="dcf-w-100% validate-email" id="visitorChat_email" name="email" type="text">
         </div>
         <div class="dcf-mt-2 dcf-mb-0 dcf-input-checkbox visitorChat_info">
