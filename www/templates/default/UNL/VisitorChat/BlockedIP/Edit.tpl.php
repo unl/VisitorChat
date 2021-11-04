@@ -14,7 +14,7 @@ function get_var($var, $context) {
     </ul>
 <?php endif; ?>
 
-<form method="post" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks/" . (($context->id)?$context->id . '/':'')  . "edit");?>" >
+<form class="dcf-form" method="post" action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("blocks/" . (($context->id)?$context->id . '/':'')  . "edit");?>" >
     <ul class="dcf-list-bare">
         <li>
             <label class="dcf-legend" for="ip_address">Block IP address</label><br />
@@ -37,5 +37,5 @@ function get_var($var, $context) {
             </select>
         </li>
     </ul>
-    <input class="dcf-btn dcf-btn-primary" type="submit" value="Submit" />
+    <input class="dcf-btn dcf-btn-primary dcf-mt-6" type="submit" value="Submit" />
 </form>
