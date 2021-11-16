@@ -11,7 +11,7 @@
                     <option value="inactive" <?php echo (isset($_GET['state']) && $_GET['state'] == 'inactive')?'selected="selected"':'';?>>Inactive</option>
                     <option value="all" <?php echo (isset($_GET['state']) && $_GET['state'] == 'all')?'selected="selected"':'';?>>All</option>
                 </select>
-                <input class="dcf-btn dcf-btn-primary" type="submit" value="Submit">
+                <input class="dcf-btn dcf-btn-primary dcf-mt-6" type="submit" value="Submit">
             </li>
         </ul>
     </fieldset>
