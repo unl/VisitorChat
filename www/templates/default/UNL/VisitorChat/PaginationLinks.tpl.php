@@ -1,48 +1,63 @@
 <?php
-
+$page->addScriptDeclaration("WDN.initializePlugin('pagination');");
 $base_url = $context->getRawObject()->url;
-function addParam($url, $param)
-{
-    if (substr_count($url, '?')) {
-        return $url .= '&' . $param;
-    }
-    
-    return $url .= '?' . $param;
-}
-?>
 
-<ul class="dcf-txt-sm dcf-list-bare dcf-list-inline">
+function addParam($url, $var, $value)
+{
+    $param = $var . '=' . $value;
+	if (substr_count($url, '?')) {
+		return $url .= '&' . $param;
+	}
+	return $url .= '?' . $param;
+}
+
+function addURLParams($url, $params) {
+    foreach ($params as $var => $value) {
+        $url = addParam($url, $var, $value);
+    }
+    return $url;
+}
+
+$cpFudge = $context->limit == 1 ? 2 : 1;
+$currentPage = intval(ceil(($context->offset  - 1) / $context->limit) + $cpFudge);
+$numberOfPages = intval(ceil($context->total / $context->limit));
+$showFirstLast = $numberOfPages > 10;
+
+?>
+<nav class="dcf-pagination">
+    <ol class="dcf-list-bare dcf-list-inline">
     <?php if ($context->offset != 0) :?>
-        <?php
-        $url = addParam($base_url, 'limit='.$context->limit);
-        $url = addParam($url, 'offset='.($context->offset-$context->limit));
-        ?>
-    <li class="dcf-mr-1 dcf-mb-1"><a class="dcf-btn dcf-btn-secondary dcf-p-1" href="<?php echo $url?>" title="Go to the previous page">&larr; prev</a></li>
+	    <?php if ($showFirstLast): ?>
+            <li><a class="dcf-pagination-first" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>0)); ?>">First</a></li>
+	    <?php endif; ?>
+        <li><a class="dcf-pagination-prev" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($context->offset-$context->limit))); ?>">Prev</a></li>
     <?php endif; ?>
-    <?php for ($page = 1; $page*$context->limit < $context->total+$context->limit; $page++ ) {
-        $url = addParam($base_url, 'limit='.$context->limit);
-        $url = addParam($url, 'offset='.(($page-1)*$context->limit));
-        
-        $link = $url;
-        $class = '';
-        if (($page-1)*$context->limit == $context->offset) {
-            $class = 'selected';
-        }
+    <?php
+    $before_ellipsis_shown = false;
+    $after_ellipsis_shown = false;
+    for ($page = 1; $page*$context->limit < $context->total+$context->limit; $page++ ) {
+        $link = addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($page-1)*$context->limit));;
     ?>
-    <li class="dcf-mr-1 <?php echo $class; ?>">
-        <?php
-        if ($class !== 'selected') { ?>
-            <a class="dcf-btn dcf-btn-secondary dcf-p-1 dcf-mr-1" href="<?php echo $link; ?>" title="Go to page <?php echo $page; ?>"><?php echo $page; ?></a>
-        <?php } else { ?>
-            <span class="dcf-bold dcf-txt-lg dcf-p-0"><?php echo $page; ?></span>
-        <?php } ?>
-    </li>
-    <?php } ?>
-    <?php if (($context->offset+$context->limit) < $context->total) :?>
-        <?php
-        $url = addParam($base_url, 'limit='.$context->limit);
-        $url = addParam($url, 'offset='.($context->offset+$context->limit));
-        ?>
-    <li class="dcf-mr-1"><a class="dcf-btn dcf-btn-secondary dcf-p-1" href="<?php echo $url ?>" title="Go to the next page">next &rarr;</a></li>
+
+    <?php if ($page === $currentPage): ?>
+        <li><span class="dcf-pagination-selected"><?php echo $page; ?></span></li>
+    <?php elseif ($page <= 3 || $page >= $numberOfPages - 2 || $page == $currentPage - 1 ||
+        $page == $currentPage - 2 || $page == $currentPage + 1 || $page == $currentPage + 2): ?>
+        <li><a href="<?php echo $link; ?>"><?php echo $page; ?></a></li>
+    <?php elseif ($page < $currentPage && !$before_ellipsis_shown): ?>
+        <li><span class="dcf-pagination-ellipsis">&mldr;</span></li>
+        <?php $before_ellipsis_shown = true; ?>
+    <?php elseif ($page > $currentPage && !$after_ellipsis_shown): ?>
+        <li><span class="dcf-pagination-ellipsis">&mldr;</span></li>
+        <?php $after_ellipsis_shown = true; ?>
     <?php endif; ?>
-</ul>
+    <?php } // end for ?>
+
+    <?php if (($context->offset+$context->limit) < $context->total) :?>
+        <li><a class="dcf-pagination-next" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($context->offset+$context->limit))); ?>">Next</a></li>
+	    <?php if ($showFirstLast): ?>
+            <li><a class="dcf-pagination-last" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($numberOfPages-1) * $context->limit)); ?>">Last</a></li>
+	    <?php endif; ?>
+    <?php endif; ?>
+    </ol>
+</nav>
