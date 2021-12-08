@@ -36,7 +36,7 @@ $showFirstLast = $numberOfPages > 10;
     $before_ellipsis_shown = false;
     $after_ellipsis_shown = false;
     for ($page = 1; $page*$context->limit < $context->total+$context->limit; $page++ ) {
-        $link = addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($page-1)*$context->limit));;
+        $link = addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($page-1)*$context->limit));
     ?>
 
     <?php if ($page === $currentPage): ?>
