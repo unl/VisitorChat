@@ -21,15 +21,11 @@ function addURLParams($url, $params) {
 $cpFudge = $context->limit == 1 ? 2 : 1;
 $currentPage = intval(ceil(($context->offset  - 1) / $context->limit) + $cpFudge);
 $numberOfPages = intval(ceil($context->total / $context->limit));
-$showFirstLast = FALSE; //$numberOfPages > 10;
 
 ?>
 <nav class="dcf-pagination">
     <ol class="dcf-list-bare dcf-list-inline">
     <?php if ($context->offset != 0) :?>
-	    <?php if ($showFirstLast): ?>
-            <li><a class="dcf-pagination-first" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>0)); ?>">First</a></li>
-	    <?php endif; ?>
         <li><a class="dcf-pagination-prev" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($context->offset-$context->limit))); ?>">Prev</a></li>
     <?php endif; ?>
     <?php
@@ -55,9 +51,6 @@ $showFirstLast = FALSE; //$numberOfPages > 10;
 
     <?php if (($context->offset+$context->limit) < $context->total) :?>
         <li><a class="dcf-pagination-next" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($context->offset+$context->limit))); ?>">Next</a></li>
-	    <?php if ($showFirstLast): ?>
-            <li><a class="dcf-pagination-last" href="<?php echo addURLParams($base_url, array('limit'=>$context->limit, 'offset'=>($numberOfPages-1) * $context->limit)); ?>">Last</a></li>
-	    <?php endif; ?>
     <?php endif; ?>
     </ol>
 </nav>
