@@ -29,9 +29,6 @@ $page->titlegraphic = '<a href=' . \UNL\VisitorChat\Controller::$url . ' class="
 $page->pagetitle = '<h1>'. $title . '</h1>';
 $page->affiliation = '';
 
-// Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="/wdn/templates_5.3/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.3/css/deprecated.css"></noscript>';
-
 //Navigation
 $page->breadcrumbs = "";
 

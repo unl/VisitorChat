@@ -15,9 +15,6 @@ if (file_exists($wdn_include_path . '/wdn/templates_5.3')) {
 
 $url = \UNL\VisitorChat\Controller::$url;
 
-// Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="/wdn/templates_5.3/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.3/css/deprecated.css"></noscript>';
-
 // Cache bust
 $cb = '20201012';
 
