@@ -1,4 +1,4 @@
-<form id='visitorChat_captchaForm' class='unl_visitorchat_form' method="post"
+<form id='visitorChat_captchaForm' class='dcf-form unl_visitorchat_form' method="post"
       action="<?php echo \UNL\VisitorChat\Controller::$URLService->generateSiteURL("captcha/edit", true, true);?>">
     
     <div id='VisitorChat_captcha_container'>
@@ -19,6 +19,6 @@
         onclick="this.blur()" align="bottom" border="0"></a><br/>
     <strong>Please enter the code:</strong><br/>
     <input type="text" name="code" size="12" maxlength="8"/>
-    <input type="submit" value='submit'/>
+    <input class="dcf-btn dcf-btn-primary" type="submit" value='submit'/>
   </div>
 </form>
