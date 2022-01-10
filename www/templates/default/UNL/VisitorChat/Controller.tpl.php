@@ -16,7 +16,7 @@ if (file_exists($wdn_include_path . '/wdn/templates_5.3')) {
 $url = \UNL\VisitorChat\Controller::$url;
 
 // Cache bust
-$cb = '20201012';
+$cb = '20220110';
 
 $page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0&cb=' . $cb);
 
