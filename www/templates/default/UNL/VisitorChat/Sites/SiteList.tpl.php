@@ -1,4 +1,4 @@
-<table class="dcf-table dcf-txt-sm">
+<table class="dcf-table dcf-table-bordered dcf-txt-sm">
   <thead>
     <tr>
       <th>Site</th>
