@@ -49,4 +49,13 @@ $page->navlinks = $savvy->render(null, 'UNL/VisitorChat/main-nav.tpl.php');
 //Main content
 $page->maincontentarea = $savvy->render($context, 'UNL/VisitorChat/main-content.tpl.php');
 
+if (isset(\UNL\VisitorChat\Controller::$siteNotice) && \UNL\VisitorChat\Controller::$siteNotice->display) {
+    $page->displayDCFNoticeMessage(
+        \UNL\VisitorChat\Controller::$siteNotice->title,
+        \UNL\VisitorChat\Controller::$siteNotice->message,
+        \UNL\VisitorChat\Controller::$siteNotice->type,
+        \UNL\VisitorChat\Controller::$siteNotice->noticePath,
+        \UNL\VisitorChat\Controller::$siteNotice->containerID);
+}
+
 echo $page;
