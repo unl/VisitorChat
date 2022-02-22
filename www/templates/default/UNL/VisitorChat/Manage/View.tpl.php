@@ -37,8 +37,8 @@
         <div class="dcf-modal-content" id="operator-chat-request-modal-content">
             <p>You have an incoming chat request. This request will expire in <span id="chatRequestCountDown">10</span> seconds.</p>
             <ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">
-                <li><button class="dcf-btn dcf-btn-primary" id="operator-assignment-reject">Reject</button></li>
-                <li><button class="dcf-btn dcf-btn-secondary" id="operator-assignment-accept">Accept</button></li>
+                <li><button class="dcf-btn dcf-btn-primary" id="operator-assignment-accept">Accept</button></li>
+                <li><button class="dcf-btn dcf-btn-secondary" id="operator-assignment-reject">Reject</button></li>
             </ul>
         </div>
     </div>
