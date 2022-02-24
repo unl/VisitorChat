@@ -16,7 +16,7 @@ if (file_exists($wdn_include_path . '/wdn/templates_5.3')) {
 $url = \UNL\VisitorChat\Controller::$url;
 
 // Cache bust
-$cb = '20220110';
+$cb = '20220222';
 
 $page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0&cb=' . $cb);
 
@@ -35,7 +35,7 @@ if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
 $page->jsbody .= \UNL\VisitorChat\Controller::$headerHTML;
 
 //Titles
-$siteTitle = 'UNLchat';
+$siteTitle = 'Chat Administration';
 $page->doctitle = '<title>' . $siteTitle . ' | University of Nebraska-Lincoln</title>';
 $page->titlegraphic = '<a href=' . \UNL\VisitorChat\Controller::$url . ' class="dcf-txt-h5">' . $siteTitle . '</a>';
 $page->pagetitle = '<h1>' . \UNL\VisitorChat\Controller::$pagetitle . '</h1>';

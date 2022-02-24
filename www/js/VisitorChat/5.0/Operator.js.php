@@ -84,23 +84,24 @@ require(['jquery', 'jqueryui'], function($) {
 
                 this.alert('idle');
 
-                //Create a new dialog to tell the operator that they missed a chat request.
-                $("#alert").html("Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.");
-                $("#alert").dialog({
-                    resizable:false,
-                    modal:true,
-                    open: function() {
-                        $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
-                    },
-                    buttons:{
-                        "Okay":$.proxy(function () {
-                            $("#alert").dialog("close");
-                        }, this),
-                        "Go back online":$.proxy(function () {
-                            $("#alert").dialog("close");
-                            this.toggleOperatorStatus('USER');
-                        }, this)
-                    }
+                $('#operator-alert-modal-content').html('<progress></progress>');
+                var helpText = "<p>Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.</p>";
+
+                helpText += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
+                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-alert-okay">Okay</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-alert-go-back-online">Go back online</button>';
+                helpText += '</ul>';
+
+                // Trigger click on hidden button to open DCF Modal
+                $(".operator-alert-modal-toggle-btn").click();
+                $('#operator-alert-modal-content').html(helpText);
+                $('#operator-alert-okay').focus();
+                $('#operator-alert-go-back-online').on('click', $.proxy(function() {
+                  $('#operator-alert-modal-close-btn').click();
+                  this.toggleOperatorStatus('USER');
+                }, this));
+                $("#operator-alert-okay").on('click', function() {
+                  $('#operator-alert-modal-close-btn').click();
                 });
             }
 
@@ -436,6 +437,9 @@ require(['jquery', 'jqueryui'], function($) {
                 //Alert the user if the server set them to busy.
                 this.alert('idle');
 
+                // Add loading to DCF Modal
+                $("#operator-alert-content").html('<progress></progress>');
+
                 var helpText = "You have been set to BUSY";
 
                 if (data['userStatusReason'] == 'SERVER_IDLE') {
@@ -451,24 +455,21 @@ require(['jquery', 'jqueryui'], function($) {
                     clearTimeout(VisitorChat.requestLoopID); //Clear the timeout.
                 }
 
-                var $alert = $('#alert');
+                helpText += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
+                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-alert-okay">Okay</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-alert-go-back-online">Go back online</button>';
+                helpText += '</ul>';
 
-                $alert.html(helpText);
-                $alert.dialog({
-                    resizable:false,
-                    modal:true,
-                    open: function() {
-                        $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
-                    },
-                    buttons:{
-                        "Okay":$.proxy(function () {
-                            $alert.dialog("close");
-                        }, this),
-                        "Go back online":$.proxy(function () {
-                            $alert.dialog("close");
-                            this.toggleOperatorStatus('USER');
-                        }, this)
-                    }
+                // Trigger click on hidden button to open DCF Modal
+                $(".operator-alert-modal-toggle-btn").click();
+                $('#operator-alert-modal-content').html(helpText);
+                $('#operator-alert-okay').focus();
+                $('#operator-alert-go-back-online').on('click', $.proxy(function() {
+                  $('#operator-alert-modal-close-btn').click();
+                  this.toggleOperatorStatus('USER');
+                }, this));
+                $("#operator-alert-okay").on('click', function() {
+                  $('#operator-alert-modal-close-btn').click();
                 });
             }
 
@@ -485,10 +486,8 @@ require(['jquery', 'jqueryui'], function($) {
             if (data['pendingAssignment'] == false || data['pendingDate'] == false) {
                 this.currentRequest = false;
                 clearTimeout(VisitorChat.requestLoopID);
-                var $dialogElement = $('#chatRequest');
-                if ($dialogElement.dialog('instance') && $dialogElement.dialog('isOpen')) {
-                    $dialogElement.dialog('close');
-                }
+                // close chat request modal if open
+                $('#operator-chat-request-modal-close-btn').click();
                 return true;
             }
 
@@ -499,28 +498,21 @@ require(['jquery', 'jqueryui'], function($) {
 
             //3. Alert the user.
             if (this.currentRequest != data['pendingAssignment']) {
-                //start a new dialog box.
-                $("#chatRequest").dialog({
-                    resizable:false,
-                    modal:true,
-                    open: function() {
-                        $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
-                    },
-                    buttons:{
-                        "Reject":$.proxy(function () {
-                            $("#chatRequest").dialog("close");
-                            this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
-                            this.clearAlert();
-                            clearTimeout(VisitorChat.requestLoopID);
-                        }, this),
-                        "Accept":$.proxy(function () {
-                            $("#chatRequest").dialog("close");
-                            this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
-                            clearTimeout(VisitorChat.requestLoopID);
-                            this.clearAlert();
-                        }, this)
-                    }
-                });
+                // Trigger click on hidden button to open DCF Modal
+                $(".operator-chat-request-modal-toggle-btn").click();
+                $('#operator-assignment-accept').focus();
+                $('#operator-assignment-reject').on('click', $.proxy(function() {
+                  $('#operator-chat-request-modal-close-btn').click();
+                  this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
+                  this.clearAlert();
+                  clearTimeout(VisitorChat.requestLoopID);
+                }, this));
+                $('#operator-assignment-accept').on('click', $.proxy(function() {
+                  $('#operator-chat-request-modal-close-btn').click();
+                  this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
+                  clearTimeout(VisitorChat.requestLoopID);
+                  this.clearAlert();
+                }, this));
 
                 this.currentRequest = data['pendingAssignment'];
                 this.startRequestLoop(data['pendingAssignment'], data['pendingDate'], data['serverTime']);
@@ -625,9 +617,7 @@ require(['jquery', 'jqueryui'], function($) {
             }
 
             if (data['client_html'] !== undefined && data['client_html']) {
-                //alert('here');
                 this.clientInfo = data['client_html'];
-                //$('#clientInfo').html(data['client_html']);
             }
 
             if (data['operators'] !== undefined) {
@@ -763,34 +753,32 @@ require(['jquery', 'jqueryui'], function($) {
         },
 
         displayStatusChangeAlert:function (offline) {
-            var html = "You are the last person online for the following sites.  If you go offline now, these sites will have chat functionality turned off. <ul id='visitorChat_sitesWarning'>";
+          // Add loading to DCF Modal
+          $("#operator-alert-modal-content").html('<progress></progress>');
 
-            for (site in offline) {
-                html += "<li>" + offline[site] + "</li>";
-            }
+          var html = '<p>You are the last person online for the following sites.  If you go offline now, these sites will have chat functionality turned off.</p>';
+          html += '<ul class="dcf-h-10 dcf-overflow-x-auto dcf-b-1 dcf-b-solid" id="visitorChat_sitesWarning">';
+          for (site in offline) {
+            html += '<li>' + offline[site] + '</li>';
+          }
+          html += '</ul>';
 
-            html += "</ul>";
+          html += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
+          html += '<li><button class="dcf-btn dcf-btn-primary" id="operator-go-offline">Go Offline Anyway</button>';
+          html += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-stay-online">Stay Online</button>';
+          html += '</ul>';
 
-            $("#alert").html(html);
-
-            //start a new dialog box.
-            $("#alert").dialog({
-                resizable:false,
-                height: 450,
-                modal:true,
-                open: function() {
-                    $('.ui-dialog-buttonpane button:visible:eq(1)').focus();
-                },
-                buttons:{
-                    "Go Offline Anyway":$.proxy(function () {
-                        $("#alert").dialog("close");
-                        this.toggleOperatorStatus('USER');
-                    }, this),
-                    "Nevermind":$.proxy(function () {
-                        $("#alert").dialog("close");
-                    }, this)
-                }
-            });
+          // Trigger click on hidden button to open DCF Modal
+          $(".operator-alert-modal-toggle-btn").click();
+          $('#operator-alert-modal-content').html(html);
+          $('#operator-go-offline').focus();
+          $('#operator-go-offline').on('click', $.proxy(function() {
+            this.toggleOperatorStatus('USER');
+            $('#operator-alert-modal-close-btn').click();
+          }, this));
+          $("#operator-stay-online").on('click', function() {
+            $('#operator-alert-modal-close-btn').click();
+          });
         },
 
         toggleOperatorStatus:function (reason) {
