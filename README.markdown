@@ -37,6 +37,8 @@ Access to the AWS chatbot is controlled via AWS Cognito.  This is currently hard
 
 The AWS javascript need to run the chatbot is currently in aws-sdk-2.493.0.min.js and is referenced in Client.js.php.  This file was generated at https://sdk.amazonaws.com/builder/js/# and may need to be manually updated from time to time to get the current AWS SDK code to run the chatbot.  The only AWS services needed are AWS.CongnitoIdentity and AWS.LexRuntime.
 
+https://git.unl.edu/dxg/aws-chatbot - repo for AWS lambda code.  Serves as a backup to AWS code.
+
 
 BSD License Agreement
 ------------------------------------------------------------------------------------
