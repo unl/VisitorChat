@@ -500,7 +500,7 @@ require(['jquery', 'jqueryui'], function($) {
             if (this.currentRequest != data['pendingAssignment']) {
                 // Trigger click on hidden button to open DCF Modal
                 $(".operator-chat-request-modal-toggle-btn").click();
-                $('#operator-assignment-accept').focus();
+                $('#operator-assignment-reject').focus();
                 $('#operator-assignment-reject').on('click', $.proxy(function() {
                   $('#operator-chat-request-modal-close-btn').click();
                   this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
@@ -771,7 +771,7 @@ require(['jquery', 'jqueryui'], function($) {
           // Trigger click on hidden button to open DCF Modal
           $(".operator-alert-modal-toggle-btn").click();
           $('#operator-alert-modal-content').html(html);
-          $('#operator-go-offline').focus();
+          $('#operator-stay-online').focus();
           $('#operator-go-offline').on('click', $.proxy(function() {
             this.toggleOperatorStatus('USER');
             $('#operator-alert-modal-close-btn').click();
