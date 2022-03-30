@@ -16,13 +16,3 @@
     </div>
   </div>
 </div>
-<button class="dcf-btn dcf-btn-primary dcf-btn-toggle-modal share-conversation-modal-toggle-btn dcf-invisible" data-toggles-modal="share-conversation-modal" type="button" disabled>Toggle Modal 1</button>
-<div class="dcf-modal" id="share-conversation-modal" hidden>
-    <div class="dcf-modal-wrapper">
-        <div class="dcf-modal-header">
-            <h3>Share This Conversation</h3>
-            <button class="dcf-btn-close-modal">Close</button>
-        </div>
-        <div class="dcf-modal-content" id="share-conversation-modal-content"></div>
-    </div>
-</div>

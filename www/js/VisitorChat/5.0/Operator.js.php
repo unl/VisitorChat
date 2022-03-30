@@ -273,12 +273,6 @@ require(['jquery', 'jqueryui'], function($) {
         },
 
         openShareWindow:function () {
-            // Add loading to DCF Modal
-            $("#share-conversation-modal-content").html('<progress></progress>');
-
-            // Trigger click on hidden button to open DCF Modal
-            $(".share-conversation-modal-toggle-btn").click();
-
             //Update the Client List
             $.ajax({
                 url:this.serverURL + "conversation/" + this.conversationID + "/share?format=partial",
@@ -291,14 +285,16 @@ require(['jquery', 'jqueryui'], function($) {
                         window.location.reload(); //reload the page
                     }
                 },
-                success: function(data) {
-                    // Populate content in DCF modal
-                    $("#share-conversation-modal-content").html(data);
-                },
-                error: function(xhr, status, error) {
-                  $("#share-conversation-modal-content").html('<p class="dcf-txt-lg">Error: Loading of share options failed.</p>');
-                }
+                success:$.proxy(function (data) {
+
+                    $("#visitorChat_brightBox").html(data);
+                    this.showBrightBox();
+                    this.loadShareWatchers();
+                    //start a new dialog box.
+                }, this)
             });
+
+            $('#visitorChat_brightBox').height('350px');
         },
 
         loadShareWatchers:function () {

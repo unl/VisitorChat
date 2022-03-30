@@ -1,6 +1,6 @@
 <?php
 // This plugin is only needed for the demo.
-$page->addScriptDeclaration("WDN.initializePlugin('notice');");
+$page->addScriptDeclartion("WDN.initializePlugin('notice');");
 ?>
 <div class="wdn_notice affirm">
     <div class="close">
