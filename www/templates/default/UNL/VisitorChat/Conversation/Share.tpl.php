@@ -11,7 +11,7 @@
         <input id="include-inactive-share-options" type="checkbox" value="0">
         <label for="include-inactive-share-options">Include inactive operators <span class="dcf-form-help">(Display Only)</span></label>
     </div>
-    <input class="dcf-mt-4 dcf-btn dcf-btn-primary submit" type="submit" value="Share">
+    <input class="dcf-mt-4 dcf-btn dcf-btn-primary submit" type="submit" value="Submit">
 </form>
 <script>
   var showAllCheckbox = document.getElementById('include-inactive-share-options');

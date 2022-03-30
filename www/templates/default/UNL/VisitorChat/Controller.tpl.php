@@ -35,7 +35,7 @@ if (\UNL\VisitorChat\User\Service::getCurrentUser()) {
 $page->jsbody .= \UNL\VisitorChat\Controller::$headerHTML;
 
 //Titles
-$siteTitle = 'Chat Administration';
+$siteTitle = 'UNLchat';
 $page->doctitle = '<title>' . $siteTitle . ' | University of Nebraska-Lincoln</title>';
 $page->titlegraphic = '<a href=' . \UNL\VisitorChat\Controller::$url . ' class="dcf-txt-h5">' . $siteTitle . '</a>';
 $page->pagetitle = '<h1>' . \UNL\VisitorChat\Controller::$pagetitle . '</h1>';
