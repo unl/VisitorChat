@@ -88,8 +88,8 @@ require(['jquery', 'jqueryui'], function($) {
                 var helpText = "<p>Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.</p>";
 
                 helpText += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
-                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-alert-okay">Okay</button>';
-                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-alert-go-back-online">Go back online</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-okay">Okay</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-go-back-online">Go back online</button>';
                 helpText += '</ul>';
 
                 // Trigger click on hidden button to open DCF Modal
@@ -100,7 +100,7 @@ require(['jquery', 'jqueryui'], function($) {
                   $('#operator-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }, this));
-                $("#operator-alert-okay").on('click', function() {
+                $("#operator-okay").on('click', function() {
                   $('#operator-alert-modal-close-btn').click();
                 });
             }
@@ -456,8 +456,8 @@ require(['jquery', 'jqueryui'], function($) {
                 }
 
                 helpText += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
-                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-alert-okay">Okay</button>';
-                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-alert-go-back-online">Go back online</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-primary" id="operator-okay">Okay</button>';
+                helpText += '<li><button class="dcf-btn dcf-btn-secondary" id="operator-go-back-online">Go back online</button>';
                 helpText += '</ul>';
 
                 // Trigger click on hidden button to open DCF Modal
@@ -468,7 +468,7 @@ require(['jquery', 'jqueryui'], function($) {
                   $('#operator-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }, this));
-                $("#operator-alert-okay").on('click', function() {
+                $("#operator-okay").on('click', function() {
                   $('#operator-alert-modal-close-btn').click();
                 });
             }
