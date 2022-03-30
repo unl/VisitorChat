@@ -31,8 +31,8 @@ ini_set("session.gc_maxlifetime", 7200);
 
 // Support third-party cookie to support chats on affiliate sites
 // NOTE for DEV site without HTTPS set samesite to 'strict' or 'lax' and secure to false;
-// ini_set("session.cookie_samesite", 'none');
-// ini_set("session.cookie_secure", true);
+ini_set("session.cookie_samesite", 'none');
+ini_set("session.cookie_secure", true);
 
 ini_set('display_errors', false);
 
@@ -43,19 +43,19 @@ error_reporting(E_ALL);
  */
 
 /* Change this to the full base url of this instance.
- *
+ * 
  * @param string - the full url to this instance.
  */
 \UNL\VisitorChat\Controller::setURL('http://www.mysite.edu/'); //Training slash is required.
 
 /* Change this to a directory where you want temporary files to be stored.
- *
+ * 
  * @var string - absolute path to the temporary directory
  */
 \UNL\VisitorChat\CacheableURL::$tmpDir = dirname(__FILE__) . "/tmp/";  //Must be writable
 
 /* Configure the allowed domains
- *
+ * 
  * @var array - an array of domains where chats are allowed to be started.
  */
 \UNL\VisitorChat\Controller::$allowedDomains = array('mysite.edu', 'mysite2.org');
@@ -76,7 +76,7 @@ error_reporting(E_ALL);
 
 /* The refresh rate (operator and client)
  * This describes the rate at with the js clients refresh in milliseconds.
- *
+ * 
  * @var int - the number of milliseconds to refresh
  */
 \UNL\VisitorChat\Controller::$refreshRate = 2000;  //(every 2 seconds)
@@ -86,7 +86,7 @@ error_reporting(E_ALL);
 
 /* Set fallback URLs
  * Conversations that fail to be answered will fall back to these sites.
- *
+ * 
  * @var \ArrayIterator - an \ArrayIterator of sites.
  */
 \UNL\VisitorChat\Controller::$fallbackURLs = new \ArrayIterator(array('http://ucommfairchild.unl.edu'));
@@ -94,25 +94,25 @@ error_reporting(E_ALL);
 //Set session key to prevent man in the middle attacks.
 /* Session key
  * Helps to prevent man in the middle attacks.  It is important that you replace this value.
- *
+ * 
  * @var string
  */
 \UNL\VisitorChat\Controller::$sessionKey = "replace me"; //!REPLACE ME!
 
 /* Caches routes (does not auto refresh cache)
- *
+ * 
  * @var bool
  */
 \UNL\VisitorChat\Controller::$cacheRoutes = false;
 
 /* To cache and minimize or not to cache and minimize javascript and css output.  That is the question.
- *
+ * 
  * @var bool
  */
 \UNL\VisitorChat\Asset\View::$cache = false;
 
 /* A list of admins (via their UIDs).  Admins can view all past conversations for all sites.
- *
+ * 
  * @var array - an array of admins where the value is the uid of a user.
  */
 \UNL\VisitorChat\Controller::$admins = array('s-mfairch4');
@@ -131,10 +131,10 @@ error_reporting(E_ALL);
 
 /**********************************************************************************************************************
  * Operator Registry settings (Required)
- *
- * If routing of chats is going to work, the system needs to know who is assigned to what site... thus we need
+ * 
+ * If routing of chats is going to work, the system needs to know who is assigned to what site... thus we need 
  * a registry service.
- *
+ * 
  * We have our own registry service here at UNL.  You are welcome to use your own or make one.
  * If you want to make your own, use the MockRegistryDriver class as a reference.
  */
