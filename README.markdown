@@ -25,8 +25,23 @@ Install
  - Edit config.inc.php to fit your own environment.
    - Follow the instructions inside the config.inc.php file to configure your site.
  - From command line run `php scripts/install.php` (This will install the database)
- - Copy the www/sample.htaccess to www/.htaccess
- - Edit www/.htaccess to fit your own environment.
+ - Copy the www/sample.htaccess to www/.htaccess and edit www/.htaccess to fit your own environment.
+ - Download the "5.3 Dependents Only" from https://wdn.unl.edu/starting-site and put the wdn folder at `www/wdn`, or build the project from https://github.com/unl/wdntemplates and symlink the wdn folder.
+
+Editing CSS Files
+-----------------
+ - `cd www; npm ci`
+ - Edit files in www/less then run `grunt` in www
+
+Using and Testing Your Dev Environment
+-------------------------------------------------
+You need a UNL website that is running the UNLedu Web Framework with your dev chat system URL built into it rather than the production ucommchat.unl.edu.
+
+ - You'll need a unl.edu domain registered and pointed at your machine like yourname.unl.edu.
+ - Register yourname.unl.edu at https://webaudit.unl.edu/
+ - (An alternative to the above two steps would be to run a local version of https://github.com/UNLSiteMaster - or contact the programmer behind WebAudit and have them add yourname.unl.edu to WebAudit then set `127.0.0.1 yourname.unl.edu` in `/etc/hosts`.)
+ - Build https://github.com/unl/wdntemplates with `grunt --rjs-flags="unlChatURl=//YOUR_CHAT_DEV_URL/assets/js"` replacing YOUR_CHAT_DEV_URL.
+ - Login to your dev chat install, then in a separate browser visit http://yourname.unl.edu/wdntemplates/debug.shtml and you should be able to chat with yourself.
 
 Chatbot Management
 ------------------
