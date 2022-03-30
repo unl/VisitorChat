@@ -97,7 +97,7 @@ require(['jquery', 'jqueryui'], function($) {
                 $('#operator-alert-modal-content').html(helpText);
                 $('#operator-alert-okay').focus();
                 $('#operator-alert-go-back-online').on('click', $.proxy(function() {
-                  $('#operator-alert-modal-close-btn').click();
+                  $('#operator-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }, this));
                 $("#operator-alert-okay").on('click', function() {
@@ -465,7 +465,7 @@ require(['jquery', 'jqueryui'], function($) {
                 $('#operator-alert-modal-content').html(helpText);
                 $('#operator-alert-okay').focus();
                 $('#operator-alert-go-back-online').on('click', $.proxy(function() {
-                  $('#operator-alert-modal-close-btn').click();
+                  $('#operator-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }, this));
                 $("#operator-alert-okay").on('click', function() {
