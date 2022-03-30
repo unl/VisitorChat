@@ -40,7 +40,7 @@
             }
 
             ?>
-            <table class="dcf-table dcf-table-bordered zentable neutral">
+            <table class="zentable neutral">
                 <thead>
                     <tr>
                         <th colspan="2"><?php echo date("F j, Y, g:ia", strtotime($context->conversation->date_created));?></th>
@@ -85,8 +85,8 @@
         if ($context->conversation->canDelete(\UNL\VisitorChat\User\Service::getCurrentUser())) {
             ?>
             <div id="options">
-                <form class="dcf-form" action="<?php echo $context->conversation->getEditURL(); ?>" method="post">
-                    <input class="dcf-btn dcf-btn-primary" id="delete_conversation" name="delete" type="submit" value="Delete this Conversation">
+                <form action="<?php echo $context->conversation->getEditURL(); ?>" method="post">
+                    <input id="delete_conversation" name="delete" type="submit" value="Delete this Conversation">
                 </form>
             </div>
             <?php
