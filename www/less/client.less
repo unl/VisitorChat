@@ -4,18 +4,29 @@
 
 
 #visitorChat {
-  background-color: var(--bg-dialog);
+  background-color: #e3e3e2;
   border-radius: 3px;
-  color: var(--body);
-  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, .1)) drop-shadow(1px 1px 30px rgba(0, 0, 0, .1));
+  box-shadow: 0 5px 10px 0 rgba(10,10,10,.25);
+  color: #424240;
   max-width: 17.76em;
   right: calc(~'1.333em + 1vw');
+  transition: background-color .3s ease-out;
   z-index: 99999;
 }
 
 
+@supports (filter: drop-shadow(0 1px 3px rgba(71,71,70,.25))) {
+
+  #visitorChat {
+    box-shadow: none;
+    filter: drop-shadow(0 0 5px fadeout(#424240,75%)) drop-shadow(0 0 1px fadeout(#424240,40%));
+  }
+
+}
+
+
 #visitorChat::after {
-  border-color: var(--bg-dialog) transparent transparent transparent;
+  border-color: #e3e3e2 transparent transparent transparent;
   border-style: solid;
   border-width: .75em 0 .75em .75em;
   content: '';
@@ -43,7 +54,7 @@
 
 
 #visitorChat h2 {
-  border-top: 1px solid var(--b);
+  border-top: 1px solid #e3e3e2;
   font-size: 1em;
   line-height: 1.43;
   margin-bottom: .75em;
@@ -105,6 +116,11 @@
 }
 
 
+#visitorChat_container {
+  background-image: linear-gradient(to bottom, #f6f6f5 0%, #ebebea 60%);
+}
+
+
 #visitorChat_chatBox {
   height: 14.2rem;
 }
@@ -136,22 +152,14 @@
 
 .unl .dcf-footer #visitorChat_chatBox a,
 .unl .dcf-footer #visitorChat_chatBox a:link {
-  color: var(--link);
+  color: #d00000;
 }
 
 
-.unl .dcf-footer #visitorChat_chatBox a:visited {
-  color: var(--visited);
-}
-
-
-.unl .dcf-footer #visitorChat_chatBox a:hover{
-  color: var(--hover);
-}
-
-
+.unl .dcf-footer #visitorChat_chatBox a:visited,
+.unl .dcf-footer #visitorChat_chatBox a:hover,
 .unl .dcf-footer #visitorChat_chatBox a:active {
-  color: var(--active);
+  color: #9e0900;
 }
 
 
@@ -165,7 +173,7 @@
 
 .visitorChat_me,
 .visitorChat_them {
-  background-color: var(--bg-dialog);
+  background-color: #fff;
 }
 
 
@@ -175,7 +183,7 @@
 
 
 .visitorChat_me::after {
-  border-color: var(--bg-dialog) transparent transparent transparent;
+  border-color: #fff transparent transparent transparent;
   border-width: .75em 0 .75em .75em;
   right: 1em;
 }
@@ -187,7 +195,7 @@
 
 
 .visitorChat_them::after {
-  border-color: var(--bg-dialog) transparent transparent transparent;
+  border-color: #fff transparent transparent transparent;
   border-width: .75em .75em .75em 0;
   left: 1em;
 }
@@ -280,7 +288,7 @@
 
 
 #VisitorChat_captcha_img {
-  border: 1px solid var(--b);
+  border: 1px solid #e3e3e2;
   margin-bottom: .32em;
   width: 100%;
 }
