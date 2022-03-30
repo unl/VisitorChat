@@ -2,7 +2,12 @@
 // This plugin is only needed for the demo.
 $page->addScriptDeclaration("WDN.initializePlugin('notice');");
 ?>
-<div class="dcf-notice dcf-notice-success" hidden data-no-close-button>
-    <h2>Success</h2>
-    <div><p>The operation was successful!</p></div>
+<div class="wdn_notice affirm">
+    <div class="close">
+        <a href="#">Close this notice</a>
+    </div>
+    <div class="message">
+        <p class="title">Success</p>
+        <p>The operation was successful!</p>
+    </div>
 </div>
