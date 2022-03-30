@@ -297,23 +297,19 @@
 #visitorChat_methods_email,
 #visitorChat_methods_chat {
   background-color: transparent;
-  border: 0;
-  color: var(--link);
+  border-color: transparent transparent currentColor transparent;
+  border-style: dotted;
+  border-width: 1px;
+  color: #d00000;
   line-height: normal;
   padding: 0;
-  text-decoration: underline;
 }
 
 
-#visitorChat_methods_email:hover,
-#visitorChat_methods_chat:hover {
-  color: var(--hover);
-}
-
-
-#visitorChat_methods_email:active,
-#visitorChat_methods_chat:active {
-  color: var(--active);
+#visitorChat_methods_email:focus,
+#visitorChat_methods_chat:focus {
+  border-color: currentColor;
+  outline: 0;
 }
 
 
