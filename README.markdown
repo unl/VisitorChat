@@ -19,11 +19,12 @@ Requirements
 Install
 -------
  - Clone this repository
- - Create a database and user in MySQL for the application.
+ - Run `composer install`
+ - Create a database named `visitorchatapp` and user in MySQL for the application.
  - Copy config.sample.php to config.inc.php.
  - Edit config.inc.php to fit your own environment.
    - Follow the instructions inside the config.inc.php file to configure your site.
- - From command line run scripts/install.php (This will install the database)
+ - From command line run `php scripts/install.php` (This will install the database)
  - Copy the www/sample.htaccess to www/.htaccess
  - Edit www/.htaccess to fit your own environment.
 
