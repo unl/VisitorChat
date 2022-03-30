@@ -7,7 +7,7 @@
 
         $unread = $conversation->getUnreadMessageCount();
 
-        echo " <span id='visitorChat_UnreadMessages_" . $conversation->id . "' class='unread_count dcf-badge dcf-badge-roundrect dcf-mr-4 dcf-ml-3 unl-bg-scarlet unl-cream'>" . $unread . "</span>";
+        echo " <span id='visitorChat_UnreadMessages_" . $conversation->id . "' class='unread_count dcf-badge dcf-badge-roundrect dcf-mr-4 dcf-ml-3 unl-bg-scarlet'>" . $unread . "</span>";
         echo "</li>";
     }
     ?>
