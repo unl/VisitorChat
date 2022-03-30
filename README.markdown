@@ -1,7 +1,7 @@
 UNLchat
 ---------------
 
-UNLchat is a custom live chat solution built for UNL.  It is designed for a large organization with many sub-organizations such as a university.
+UNLchat is a custom live chat solution built for UNL.  It is designed to be work for a large organization with many sub-organizations such as a university.
 
 When a chat request comes in, the chat is routed to the operators of closest site (as defined by a registry service) from where the chat originated.
 For example, if a chat was started at http://www.unl.edu/WDN/index.php the chat would be routed to operators for http://www.unl.edu/WDN/.
