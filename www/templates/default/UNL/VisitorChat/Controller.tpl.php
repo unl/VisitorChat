@@ -1,22 +1,22 @@
 <?php
 use \UNL\Templates\Templates;
-$page = Templates::factory('Local', Templates::VERSION_5_2);
+$page = Templates::factory('Local', Templates::VERSION_5_1);
 
 $savvy->addGlobal('page', $page);
 
 /**
- * @var $page \UNL\Templates\Version5x2\Local
+ * @var $page \UNL\Templates\Version4x1\Fixed
  */
 
 $wdn_include_path = \UNL\VisitorChat\Controller::$applicationDir . '/www';
-if (file_exists($wdn_include_path . '/wdn/templates_5.2')) {
+if (file_exists($wdn_include_path . '/wdn/templates_5.1')) {
     $page->setLocalIncludePath($wdn_include_path);
 }
 
 $url = \UNL\VisitorChat\Controller::$url;
 
 // Add WDN Deprecated Styles
-$page->head .= '<link rel="preload" href="/wdn/templates_5.2/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.2/css/deprecated.css"></noscript>';
+$page->head .= '<link rel="preload" href="/wdn/templates_5.1/css/deprecated.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"> <noscript><link rel="stylesheet" href="/wdn/templates_5.1/css/deprecated.css"></noscript>';
 
 $page->addStyleSheet(\UNL\VisitorChat\Controller::$url . 'assets/css?for=operator&v=5.0');
 
