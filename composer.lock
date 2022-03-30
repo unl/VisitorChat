@@ -97,16 +97,16 @@
         },
         {
             "name": "unl/php-wdn-templates",
-            "version": "v5.3.4",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/unl/phpunltemplates.git",
-                "reference": "845d8e05a6ae636797b350659f64b5f03b466166"
+                "reference": "090d6c7c8ac8ab2828165bd06574ecb48caf1a88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/unl/phpunltemplates/zipball/845d8e05a6ae636797b350659f64b5f03b466166",
-                "reference": "845d8e05a6ae636797b350659f64b5f03b466166",
+                "url": "https://api.github.com/repos/unl/phpunltemplates/zipball/090d6c7c8ac8ab2828165bd06574ecb48caf1a88",
+                "reference": "090d6c7c8ac8ab2828165bd06574ecb48caf1a88",
                 "shasum": ""
             },
             "require": {
@@ -152,9 +152,9 @@
             "homepage": "http://wdn.unl.edu/",
             "support": {
                 "issues": "https://github.com/unl/phpunltemplates/issues",
-                "source": "https://github.com/unl/phpunltemplates/tree/v5.3.4"
+                "source": "https://github.com/unl/phpunltemplates/tree/v5.3.0"
             },
-            "time": "2022-01-24T19:05:47+00:00"
+            "time": "2021-01-27T17:05:21+00:00"
         },
         {
             "name": "unl/unl_cache_lite",
@@ -351,5 +351,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }

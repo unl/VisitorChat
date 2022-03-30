@@ -162,12 +162,3 @@ error_reporting(0);
     'password' => 'visitorchatapp',
     'dbname'   => 'visitorchatapp'
 ));
-
-// Site Notice
-$siteNotice = new stdClass();
-$siteNotice->display = false;
-$siteNotice->noticePath = 'dcf-notice';
-$siteNotice->containerID = 'dcf-main';
-$siteNotice->type = 'dcf-notice-info';
-$siteNotice->title = 'Maintenance Notice';
-$siteNotice->message = 'We will be performing site maintenance on February 3rd from 4:30 to 5:00.  The site may not be available during this time.';
