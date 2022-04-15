@@ -119,10 +119,12 @@
         var qx,n,v,a = this.formToArray(options.semantic);
         if (options.data) {
             options.extraData = options.data;
-            qx = $.param(options.data, traditional);
+            const URLparams = new URLSearchParams(Object.entries(options.data, traditional));
+            qx = URLparams.toString();
         }
     
         // give pre-submit callback an opportunity to abort the submit
+        // April 15 , what even is a beforeSubmit function ?
         if (options.beforeSubmit && options.beforeSubmit(a, this, options) === false) {
             log('ajaxSubmit: submit aborted via beforeSubmit callback');
             return this;
@@ -136,7 +138,8 @@
         }
     
         //unsure
-        let q = $.param(a, traditional);
+        const aParams = new URLSearchParams(Object.entries(a, traditional));
+        let q = aParams.toString();
     
         if (qx) {
             q = ( q ? (q + '&' + qx) : qx );
