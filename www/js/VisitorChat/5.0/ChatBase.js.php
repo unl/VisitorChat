@@ -1,6 +1,6 @@
 <?php
-    require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/5.0" . "/SimpleJavaScriptInheritance.js");
-    require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/5.0" . "/form.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/5.0" . "/SimpleJavaScriptInheritance.js");
+require_once(\UNL\VisitorChat\Controller::$applicationDir . "/www/js/VisitorChat/5.0" . "/form.js");
 ?>
 
 /*
@@ -883,12 +883,12 @@ var VisitorChat_ChatBase = Class.extend({
 
         //bind form using 'ajaxForm'
         $('.unl_visitorchat_form').ajaxForm(options);
-        //this.myAjaxForm(options);
     },
 
     onLogin:function () {
         var html = "<div class='visitorChat_loading'></div>";
-        ('#visitorChat_container').html(html);
+        var el = document.getElementById('visitorChat_container');
+        el.innerHTML = html;
     },
 
     ajaxBeforeSubmit:function (arr, $form, options) {
@@ -896,7 +896,8 @@ var VisitorChat_ChatBase = Class.extend({
             VisitorChat.onLogin();
         } else {
             if (VisitorChat.chatStatus != 'CLOSED') {
-                $('#visitorChat_chatBox').addClass("visitorChat_loading");
+                var el = document.getElementById('visitorChat_chatBox');
+                el.classList.add("visitorChat_loading");
             }
         }
 
@@ -1074,7 +1075,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     handleAjaxResponse:function (data, textStatus) {
         if (data["responseText"] !== undefined) {
-            data = $.parseJSON(data["responseText"]);
+            data = JSON.parse(data["responseText"]);
         }
 
         if (textStatus == 'error') {
@@ -1143,13 +1144,16 @@ var VisitorChat_ChatBase = Class.extend({
     /**
      * the loop function is used to loop the main process of the chat application.
      */
-     loop:function () {
+    loop:function () {
         VisitorChat.run();
         VisitorChat.loopID = setTimeout("VisitorChat.loop()", VisitorChat.refreshRate);
-        },
+    },
+
+
         
-    //Toan's code for the conversion , has not been tested yer , only implemented 
-    ready: function(fn) {
+    //Toan's code for the conversion , has not been tested yet , only implemented 
+
+    docReady: function(fn) {
         if (document.readyState != 'loading'){
           fn();
         } else {
@@ -1157,7 +1161,62 @@ var VisitorChat_ChatBase = Class.extend({
         }
     },
 
-    myAjaxForm: function(options){
+    myTestStuff: function(form ,callback){
+        var url = form.action,
+        xhr = new XMLHttpRequest();
+        var params = [].filter.call(form.elements, function(el) {
+            //Allow only elements that don't have the 'checked' property
+            //Or those who have it, and it's checked for them.
+            return typeof(el.checked) === 'undefined' || el.checked;
+            //Practically, filter out checkboxes/radios which aren't checekd.
+        })
+        .filter(function(el) { return !!el.name; }) //Nameless elements die.
+        .filter(function(el) { return el.disabled; }) //Disabled elements die.
+        .map(function(el) {
+            //Map each field into a name=value string, make sure to properly escape!
+            return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
+        }).join('&'); //Then join all the strings by &
+    
+        xhr.open("POST", url);
+        // Changed from application/x-form-urlencoded to application/x-form-urlencoded
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+        //.bind ensures that this inside of the function is the XHR object.
+        xhr.onload = callback.bind(xhr); 
+    
+        //All preperations are clear, send the request!
+        xhr.send(params);
+    },
+
+
+    myAjaxForm: function(form, options){
+        // in jQuery 1.3+ we can fix mistakes with the ready state
+        var url = form.action,
+        xhr = new XMLHttpRequest();
+
+        var params = [].filter.call(form.elements, function(el) {
+            //Allow only elements that don't have the 'checked' property
+            //Or those who have it, and it's checked for them.
+            return typeof(el.checked) === 'undefined' || el.checked;
+            //Practically, filter out checkboxes/radios which aren't checekd.
+        })
+        .filter(function(el) { return !!el.name; }) //Nameless elements die.
+        .filter(function(el) { return el.disabled; }) //Disabled elements die.
+        .map(function(el) {
+            //Map each field into a name=value string, make sure to properly escape!
+            return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
+        }).join('&'); //Then join all the strings by &
+    
+        xhr.open("POST", url);
+        // Changed from application/x-form-urlencoded to application/x-form-urlencoded
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    
+        //.bind ensures that this inside of the function is the XHR object.
+        xhr.onload = options.bind(xhr); 
+    
+        //All preperations are clear, send the request!
+        xhr.send(params);
+
         // in jQuery 1.3+ we can fix mistakes with the ready state
         if (this.length === 0) {
             var o = { s: this.selector, c: this.context };
@@ -1176,7 +1235,8 @@ var VisitorChat_ChatBase = Class.extend({
         return this.ajaxFormUnbind().bind('submit.form-plugin', function(e) {
             if (!e.isDefaultPrevented()) { // if event has been canceled, don't proceed
                 e.preventDefault();
-                this.myAjaxSubmit(options);
+                // this.myAjaxSubmit(options);
+                params.myAjaxSubmit(options);
             }
         }).bind('click.form-plugin', function(e) {
             var el = e.target;
@@ -1324,13 +1384,13 @@ var VisitorChat_ChatBase = Class.extend({
      }
  
      var callbacks = [];
-     if (options.resetForm) {
-         //is this how the code works ?
-         callbacks.push(function() { form.myResetForm(); });
-     }
-     if (options.clearForm) {
-         callbacks.push(function() { form.clearForm(options.includeHidden); });
-     }
+    //  if (options.resetForm) {
+    //      //is this how the code works ?
+    //      callbacks.push(function() { form.myResetForm(); });
+    //  }
+    //  if (options.clearForm) {
+    //      callbacks.push(function() { form.clearForm(options.includeHidden); });
+    //  }
  
      // perform a load on the target only if dataType is not provided
      if (!options.dataType && options.target) {
@@ -1338,7 +1398,7 @@ var VisitorChat_ChatBase = Class.extend({
          callbacks.push(function(data) {
              var fn = options.replaceTarget ? 'replaceWith' : 'html';
              //unsure
-             Array.prototype.forEach.call(document.querySelectorAll((options.target)[fn](data)),(oldSuccess, arguments));
+             //Array.prototype.forEach.call(document.querySelectorAll((options.target)[fn](data)),(oldSuccess, arguments));
          });
      }
      else if (options.success) {
