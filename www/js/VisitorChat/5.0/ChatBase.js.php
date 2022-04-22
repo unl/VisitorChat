@@ -97,7 +97,8 @@ var VisitorChat_ChatBase = Class.extend({
         this.serverURL = serverURL;
 
         if (typeof visitorchat_config == "object") {
-            $.extend(this.config, visitorchat_config);
+            extend(this.config, visitorchat_config);
+            //deepExtend(this.config, visitorchat_config);
         }
 
         //Change to https if we need to.
@@ -113,10 +114,10 @@ var VisitorChat_ChatBase = Class.extend({
         this.loadStyles();
         this.initWindow();
 
-        $(document).ready($.proxy(function(){
+        $(document).ready(function(){
             this.updateUserInfo();
             this.initWatchers();
-        }, this));
+        }.bind(this));
 
 
     },
@@ -163,12 +164,25 @@ var VisitorChat_ChatBase = Class.extend({
      * Initalize event watchers related to the current window.
      */
     initWindow:function () {
-        $([window, document]).blur(function () {
+        // Add blur for both document + window
+        document.addEventListener('blur', function () {
 
-            VisitorChat.windowVisible = false;
+             VisitorChat.windowVisible = false;
         });
 
-        $([window, document]).focus(function () {
+        window.addEventListener('blur', function () {
+
+            VisitorChat.windowVisible = false;
+       });
+
+       // Add focus 
+        document.addEventListener('focus', function () {
+            VisitorChat.windowVisible = true;
+            VisitorChat.clearAlert();
+            document.title = VisitorChat.siteTitle;
+        });
+        
+        window.addEventListener('focus', function () {
             VisitorChat.windowVisible = true;
             VisitorChat.clearAlert();
             document.title = VisitorChat.siteTitle;
@@ -241,9 +255,9 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             },
             dataType:"json",
-            success:$.proxy(function (data, textStatus, jqXHR) {
+            success:(function (data, textStatus, jqXHR) {
                 this.handleUserDataResponse(data);
-            }, this),
+            }.bind(this)),
             complete:function(data, textStatus, jqXHR)
             {
                 VisitorChat.pendingUserAJAX = false;
@@ -320,10 +334,10 @@ var VisitorChat_ChatBase = Class.extend({
             error: function(jqXHR, textStatus, errorThrown) {
                 //alert('test: ' + textStatus);
             },
-            success:$.proxy(function (data, textStatus, jqXHR) {
+            success:(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
                 this.pendingChatAJAX = false;
-            }, this)
+            }.bind(this))
         });
     },
 
@@ -377,10 +391,11 @@ var VisitorChat_ChatBase = Class.extend({
 
     updateLatestMessageId:function (latest) {
         this.latestMessageId = latest;
-
-        if (action = $('.unl_visitorchat_form').attr('action')) {
+        var e = document.querySelector('.unl_visitorchat_form');
+        if (action = e.getAttribute('action')) {
             action = action.replace(/last=(\d)*/g, "last=" + latest);
-            $('.unl_visitorchat_form').attr('action', action);
+            e.setAttribute('action', action);
+            //$('.unl_visitorchat_form').attr('action', action);            
         }
     },
 
@@ -486,7 +501,6 @@ var VisitorChat_ChatBase = Class.extend({
 
         //Scroll if we can.
         this.scroll();
-
         this.initWatchers();
     },
 
@@ -495,6 +509,10 @@ var VisitorChat_ChatBase = Class.extend({
      * Appends a single message to the conversation.
      */
     appendMessage:function (id, message) {
+        // var el = document.getElementById("visitorChat_chatBox").getElementsByTagName("ul");
+        // el.appendChild("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
+        //     "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
+        //     "</li>");
         $("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
             "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
             "</li>");
@@ -566,6 +584,12 @@ var VisitorChat_ChatBase = Class.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
     },
 
+    //Toan function to dealt with parseHtml
+    parseHTML: function(str) {
+        var t = document.createElement('template');
+        t.innerHTML = html;
+        return t.content;
+    },
     /**
      * updateChatContainerWithHTML will update a given html container
      * with html and then scroll that container and initalize any watcher
@@ -574,7 +598,7 @@ var VisitorChat_ChatBase = Class.extend({
     updateChatContainerWithHTML:function (selector, html, sendAlerts) {
         //$.parseHTML(html)[0].outerHTML is used to compare the rendered html (the browser can change quotes, etc)
         //It just makes the comparison more accurate (at the cost of a little speed)
-        if ($(selector).html() === $.parseHTML(html)[0].outerHTML) {
+        if (selector.innerHTML === $.parseHTML((html)[0].outerHTML)) {
             //Contents are the same, nothing to be done here.
             return;
         }
@@ -618,6 +642,7 @@ var VisitorChat_ChatBase = Class.extend({
      * add a new watcher.
      */
     initWatchers:function () {
+        var el = document.getElementById("#visitorChat_container");
         $('#visitorChat_messageBox').keypress(function (e) {
             if (VisitorChat.chatStatus == false) {
                 return true;
@@ -632,9 +657,10 @@ var VisitorChat_ChatBase = Class.extend({
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
                 if (VisitorChat.chatStatus == 'LOGIN') {
+                   //document.getElementById('visitorchat_clientLogin').submit();
                   $('#visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                  $('#visitorChat_messageForm').submit();
+                $('#visitorchat_clientLogin').submit();
                   $('#visitorChat_messageBox').val('');
                 }
             }
@@ -652,7 +678,7 @@ var VisitorChat_ChatBase = Class.extend({
             }
           }
 
-          var message = $('#visitorChat_messageBox').val();
+          var message = document.getElementById('visitorChat_messageBox').value;
 
           if (message.trim().length == 0) {
             // ignore empty messages
@@ -660,6 +686,7 @@ var VisitorChat_ChatBase = Class.extend({
           }
 
           // check if chatting with chatbot and capture client message
+          // Toan don't think this need to be fixed since it's
           if (VisitorChat.method == 'chatbot') {
             // set chatbot message to be sent once processed by VisitorChat
             if (VisitorChat.userID === false) {
@@ -774,11 +801,11 @@ var VisitorChat_ChatBase = Class.extend({
           withCredentials:true
         },
         data: data,
-        success:$.proxy(function (data, textStatus, jqXHR) {
+        success:(function (data, textStatus, jqXHR) {
           //console.log('recordChatbotError data', data);
           this.handleAjaxResponse(data, textStatus);
           $('#visitorChat_chatBox').removeClass('visitorChat_loading');
-        }, this)
+        }.bind(this))
       });
     },
 
@@ -799,11 +826,11 @@ var VisitorChat_ChatBase = Class.extend({
           withCredentials:true
         },
         data: data,
-        success:$.proxy(function (data, textStatus, jqXHR) {
+        success:(function (data, textStatus, jqXHR) {
           //console.log('recordChatbotResponse data', data);
           this.handleAjaxResponse(data, textStatus);
           $('#visitorChat_chatBox').removeClass('visitorChat_loading');
-        }, this)
+        }.bind(this))
       });
     },
 
@@ -826,7 +853,7 @@ var VisitorChat_ChatBase = Class.extend({
             clearForm:true,
             timeout: 10000,
             dataType:"json",
-            success:$.proxy(function (data, textStatus, jqXHR) {
+            success:(function (data, textStatus, jqXHR) {
                 this.handleAjaxResponse(data, textStatus);
 
                 // handle chatbot message if set
@@ -838,8 +865,9 @@ var VisitorChat_ChatBase = Class.extend({
                 }
 
                 $('#visitorChat_chatBox').removeClass('visitorChat_loading');
-            }, this),
-            error:$.proxy(function (data, textStatus, jqXHR) {
+            }.bind(this)),
+
+            error:(function (data, textStatus, jqXHR) {
                 // Temp logging to help debug error
                 console.log('initAjaxForms fail data', data);
                 console.log('initAjaxForms fail textStatus', textStatus);
@@ -863,10 +891,11 @@ var VisitorChat_ChatBase = Class.extend({
                   // Reset chat so does not hang
                   this.updateChat(this.generateChatURL(), true);
                 }
-            }, this),
-            beforeSubmit:$.proxy(function (arr, $form, options) {
+            }.bind(this)),
+
+            beforeSubmit:(function (arr, $form, options) {
                 return this.ajaxBeforeSubmit(arr, $form, options);
-            }, this),
+            }.bind(this)),
             crossDomain:true,
             xhrFields:{
                 withCredentials:true
@@ -874,11 +903,12 @@ var VisitorChat_ChatBase = Class.extend({
         };
 
         var action = $('.unl_visitorchat_form').attr('action');
+        //var action = document.querySelectorAll('.unl_visitorchat_form').getAttribute('action');
 
         if (action !== undefined && action.indexOf("format=json") == -1) {
-            $('.unl_visitorchat_form').attr('action', $.proxy(function (i, val) {
+            $('.unl_visitorchat_form').attr('action', (function (i, val) {
                 return val + '?format=json&' + this.getURLSessionParam();
-            }, this));
+            }.bind(this)));
         }
 
         //bind form using 'ajaxForm'
@@ -1149,10 +1179,7 @@ var VisitorChat_ChatBase = Class.extend({
         VisitorChat.loopID = setTimeout("VisitorChat.loop()", VisitorChat.refreshRate);
     },
 
-
-        
-    //Toan's code for the conversion , has not been tested yet , only implemented 
-
+    // Toan's code from form.js
     docReady: function(fn) {
         if (document.readyState != 'loading'){
           fn();
@@ -2057,5 +2084,4 @@ var VisitorChat_ChatBase = Class.extend({
          }
      });
     }
- 
 });
