@@ -114,10 +114,34 @@ var VisitorChat_ChatBase = Class.extend({
         this.loadStyles();
         this.initWindow();
 
+        // This needs more work , hasn't finished yet
+        var callback = function(nop){
+            // Handler when the DOM is fully loaded
+            console.log('Kinda');
+            var r = function(){
+                nop.updateUserInfo();
+                nop.initWatchers();
+                console.log('Is it working');
+            };
+            r.bind(nop);
+            console.log('Is it workin');
+        };
+          
+          if (
+              document.readyState === "complete" ||
+              (document.readyState !== "loading" && !document.documentElement.doScroll)
+          ) {
+            callback(this);
+          } else {
+            document.addEventListener("DOMContentLoaded", callback(this));
+          }
+
         $(document).ready(function(){
             this.updateUserInfo();
             this.initWatchers();
         }.bind(this));
+        
+        
 
 
     },
@@ -509,13 +533,10 @@ var VisitorChat_ChatBase = Class.extend({
      * Appends a single message to the conversation.
      */
     appendMessage:function (id, message) {
-        // var el = document.getElementById("visitorChat_chatBox").getElementsByTagName("ul");
-        // el.appendChild("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
-        //     "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
-        //     "</li>");
-        $("#visitorChat_chatBox ul").append("<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
-            "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
-            "</li>");
+        var e = document.querySelector("#visitorChat_chatBox ul");
+        e.insertAdjacentHTML('beforeend',"<li id='visitorChat_message_" + id + "' class='" + message['class'] + "'>" + message['message'] +
+        "<div class='dcf-d-flex dcf-jc-between dcf-mt-1 dcf-txt-xs unl-dark-gray'><span class='stamp'>from " + message['poster']['name'] + "</span><span class='dcf-sr-only'> at </span><span class='timestamp'>" + message['date'] + "</span></div>" +
+        "</li>");
     },
 
     /**
@@ -530,8 +551,8 @@ var VisitorChat_ChatBase = Class.extend({
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
         }
 
-        $("#visitorChat_container").append("<div class='visitorChat_center'></div>");
-
+        var e = document.getElementById("visitorChat_container");
+        e.insertAdjacentHTML('beforeend',"<div class='visitorChat_center'></div>");
         clearTimeout(VisitorChat.loopID);
 
         var html = '<div class="chat_notify" id="visitorChat_closed" tabindex="-1"><p class="dcf-mb-1">This conversation has ended.</p></div>';
@@ -585,10 +606,10 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     //Toan function to dealt with parseHtml
-    parseHTML: function(str) {
-        var t = document.createElement('template');
-        t.innerHTML = html;
-        return t.content;
+    htmlParse: function(str) {
+        var tmp = document.implementation.createHTMLDocument("");
+        tmp.body.innerHTML = str;
+        return tmp.body.children;
     },
     /**
      * updateChatContainerWithHTML will update a given html container
@@ -610,22 +631,31 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Update the html
-        var $container = $(selector);
-        $container.html(html);
+        // var $container = $(selector);
+        // $container.html(html);
+        var container = document.querySelector(selector);
+        container.innerHTML = html;
         //Send focus to the first input or child for a11y (notify of change)
         //Contents should be wrapped in their own container div or element, so we need to focus that.
-        var $first_input = $('input[type="text"],textarea', $container);
-        var $first_child = $(':first-child', $container);
+        // var $first_input = $('input[type="text"],textarea', container);
+        var first_input = document.querySelector('input[type="text"],textarea', container);
+        //This doesn't seems to work
+        var first_child = document.querySelector(':first-child', container);
+        var $first_child = $(':first-child', container);
 
-        if ($first_input.length) {
+        if (first_input.length) {
             //focus first input
-            $first_input.eq(0).focus();
+            //$first_input.eq(0).focus();
+            first_input[0].focus();
         } else if ($first_child.length) {
             //focus first child
             $first_child.eq(0).attr('tabindex', '-1').focus();
+            //first_child[0].setAttribute('tabindex', '-1').focus();
         } else {
             //focus the container
-            $container.attr('tabindex', '-1').focus();
+            //$container.attr('tabindex', '-1').focus();
+            // Actually this shouldn't be working but idk how since focus() is a jquery func
+            container.setAttribute('tabindex', '-1').focus();
         }
 
         //Scroll if we can.
@@ -642,7 +672,7 @@ var VisitorChat_ChatBase = Class.extend({
      * add a new watcher.
      */
     initWatchers:function () {
-        var el = document.getElementById("#visitorChat_container");
+        //var el = document.getElementById("#visitorChat_container");
         $('#visitorChat_messageBox').keypress(function (e) {
             if (VisitorChat.chatStatus == false) {
                 return true;
@@ -656,29 +686,36 @@ var VisitorChat_ChatBase = Class.extend({
 
             if (e.which == 13 && !e.shiftKey) {
                 e.preventDefault();
+                // submit() and val('') is a jquery function imo
                 if (VisitorChat.chatStatus == 'LOGIN') {
-                   //document.getElementById('visitorchat_clientLogin').submit();
-                  $('#visitorchat_clientLogin').submit();
+                   document.querySelector('visitorchat_clientLogin').submit();
                 } else if(VisitorChat.chatStatus != false) {
-                $('#visitorchat_clientLogin').submit();
-                  $('#visitorChat_messageBox').val('');
+                    document.querySelector('#visitorchat_clientLogin').submit();
+                    document.querySelector('#visitorChat_messageBox').val('');
                 }
             }
         });
 
-        $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
-          var chatbotIntentMessage = $('#visitorChatbot_intent').val();
-          var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
+         $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
+        //document.querySelectorAll('#visitorChat_messageForm, #visitorchat_clientLogin').addEventListener('submit', function() {
+          //var chatbotIntentMessage = $('#visitorChatbot_intent').val();
+          //var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
+          var chatbotIntentMessage = document.querySelectorAll('#visitorChatbot_intent').value;
+          var chatbotIntentDefaults = document.querySelectorAll('#visitorChatbot_intent_defaults').value;
 
           // Handle chatbot intent message as a message from user
           if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
-            $('#visitorChat_messageBox').val(chatbotIntentMessage);
+            //$('#visitorChat_messageBox').val(chatbotIntentMessage);
+            document.querySelectorAll('#visitorChat_messageBox').value = chatbotIntentMessage;
             if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
               VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
             }
           }
 
-          var message = document.getElementById('visitorChat_messageBox').value;
+        
+        //var message = document.querySelectorAll('visitorChat_messageBox').value;
+       
+        var message = $('#visitorChat_messageBox').val();
 
           if (message.trim().length == 0) {
             // ignore empty messages
@@ -692,8 +729,8 @@ var VisitorChat_ChatBase = Class.extend({
             if (VisitorChat.userID === false) {
               VisitorChat.updateUserInfo();
             }
-            $('#visitorChat_message_submit').disabled = true;
-            $('#visitorChat_message_submit').attr('disabled', 'disabled');
+            document.querySelector('#visitorChat_message_submit').disabled = true;
+            document.querySelector('#visitorChat_message_submit').setAttribute('disabled', 'disabled');
             VisitorChat.chatbotClientMessage = message.trim();
           }
         });
@@ -804,7 +841,8 @@ var VisitorChat_ChatBase = Class.extend({
         success:(function (data, textStatus, jqXHR) {
           //console.log('recordChatbotError data', data);
           this.handleAjaxResponse(data, textStatus);
-          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+          document.querySelector('#visitorChat_chatBox').classList.remove('visitorChat_loading');
+          //$('#visitorChat_chatBox').removeClass('visitorChat_loading');
         }.bind(this))
       });
     },
@@ -829,7 +867,7 @@ var VisitorChat_ChatBase = Class.extend({
         success:(function (data, textStatus, jqXHR) {
           //console.log('recordChatbotResponse data', data);
           this.handleAjaxResponse(data, textStatus);
-          $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+          document.querySelector('#visitorChat_chatBox').classList.remove('visitorChat_loading');
         }.bind(this))
       });
     },
@@ -859,12 +897,12 @@ var VisitorChat_ChatBase = Class.extend({
                 // handle chatbot message if set
                 if (VisitorChat.chatbotClientMessage) {
                   VisitorChat.sendChatbotMessage(VisitorChat.chatbotClientMessage);
-                  $('#visitorChat_message_submit').disabled = false;
-                  $('#visitorChat_message_submit').removeAttr("disabled");
+                  document.querySelector('#visitorChat_message_submit').disabled = true;
+                  document.querySelector('#visitorChat_message_submit').removeAttribute("disabled");
                   VisitorChat.chatbotClientMessage = false;
                 }
 
-                $('#visitorChat_chatBox').removeClass('visitorChat_loading');
+                document.querySelector('#visitorChat_chatBox').classList.remove('visitorChat_loading');
             }.bind(this)),
 
             error:(function (data, textStatus, jqXHR) {
@@ -901,18 +939,40 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             }
         };
+        var selection = document.querySelector('.unl_visitorchat_form') !== null;
+        var callback = function(){
+            // Handler when the DOM is fully loaded
+            var action = document.querySelector('.unl_visitorchat_form').getAttribute('action');
 
-        var action = $('.unl_visitorchat_form').attr('action');
-        //var action = document.querySelectorAll('.unl_visitorchat_form').getAttribute('action');
+            if (action !== undefined && action.indexOf("format=json") == -1) {
+                document.querySelector('.unl_visitorchat_form').setAttribute('action', (function (i, val) {
+                    return val + '?format=json&' + this.getURLSessionParam();
+                }.bind(this)));
+            }
+            //document.querySelector('.unl_visitorchat_form').ajaxForm(options);
+            // Need to fix this I think
+            $('.unl_visitorchat_form').ajaxForm(options);
+        };
+          
+          if(selection){
+            callback();
+          } else {
+            document.addEventListener("DOMContentLoaded", callback);
+          }
 
-        if (action !== undefined && action.indexOf("format=json") == -1) {
-            $('.unl_visitorchat_form').attr('action', (function (i, val) {
-                return val + '?format=json&' + this.getURLSessionParam();
-            }.bind(this)));
-        }
+        // var action = $('.unl_visitorchat_form').attr('action');
 
-        //bind form using 'ajaxForm'
-        $('.unl_visitorchat_form').ajaxForm(options);
+        // if (action !== undefined && action.indexOf("format=json") == -1) {
+        //     $('.unl_visitorchat_form').attr('action', (function (i, val) {
+        //         return val + '?format=json&' + this.getURLSessionParam();
+        //     }.bind(this)));
+        //     // document.querySelector('.unl_visitorchat_form').setAttribute('action', (function (i, val) {
+        //     //     return val + '?format=json&' + this.getURLSessionParam();
+        //     // }.bind(this)));
+        // }
+
+        // //bind form using 'ajaxForm'
+        // $('.unl_visitorchat_form').ajaxForm(options);
     },
 
     onLogin:function () {
@@ -1180,13 +1240,18 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     // Toan's code from form.js
-    docReady: function(fn) {
-        if (document.readyState != 'loading'){
-          fn();
-        } else {
-          document.addEventListener('DOMContentLoaded', fn);
-        }
+    docReady: function(callback) {
+          if (
+              document.readyState === "complete" ||
+              (document.readyState !== "loading" && !document.documentElement.doScroll)
+          ) {
+            callback();
+          } else {
+            document.addEventListener("DOMContentLoaded", callback);
+          }
     },
+
+   
 
     myTestStuff: function(form ,callback){
         var url = form.action,
