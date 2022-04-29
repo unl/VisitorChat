@@ -97,8 +97,7 @@ var VisitorChat_ChatBase = Class.extend({
         this.serverURL = serverURL;
 
         if (typeof visitorchat_config == "object") {
-            extend(this.config, visitorchat_config);
-            //deepExtend(this.config, visitorchat_config);
+            this.config = Object.assign(this.config, visitorchat_config);
         }
 
         //Change to https if we need to.
@@ -115,27 +114,6 @@ var VisitorChat_ChatBase = Class.extend({
         this.initWindow();
 
         // This needs more work , hasn't finished yet
-        var callback = function(nop){
-            // Handler when the DOM is fully loaded
-            console.log('Kinda');
-            var r = function(){
-                nop.updateUserInfo();
-                nop.initWatchers();
-                console.log('Is it working');
-            };
-            r.bind(nop);
-            console.log('Is it workin');
-        };
-          
-          if (
-              document.readyState === "complete" ||
-              (document.readyState !== "loading" && !document.documentElement.doScroll)
-          ) {
-            callback(this);
-          } else {
-            document.addEventListener("DOMContentLoaded", callback(this));
-          }
-
         $(document).ready(function(){
             this.updateUserInfo();
             this.initWatchers();
@@ -144,6 +122,19 @@ var VisitorChat_ChatBase = Class.extend({
         
 
 
+    },
+
+    // Ajax related, I don't know if I can fix this
+    // Eric recommended this , will work around this
+    xhrPool:[],
+    xhrAbortAll: function () {
+        this.xhrPool.forEach( (idx, jqXHR) => {
+            jqXHR.abort();
+        });
+    },
+
+    xhrAjaxSetup: function(){
+        this.xhrPool[xhrPool.length] = jqXHR;
     },
 
     initAjaxPool: function()
@@ -158,11 +149,13 @@ var VisitorChat_ChatBase = Class.extend({
 
         $.ajaxSetup({
             beforeSend: function(jqXHR) {
-                $.xhrPool.push(jqXHR);
+                //VisitorChat.xhrPool[xhrPool.length] = jqXHR;
+                $.xhrPool.push = jqXHR;
             },
             complete: function(jqXHR) {
                 var index = $.xhrPool.indexOf(jqXHR);
                 if (index > -1) {
+                    //VisitorChat.xhrPool.splice(index, 1);
                     $.xhrPool.splice(index, 1);
                 }
             }
@@ -273,6 +266,11 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Start the chat.
+        // var request = new XMLHttpRequest();
+        // request.open('POST' , this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators + checkChatbots, true);
+        // request.withCredentials = true;
+        // request.dataType = "json";
+
         $.ajax({
             url:this.serverURL + "user/info?format=json" + this.getURLSessionParam() + checkOperators + checkChatbots,
             xhrFields:{
@@ -418,8 +416,7 @@ var VisitorChat_ChatBase = Class.extend({
         var e = document.querySelector('.unl_visitorchat_form');
         if (action = e.getAttribute('action')) {
             action = action.replace(/last=(\d)*/g, "last=" + latest);
-            e.setAttribute('action', action);
-            //$('.unl_visitorchat_form').attr('action', action);            
+            e.setAttribute('action', action);         
         }
     },
 
@@ -501,7 +498,7 @@ var VisitorChat_ChatBase = Class.extend({
 
         for (id in messages) {
             //skip if a message with this id already exists
-            if ($('#visitorChat_message_' + id).length != 0) {
+            if (document.querySelectorAll('#visitorChat_message_' + id).length != 0) {
                 continue;
             }
 
@@ -605,12 +602,6 @@ var VisitorChat_ChatBase = Class.extend({
         this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
     },
 
-    //Toan function to dealt with parseHtml
-    htmlParse: function(str) {
-        var tmp = document.implementation.createHTMLDocument("");
-        tmp.body.innerHTML = str;
-        return tmp.body.children;
-    },
     /**
      * updateChatContainerWithHTML will update a given html container
      * with html and then scroll that container and initalize any watcher
@@ -619,7 +610,7 @@ var VisitorChat_ChatBase = Class.extend({
     updateChatContainerWithHTML:function (selector, html, sendAlerts) {
         //$.parseHTML(html)[0].outerHTML is used to compare the rendered html (the browser can change quotes, etc)
         //It just makes the comparison more accurate (at the cost of a little speed)
-        if (selector.innerHTML === $.parseHTML((html)[0].outerHTML)) {
+        if (document.querySelector(selector).innerHTML === this.htmlParse((html)[0].outerHTML)) {
             //Contents are the same, nothing to be done here.
             return;
         }
@@ -631,31 +622,23 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         //Update the html
-        // var $container = $(selector);
-        // $container.html(html);
         var container = document.querySelector(selector);
         container.innerHTML = html;
         //Send focus to the first input or child for a11y (notify of change)
         //Contents should be wrapped in their own container div or element, so we need to focus that.
-        // var $first_input = $('input[type="text"],textarea', container);
         var first_input = document.querySelector('input[type="text"],textarea', container);
         //This doesn't seems to work
         var first_child = document.querySelector(':first-child', container);
-        var $first_child = $(':first-child', container);
 
         if (first_input.length) {
             //focus first input
-            //$first_input.eq(0).focus();
             first_input[0].focus();
-        } else if ($first_child.length) {
+        } else if (first_child.length) {
             //focus first child
-            $first_child.eq(0).attr('tabindex', '-1').focus();
-            //first_child[0].setAttribute('tabindex', '-1').focus();
+            first_child[0].setAttribute('tabindex', '-1').focus();
         } else {
             //focus the container
-            //$container.attr('tabindex', '-1').focus();
-            // Actually this shouldn't be working but idk how since focus() is a jquery func
-            container.setAttribute('tabindex', '-1').focus();
+            container.setAttribute('tabindex', '-1');
         }
 
         //Scroll if we can.
@@ -665,6 +648,12 @@ var VisitorChat_ChatBase = Class.extend({
         this.initWatchers();
     },
 
+    //Toan function to dealt with parseHtml
+    htmlParse: function(str) {
+        var tmp = document.implementation.createHTMLDocument("");
+        tmp.body.innerHTML = str;
+        return tmp.body.children;
+    },
     /**
      * initWatchers sets up watcher functions for events related to chatting.
      * this function is called whenever the chat is updated to ensure that the correct
@@ -672,70 +661,68 @@ var VisitorChat_ChatBase = Class.extend({
      * add a new watcher.
      */
     initWatchers:function () {
-        //var el = document.getElementById("#visitorChat_container");
-        $('#visitorChat_messageBox').keypress(function (e) {
-            if (VisitorChat.chatStatus == false) {
-                return true;
-            }
-
-            if (VisitorChat.chatStatus == 'LOGIN') {
-                return true;
-            }
-
-            VisitorChat.handleIsTyping();
-
-            if (e.which == 13 && !e.shiftKey) {
-                e.preventDefault();
-                // submit() and val('') is a jquery function imo
-                if (VisitorChat.chatStatus == 'LOGIN') {
-                   document.querySelector('visitorchat_clientLogin').submit();
-                } else if(VisitorChat.chatStatus != false) {
-                    document.querySelector('#visitorchat_clientLogin').submit();
-                    document.querySelector('#visitorChat_messageBox').val('');
+         var e = document.querySelector('#visitorChat_messageBox') !== null;
+         if(e){
+            document.querySelector('#visitorChat_messageBox').addEventListener('keypress' ,(function (e) {
+                if (VisitorChat.chatStatus == false) {
+                    return true;
                 }
+    
+                if (VisitorChat.chatStatus == 'LOGIN') {
+                    return true;
+                }
+    
+                VisitorChat.handleIsTyping();
+    
+                if (e.which == 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    // submit() and val('') is a jquery function imo
+                    if (VisitorChat.chatStatus == 'LOGIN') {
+                       document.querySelector('#visitorchat_clientLogin').submit();
+                    } else if(VisitorChat.chatStatus != false) {
+                        document.querySelector('#visitorchat_clientLogin').submit();
+                        document.querySelector('#visitorChat_messageBox').value = ' ';
+                    }
+                }
+            }));
+    
+        var el = document.querySelector('#visitorChat_messageForm, #visitorchat_clientLogin') !== null;
+        if(el){
+            document.querySelector('#visitorChat_messageForm, #visitorchat_clientLogin').addEventListener('submit', function() {
+                var chatbotIntentMessage = document.querySelectorAll('#visitorChatbot_intent').value;
+                var chatbotIntentDefaults = document.querySelectorAll('#visitorChatbot_intent_defaults').value;
+              
+                // Handle chatbot intent message as a message from user
+                if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
+                    document.querySelectorAll('#visitorChat_messageBox').value = chatbotIntentMessage;
+                if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
+                    VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
+                    }
+                }
+              
+                      
+                var message = document.querySelector('#visitorChat_messageBox').value;
+              
+                if (message.trim().length == 0) {
+                    // ignore empty messages
+                    return false;
+                }
+              
+                // check if chatting with chatbot and capture client message
+                if (VisitorChat.method == 'chatbot') {
+                    // set chatbot message to be sent once processed by VisitorChat
+                if (VisitorChat.userID === false) {
+                    VisitorChat.updateUserInfo();
+                }
+                    document.querySelector('#visitorChat_message_submit').disabled = true;
+                    document.querySelector('#visitorChat_message_submit').setAttribute('disabled', 'disabled');
+                    VisitorChat.chatbotClientMessage = message.trim();
+                }
+            });
+              
+                this.initAjaxForms();
             }
-        });
-
-         $('#visitorChat_messageForm, #visitorchat_clientLogin').on('submit', function() {
-        //document.querySelectorAll('#visitorChat_messageForm, #visitorchat_clientLogin').addEventListener('submit', function() {
-          //var chatbotIntentMessage = $('#visitorChatbot_intent').val();
-          //var chatbotIntentDefaults = $('#visitorChatbot_intent_defaults').val();
-          var chatbotIntentMessage = document.querySelectorAll('#visitorChatbot_intent').value;
-          var chatbotIntentDefaults = document.querySelectorAll('#visitorChatbot_intent_defaults').value;
-
-          // Handle chatbot intent message as a message from user
-          if (chatbotIntentMessage && chatbotIntentMessage.trim().length > 0) {
-            //$('#visitorChat_messageBox').val(chatbotIntentMessage);
-            document.querySelectorAll('#visitorChat_messageBox').value = chatbotIntentMessage;
-            if (chatbotIntentDefaults && chatbotIntentDefaults.trim().length > 0) {
-              VisitorChat.sessionAttributes = JSON.parse(chatbotIntentDefaults);
-            }
-          }
-
-        
-        //var message = document.querySelectorAll('visitorChat_messageBox').value;
-       
-        var message = $('#visitorChat_messageBox').val();
-
-          if (message.trim().length == 0) {
-            // ignore empty messages
-            return false;
-          }
-
-          // check if chatting with chatbot and capture client message
-          // Toan don't think this need to be fixed since it's
-          if (VisitorChat.method == 'chatbot') {
-            // set chatbot message to be sent once processed by VisitorChat
-            if (VisitorChat.userID === false) {
-              VisitorChat.updateUserInfo();
-            }
-            document.querySelector('#visitorChat_message_submit').disabled = true;
-            document.querySelector('#visitorChat_message_submit').setAttribute('disabled', 'disabled');
-            VisitorChat.chatbotClientMessage = message.trim();
-          }
-        });
-
-        this.initAjaxForms();
+         }
     },
 
     generateUUID: function() { // Public Domain/MIT
@@ -842,7 +829,6 @@ var VisitorChat_ChatBase = Class.extend({
           //console.log('recordChatbotError data', data);
           this.handleAjaxResponse(data, textStatus);
           document.querySelector('#visitorChat_chatBox').classList.remove('visitorChat_loading');
-          //$('#visitorChat_chatBox').removeClass('visitorChat_loading');
         }.bind(this))
       });
     },
@@ -880,7 +866,11 @@ var VisitorChat_ChatBase = Class.extend({
      * scroll is used to scroll the current chat to the bottom of the chat div.
      */
     scroll:function () {
-        $("#visitorChat_chatBox").scrollTop($("#visitorChat_chatBox").prop('scrollHeight'));
+        // Check if it's null or not, only execute when it isn't
+        var el = document.querySelector("#visitorChat_chatBox") !== null;
+        if(el){
+            document.querySelector("#visitorChat_chatBox").scrollTo(0, document.querySelector("#visitorChat_chatBox").scrollHeight);
+        }
     },
 
     /**
@@ -922,7 +912,7 @@ var VisitorChat_ChatBase = Class.extend({
                   }
 
                   //display word filter error (and other errors during login)
-                  $('#visitorChat_container').text(errorMessage);
+                  document.querySelector('#visitorChat_container').textContent = errorMessage;
 
                 } else {
                   console.log('reloading chat...');
@@ -939,40 +929,18 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             }
         };
-        var selection = document.querySelector('.unl_visitorchat_form') !== null;
-        var callback = function(){
-            // Handler when the DOM is fully loaded
-            var action = document.querySelector('.unl_visitorchat_form').getAttribute('action');
 
-            if (action !== undefined && action.indexOf("format=json") == -1) {
-                document.querySelector('.unl_visitorchat_form').setAttribute('action', (function (i, val) {
-                    return val + '?format=json&' + this.getURLSessionParam();
-                }.bind(this)));
-            }
-            //document.querySelector('.unl_visitorchat_form').ajaxForm(options);
+        //Keep jquery due to conflict with form.js
+        var action = $('.unl_visitorchat_form').attr('action');
+
+        if (action !== undefined && action.indexOf("format=json") == -1) {
+            $('.unl_visitorchat_form').attr('action',(function (i, val) {
+                return val + '?format=json&' + this.getURLSessionParam();
+            }.bind(this)));
+        }
             // Need to fix this I think
             $('.unl_visitorchat_form').ajaxForm(options);
-        };
           
-          if(selection){
-            callback();
-          } else {
-            document.addEventListener("DOMContentLoaded", callback);
-          }
-
-        // var action = $('.unl_visitorchat_form').attr('action');
-
-        // if (action !== undefined && action.indexOf("format=json") == -1) {
-        //     $('.unl_visitorchat_form').attr('action', (function (i, val) {
-        //         return val + '?format=json&' + this.getURLSessionParam();
-        //     }.bind(this)));
-        //     // document.querySelector('.unl_visitorchat_form').setAttribute('action', (function (i, val) {
-        //     //     return val + '?format=json&' + this.getURLSessionParam();
-        //     // }.bind(this)));
-        // }
-
-        // //bind form using 'ajaxForm'
-        // $('.unl_visitorchat_form').ajaxForm(options);
     },
 
     onLogin:function () {
@@ -1220,6 +1188,7 @@ var VisitorChat_ChatBase = Class.extend({
             dataType:"json",
             complete:function (jqXHR, textStatus) {
                 $.xhrPool.abortAll();
+                //this.xhrAbortAll();
             }
         });
 
@@ -1240,130 +1209,6 @@ var VisitorChat_ChatBase = Class.extend({
     },
 
     // Toan's code from form.js
-    docReady: function(callback) {
-          if (
-              document.readyState === "complete" ||
-              (document.readyState !== "loading" && !document.documentElement.doScroll)
-          ) {
-            callback();
-          } else {
-            document.addEventListener("DOMContentLoaded", callback);
-          }
-    },
-
-   
-
-    myTestStuff: function(form ,callback){
-        var url = form.action,
-        xhr = new XMLHttpRequest();
-        var params = [].filter.call(form.elements, function(el) {
-            //Allow only elements that don't have the 'checked' property
-            //Or those who have it, and it's checked for them.
-            return typeof(el.checked) === 'undefined' || el.checked;
-            //Practically, filter out checkboxes/radios which aren't checekd.
-        })
-        .filter(function(el) { return !!el.name; }) //Nameless elements die.
-        .filter(function(el) { return el.disabled; }) //Disabled elements die.
-        .map(function(el) {
-            //Map each field into a name=value string, make sure to properly escape!
-            return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
-        }).join('&'); //Then join all the strings by &
-    
-        xhr.open("POST", url);
-        // Changed from application/x-form-urlencoded to application/x-form-urlencoded
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    
-        //.bind ensures that this inside of the function is the XHR object.
-        xhr.onload = callback.bind(xhr); 
-    
-        //All preperations are clear, send the request!
-        xhr.send(params);
-    },
-
-
-    myAjaxForm: function(form, options){
-        // in jQuery 1.3+ we can fix mistakes with the ready state
-        var url = form.action,
-        xhr = new XMLHttpRequest();
-
-        var params = [].filter.call(form.elements, function(el) {
-            //Allow only elements that don't have the 'checked' property
-            //Or those who have it, and it's checked for them.
-            return typeof(el.checked) === 'undefined' || el.checked;
-            //Practically, filter out checkboxes/radios which aren't checekd.
-        })
-        .filter(function(el) { return !!el.name; }) //Nameless elements die.
-        .filter(function(el) { return el.disabled; }) //Disabled elements die.
-        .map(function(el) {
-            //Map each field into a name=value string, make sure to properly escape!
-            return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
-        }).join('&'); //Then join all the strings by &
-    
-        xhr.open("POST", url);
-        // Changed from application/x-form-urlencoded to application/x-form-urlencoded
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    
-        //.bind ensures that this inside of the function is the XHR object.
-        xhr.onload = options.bind(xhr); 
-    
-        //All preperations are clear, send the request!
-        xhr.send(params);
-
-        // in jQuery 1.3+ we can fix mistakes with the ready state
-        if (this.length === 0) {
-            var o = { s: this.selector, c: this.context };
-            if (!$.isReady && o.s) {
-                log('DOM not ready, queuing ajaxForm');
-                (function() {
-                    (o.s,o.c).myAjaxForm(options);
-                });
-                return this;
-            }
-            // is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-            log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
-            return this;
-        }
-    
-        return this.ajaxFormUnbind().bind('submit.form-plugin', function(e) {
-            if (!e.isDefaultPrevented()) { // if event has been canceled, don't proceed
-                e.preventDefault();
-                // this.myAjaxSubmit(options);
-                params.myAjaxSubmit(options);
-            }
-        }).bind('click.form-plugin', function(e) {
-            var el = e.target;
-            if (!(el.is(":submit,input:image"))) {
-                // is this a child element of the submit el?  (ex: a span within a button)
-                var t = document.querySelector(el.closest(':submit'));
-                if (t.length == 0) {
-                    return;
-                }
-                target = t[0];
-            }
-            var form = this;
-            form.clk = target;
-            if (target.type == 'image') {
-                if (e.offsetX != undefined) {
-                    form.clk_x = e.offsetX;
-                    form.clk_y = e.offsetY;
-                } else if (typeof $.fn.offset == 'function') { // try to use dimensions plugin
-                    var offset = $el.offset();
-                    form.clk_x = e.pageX - offset.left;
-                    form.clk_y = e.pageY - offset.top;
-                } else {
-                    form.clk_x = e.pageX - target.offsetLeft;
-                    form.clk_y = e.pageY - target.offsetTop;
-                }
-            }
-            // clear form vars
-            setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 100);
-        });
-    },
-
-    ajaxFormUnbind: function(){
-        return this.removeEventListener('submit.form-plugin click.form-plugin');
-    },
-
     deepExtend: function (out) {
         out = out || {};
       
@@ -1383,770 +1228,7 @@ var VisitorChat_ChatBase = Class.extend({
         }
       
         return out;
-    },
-
-    myAjaxSubmit:function (options){
-        // fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
-     if (!this.length) {
-         log('ajaxSubmit: skipping submit process - no element selected');
-         return this;
-     }
-     
-     var method, action, url, form = this;
- 
-     if (typeof options == 'function') {
-         options = { success: options };
-     }
- 
-     method = this.getAttribute('method');
-     action = this.getAttribute('action');
-     url = (typeof action === 'string') ? action.trim : '';
-     url = url || window.location.href || '';
-     if (url) {
-         // clean url (don't include hash vaue)
-         url = (url.match(/^([^#]+)/)||[])[1];
-     }
- 
-     // This jquery need to be update somehow
-     var obj1 = {
-         url:  url,
-         success: ajaxSettings.success,
-         type: method || 'GET',
-         iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
-     };
-
-     deepExtend({}, obj1 , options);
-     
-     // hook for manipulating the form data before it is extracted;
-     // convenient for use with rich editors like tinyMCE or FCKEditor
-     var veto = {};
-     //this.trigger('form-pre-serialize', [this, options, veto]);
-     this.dispatchEvent(new Event('form-pre-serialize' , { detail  : [this, options, veto]}));
-    
-     if (veto.veto) {
-         log('ajaxSubmit: submit vetoed via form-pre-serialize trigger');
-         return this;
-     }
- 
-     // provide opportunity to alter form data before it is serialized
-     if (options.beforeSerialize && options.beforeSerialize(this, options) === false) {
-         log('ajaxSubmit: submit aborted via beforeSerialize callback');
-         return this;
-     }
- 
-     var traditional = options.traditional;
-     if ( traditional === undefined ) {
-         traditional = ajaxSettings.traditional;
-     }
-     
-     var qx,n,v,a = this.myFormToArray(options.semantic);
-     if (options.data) {
-         options.extraData = options.data;
-         const URLparams = new URLSearchParams(Object.entries(options.data, traditional));
-         qx = URLparams.toString();
-     }
- 
-     // give pre-submit callback an opportunity to abort the submit
-     // April 15 , what even is a beforeSubmit function ?
-     if (options.beforeSubmit && options.beforeSubmit(a, this, options) === false) {
-         log('ajaxSubmit: submit aborted via beforeSubmit callback');
-         return this;
-     }
- 
-     // fire vetoable 'validate' event
-     this.dispatchEvent(new Event('form-submit-validate',{ detail : [a, this, options, veto]}));
-     if (veto.veto) {
-         log('ajaxSubmit: submit vetoed via form-submit-validate trigger');
-         return this;
-     }
- 
-     //unsure
-     const aParams = new URLSearchParams(Object.entries(a, traditional));
-     let q = aParams.toString();
- 
-     if (qx) {
-         q = ( q ? (q + '&' + qx) : qx );
-     }   
-     if (options.type.toUpperCase() == 'GET') {
-         options.url += (options.url.indexOf('?') >= 0 ? '&' : '?') + q;
-         options.data = null;  // data is null for 'get'
-     }
-     else {
-         options.data = q; // data is the query string for 'post'
-     }
- 
-     var callbacks = [];
-    //  if (options.resetForm) {
-    //      //is this how the code works ?
-    //      callbacks.push(function() { form.myResetForm(); });
-    //  }
-    //  if (options.clearForm) {
-    //      callbacks.push(function() { form.clearForm(options.includeHidden); });
-    //  }
- 
-     // perform a load on the target only if dataType is not provided
-     if (!options.dataType && options.target) {
-         var oldSuccess = options.success || function(){};
-         callbacks.push(function(data) {
-             var fn = options.replaceTarget ? 'replaceWith' : 'html';
-             //unsure
-             //Array.prototype.forEach.call(document.querySelectorAll((options.target)[fn](data)),(oldSuccess, arguments));
-         });
-     }
-     else if (options.success) {
-         callbacks.push(options.success);
-     }
- 
-     options.success = function(data, status, xhr) { // jQuery 1.4+ passes xhr as 3rd arg
-         var context = options.context || options;   // jQuery 1.4+ supports scope context 
-         for (var i=0, max=callbacks.length; i < max; i++) {
-             callbacks[i].apply(context, [data, status, xhr || form, form]);
-         }
-     };
- 
-     // are there files to upload?
-     var fileInputs = $('input:file:enabled[value]', this); // [value] (issue #113)
-     var hasFileInputs = fileInputs.length > 0;
-     var mp = 'multipart/form-data';
-     var multipart = (form.getAttribute('enctype') == mp || form.getAttribute('encoding') == mp);
- 
-     var fileAPI = !!(hasFileInputs && fileInputs.get(0).files && window.FormData);
-     log("fileAPI :" + fileAPI);
-     var shouldUseFrame = (hasFileInputs || multipart) && !fileAPI;
- 
-     // options.iframe allows user to force iframe mode
-     // 06-NOV-09: now defaulting to iframe mode if file input is detected
-     if (options.iframe !== false && (options.iframe || shouldUseFrame)) {
-         // hack to fix Safari hang (thanks to Tim Molendijk for this)
-         // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
-         if (options.closeKeepAlive) {
-             // $.get(options.closeKeepAlive, function() {
-             //     fileUploadIframe(a);
-             // });
-                 var request = new XMLHttpRequest();
-                 request.open('GET', options.closeKeepAlive, true);
-                 request.onload = function() {
-                 if (this.status >= 200 && this.status < 400) {
-                         // Success!
-                         fileUploadIframe(a);
-                 } else {
-                         // We reached our target server, but it returned an error
-                 }
-                 };
-                 request.send();
-         }
-         else {
-             fileUploadIframe(a);
-         }
-     }
-     else if ((hasFileInputs || multipart) && fileAPI) {
-         options.progress = options.progress || $.noop;
-         fileUploadXhr(a);
-     }
-     else {
-         var request = new XMLHttpRequest();
-         request.open('POST', options.url , true);
-         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-         request.send(options.data);
-     }
- 
-      // fire 'notify' event
-      this.dispatchEvent(new Event('form-submit-notify' , { detail  : [this, options]}));
-      return this;
- 
-      // XMLHttpRequest Level 2 file uploads (big hat tip to francois2metz)
-     function fileUploadXhr(a) {
-         var formdata = new FormData();
- 
-         for (var i=0; i < a.length; i++) {
-             if (a[i].type == 'file')
-                 continue;
-             formdata.append(a[i].name, a[i].value);
-         }
- 
-         form.find('input:file:enabled').each(function(){
-             var name = this.getAttribute('name'), files = this.files;
-             if (name) {
-                 for (var i=0; i < files.length; i++)
-                     formdata.append(name, files[i]);
-             }
-         });
- 
-         if (options.extraData) {
-             for (var k in options.extraData)
-                 formdata.append(k, options.extraData[k])
-         }
- 
-         options.data = null;
-         //unsure
-         var obj1 = {
-             contentType: false,
-             processData: false,
-             cache: false,
-             type: 'POST'
-         };
-         deepExtend({} , ajaxSettings, options , obj1);
- 
-       s.context = s.context || s;
- 
-       s.data = null;
-       var beforeSend = s.beforeSend;
-       s.beforeSend = function(xhr, o) {
-           o.data = formdata;
-           if(xhr.upload) { // unfortunately, jQuery doesn't expose this prop (http://bugs.jquery.com/ticket/10190)
-               xhr.upload.onprogress = function(event) {
-                   o.progress(event.position, event.total);
-               };
-           }
-           if(beforeSend)
-               beforeSend.call(o, xhr, options);
-       };
-       //I really can't tell what this do :(
-       $.ajax(s);
     }
- 
-     // private function for handling file uploads (hat tip to YAHOO!)
-     function fileUploadIframe(a) {
-         var form = form[0], el, i, s, g, id, $io, io, xhr, sub, n, timedOut, timeoutHandle;
-         var useProp = !!$.fn.prop;
- 
-         if (a) {
-             if ( useProp ) {
-                 // ensure that every serialized input is still enabled
-                 for (i=0; i < a.length; i++) {
-                     form[a[i].name].querySelector('.input').disabled = false;
-                 }
-             } else {
-                 for (i=0; i < a.length; i++) {
-                     form[a[i].name].removeAttribute('disabled');
-                 }
-             };
-         }
- 
-         if ($(':input[name=submit],:input[id=submit]', form).length) {
-             // if there is an input with a name or id of 'submit' then we won't be
-             // able to invoke the submit fn on the form (at least not x-browser)
-             alert('Error: Form elements must not have name or id of "submit".');
-             return;
-         }
-         // unsure extend
-         deepExtend({}, ajaxSettings, options);
-         s.context = s.context || s;
-         id = 'jqFormIO' + (new Date().getTime());
-         if (s.iframeTarget) {
-             $io = s.iframeTarget;
-             n = $io.getAttribute('name');
-             if (n == null)
-                 $io.getAttribute('name', id);
-             else
-                 id = n;
-         }
-         else {
-             $io = ('<iframe name="' + id + '" src="'+ s.iframeSrc +'" />');
-             $io.css({ position: 'absolute', top: '-1000px', left: '-1000px' });
-         }
-         io = io[0];
- 
- 
-         xhr = { // mock object
-             aborted: 0,
-             responseText: null,
-             responseXML: null,
-             status: 0,
-             statusText: 'n/a',
-             getAllResponseHeaders: function() {},
-             getResponseHeader: function() {},
-             setRequestHeader: function() {},
-             abort: function(status) {
-                 var e = (status === 'timeout' ? 'timeout' : 'aborted');
-                 log('aborting upload... ' + e);
-                 this.aborted = 1;
-                 io.getAttribute('src', s.iframeSrc); // abort op in progress
-                 xhr.error = e;
-                 s.error && s.error.call(s.context, xhr, e, status);
-                 //g && $.event.trigger("ajaxError", [xhr, s, e]);
-                 g && event.dispatchEvent(new Event("ajaxError" , { detail  : {xhr, s, e}}));
-                 s.complete && s.complete.call(s.context, xhr, e);
-             }
-         };
- 
-         g = s.global;
-         // trigger ajax global events so that activity/block indicators work like normal
-         if (g && ! $.active++) {
-             //$.event.trigger("ajaxStart");
-             event.dispatchEvent(new Event("ajaxStart"));
-         }
-         if (g) {
-             //$.event.trigger("ajaxSend", [xhr, s]);
-             var e = new Event("ajaxSend" , { detail  : {xhr, s}});
-             event.dispatchEvent(e);
-         }
- 
-         if (s.beforeSend && s.beforeSend.call(s.context, xhr, s) === false) {
-             if (s.global) {
-                 $.active--;
-             }
-             return;
-         }
-         if (xhr.aborted) {
-             return;
-         }
- 
-         // add submitting element to data if we know it
-         sub = form.clk;
-         if (sub) {
-             n = sub.name;
-             if (n && !sub.disabled) {
-                 s.extraData = s.extraData || {};
-                 s.extraData[n] = sub.value;
-                 if (sub.type == "image") {
-                     s.extraData[n+'.x'] = form.clk_x;
-                     s.extraData[n+'.y'] = form.clk_y;
-                 }
-             }
-         }
-         
-         var CLIENT_TIMEOUT_ABORT = 1;
-         var SERVER_ABORT = 2;
- 
-         function getDoc(frame) {
-             var doc = frame.contentWindow ? frame.contentWindow.document : frame.contentDocument ? frame.contentDocument : frame.document;
-             return doc;
-         }
-         
-         // Rails CSRF hack (thanks to Yvan Barthelemy)
-         var csrf_token = $('meta[name=csrf-token]').getAttribute('content');
-         var csrf_param = $('meta[name=csrf-param]').getAttribute('content');
-         if (csrf_param && csrf_token) {
-             s.extraData = s.extraData || {};
-             s.extraData[csrf_param] = csrf_token;
-         }
- 
-         // take a breath so that pending repaints get some cpu time before the upload starts
-         function doSubmit() {
-             // make sure form attrs are set
-             var t = form.getAttribute('target'), a = form.getAttribute('action');
- 
-             // update form attrs in IE friendly way
-             form.setAttribute('target',id);
-             if (!method) {
-                 form.setAttribute('method', 'POST');
-             }
-             if (a != s.url) {
-                 form.setAttribute('action', s.url);
-             }
- 
-             // ie borks in some cases when setting encoding
-             if (! s.skipEncodingOverride && (!method || /post/i.test(method))) {
-                 form.getAttribute({
-                     encoding: 'multipart/form-data',
-                     enctype:  'multipart/form-data'
-                 });
-             }
- 
-             // support timout
-             if (s.timeout) {
-                 timeoutHandle = setTimeout(function() { timedOut = true; cb(CLIENT_TIMEOUT_ABORT); }, s.timeout);
-             }
-             
-             // look for server aborts
-             function checkState() {
-                 try {
-                     var state = getDoc(io).readyState;
-                     log('state = ' + state);
-                     if (state.toLowerCase() == 'uninitialized')
-                         setTimeout(checkState,50);
-                 }
-                 catch(e) {
-                     log('Server abort: ' , e, ' (', e.name, ')');
-                     cb(SERVER_ABORT);
-                     timeoutHandle && clearTimeout(timeoutHandle);
-                     timeoutHandle = undefined;
-                 }
-             }
- 
-             // add "extra" data to form if provided in options
-             var extraInputs = [];
-             try {
-                 if (s.extraData) {
-                     for (var n in s.extraData) {
-                         extraInputs.push(
-                             $('<input type="hidden" name="'+n+'">').getAttribute('value',s.extraData[n]).appendTo(form)[0]);
-                     }
-                 }
- 
-                 if (!s.iframeTarget) {
-                     // add iframe to doc and submit the form
-                     io.appendTo('body');
-                     io.attachEvent ? io.attachEvent('onload', cb) : io.addEventListener('load', cb, false);
-                 }
-                 setTimeout(checkState,15);
-                 form.submit();
-             }
-             finally {
-                 // reset attrs and remove "extra" input elements
-                 form.setAttribute('action',a);
-                 if(t) {
-                     form.setAttribute('target', t);
-                 } else {
-                     form.removeAttribute('target');
-                 }
-                 //$(extraInputs).remove();
-                 if (extraInputs.parentNode !== null) {
-                     extraInputs.parentNode.removeChild(extraInputs);
-                 }
-             }
-         }
- 
-         if (s.forceSync) {
-             doSubmit();
-         }
-         else {
-             setTimeout(doSubmit, 10); // this lets dom updates render
-         }
- 
-         var data, doc, domCheckCount = 50, callbackProcessed;
- 
-         function cb(e) {
-             if (xhr.aborted || callbackProcessed) {
-                 return;
-             }
-             try {
-                 doc = getDoc(io);
-             }
-             catch(ex) {
-                 log('cannot access response document: ', ex);
-                 e = SERVER_ABORT;
-             }
-             if (e === CLIENT_TIMEOUT_ABORT && xhr) {
-                 xhr.abort('timeout');
-                 return;
-             }
-             else if (e == SERVER_ABORT && xhr) {
-                 xhr.abort('server abort');
-                 return;
-             }
- 
-             if (!doc || doc.location.href == s.iframeSrc) {
-                 // response not received yet
-                 if (!timedOut)
-                     return;
-             }
-             io.detachEvent ? io.detachEvent('onload', cb) : io.removeEventListener('load', cb, false);
- 
-             var status = 'success', errMsg;
-             try {
-                 if (timedOut) {
-                     throw 'timeout';
-                 }
- 
-                 var isXml = s.dataType == 'xml' || doc.XMLDocument || $.isXMLDoc(doc);
-                 log('isXml='+isXml);
-                 if (!isXml && window.opera && (doc.body == null || doc.body.innerHTML == '')) {
-                     if (--domCheckCount) {
-                         // in some browsers (Opera) the iframe DOM is not always traversable when
-                         // the onload callback fires, so we loop a bit to accommodate
-                         log('requeing onLoad callback, DOM not available');
-                         setTimeout(cb, 250);
-                         return;
-                     }
-                     // let this fall through because server response could be an empty document
-                     //log('Could not access iframe DOM after mutiple tries.');
-                     //throw 'DOMException: not available';
-                 }
- 
-                 //log('response detected');
-                 var docRoot = doc.body ? doc.body : doc.documentElement;
-                 xhr.responseText = docRoot ? docRoot.innerHTML : null;
-                 xhr.responseXML = doc.XMLDocument ? doc.XMLDocument : doc;
-                 if (isXml)
-                     s.dataType = 'xml';
-                     xhr.getResponseHeader = function(header){
-                     var headers = {'content-type': s.dataType};
-                     return headers[header];
-                 };
-                 // support for XHR 'status' & 'statusText' emulation :
-                 if (docRoot) {
-                     xhr.status = Number( docRoot.getAttribute('status') ) || xhr.status;
-                     xhr.statusText = docRoot.getAttribute('statusText') || xhr.statusText;
-                 }
- 
-                 var dt = (s.dataType || '').toLowerCase();
-                 var scr = /(json|script|text)/.test(dt);
-                 if (scr || s.textarea) {
-                     // see if user embedded response in textarea
-                     var ta = doc.getElementsByTagName('textarea')[0];
-                     if (ta) {
-                         xhr.responseText = ta.value;
-                         // support for XHR 'status' & 'statusText' emulation :
-                         xhr.status = Number( ta.getAttribute('status') ) || xhr.status;
-                         xhr.statusText = ta.getAttribute('statusText') || xhr.statusText;
-                     }
-                     else if (scr) {
-                         // account for browsers injecting pre around json response
-                         var pre = doc.getElementsByTagName('pre')[0];
-                         var b = doc.getElementsByTagName('body')[0];
-                         if (pre) {
-                             xhr.responseText = pre.textContent ? pre.textContent : pre.innerText;
-                         }
-                         else if (b) {
-                             xhr.responseText = b.textContent ? b.textContent : b.innerText;
-                         }
-                     }
-                 }
-                 else if (dt == 'xml' && !xhr.responseXML && xhr.responseText != null) {
-                     xhr.responseXML = toXml(xhr.responseText);
-                 }
- 
-                 try {
-                     data = httpData(xhr, dt, s);
-                 }
-                 catch (e) {
-                     status = 'parsererror';
-                     xhr.error = errMsg = (e || status);
-                 }
-             }
-             catch (e) {
-                 log('error caught: ',e);
-                 status = 'error';
-                 xhr.error = errMsg = (e || status);
-             }
- 
-             if (xhr.aborted) {
-                 log('upload aborted');
-                 status = null;
-             }
- 
-             if (xhr.status) { // we've set xhr.status
-                 status = (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) ? 'success' : 'error';
-             }
- 
-             // ordering of these callbacks/triggers is odd, but that's how $.ajax does it
-             if (status === 'success') {
-                 s.success && s.success.call(s.context, data, 'success', xhr);
-                 g && $.event.trigger("ajaxSuccess", [xhr, s]);
-             }
-             else if (status) {
-                 if (errMsg == undefined)
-                     errMsg = xhr.statusText;
-                 s.error && s.error.call(s.context, xhr, status, errMsg);
-                 g && event.dispatchEvent(new Event("ajaxError", { detail : [xhr, s, errMsg]}));
-             }
- 
-             g && event.dispatchEvent(new Event("ajaxComplete",{detail : [xhr, s]}));
-             
-             if (g && ! --$.active) {
-                 event.dispatchEvent(new Event("ajaxStop"));
-             }
- 
-             s.complete && s.complete.call(s.context, xhr, status);
- 
-             callbackProcessed = true;
-             if (s.timeout)
-                 clearTimeout(timeoutHandle);
- 
-             // clean up
-             setTimeout(function() {
-                 if (!s.iframeTarget){
-                     //$io.remove();
-                     if (io.parentNode !== null) {
-                         io.parentNode.removeChild(io);
-                     }
-                 }
-                     
-                 xhr.responseXML = null;
-             }, 100);
-         }
- 
-         var toXml = $.parseXML || function(s, doc) { // use parseXML if available (jQuery 1.5+)
-             if (window.ActiveXObject) {
-                 doc = new ActiveXObject('Microsoft.XMLDOM');
-                 doc.async = 'false';
-                 doc.loadXML(s);
-             }
-             else {
-                 doc = (new DOMParser()).parseFromString(s, 'text/xml');
-             }
-             return (doc && doc.documentElement && doc.documentElement.nodeName != 'parsererror') ? doc : null;
-         };
-         var parseJSON = $.parseJSON || function(s) {
-             return window['eval']('(' + s + ')');
-         };
- 
-         var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4
- 
-             var ct = xhr.getResponseHeader('content-type') || '',
-                 xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
-                 data = xml ? xhr.responseXML : xhr.responseText;
- 
-             if (xml && data.documentElement.nodeName === 'parsererror') {
-                 $.error && $.error('parsererror');
-             }
-             if (s && s.dataFilter) {
-                 data = s.dataFilter(data, type);
-             }
-             if (typeof data === 'string') {
-                 if (type === 'json' || !type && ct.indexOf('json') >= 0) {
-                     data = parseJSON(data);
-                 } else if (type === "script" || !type && ct.indexOf("javascript") >= 0) {
-                     //unsure
-                     $.globalEval(data);
-                 }
-             }
-             return data;
-         };
-     }
-    },
-
-    myFormToArray:function (semantic){
-        var a = [];
-        if (this.length === 0) {
-            return a;
-        }
-
-        var form = this[0];
-        var els = semantic ? form.getElementsByTagName('*') : form.elements;
-        if (!els) {
-            return a;
-        }
-
-        var i,j,n,v,el,max,jmax;
-        for(i=0, max=els.length; i < max; i++) {
-            el = els[i];
-            n = el.name;
-            if (!n) {
-                continue;
-            }
-
-            if (semantic && form.clk && el.type == "image") {
-                // handle image inputs on the fly when semantic == true
-                if(!el.disabled && form.clk == el) {
-                    a.push({name: n, value: Object.values(el), type: el.type });
-                    a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
-                }
-                continue;
-            }
-
-            v = this.myFieldValue(el, true);
-            if (v && v.constructor == Array) {
-                for(j=0, jmax=v.length; j < jmax; j++) {
-                    a.push({name: n, value: v[j]});
-                }
-            }
-            else if (v !== null && typeof v != 'undefined') {
-                a.push({name: n, value: v, type: el.type});
-            }
-        }
-
-        if (!semantic && form.clk) {
-            // input type=='image' are not found in elements array! handle it here
-            var input = (form.clk), input = input[0];
-            n = input.name;
-            if (n && !input.disabled && input.type == 'image') {
-                a.push({name: n, value: Object.values(input)});
-                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
-            }
-        }
-        return a;
-    },
-
-    myFieldValue:function (el,successful){
-        var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
-        if (successful === undefined) {
-            successful = true;
-        }
     
-        if (successful && (!n || el.disabled || t == 'reset' || t == 'button' ||
-            (t == 'checkbox' || t == 'radio') && !el.checked ||
-            (t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
-            tag == 'select' && el.selectedIndex == -1)) {
-                return null;
-        }
-    
-        if (tag == 'select') {
-            var index = el.selectedIndex;
-            if (index < 0) {
-                return null;
-            }
-            var a = [], ops = el.options;
-            var one = (t == 'select-one');
-            var max = (one ? index+1 : ops.length);
-            for(var i=(one ? index : 0); i < max; i++) {
-                var op = ops[i];
-                if (op.mySelected) {
-                    var v = op.value;
-                    if (!v) { // extra pain for IE...
-                        v = (op.attributes && op.attributes['value'] && !(op.attributes['value'].specified)) ? op.text : op.value;
-                    }
-                    if (one) {
-                        return v;
-                    }
-                    a.push(v);
-                }
-            }
-            return a;
-        }
-        return Objects.values(el);
-    },
-
-    // My own clearForm, kinda messy
-    clearForm:function (includeHidden){
-     return Array.prototype.forEach.call(this , function(){
-         $('input,select,textarea', this).myClearFields(includeHidden);
-     }); 
-    },
-
-    myClearFields:function(includeHidden) {
-        var re = /^(?:color|date|datetime|email|month|number|password|range|search|tel|text|time|url|week)$/i; // 'hidden' is not in this list
-        return this.each(function() {
-            var t = this.type, tag = this.tagName.toLowerCase();
-            if (re.test(t) || tag == 'textarea' || (includeHidden && /hidden/.test(t)) ) {
-                this.value = '';
-            }
-            else if (t == 'checkbox' || t == 'radio') {
-                this.checked = false;
-            }
-            else if (tag == 'select') {
-                this.selectedIndex = -1;
-            }
-        });
-    },
-
-    myResetForm: function(){
-     return Array.prototype.forEach.call(this, function() {
-         // guard against an input with the name of 'reset'
-         // note that IE reports the reset function as an 'object'
-         if (typeof this.reset == 'function' || (typeof this.reset == 'object' && !this.reset.nodeType)) {
-             this.reset();
-         }
-     });
-    },
-
-    getParents: function(e) {
-     var result = [];
-     for (var p = e && e.parentElement; p; p = p.parentElement) {
-       result.push(p);
-     }
-     return result;
-    },
-
-    mySelected: function(select){
-     if (select === undefined) {
-         select = true;
-     }
-     return this.each(function() {
-         var t = this.type;
-         if (t == 'checkbox' || t == 'radio') {
-             this.checked = select;
-         }
-         else if (this.tagName.toLowerCase() == 'option') {
-             var sel = getParents('select');
-             if (select && sel[0] && sel[0].type == 'select-one') {
-                 // deselect all other options
-                 sel.querySelectorAll('option').mySelected(false);
-             }
-             this.selected = select;
-         }
-     });
-    }
+ 
 });
