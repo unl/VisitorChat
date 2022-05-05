@@ -107,7 +107,19 @@ var VisitorChat_ChatBase = Class.extend({
 
         this.refreshRate = refreshRate;
 
-        this.initAjaxPool();
+        $.ajaxSetup({
+            beforeSend: function(jqXHR) {
+                //VisitorChat.xhrPool[xhrPool.length] = jqXHR;
+                VisitorChat.xhrPool.push = jqXHR;
+            },
+            complete: function(jqXHR) {
+                var index = VisitorChat.xhrPool.indexOf(jqXHR);
+                if (index > -1) {
+                    //VisitorChat.xhrPool.splice(index, 1);
+                    thVisitorChatis.xhrPool.splice(index, 1);
+                }
+            }
+        });
 
         //Start the chat
         this.loadStyles();
@@ -127,39 +139,12 @@ var VisitorChat_ChatBase = Class.extend({
     // Ajax related, I don't know if I can fix this
     // Eric recommended this , will work around this
     xhrPool:[],
+    
     xhrAbortAll: function () {
         this.xhrPool.forEach( (idx, jqXHR) => {
             jqXHR.abort();
         });
-    },
-
-    xhrAjaxSetup: function(){
-        this.xhrPool[xhrPool.length] = jqXHR;
-    },
-
-    initAjaxPool: function()
-    {
-        $.xhrPool = [];
-        $.xhrPool.abortAll = function() {
-            $(this).each(function(idx, jqXHR) {
-                jqXHR.abort();
-            });
-            $.xhrPool.length = 0
-        };
-
-        $.ajaxSetup({
-            beforeSend: function(jqXHR) {
-                //VisitorChat.xhrPool[xhrPool.length] = jqXHR;
-                $.xhrPool.push = jqXHR;
-            },
-            complete: function(jqXHR) {
-                var index = $.xhrPool.indexOf(jqXHR);
-                if (index > -1) {
-                    //VisitorChat.xhrPool.splice(index, 1);
-                    $.xhrPool.splice(index, 1);
-                }
-            }
-        });
+        this.xhrPool.length = 0;
     },
 
     usePhpSessIdCookie: function() {
@@ -701,8 +686,14 @@ var VisitorChat_ChatBase = Class.extend({
                 }
               
                       
-                var message = document.querySelector('#visitorChat_messageBox').value;
-              
+                var message = document.querySelector('#visitorChat_messageBox') !== null;
+                if(message){
+                    message = document.querySelector('#visitorChat_messageBox').value;
+                }else{
+                    console.log("No there isn't");
+                }
+                //var message = $('#visitorChat_messageBox').val();
+
                 if (message.trim().length == 0) {
                     // ignore empty messages
                     return false;
@@ -1187,8 +1178,7 @@ var VisitorChat_ChatBase = Class.extend({
             },
             dataType:"json",
             complete:function (jqXHR, textStatus) {
-                $.xhrPool.abortAll();
-                //this.xhrAbortAll();
+                VisitorChat.xhrAbortAll();
             }
         });
 
