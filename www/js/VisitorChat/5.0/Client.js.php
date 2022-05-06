@@ -407,12 +407,13 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 }
 
             //Display error and request confirmation before continuing.
-            var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK?</div>";
+            var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK? Type your email if you want a respond instead </div>";
 
             // $('#visitorChat_login_submit').before(html);
             // $('#visitorChat_login_submit').val("Yes, I do not need a response");
-            document.querySelector('#visitorChat_login_submit').insertAdjacentElement('beforebegin', html);
-            document.querySelector('#visitorChat_login_submit').value = "Yes, I do not need a response";
+            var e = document.querySelector('#visitorChat_login_submit');
+            e.insertAdjacentHTML('beforebegin', html);
+            e.value = "Yes, I do not need a response";
             this.initWatchers();
 
             //remove the warning if they start to enter an email
@@ -428,11 +429,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Start an email convo now if need be.
             for (var key = 0; key<arr.length; key++) {
                 if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
-                    if (this.confirmAnonSubmit()) {
-                        //this.startEmail();
-                    } else {
-                        return false;
-                    }
+                    if (!this.confirmAnonSubmit()) return false;
                 }
             }
 
@@ -490,10 +487,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.initValidation();
 
             $('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
+                //document.querySelector('#visitorchat_clientLogin_anonwaning').remove();
                 $('#visitorchat_clientLogin_anonwaning').remove();
-
-                if (document.querySelector('#visitorChat_footercontainer #visitorChat_login_submit').value
-                    == 'Yes, no response needed'
+                if (document.querySelector('#visitorChat_footercontainer #visitorChat_login_submit').value == 'Yes, no response needed'
                     && document.querySelector('#visitorChat_email').value != '') {
                     document.querySelector('#visitorChat_footercontainer #visitorChat_login_submit').value = "Submit";
                 }
@@ -507,9 +503,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
                     $().unbind('#visitorChat_sendAnotherConfirmation');
                     
-                    document.querySelector('#visitorChat_sendAnotherConfirmation').addEventListener('click' ,
-                    function(){
-                        $('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html()).focus();
+                    document.querySelector('#visitorChat_sendAnotherConfirmation').addEventListener('click' , function(){
+                        //$('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html()).focus();
+                        document.querySelector('#visitorChat_confirmationContainer').innerHTML
+                        = Array.prototype.filter.call( document.querySelectorAll(VisitorChat.confirmationHTML), document.querySelector('#visitorChat_confirmationContainer').innerHTML).focus();
                         VisitorChat.initWatchers();
                         return false;
                     });
@@ -572,6 +569,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             //Logout function
             $('#visitorChat_logout').on('click keypress', (function (event) {
+            //document.querySelector('#visitorChat_logout').addEventListener('click keypress', (function (event) {
                 if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
                     //Must be space or enter to continue
                     return;
@@ -587,7 +585,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 }
 
                 VisitorChat.stop();
-
                 return false;
             }.bind(this)));
 
@@ -599,7 +596,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         document.querySelector('label[for="visitorChat_email"]').innerText = "Email (Required)";
                         document.querySelector('#visitorChat_email').classList.add('required-entry');
                     } else {
-                        document.querySelector('label[for="visitorChat_email"]').innerText("Email (Optional)");
+                        document.querySelector('label[for="visitorChat_email"]').innerText = "Email (Optional)";
                         document.querySelector('#visitorChat_email').classList.add('required-entry');
                     }
                 });
@@ -634,7 +631,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     document.querySelector('#visitorChat_email').value = VisitorChat.email;
 
                     document.querySelector('#visitorChat_email').focus();
-                    $('#visitorChat_messageBox').keyup();
+                    document.querySelector('#visitorChat_messageBox').addEventListener("keyup", function (){
+                        //testing for the keyup function , unsure this even works but it's ok for now
+                        console.log("this works ?");
+                    });
                 });
 
                 return true;
@@ -659,9 +659,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             if (this.chatStatus) {
                 $('#visitorChat_logout').css({'display':'inline-block'});
+                // document.querySelectorAll('#visitorChat_logout').forEach(function(el){
+                //     el.style.display = "incline-block";
+                // });
                 $('#visitorChat_header_text').css({'margin-right':'1.777em'});
             } else {
                 $('#visitorChat_logout').css({'display':'none'});
+                // document.querySelectorAll('#visitorChat_logout').forEach(function(el){
+                //     el.style.display = "none";
+                // });
                 $('#visitorChat_header_text').css({'margin-right':'0'});
             }
 
@@ -748,8 +754,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             analytics.callTrackEvent('WDN Chat', 'Started');
         },
 
+
         onConversationStatus_Closed:function (data) {
-            if ($('#visitorChat_confirmationContainer').length != 0) {
+            if (document.querySelectorAll('#visitorChat_confirmationContainer').length != 0) {
                 return false;
             }
 
@@ -757,12 +764,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             this.confirmationHTML = data['confirmationHTML'];
 
-            $('#visitorChat_chatBox').height('150px');
+            document.querySelector('#visitorChat_chatBox').style.height = '150px';
 
             $('#visitorChat_messageForm').remove();
 
             var $closed_container = $('#visitorChat_closed');
+            var e = document.querySelector('#visitorChat_closed');
 
+             //Object.assign(e , data['confirmationHTML'])
+            //e.setAttribute('tabindex', '-1');
             $closed_container.append(data['confirmationHTML']);
             $closed_container.attr('tabindex', '-1');
             $('#visitorChat_confiramtionEmail').focus();
@@ -852,10 +862,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (document.createStyleSheet) {
                 document.createStyleSheet(stylesheet);
             } else {
-                $('head').append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />"));
+                var html = "<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />";
+                document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', html);
             }
 
-            $(window).on("load", function () {
+            window.addEventListener("load", function () {
                 VisitorChat.displaySiteAvailability();
             });
 
@@ -863,8 +874,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append('' +
-                '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
+            document.querySelector('#dcf-footer').insertAdjacentHTML('beforeend',
+                    '' + '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
                     '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" aria-label="Open the Email Us widget">' +
                         '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
                         '<div id="visitor-chat-header-options">' +
@@ -876,10 +887,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         '</div>' +
                     '</div>' +
                     '<div id="visitorChat_sound_container"></div>' +
-                '</div>');
+                '</div>'
+            );
 
-            $('#dcf-nav-toggle-group').append('' +
-                '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
+            document.querySelector('#dcf-nav-toggle-group').insertAdjacentHTML('beforeend', 
+               '' + '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                         '<g class="" id="dcf-nav-toggle-icon-open-chat">' +
                             '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
@@ -909,6 +921,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             VisitorChat.xhrAbortAll();
 
             callbackSet = false;
+            //Object.is(document.querySelector('#visitorChat_container'),':visible')
             if ($('#visitorChat_container').is(':visible')) {
                 callbackSet = true;
                 $('#visitorChat_container').slideUp(400,(function () {
@@ -948,10 +961,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         closeChatContainer: function() {
-            $('#visitorChat').removeClass('visitorChat_open');
+            document.querySelector('#visitorChat').classList.remove('visitorChat_open');
             $('#visitorChat_logout').css({'display':'none'});
-            $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
-            $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
+            document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.remove('dcf-d-none');
+            document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.add('dcf-d-none');
             this.widgetIsOpen = false;
             this.displaySiteAvailability();
         },
@@ -961,43 +974,50 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 available = VisitorChat.operatorsAvailable;
             }
 
-            var $widget = $('#visitorChat');
-
+            //var $widget = $('#visitorChat');
+            var widget = document.querySelector('#visitorChat');
             var text = 'Email Us';
 
             if (available) {
-                $widget.addClass('online');
-                $widget.removeClass('offline');
+                widget.classList.add('online');
+                widget.classList.remove('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
             } else if (this.isChatbotAvailable()) {
-                $widget.addClass('online');
-                $widget.removeClass('offline');
+                widget.classList.add('online');
+                widget.classList.remove('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chatbot';
             } else {
-                $widget.addClass('offline');
-                $widget.removeClass('online');
+                widget.classList.add('offline');
+                widget.classList.remove('online');
                 VisitorChat.method = 'email';
             }
 
             //Update the text of the visible prompt
-            $('#visitorChat_header_text').text(text);
+            document.querySelector('#visitorChat_header_text').innerText = text;
 
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the ' + text + ' widget').attr('aria-expanded', 'true');
-                $('.dcf-nav-toggle-label-chat').text('Close');
+                document.querySelector('.dcf-nav-toggle-label-chat').innerText = 'Close';
             } else {
                 $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Open the ' + text + ' widget').attr('aria-expanded', 'false');
-                $('.dcf-nav-toggle-label-chat').text(text);
+                document.querySelector('.dcf-nav-toggle-label-chat').innerText = text;
             }
 
             return true;
+        },
+
+        setHeight: function(el, val) {
+            if (typeof val === "function") val = val();
+            if (typeof val === "string") el.style.height = val;
+            else el.style.height = val + "px";
         }
     });
 
     $(function(){
+
         WDN.initializePlugin('form_validation', [function() {
             if (VisitorChat == false) {
                 VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
