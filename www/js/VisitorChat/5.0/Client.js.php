@@ -70,9 +70,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 document.querySelector('#visitorChat_methods_chat').addEventListener('click', function() {
                     VisitorChat.stop(function(){
                         VisitorChat.startChat();
-                        //$('#visitorChat_messageBox').keyup();
-                        // This should be fix, I don't think this is right 
-                        document.querySelector('#visitorChat_messageBox').onkeyup;
+                        document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
                     });
 
                     return false;
@@ -86,7 +84,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 document.querySelector('#visitorChat_methods_chat').addEventListener('click', function() {
                    VisitorChat.stop(function(){
                       VisitorChat.startChatBot();
-                      document.querySelector('#visitorChat_messageBox').onkeyup;
+                      document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
                     });
                     
                     return false;
@@ -103,8 +101,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.chatStatus = "CHATTING";
                 return this.start();
             }
-            //document.querySelector('#visitorChat_container #visitorChat_email_fallback_text').innerHTML = "If no operators are available,&nbsp;I would like to receive an email.";
-            $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+            var e = document.querySelector('#visitorChat_container #visitorChat_email_fallback_text');
+            if(e){
+                e.innerHTML = "If no operators are available,&nbsp;I would like to receive an email.";
+            }
+
 
             this.start();
 
@@ -116,16 +117,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Submit as chat
             document.querySelector('#visitorChat_login_chatmethod').value = "CHAT";
             
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
-            // var el = document.querySelector('#visitorChat_container');
-            // el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+            var el = document.querySelector('#visitorChat_container');
+            el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
 
             VisitorChat.displayWelcomeMessage();
 
             document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
                 VisitorChat.stop(function(){
                     VisitorChat.startEmail();
-                    $('#visitorChat_messageBox').keyup();
+                    document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
                 });
                 return false;
             }, {once : true});
@@ -142,7 +142,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             return this.start();
           }
 
-          $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+          var e = document.querySelector('#visitorChat_container #visitorChat_email_fallback_text');
+        if(e){
+                e.innerHTML = "If no operators are available,&nbsp;I would like to receive an email.";
+        }
+
 
           this.start();
 
@@ -155,20 +159,20 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
           document.querySelector('#visitorChat_footerHeader').innerHTML = 'Chat with ' + title + ' Chatbot ' + testNotice;
 
-          //$('label[for="visitorChat_messageBox"]').text("How can we assist you?");
           document.querySelector('label[for="visitorChat_messageBox"]').innerHTML = "How can we assist you?";
 
           //Submit as chat
           document.querySelector('#visitorChat_login_chatmethod').value = "CHATBOT";
 
-          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+          var el = document.querySelector('#visitorChat_container');
+          el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
 
           VisitorChat.displayWelcomeMessage();
 
           document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
             VisitorChat.stop(function(){
               VisitorChat.startEmail();
-              $('#visitorChat_messageBox').keyup();
+              document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
             });
             return false;
           }, {once : true});
@@ -186,10 +190,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           // invalid intent info so launch chatbot without intent instead
           if (VisitorChat.operatorsAvailable) {
             this.startChatBot();
-            $('#visitorChat_messageBox').keyup();
+            document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           } else {
             VisitorChat.startEmail();
-            $('#visitorChat_messageBox').keyup();
+            document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           }
           return false;
         }
@@ -223,7 +227,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         document.querySelector('.dcf-nav-toggle-label-chat').innerText = 'Close';
         document.querySelector('#visitorChatbot_intent').value = intentMsg;
         document.querySelector('#visitorChatbot_intent_defaults').value = JSON.stringify(intentSessionAttributes);
-        $('#visitorChat_messageBox').keyup();
+        document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
         document.querySelector('#visitorChatbot_messageBoxContainer').style.display = 'none';
         document.querySelector('#visitorChatbot_intent_message').innerText = introMsg;
         document.querySelector('#visitorChatbot_intent_message').style.display = '';
@@ -232,12 +236,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           if (VisitorChat.operatorsAvailable) {
             var el = document.querySelector('#visitorChat_container');
             el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
-            //$('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
 
             document.querySelector('#visitorChat_methods_chat').addEventListener('click', function () {
               VisitorChat.stop(function () {
                 VisitorChat.startChat();
-                $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
               });
 
               return false;
@@ -250,7 +253,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             document.querySelector('#visitorChat_methods_chat').addEventListener('click', function () {
               VisitorChat.stop(function () {
                 VisitorChat.startChatBot();
-                $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
               });
 
               return false;
@@ -258,16 +261,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
           } else {
               // This code causes problem, will have to look into it
-            // var el = document.querySelector('#visitorChat_container');
-            // el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+              var el = document.querySelector('#visitorChat_container');
+              el.insertAdjacentHTML('afterend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
           }
         }
 
         document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
           VisitorChat.stop(function(){
             VisitorChat.startEmail();
-            $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           });
 
           return false;
@@ -417,7 +419,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             this.initWatchers();
 
             //remove the warning if they start to enter an email
-            $('#visitorChat_email').keyup(function () {
+            document.querySelector('#visitorChat_email').addEventListener('keyup',function () {
                 $('#visitorchat_clientLogin_anonwaning').remove();
                 document.querySelector('#visitorChat_login_submit').value = "Submit";
             });
@@ -440,7 +442,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $.validation.addMethod('validate-require-if-question',
                 'An email address is required if you ask a question so that we can respond.',
                 function(value, object) {
-                    var message = $('#visitorChat_messageBox').val();
+                    var message = document.querySelector('#visitorChat_messageBox').value;
                     if (message.indexOf("?") != -1 && value == "") {
                         return false;
                     }
