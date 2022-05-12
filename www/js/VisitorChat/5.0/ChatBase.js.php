@@ -398,10 +398,12 @@ var VisitorChat_ChatBase = Class.extend({
 
     updateLatestMessageId:function (latest) {
         this.latestMessageId = latest;
-        var e = document.querySelector('.unl_visitorchat_form');
-        if (action = e.getAttribute('action')) {
-            action = action.replace(/last=(\d)*/g, "last=" + latest);
-            e.setAttribute('action', action);         
+        var e = document.querySelector('.unl_visitorchat_form') !== null;
+        if(e){
+            if (action = document.querySelector('.unl_visitorchat_form').getAttribute('action')) {
+                action = action.replace(/last=(\d)*/g, "last=" + latest);
+                document.querySelector('.unl_visitorchat_form') .setAttribute('action', action);         
+            }
         }
     },
 
@@ -663,10 +665,15 @@ var VisitorChat_ChatBase = Class.extend({
                     e.preventDefault();
                     // submit() and val('') is a jquery function imo
                     if (VisitorChat.chatStatus == 'LOGIN') {
-                       document.querySelector('#visitorchat_clientLogin').submit();
+                        document.getElementById("visitorchat_clientLogin").submit();
                     } else if(VisitorChat.chatStatus != false) {
-                        document.querySelector('#visitorchat_clientLogin').submit();
-                        document.querySelector('#visitorChat_messageBox').value = ' ';
+                        // document.getElementById("visitorChat_messageForm").addEventListener("submit", (event) => {
+                        //     event.preventDefault();
+                        //     console.log("form submitted");
+                        // });
+                        $('#visitorChat_messageForm').submit();
+                        document.getElementById('visitorChat_messageBox').value = '';
+                        // $('#visitorChat_messageBox').val('');
                     }
                 }
             }));
