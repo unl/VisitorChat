@@ -650,6 +650,7 @@ var VisitorChat_ChatBase = Class.extend({
     initWatchers:function () {
          var e = document.querySelector('#visitorChat_messageBox') !== null;
          if(e){
+             // this might be the reason the code is enter key is not working
             document.querySelector('#visitorChat_messageBox').addEventListener('keypress' ,(function (e) {
                 if (VisitorChat.chatStatus == false) {
                     return true;
@@ -667,13 +668,9 @@ var VisitorChat_ChatBase = Class.extend({
                     if (VisitorChat.chatStatus == 'LOGIN') {
                         document.getElementById("visitorchat_clientLogin").submit();
                     } else if(VisitorChat.chatStatus != false) {
-                        // document.getElementById("visitorChat_messageForm").addEventListener("submit", (event) => {
-                        //     event.preventDefault();
-                        //     console.log("form submitted");
-                        // });
                         $('#visitorChat_messageForm').submit();
-                        document.getElementById('visitorChat_messageBox').value = '';
-                        // $('#visitorChat_messageBox').val('');
+                        //document.getElementById('visitorChat_messageBox').value = '';
+                        $('#visitorChat_messageBox').val('');
                     }
                 }
             }));
@@ -692,14 +689,13 @@ var VisitorChat_ChatBase = Class.extend({
                     }
                 }
               
-                      
+                //This part is causing some error on the log, I'll have to look on the trimming message
                 var message = document.querySelector('#visitorChat_messageBox') !== null;
                 if(message){
                     message = document.querySelector('#visitorChat_messageBox').value;
                 }else{
                     console.log("No there isn't");
                 }
-                //var message = $('#visitorChat_messageBox').val();
 
                 if (message.trim().length == 0) {
                     // ignore empty messages
@@ -952,8 +948,10 @@ var VisitorChat_ChatBase = Class.extend({
             VisitorChat.onLogin();
         } else {
             if (VisitorChat.chatStatus != 'CLOSED') {
-                var el = document.getElementById('visitorChat_chatBox');
-                el.classList.add("visitorChat_loading");
+                var el = document.getElementById('visitorChat_chatBox') !== null;
+                if(el){
+                    document.getElementById('visitorChat_chatBox').classList.add("visitorChat_loading");
+                }
             }
         }
 
