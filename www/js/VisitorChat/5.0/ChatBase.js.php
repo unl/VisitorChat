@@ -84,6 +84,9 @@ var VisitorChat_ChatBase = Class.extend({
 
     nonCORSDomain: 'unl.edu',
 
+    // Eric recommended this , will work around this
+    xhrPool:[],
+
     config: {},
 
     //timeout for the is_typing status
@@ -109,14 +112,12 @@ var VisitorChat_ChatBase = Class.extend({
 
         $.ajaxSetup({
             beforeSend: function(jqXHR) {
-                //VisitorChat.xhrPool[xhrPool.length] = jqXHR;
                 VisitorChat.xhrPool.push = jqXHR;
             },
             complete: function(jqXHR) {
                 var index = VisitorChat.xhrPool.indexOf(jqXHR);
                 if (index > -1) {
-                    //VisitorChat.xhrPool.splice(index, 1);
-                    thVisitorChatis.xhrPool.splice(index, 1);
+                    VisitorChat.xhrPool.splice(index, 1);
                 }
             }
         });
@@ -131,14 +132,8 @@ var VisitorChat_ChatBase = Class.extend({
             this.initWatchers();
         }.bind(this));
         
-        
-
-
     },
-
-    // Ajax related, I don't know if I can fix this
-    // Eric recommended this , will work around this
-    xhrPool:[],
+    
     
     xhrAbortAll: function () {
         this.xhrPool.forEach( (idx, jqXHR) => {
@@ -652,6 +647,7 @@ var VisitorChat_ChatBase = Class.extend({
          if(e){
              // this might be the reason the code is enter key is not working
             document.querySelector('#visitorChat_messageBox').addEventListener('keypress' ,(function (e) {
+            //$('#visitorChat_messageBox').keypress(function (e) {
                 if (VisitorChat.chatStatus == false) {
                     return true;
                 }
@@ -668,12 +664,13 @@ var VisitorChat_ChatBase = Class.extend({
                     if (VisitorChat.chatStatus == 'LOGIN') {
                         document.getElementById("visitorchat_clientLogin").submit();
                     } else if(VisitorChat.chatStatus != false) {
+                        //document.getElementById('visitorChat_messageForm').submit();
                         $('#visitorChat_messageForm').submit();
-                        //document.getElementById('visitorChat_messageBox').value = '';
-                        $('#visitorChat_messageBox').val('');
+                        document.getElementById('visitorChat_messageBox').value = '';
                     }
                 }
             }));
+         }
     
         var el = document.querySelector('#visitorChat_messageForm, #visitorchat_clientLogin') !== null;
         if(el){
@@ -716,7 +713,7 @@ var VisitorChat_ChatBase = Class.extend({
               
                 this.initAjaxForms();
             }
-         }
+         
     },
 
     generateUUID: function() { // Public Domain/MIT
@@ -1109,9 +1106,10 @@ var VisitorChat_ChatBase = Class.extend({
                 break;
         }
 
-        var $soundContainer = $('#visitorChat_sound_container');
-        if ($soundContainer.length) {
-            var audio = $('<audio />', {
+        // Sound could be broken , will test it once I brought my headphone
+        var soundContainer = document.querySelector('#visitorChat_sound_container');
+        if (soundContainer.length) {
+            var audio = ('<audio />', {
                 'src': this.serverURL + "audio/" + file,
                 'autoplay': true,
                 'aria-hidden': 'true'
@@ -1120,7 +1118,7 @@ var VisitorChat_ChatBase = Class.extend({
             audio.on('ended', function() {
                 audio.remove();
             });
-            $soundContainer.append(audio);
+            soundContainer.insertAdjacentHTML('beforeend', audio);
         }
     },
 
@@ -1155,15 +1153,13 @@ var VisitorChat_ChatBase = Class.extend({
             }
         }
 
-        //Send a post response.
-        $.ajax({
-            type:"POST",
-            url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
-            xhrFields:{
-                withCredentials:true
-            },
-            data:"status=" + status
-        }).done(callback);
+        //there's a .done at the end of the last ajax functions but it seems we don't need it anymore
+        var request = new XMLHttpRequest();
+        request.open('POST', this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(), true );
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.withCredentials = true;
+        request.send("status=" + status);
+        
     },
 
     /**
