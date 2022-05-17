@@ -612,30 +612,28 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     return false;
                 }.bind(this)));
             }
-            // test function for 2 elements in DOM
-            // if(this.elementReady('#visitorChat_logout')){
-            //     ['click' , 'keypress'].forEach(function (e){
-            //         document.querySelector('#visitorChat_logout').addEventListener(e , (function (event) {
-            //             if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
-            //                 //Must be space or enter to continue
-            //                 return;
-            //             }
-        
-            //             if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
-            //                 return false;
-            //             }
-        
-            //             if (this.chatStatus == 'CHATTING') {
-            //                 VisitorChat.changeConversationStatus("CLOSED");
-            //                 return false;
-            //             }
-        
-            //             VisitorChat.stop();
-            //             return false;
-            //     }.bind(this)));
-    
-            // });
-            // }
+
+            // var someFunction = function(event){
+            //     if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
+            //         //Must be space or enter to continue
+            //         return;
+            //     }
+
+            //     if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
+            //         return false;
+            //     }
+
+            //     if (this.chatStatus == 'CHATTING') {
+            //         VisitorChat.changeConversationStatus("CLOSED");
+            //         return false;
+            //     }
+
+            //     VisitorChat.stop();
+            //     return false;
+            // }.bind(this);
+
+            // document.querySelector('#visitorChat_logout').addEventListener('click' , someFunction);
+            // document.querySelector('#visitorChat_logout').addEventListener('keypress' , someFunction);
 
             if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
                 //if email_fallback is checked, make sure that the email is required.
