@@ -95,6 +95,8 @@ var VisitorChat_ChatBase = Class.extend({
     /**
      * Constructor function.
      */
+
+     
     init:function (serverURL, refreshRate) {
         //set vars
         this.serverURL = serverURL;
@@ -309,6 +311,7 @@ var VisitorChat_ChatBase = Class.extend({
      */
     updateChat:function (url, force) {
         //Check if we should not update.
+        var flag = false;
         if ((this.chatStatus == 'LOGIN'
             || this.chatStatus == 'CLOSED'
             || this.chatStatus == 'OPERATOR_LOOKUP_FAILED'
@@ -326,6 +329,9 @@ var VisitorChat_ChatBase = Class.extend({
         }
 
         this.pendingChatAJAX = true;
+         
+        var that = this;
+
 
         $.ajax({
             url:url,
@@ -333,9 +339,6 @@ var VisitorChat_ChatBase = Class.extend({
                 withCredentials:true
             },
             dataType:"json",
-            error: function(jqXHR, textStatus, errorThrown) {
-                //alert('test: ' + textStatus);
-            },
             success:(function (data, textStatus, jqXHR) {
                 this.updateChatWithData(data);
                 this.pendingChatAJAX = false;
@@ -349,6 +352,7 @@ var VisitorChat_ChatBase = Class.extend({
      * conversation status and fires off a related function.
      */
     updateChatWithData:function (data) {
+        console.log("inside");
         if (data['status'] !== undefined) {
             this.chatStatus = data['status'];
         }
@@ -525,6 +529,7 @@ var VisitorChat_ChatBase = Class.extend({
      * A close event happens when a client logs out or an operator closes the chat
      * from their end or the current operator logs out.
      */
+    // something wrong here when they want to get an email
     onConversationStatus_Closed:function (data) {
         if (data['html'] != undefined) {
             this.updateChatContainerWithHTML("#visitorChat_container", data['html']);
@@ -646,8 +651,8 @@ var VisitorChat_ChatBase = Class.extend({
          var e = document.querySelector('#visitorChat_messageBox') !== null;
          if(e){
              // this might be the reason the code is enter key is not working
-            document.querySelector('#visitorChat_messageBox').addEventListener('keypress' ,(function (e) {
-            //$('#visitorChat_messageBox').keypress(function (e) {
+            //document.querySelector('#visitorChat_messageBox').addEventListener('keypress' ,(function (e) {
+            $('#visitorChat_messageBox').keypress(function (e) {
                 if (VisitorChat.chatStatus == false) {
                     return true;
                 }
@@ -669,7 +674,7 @@ var VisitorChat_ChatBase = Class.extend({
                         document.getElementById('visitorChat_messageBox').value = '';
                     }
                 }
-            }));
+            });
          }
     
         var el = document.querySelector('#visitorChat_messageForm, #visitorchat_clientLogin') !== null;
@@ -905,6 +910,9 @@ var VisitorChat_ChatBase = Class.extend({
                   //display word filter error (and other errors during login)
                   document.querySelector('#visitorChat_container').textContent = errorMessage;
 
+                  // The error seems to always occur ,  might as well just get them waiting for someone at the time 
+                  // so that user don't have to reload page every time they start sending messages
+                  this.updateChat(this.generateChatURL(), true);
                 } else {
                   console.log('reloading chat...');
                   // Reset chat so does not hang
@@ -1153,7 +1161,7 @@ var VisitorChat_ChatBase = Class.extend({
             }
         }
 
-        //there's a .done at the end of the last ajax functions but it seems we don't need it anymore
+        //there's a .done at the end of the last ajax functions and should be fix somehow
         var request = new XMLHttpRequest();
         request.open('POST', this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(), true );
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
