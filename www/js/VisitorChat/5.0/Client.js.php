@@ -24,7 +24,6 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         config: {
             email_required: false,
             name_required: false,
-            site_title: false
         },
         widgetIsOpen: false,
         lexruntime: new AWS.LexRuntime(),
@@ -46,45 +45,47 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             var title = this.getSiteTitle();
 
-            $('#visitorChat_footerHeader').html('Send ' + title + ' a message');
+            document.querySelector('#visitorChat_footerHeader').innerHTML = 'Send ' + title + ' a message';
 
-            $('label[for="visitorChat_messageBox"]').text("Send a comment or ask us a question");
-
+            document.querySelector('#visitorChat_footerHeader').innerText = "Send a comment or ask us a question";
             //Require email if we need to.
             if (this.config.email_required) {
-                $('label[for="visitorChat_email"]').text("Email (Required)");
-                $('#visitorChat_email').addClass('required-entry');
+                document.querySelector('label[for="visitorChat_email"]').innerText = "Email (Required)";
+                document.querySelector('#visitorChat_email').classList.add('required-entry');
             }
 
             if (this.config.name_required) {
-                $('label[for="visitorChat_name"]').text("Name (Required)");
-                $('#visitorChat_name').addClass('required-entry');
+                document.querySelector('label[for="visitorChat_name"]').innerText = "Name (Required)";
+                document.querySelector('#visitorChat_name').classList.add('required-entry');
             }
 
             VisitorChat.displayWelcomeMessage();
 
             if (VisitorChat.operatorsAvailable) {
-                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
+                var el = document.querySelector('#visitorChat_container');
+                el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
 
-                $('#visitorChat_methods_chat').one('click', function() {
+                document.querySelector('#visitorChat_methods_chat').addEventListener('click', function() {
                     VisitorChat.stop(function(){
                         VisitorChat.startChat();
-                        $('#visitorChat_messageBox').keyup();
+                        document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
                     });
 
                     return false;
-                });
+                }, {once : true});
+
             } else if (this.isChatbotAvailable()) {
-                $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
+                var el = document.querySelector('#visitorChat_container');
+                el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat with us</button> </div>");
 
-                $('#visitorChat_methods_chat').one('click', function() {
-                  VisitorChat.stop(function(){
-                    VisitorChat.startChatBot();
-                    $('#visitorChat_messageBox').keyup();
-                  });
-
-                  return false;
-                });
+                document.querySelector('#visitorChat_methods_chat').addEventListener('click', function() {
+                   VisitorChat.stop(function(){
+                      VisitorChat.startChatBot();
+                      document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
+                    });
+                    
+                    return false;
+                }, {once : true});
             }
         },
 
@@ -97,45 +98,52 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 this.chatStatus = "CHATTING";
                 return this.start();
             }
+            var e = document.querySelector('#visitorChat_container #visitorChat_email_fallback_text');
+            if(e){
+                e.innerHTML = "If no operators are available,&nbsp;I would like to receive an email.";
+            }
 
-            $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
 
             this.start();
 
             var title = this.getSiteTitle();
 
-            $('#visitorChat_footerHeader').html('Chat with ' + title);
+            document.querySelector('#visitorChat_footerHeader').innerHTML = 'Chat with ' + title;
 
-            $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
+            document.querySelector('label[for="visitorChat_messageBox"]').innerText = "How can we assist you?";
             //Submit as chat
-            $('#visitorChat_login_chatmethod').val("CHAT");
-
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+            document.querySelector('#visitorChat_login_chatmethod').value = "CHAT";
+            
+            var el = document.querySelector('#visitorChat_container');
+            el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
 
             VisitorChat.displayWelcomeMessage();
 
-            $('#visitorChat_methods_email').one('click', function() {
+            document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
                 VisitorChat.stop(function(){
                     VisitorChat.startEmail();
-                    $('#visitorChat_messageBox').keyup();
+                    document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
                 });
                 return false;
-            });
+            }, {once : true});
+
         },
 
         startChatBot:function (chatInProgress) {
           this.method = 'chatbot';
           this.displaySiteAvailability();
           this.launchChatContainer();
-          //console.log('starting chatbot: ' + VisitorChat.chatbotUserID);
-          //console.log('starting chatbot: ' + VisitorChat.getChatbotUserID());
 
           if (chatInProgress && this.chatStatus == "LOGIN") {
             this.chatStatus = "CHATING";
             return this.start();
           }
 
-          $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+          var e = document.querySelector('#visitorChat_container #visitorChat_email_fallback_text');
+        if(e){
+                e.innerHTML = "If no operators are available,&nbsp;I would like to receive an email.";
+        }
+
 
           this.start();
 
@@ -145,23 +153,26 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           if (VisitorChat.chatbotEnv != 'PROD') {
             testNotice = ' (Test Env)';
           }
-          $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
 
-          $('label[for="visitorChat_messageBox"]').text("How can we assist you?");
+          document.querySelector('#visitorChat_footerHeader').innerHTML = 'Chat with ' + title + ' Chatbot ' + testNotice;
+
+          document.querySelector('label[for="visitorChat_messageBox"]').innerHTML = "How can we assist you?";
+
           //Submit as chat
-          $('#visitorChat_login_chatmethod').val("CHATBOT");
+          document.querySelector('#visitorChat_login_chatmethod').value = "CHATBOT";
 
-          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+          var el = document.querySelector('#visitorChat_container');
+          el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
 
           VisitorChat.displayWelcomeMessage();
 
-          $('#visitorChat_methods_email').one('click', function() {
+          document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
             VisitorChat.stop(function(){
               VisitorChat.startEmail();
-              $('#visitorChat_messageBox').keyup();
+              document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
             });
             return false;
-          });
+          }, {once : true});
         },
 
       startChatBotWithIntent:function (introMsg, intentMsg, intentSessionAttributes, displayChatMethods) {
@@ -176,10 +187,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           // invalid intent info so launch chatbot without intent instead
           if (VisitorChat.operatorsAvailable) {
             this.startChatBot();
-            $('#visitorChat_messageBox').keyup();
+            document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           } else {
             VisitorChat.startEmail();
-            $('#visitorChat_messageBox').keyup();
+            document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           }
           return false;
         }
@@ -188,7 +199,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         this.displaySiteAvailability();
         this.launchChatContainer();
 
-        $('#visitorChat_container #visitorChat_email_fallback_text').html("If no operators are available,&nbsp;I would like to receive an email.");
+        var el = document.querySelector('#visitorChat_container #visitorChat_email_fallback_text');
+        el.insertAdjacentHTML('beforeend',"If no operators are available,&nbsp;I would like to receive an email.");
 
         this.start();
 
@@ -198,83 +210,90 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         if (VisitorChat.chatbotEnv != 'PROD') {
           testNotice = ' (Test Env)';
         }
-        $('#visitorChat_footerHeader').html('Chat with ' + title + ' Chatbot ' + testNotice);
-
+        document.querySelector('#visitorChat_footerHeader').innerHTML = 'Chat with ' + title + ' Chatbot ' + testNotice;
         //Submit as chat
-        $('#visitorChat_login_chatmethod').val("CHATBOT");
+        document.querySelector('#visitorChat_login_chatmethod').value = "CHATBOT";
 
         VisitorChat.displayWelcomeMessage();
 
         // setup intent display
-        $('#visitorChat').addClass('visitorChat_open');
-        $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the Let\'s Chat widget').attr('aria-expanded', 'true');
-        $('.dcf-nav-toggle-label-chat').text('Close');
-        $('#visitorChatbot_intent').val(intentMsg);
-        $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
-        $('#visitorChat_messageBox').keyup();
-        $('#visitorChatbot_messageBoxContainer').hide();
-        $('#visitorChatbot_intent_message').text(introMsg);
-        $('#visitorChatbot_intent_message').show();
+        document.querySelector('#visitorChat').classList.add('visitorChat_open');
+        document.querySelector('#visitorChat_header, #dcf-mobile-toggle-chat').
+        setAttribute('aria-label', 'Close the Let\'s Chat widget').
+        setAttribute('aria-expanded', 'true');
+        document.querySelector('.dcf-nav-toggle-label-chat').innerText = 'Close';
+        document.querySelector('#visitorChatbot_intent').value = intentMsg;
+        document.querySelector('#visitorChatbot_intent_defaults').value = JSON.stringify(intentSessionAttributes);
+        document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
+        document.querySelector('#visitorChatbot_messageBoxContainer').style.display = 'none';
+        document.querySelector('#visitorChatbot_intent_message').innerText = introMsg;
+        document.querySelector('#visitorChatbot_intent_message').style.display = '';
 
         if (displayChatMethods === true) {
           if (VisitorChat.operatorsAvailable) {
+            var el = document.querySelector('#visitorChat_container');
+            el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
-
-            $('#visitorChat_methods_chat').one('click', function () {
+            document.querySelector('#visitorChat_methods_chat').addEventListener('click', function () {
               VisitorChat.stop(function () {
                 VisitorChat.startChat();
-                $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
               });
 
               return false;
-            });
+            }, {once : true});
           } else if (this.isChatbotAvailable()) {
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+            var el = document.querySelector('#visitorChat_container');
+            el.insertAdjacentHTML('beforeend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
 
-            $('#visitorChat_methods_chat').one('click', function () {
+            document.querySelector('#visitorChat_methods_chat').addEventListener('click', function () {
               VisitorChat.stop(function () {
                 VisitorChat.startChatBot();
-                $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
               });
 
               return false;
-            });
+            }, {once : true});
 
           } else {
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+              // This code causes problem, will have to look into it
+              var el = document.querySelector('#visitorChat_container');
+              el.insertAdjacentHTML('afterend',"<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
           }
         }
 
-        $('#visitorChat_methods_email').one('click', function() {
+        document.querySelector('#visitorChat_methods_email').addEventListener('click', function() {
           VisitorChat.stop(function(){
             VisitorChat.startEmail();
-            $('#visitorChat_messageBox').keyup();
+                document.querySelector('#visitorChat_messageBox').addEventListener("keyup",  function() {});
           });
+
           return false;
-        });
+        }, {once : true});
 
       },
 
         displayWelcomeMessage: function() {
             if (typeof visitorchat_config !== 'undefined' && typeof visitorchat_config.chat_welcome_message !== 'undefined') {
-                $('#visitorchat_clientLogin').prepend($('<p>', {'class':'welcome-message'}).html(visitorchat_config.chat_welcome_message));
+                var parent = document.querySelector('#visitorchat_clientLogin');
+                var child = document.querySelector('<p>', {'class':'welcome-message'}).innerHTML = visitorchat_config.chat_welcome_message;
+                parent.insertBefore(child , parent.firstChild);
+
             }
         },
 
         getSiteTitle: function() {
-            var title = this.config.site_title;
-            if (false == title) {
-                if ($('#dcf-site-title abbr').length) {
-                    title = $('#dcf-site-title abbr').attr('title');
-                } else {
-                    title = $('#dcf-site-title').text()
-                }
+            //checking fo config.site seems redundant , I'll might remove this
+            var element = document.querySelector('#dcf-site-title abbr');
+            if (typeof(element) != 'undefined' && element != null){
+                title = document.querySelector('#dcf-site-title abbr').getAttribute('title');
+                console.log('yes');
+            } else {
+                title = document.querySelector('#dcf-site-title').textContent;
+                console.log('no');
             }
-
-            title = $.trim(title);
-
+            title.trim();
             return title;
         },
 
@@ -313,44 +332,59 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         launchEmailContainer:function() {
             this.chatStatus = "LOGIN";
-
+            
             //Remove an old one if it is there.
-            $('#visitorChat_container').remove();
-
+            if(this.elementReady('#visitorChat_container')){
+                document.querySelector('#visitorChat_container').
+                parentNode.removeChild(document.querySelector('#visitorChat_container'));
+            }
             //set up a container.
-            $('#visitorChat').append(
-                "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
-                "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
-                "</div>"
-            );
+            var addon = "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
+            "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
+            "</div>";
+            document.querySelector('#visitorChat').insertAdjacentHTML('beforeend' , addon);
 
             //set up a container.
             var html = "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container'>Please wait...</div>";
-
-            $('#visitorchat_clientLogin').replaceWith("<div class='dcf-relative dcf-mb-2 dcf-pt-3 dcf-pr-4 dcf-pb-3 dcf-pl-4 unl-bg-lightest-gray' id='visitorChat_container'></div>");
-
-            $('#visitorChat_container').show();
+            var e = document.querySelector('#visitorchat_clientLogin') !== null;
+            if(e){
+                document.querySelector('#visitorchat_clientLogin').outerHTML = html;
+            }
+               document.querySelector('#visitorChat_container').style.display = '';
         },
 
         launchChatContainer:function () {
             //Remove an old one if it is there.
-            $('#visitorChat_container').remove();
+            if(this.elementReady('#visitorChat_container')){
+                document.querySelector('#visitorChat_container').
+                parentNode.removeChild(document.querySelector('#visitorChat_container'));
+            }
 
-            //set up a container.
-            $('#visitorChat').append(
-                "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
-                    "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
-                    "</div>"
-            );
+            var addon = "<div class='dcf-relative dcf-mr-1 dcf-mb-1 dcf-ml-1 dcf-p-4 dcf-rounded unl-bg-lightest-gray' id='visitorChat_container' tabindex='-1'>" +
+            "<div class='chat_notify visitorChat_loading'>Initializing, please wait.</div>" +
+            "</div>";
+            document.querySelector('#visitorChat').insertAdjacentHTML('beforeend' , addon);
+           
 
             this.chatStatus = "LOGIN";
 
-            $('#visitorchat_clientLogin').parent().html("Disabled");
+            if (this.existInDom('#visitorchat_clientLogin'))
+            {
+                document.querySelector('#visitorchat_clientLogin').parentNode.innerHTML = "Disabled";
+            }           
+            
 
             //Display and set the name (if found).
+            // setTimeout(function(){
+            //     document.querySelector('#visitorChat_container').style.height = '320px';
+            //     //if (idm.getDisplayName()) {
+            //         document.querySelector('#visitorChat_name').value = idm.getDisplayName();
+            //     //}
+            // }, 10);
+
             $('#visitorChat_container').delay(10).slideDown(320, function() {
                 if (idm.getDisplayName()) {
-                    $('#visitorChat_name').val(idm.getDisplayName());
+                    document.querySelector('#visitorChat_name').value = idm.getDisplayName();
                 }
             });
         },
@@ -369,32 +403,31 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         //Require confirmation that a comment is to be submitted anon.
         confirmAnonSubmit: function() {
-            var email = $('#visitorChat_email').val();
-
+            var email = document.querySelector('#visitorChat_email').value;
             //If the email is empty, don't submit and append a warning to the form, otherwise continue on.
             if (email != '') {
                 return true;
             }
 
             //Check if they are confirming anon...
-            if ($('#visitorChat_login_submit').val() == 'Yes, I do not need a response') {
-                //Reset to say 'submit'.
-                $('#visitorChat_login_submit').val("Submit");
-                return true;
-            }
+            if (document.querySelector('#visitorChat_login_submit').value == 'Yes, I do not need a response') {
+                    //Reset to say 'submit'.
+                    document.querySelector('#visitorChat_login_submit').value = "Submit";
+                    return true;
+                }
 
             //Display error and request confirmation before continuing.
-            var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK?</div>";
+            var html = "<div id='visitorchat_clientLogin_anonwaning'>Since you didn't enter an email, we won't be able to respond. Is this OK? Type your email if you want a respond instead </div>";
 
-            $('#visitorChat_login_submit').before(html);
-            $('#visitorChat_login_submit').val("Yes, I do not need a response");
-
+            var e = document.querySelector('#visitorChat_login_submit');
+            e.insertAdjacentHTML('beforebegin', html);
+            e.value = "Yes, I do not need a response";
             this.initWatchers();
 
             //remove the warning if they start to enter an email
-            $('#visitorChat_email').keyup(function () {
-                $('#visitorchat_clientLogin_anonwaning').remove();
-                $('#visitorChat_login_submit').val("Submit");
+            document.querySelector('#visitorChat_email').addEventListener('keyup',function () {
+                document.querySelector('#visitorchat_clientLogin_anonwaning').parentNode.removeChild(document.querySelector('#visitorchat_clientLogin_anonwaning'));
+                document.querySelector('#visitorChat_login_submit').value = "Submit";
             });
 
             return false;
@@ -404,11 +437,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Start an email convo now if need be.
             for (var key = 0; key<arr.length; key++) {
                 if (arr[key]['name'] == 'method' && arr[key]['value'] == 'EMAIL') {
-                    if (this.confirmAnonSubmit()) {
-                        //this.startEmail();
-                    } else {
-                        return false;
-                    }
+                    if (!this.confirmAnonSubmit()) return false;
                 }
             }
 
@@ -419,7 +448,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $.validation.addMethod('validate-require-if-question',
                 'An email address is required if you ask a question so that we can respond.',
                 function(value, object) {
-                    var message = $('#visitorChat_messageBox').val();
+                    var message = document.querySelector('#visitorChat_messageBox').value;
                     if (message.indexOf("?") != -1 && value == "") {
                         return false;
                     }
@@ -432,9 +461,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             $('#visitorChat_confirmationEmailForm').data('validation', false);
 
             //Require email for questions submitted via the footer comment form.
-            $('#visitorChat_footercontainer #visitorChat_email').addClass('validate-require-if-question');
-
-            //Validator
+            if(this.existInDom('#visitorChat_footercontainer #visitorChat_email')){ 
+                document.querySelector('#visitorChat_footercontainer #visitorChat_email').
+                classList.add('validate-require-if-question');
+            }
+            //Validator , I cannot find an alt way to solve this , it's not even in any library 
             $('#visitorchat_clientLogin, #visitorChat_confirmationEmailForm').validation();
         },
 
@@ -464,57 +495,70 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 '#visitorChat_confirmationEmailForm').unbind();
 
             this.initValidation();
-
-            $('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
-                $('#visitorchat_clientLogin_anonwaning').remove();
-
-                if ($('#visitorChat_footercontainer #visitorChat_login_submit').val() == 'Yes, no response needed'
-                    && $('#visitorChat_email').val() != '') {
-                    $('#visitorChat_footercontainer #visitorChat_login_submit').val("Submit");
-                }
-
-                return true;
-            });
-
-            $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
-                if (result) {
-                    $('#visitorChat_confirmationContainer').html("<p class='dcf-txt-xs'>The email transcript has been sent to " + $('#visitorChat_confiramtionEmail').val() + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>").focus();
-
-                    $().unbind('#visitorChat_sendAnotherConfirmation');
-
-                    $('#visitorChat_sendAnotherConfirmation').click(function(){
-                        $('#visitorChat_confirmationContainer').html($(VisitorChat.confirmationHTML).filter('#visitorChat_confirmationContainer').html()).focus();
-                        VisitorChat.initWatchers();
-                        return false;
+            if(this.elementReady('#visitorChat_footercontainer #visitorchat_clientLogin')){
+                document.querySelector('#visitorChat_footercontainer #visitorchat_clientLogin').bind('validate-form', function (event, result) {
+                        document.querySelector('#visitorchat_clientLogin_anonwaning').
+                        parentNode.removeChild(document.querySelector('#visitorchat_clientLogin_anonwaning'));
+                        if (document.querySelector('#visitorChat_footercontainer #visitorChat_login_submit').value == 'Yes, no response needed'
+                            && document.querySelector('#visitorChat_email').value != '') {
+                            document.querySelector('#visitorChat_footercontainer #visitorChat_login_submit').value = "Submit";
+                        }
+        
+                        return true;
                     });
-                }
+        
+            }
 
-                return false;
-            });
+            // doing addEventListener will crash the sending emails , reverting back to jquery for now (may 19th 2022)
+            $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
+                        if (result) {
+                            document.querySelector('#visitorChat_confirmationContainer').innerHTML = "<p class='dcf-txt-xs'>The email transcript has been sent to " + document.querySelector('#visitorChat_confiramtionEmail').value + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>";
+        
+                            $().unbind('#visitorChat_sendAnotherConfirmation');
+                            
+                            document.querySelector('#visitorChat_sendAnotherConfirmation').addEventListener('click' , function(){
+                                // This kinda ugly
+                                document.querySelector('#visitorChat_confirmationContainer').innerHTML
+                                = Array.prototype.filter.call( document.querySelectorAll(VisitorChat.confirmationHTML), document.querySelector('#visitorChat_confirmationContainer').innerHTML).focus();
+                                VisitorChat.initWatchers();
+                                return false;
+                            });
+                        }
+                    });
+            
+            
 
             //Call the parent
             this._super();
 
-            //Click header or mobile toolbar button to open up Chat
+            // Click header or mobile toolbar button to open up Chat
+            // jquery mess a lot of things , need to check on thsi for now
+            
             $('#visitorChat_header, #dcf-mobile-toggle-chat').on('click keypress', function (event) {
-                if (event.type == 'keypress' && ($.inArray(event.which, [32,13]) == -1)) {
+                if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
                     //Must be space or enter to continue
                     return;
                 }
-
-                if (!$('#visitorChat_container').is(':visible')) {
+                var a = document.querySelector('#visitorChat_container');
+                if(!Object.is(a,':visible')) {
                     //Open the container
                     VisitorChat.widgetIsOpen = true;
-                    $('#visitorChat').addClass('visitorChat_open');
-                    $('#visitorChat_container').slideDown(320);
-                    $('#dcf-nav-toggle-icon-open-chat').addClass('dcf-d-none');
-                    $('#dcf-nav-toggle-icon-close-chat').removeClass('dcf-d-none');
+                    document.querySelector('#visitorChat').classList.add('visitorChat_open');
+                    var e = document.querySelector('#visitorChat_container') !== null;
+                    if(e){
+                        document.querySelector('#visitorChat_container').style.height = '320px';
+                    }
+                    document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.add('dcf-d-none');
+                    document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.remove('dcf-d-none');
                 } else {
                     //Close the container
                     VisitorChat.widgetIsOpen = false;
-                    $('#visitorChat_container').slideUp(320);
-                    $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
-                    $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
+                    var e = document.querySelector('#visitorChat_container') !== null;
+                    if(e){
+                        document.querySelector('#visitorChat_container').style.height = '0px';
+                    }
+                    document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.remove('dcf-d-none');
+                    document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.add('dcf-d-none');
 
                     if (VisitorChat.chatStatus == "LOGIN") {
                         //If the user hasn't done anything yet, simply stop everything and exit early
@@ -539,102 +583,142 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     }
 
                 }
-
                 return false;
             });
 
+
             //Logout function
-            $('#visitorChat_logout').on('click keypress', $.proxy(function (event) {
-                if (event.type == 'keypress' && ($.inArray(event.which, [32,13]) == -1)) {
-                    //Must be space or enter to continue
-                    return;
-                }
 
-                if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
+            if(this.elementReady('#visitorChat_logout')){
+                $('#visitorChat_logout').on('click keypress', (function (event) {
+                    if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
+                        //Must be space or enter to continue
+                        return;
+                    }
+    
+                    if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
+                        return false;
+                    }
+    
+                    if (this.chatStatus == 'CHATTING') {
+                        VisitorChat.changeConversationStatus("CLOSED");
+                        return false;
+                    }
+    
+                    VisitorChat.stop();
                     return false;
-                }
+                }.bind(this)));
+            }
 
-                if (this.chatStatus == 'CHATTING') {
-                    VisitorChat.changeConversationStatus("CLOSED");
-                    return false;
-                }
+            // var someFunction = function(event){
+            //     if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
+            //         //Must be space or enter to continue
+            //         return;
+            //     }
 
-                VisitorChat.stop();
+            //     if (this.chatStatus == 'CHATTING' && !VisitorChat.confirmClose()) {
+            //         return false;
+            //     }
 
-                return false;
-            }, this));
+            //     if (this.chatStatus == 'CHATTING') {
+            //         VisitorChat.changeConversationStatus("CLOSED");
+            //         return false;
+            //     }
+
+            //     VisitorChat.stop();
+            //     return false;
+            // }.bind(this);
+
+            // document.querySelector('#visitorChat_logout').addEventListener('click' , someFunction);
+            // document.querySelector('#visitorChat_logout').addEventListener('keypress' , someFunction);
 
             if (VisitorChat.chatStatus == "LOGIN" || VisitorChat.chatStatus == false) {
                 //if email_fallback is checked, make sure that the email is required.
-                $('#visitorChat_email_fallback').click(function () {
-                    if ($(this).is(':checked') || this.config.email_required) {
-                        $('label[for="visitorChat_email"]').text("Email (Required)");
-                        $('#visitorChat_email').addClass('required-entry');
-                    } else {
-                        $('label[for="visitorChat_email"]').text("Email (Optional)");
-                        $('#visitorChat_email').removeClass('required-entry');
-                    }
-                });
+                if(this.elementReady('#visitorChat_email_fallback')){
+                    document.querySelector('#visitorChat_email_fallback').addEventListener('click' , function () {
+                            if(Object.is(this,':checked') || this.config.email_required) {
+                                document.querySelector('label[for="visitorChat_email"]').innerText = "Email (Required)";
+                                document.querySelector('#visitorChat_email').classList.add('required-entry');
+                            } else {
+                                document.querySelector('label[for="visitorChat_email"]').innerText = "Email (Optional)";
+                                document.querySelector('#visitorChat_email').classList.add('required-entry');
+                            }
+                        } , false);
+                }
             }
 
             //This will slide down the Name and Email fields, plus the Ask button
-            $('#visitorChat_messageBox').one('keyup', function () {
-                if (idm.getDisplayName()) {
-                    $('#visitorChat_name').val(idm.getDisplayName());
-                }
-                if (idm.getEmailAddress()) {
-                    $('#visitorChat_email').val(idm.getEmailAddress());
-                }
+            if(this.elementReady('#visitorChat_messageBox')){
+                document.querySelector('#visitorChat_messageBox').addEventListener('keyup', function () {
+                    if (idm.getDisplayName()) {
+                        document.querySelector('#visitorChat_name').value = idm.getDisplayName();
+                    }
+                    if (idm.getEmailAddress()) {
+                        document.querySelector('#visitorChat_email').value = idm.getEmailAddress();
+                    }
+    
+                    //this.downSlide();
+                    $('.visitorChat_info, #visitorChat_login_submit').slideDown('fast', function(){
+                        
+                        if (VisitorChat.initialMessage && !Object.is(document.querySelector('#visitorChat_messageBox'),':focus')) {
+                            document.querySelector('#visitorChat_email').focus();
+                        }
+                    });
+                } , {once : true});
+            }
+            
 
-                $('.visitorChat_info, #visitorChat_login_submit').slideDown('fast', function(){
-                    if (VisitorChat.initialMessage && !$('#visitorChat_messageBox').is(':focus')) {
-                        $('#visitorChat_email').focus();
+            //From down below is definietly not the best way to check for document ready , but this works for now
+            // First checking if the query selector is null or not , then do the thing , might have to make a seperate function for it 
+            if(this.elementReady('#visitorChat_failedOptions_yes')){
+                document.querySelector('#visitorChat_failedOptions_yes').addEventListener('click', function() {
+                        VisitorChat.stop(function(){
+                            VisitorChat.startEmail();
+                            if (VisitorChat.initialMessage) {
+                                document.querySelector('#visitorChat_messageBox').value = VisitorChat.initialMessage;
+                            }
+                            document.querySelector('#visitorChat_name').value = VisitorChat.name;
+                            document.querySelector('#visitorChat_email').value = VisitorChat.email;
+                            document.querySelector('#visitorChat_email').focus();
+                             //testing for the keyup function , unsure this even works but it's ok for now
+                            document.querySelector('#visitorChat_messageBox').addEventListener("keyup", function (){
+                                console.log("this works ?");
+                            });
+                        });
+        
+                        return true;
+                    });
+            }
+
+            if(this.elementReady('#visitorChat_confirmationEmail')){
+                document.querySelector('#visitorChat_confirmationEmail').addEventListener('keypress', function (e) {
+                    if (e.which == 13) {
+                        e.preventDefault();
+                        document.querySelector('#visitorChat_confirmationEmailForm').submit();
                     }
                 });
-            });
-
-            $('#visitorChat_failedOptions_yes').click(function() {
-                VisitorChat.stop(function(){
-                    VisitorChat.startEmail();
-                    if (VisitorChat.initialMessage) {
-                    $('#visitorChat_messageBox').val(VisitorChat.initialMessage);
-                    }
-
-                    $('#visitorChat_name').val(VisitorChat.name);
-                    $('#visitorChat_email').val(VisitorChat.email);
-
-                    $('#visitorChat_email').focus();
-                    $('#visitorChat_messageBox').keyup();
+            }
+            
+            if(this.elementReady('#visitorChat_failedOptions_no')){
+                document.querySelector('#visitorChat_failedOptions_no').addEventListener('click', function(){
+                        VisitorChat.stop();
+                        return true;
                 });
-
-                return true;
-            });
-
-            $('#visitorChat_confirmationEmail').keypress(function (e) {
-                if (e.which == 13) {
-                    e.preventDefault();
-
-                    $('#visitorChat_confirmationEmailForm').submit();
-                }
-            });
-
-            $('#visitorChat_failedOptions_no').click(function() {
-                VisitorChat.stop();
-
-                return true;
-            });
+            }
 
             if (this.chatStatus) {
-                $('#visitorChat_logout').css({'display':'inline-block'});
-                $('#visitorChat_header_text').css({'margin-right':'1.777em'});
+                document.querySelector('#visitorChat_logout').style.display = 'inline-block';
+                document.querySelector('#visitorChat_header_text').style.marginRight = '1.777em';
             } else {
-                $('#visitorChat_logout').css({'display':'none'});
-                $('#visitorChat_header_text').css({'margin-right':'0'});
+                document.querySelector('#visitorChat_logout').style.display = 'none';
+                document.querySelector('#visitorChat_header_text').style.marginRight = 0;
             }
 
             //set the for_url
-            $('#initial_url').val(document.URL);
-            $('#initial_pagetitle').val($(document).attr('title'));
+            if(this.elementReady('#initial_url')){
+                document.querySelector('#initial_url').value = document.URL;
+                document.querySelector('#initial_pagetitle').value = document.title;
+            }
         },
 
         handleIsTyping:function () {
@@ -650,14 +734,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         sendIsTypingStatus:function(newStatus) {
-            $.ajax({
-                type:"POST",
-                url:this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),
-                xhrFields:{
-                    withCredentials:true
-                },
-                data:"client_is_typing=" + newStatus
-            })
+            var request = new XMLHttpRequest();
+            request.open('POST',this.serverURL + "conversation/" + this.conversationID + "/edit?format=json&" + this.getURLSessionParam(),true );
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            request.withCredentials = true;
+            request.send("client_is_typing=" + newStatus);
         },
 
         /**
@@ -696,10 +777,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         onLogin:function () {
-            this.clientName = $('#visitorChat_name').val();
-            this.initialMessage = $('#visitorChat_messageBox').val();
-            this.name = $('#visitorChat_name').val();
-            this.email = $('#visitorChat_email').val();
+            this.clientName = document.querySelector('#visitorChat_name').value;
+            this.initialMessage = document.querySelector('#visitorChat_messageBox').value;
+            this.name = document.querySelector('#visitorChat_name').value;
+            this.email = document.querySelector('#visitorChat_email').value;
 
             this._super();
 
@@ -714,8 +795,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             analytics.callTrackEvent('WDN Chat', 'Started');
         },
 
+
         onConversationStatus_Closed:function (data) {
-            if ($('#visitorChat_confirmationContainer').length != 0) {
+            if (document.querySelectorAll('#visitorChat_confirmationContainer').length != 0) {
                 return false;
             }
 
@@ -723,15 +805,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             this.confirmationHTML = data['confirmationHTML'];
 
-            $('#visitorChat_chatBox').height('150px');
+            document.querySelector('#visitorChat_chatBox').style.height = '150px';
 
-            $('#visitorChat_messageForm').remove();
+            if(this.existInDom('#visitorChat_messageForm')){
+                document.querySelector('#visitorChat_messageForm').parentNode.removeChild(document.querySelector('#visitorChat_messageForm'));
+            }
+            var e = document.querySelector('#visitorChat_closed');
 
-            var $closed_container = $('#visitorChat_closed');
-
-            $closed_container.append(data['confirmationHTML']);
-            $closed_container.attr('tabindex', '-1');
-            $('#visitorChat_confiramtionEmail').focus();
+            e.insertAdjacentHTML('beforeend',data['confirmationHTML'] );
+            e.setAttribute('tabindex', '-1');
+            document.querySelector('#visitorChat_confiramtionEmail').focus();
 
             this.initWatchers();
 
@@ -756,6 +839,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 WDN.jQuery('#visitorChat_is_typing').text("The other party is typing.").show(500);
             } else {
                 WDN.jQuery('#visitorChat_is_typing').hide(500);
+                //document.querySelector('#visitorChat_is_typing').style.display = 'none';
             }
 
             $().unbind('visitorChat_header');
@@ -818,10 +902,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (document.createStyleSheet) {
                 document.createStyleSheet(stylesheet);
             } else {
-                $('head').append($("<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />"));
+                var html = "<link rel='stylesheet' href='" + stylesheet + "' type='text/css' media='screen, print' />";
+                document.getElementsByTagName('head')[0].insertAdjacentHTML('beforeend', html);
             }
 
-            $(window).on("load", function () {
+            window.addEventListener("load", function () {
                 VisitorChat.displaySiteAvailability();
             });
 
@@ -829,8 +914,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         init:function (serverURL, refreshRate) {
-            $('#dcf-footer').append('' +
-                '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
+            document.querySelector('#dcf-footer').insertAdjacentHTML('beforeend',
+                    '' + '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
                     '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" aria-label="Open the Email Us widget">' +
                         '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
                         '<div id="visitor-chat-header-options">' +
@@ -842,10 +927,11 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                         '</div>' +
                     '</div>' +
                     '<div id="visitorChat_sound_container"></div>' +
-                '</div>');
+                '</div>'
+            );
 
-            $('#dcf-nav-toggle-group').append('' +
-                '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
+            document.querySelector('#dcf-nav-toggle-group').insertAdjacentHTML('beforeend', 
+               '' + '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
                     '<svg class="dcf-txt-sm dcf-h-6 dcf-w-6 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                         '<g class="" id="dcf-nav-toggle-icon-open-chat">' +
                             '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
@@ -872,16 +958,16 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 return true;
             }
 
-            $.xhrPool.abortAll();
+            VisitorChat.xhrAbortAll();
 
             callbackSet = false;
-            if ($('#visitorChat_container').is(':visible')) {
+            if (document.querySelector('#visitorChat_container').style.display != "none") {
                 callbackSet = true;
-                $('#visitorChat_container').slideUp(400, $.proxy(function () {
+                $('#visitorChat_container').slideUp(400,(function () {
                     if (callback) {
                         callback();
                     }
-                }, this));
+                }.bind(this)));
             }
 
             this._super();
@@ -914,10 +1000,10 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         },
 
         closeChatContainer: function() {
-            $('#visitorChat').removeClass('visitorChat_open');
-            $('#visitorChat_logout').css({'display':'none'});
-            $('#dcf-nav-toggle-icon-open-chat').removeClass('dcf-d-none');
-            $('#dcf-nav-toggle-icon-close-chat').addClass('dcf-d-none');
+            document.querySelector('#visitorChat').classList.remove('visitorChat_open');
+            document.querySelector('#visitorChat_logout').style.display = 'none';
+            document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.remove('dcf-d-none');
+            document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.add('dcf-d-none');
             this.widgetIsOpen = false;
             this.displaySiteAvailability();
         },
@@ -927,43 +1013,133 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 available = VisitorChat.operatorsAvailable;
             }
 
-            var $widget = $('#visitorChat');
-
+            var widget = document.querySelector('#visitorChat');
             var text = 'Email Us';
 
             if (available) {
-                $widget.addClass('online');
-                $widget.removeClass('offline');
+                widget.classList.add('online');
+                widget.classList.remove('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chat';
             } else if (this.isChatbotAvailable()) {
-                $widget.addClass('online');
-                $widget.removeClass('offline');
+                widget.classList.add('online');
+                widget.classList.remove('offline');
                 text = 'Let\'s Chat';
                 VisitorChat.method = 'chatbot';
             } else {
-                $widget.addClass('offline');
-                $widget.removeClass('online');
+                widget.classList.add('offline');
+                widget.classList.remove('online');
                 VisitorChat.method = 'email';
             }
 
             //Update the text of the visible prompt
-            $('#visitorChat_header_text').text(text);
+            document.querySelector('#visitorChat_header_text').innerText = text;
 
             //Set the aria attributes based on the action that will be performed when clicking
             if (this.widgetIsOpen) {
-                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the ' + text + ' widget').attr('aria-expanded', 'true');
-                $('.dcf-nav-toggle-label-chat').text('Close');
+                // This kinda work I guess
+                var e = document.querySelector('#visitorChat_header, #dcf-mobile-toggle-chat');
+                e.setAttribute('aria-label', 'Close the ' + text + ' widget');
+                e.setAttribute('aria-expanded', 'true');
+                document.querySelector('.dcf-nav-toggle-label-chat').innerText = 'Close';
             } else {
-                $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Open the ' + text + ' widget').attr('aria-expanded', 'false');
-                $('.dcf-nav-toggle-label-chat').text(text);
+                var e = document.querySelector('#visitorChat_header, #dcf-mobile-toggle-chat');
+                e.setAttribute('aria-label', 'Open the ' + text + ' widget');
+                e.setAttribute('aria-expanded', 'false');
+                document.querySelector('.dcf-nav-toggle-label-chat').innerText = text;
             }
 
             return true;
+        },
+
+        setHeight: function(el, val) {
+            if (typeof val === "function") val = val();
+            if (typeof val === "string") el.style.height = val;
+            else el.style.height = val + "px";
+        },
+        
+        // This function check whenever the followin querySelector is loaded or not
+        // This is how I check for domReady in Chatbase but should be fix in the future , since this is not the best way to check it
+        elementReady :function(e){
+            return document.querySelector(e) !== null;
+        },
+
+        //This might be a better elementReady , more testing needed
+        existInDom : function(e){
+            var element = document.querySelector(e);
+            if (typeof(element) != 'undefined' && element != null)
+            {
+                return true;
+            }
+            return false;
+        },
+
+        // This repalce the 
+        mobileOpen: function (event){
+            if (event.type == 'keypress' && ([32,13].indexOf(event.which) == -1)) {
+                //Must be space or enter to continue
+                return;
+            }
+            var a = document.querySelector('#visitorChat_container');
+            if(!Object.is(a,':visible')) {
+                //Open the container
+                VisitorChat.widgetIsOpen = true;
+                document.querySelector('#visitorChat').classList.add('visitorChat_open');
+                var e = document.querySelector('#visitorChat_container') !== null;
+                if(e){
+                    document.querySelector('#visitorChat_container').style.height = '320px';
+                }
+                document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.add('dcf-d-none');
+                document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.remove('dcf-d-none');
+            } else {
+                //Close the container
+                VisitorChat.widgetIsOpen = false;
+                var e = document.querySelector('#visitorChat_container') !== null;
+                if(e){
+                    document.querySelector('#visitorChat_container').style.height = '0px';
+                }
+                document.querySelector('#dcf-nav-toggle-icon-open-chat').classList.remove('dcf-d-none');
+                document.querySelector('#dcf-nav-toggle-icon-close-chat').classList.add('dcf-d-none');
+    
+                if (VisitorChat.chatStatus == "LOGIN") {
+                    //If the user hasn't done anything yet, simply stop everything and exit early
+                    VisitorChat.stop();
+                    return false;
+                }
+            }
+    
+            if (VisitorChat.chatOpened) {
+                //If we are chatting or pending approval, don't do anything
+                if (VisitorChat.chatStatus == 'CHATTING' || VisitorChat.chatStatus == 'OPERATOR_PENDING_APPROVAL') {
+                    return false;
+                }
+            } else {
+                //Otherwise start chat/email forms
+                if (VisitorChat.method == 'chat') {
+                    VisitorChat.startChat();
+                } else if (VisitorChat.method == 'chatbot') {
+                  VisitorChat.startChatBot();
+                } else {
+                    VisitorChat.startEmail();
+                }
+    
+            }
+            return false;
+        },
+        
+
+        downSlide : function(){
+            document.querySelector('.visitorChat_info, #visitorChat_login_submit').style.height = '320px';
+            once(1 , function(){
+               if (VisitorChat.initialMessage && !Object.is(document.querySelector('#visitorChat_messageBox'),':focus')) {
+                    document.querySelector('#visitorChat_email').focus();
+                }
+            });
         }
     });
 
     $(function(){
+
         WDN.initializePlugin('form_validation', [function() {
             if (VisitorChat == false) {
                 VisitorChat = new VisitorChat_Client("<?php echo \UNL\VisitorChat\Controller::$url;?>", <?php echo \UNL\VisitorChat\Controller::$refreshRate;?>);
