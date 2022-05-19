@@ -457,17 +457,15 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                 });
 
             //Remove the vaildation binding so that validation does not stack and is always called before ajax submit.
-            if(this.existInDom('#visitorchat_clientLogin')) 
-                document.querySelector('#visitorchat_clientLogin').data = {'validation':false};
-            if(this.existInDom('#visitorChat_confirmationEmailForm')) 
-                document.querySelector('#visitorChat_confirmationEmailForm').data = {'validation':false};
+            $('#visitorchat_clientLogin').data('validation', false);
+            $('#visitorChat_confirmationEmailForm').data('validation', false);
 
             //Require email for questions submitted via the footer comment form.
-            if(this.existInDom('#visitorChat_footercontainer #visitorChat_email')) 
+            if(this.existInDom('#visitorChat_footercontainer #visitorChat_email')){ 
                 document.querySelector('#visitorChat_footercontainer #visitorChat_email').
                 classList.add('validate-require-if-question');
-
-            //Validator
+            }
+            //Validator , I cannot find an alt way to solve this , it's not even in any library 
             $('#visitorchat_clientLogin, #visitorChat_confirmationEmailForm').validation();
         },
 
@@ -510,8 +508,9 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                     });
         
             }
-            if(this.existInDom('#visitorChat_confirmationEmailForm')){
-                document.querySelector('#visitorChat_confirmationEmailForm').addEventListener('validate-form', function (event, result) {
+
+            // doing addEventListener will crash the sending emails , reverting back to jquery for now (may 19th 2022)
+            $('#visitorChat_confirmationEmailForm').bind('validate-form', function (event, result) {
                         if (result) {
                             document.querySelector('#visitorChat_confirmationContainer').innerHTML = "<p class='dcf-txt-xs'>The email transcript has been sent to " + document.querySelector('#visitorChat_confiramtionEmail').value + ".</p><button class='dcf-btn dcf-btn-secondary' id='visitorChat_sendAnotherConfirmation'>Send another one</button>";
         
@@ -525,10 +524,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                                 return false;
                             });
                         }
-        
-                        return false;
                     });
-            }
+            
             
 
             //Call the parent
