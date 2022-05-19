@@ -70,13 +70,10 @@ require(['jquery', 'jqueryui'], function($) {
 
             //For status toggle useability
             document.querySelector("#toggleOperatorStatus").addEventListener('mouseover' ,function () {
-                //var isOpen = $(this).hasClass('open');
                 var isOpen = this.classList.contains('open');
                 if (isOpen) {
-                    //document.querySelector("#currentOperatorStatus").innerHTML = "Go offline?";
                     $(this).children('#currentOperatorStatus').html("Go offline?");
                 } else {
-                    //document.querySelector("#currentOperatorStatus").innerHTML = "Go online?";
                     $(this).children('#currentOperatorStatus').html("Go online?");
                 }
 
@@ -84,9 +81,9 @@ require(['jquery', 'jqueryui'], function($) {
                 var isOpen = this.classList.contains('open');
 
                 if (isOpen) {
-                    $(this).children('#currentOperatorStatus').html("You are available");
+                    this.children(document.querySelector("#currentOperatorStatus").innerHTML = "You are available?");
                 } else {
-                    $(this).children('#currentOperatorStatus').html("You are unavailable");
+                    this.children(document.querySelector("#currentOperatorStatus").innerHTML = "You are unavailable?");
                 }
             });
 
@@ -121,7 +118,6 @@ require(['jquery', 'jqueryui'], function($) {
                 this.alert('idle');
 
                 document.querySelector('#operator-alert-modal-content').innerHTML = '<progress></progress>';
-                //$('#operator-alert-modal-content').html('<progress></progress>');
                 var helpText = "<p>Due to inactivity, you have been set to 'busy'.  You are considered inactive if you have not shown any activity for " + (this.idleTimeout/1000)/60 + " minutes.</p>";
 
                 helpText += '<ul class="dcf-list-bare dcf-list-inline dcf-p-1 dcf-mt-3 dcf-mb-3">';
@@ -130,15 +126,15 @@ require(['jquery', 'jqueryui'], function($) {
                 helpText += '</ul>';
 
                 // Trigger click on hidden button to open DCF Modal
-                $(".operator-alert-modal-toggle-btn").click();
+                document.querySelector(".operator-alert-modal-toggle-btn").click();
                 document.querySelector('#operator-alert-modal-content').innerHTML = helpText;
                 document.querySelector('#operator-alert-okay').focus();
                 document.querySelector('#operator-alert-go-back-online').addEventListener('click', function() {
-                  $('#operator-alert-modal-close-btn').click();
+                    document.querySelector('#operator-alert-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }.bind(this));
                 document.querySelector("#operator-alert-okay").addEventListener('click', function() {
-                  $('#operator-alert-modal-close-btn').click();
+                    document.querySelector('#operator-alert-modal-close-btn').click();
                 });
             }
 
@@ -179,6 +175,8 @@ require(['jquery', 'jqueryui'], function($) {
             $('.conversationLink, #closeConversation, #block_ip, #visitorChat_messageBox, #shareConversation, #visitorChat_operatorInvite > li, #clientChat_Invitations, #clientInfo, #leaveConversation').unbind();
 
             //Watch coversation link clicks.  Loads up the conversation all ajaxy
+            // The querySelector will crash the operator once clicking onanswering a guest, back to jquery for now ()
+            //document.querySelector('.conversationLink').addEventListener('click' , function () {
             $('.conversationLink').click(function () {
                 //Empty out the current chat.
                 VisitorChat.clearChat();
@@ -195,9 +193,8 @@ require(['jquery', 'jqueryui'], function($) {
                 if (!isSelected) {
                     //var prevSelected = document.querySelector('#clientList').querySelectorAll('.selected');
                     var prevSelected = $('#clientList').find('.selected');
-                    var nowSelected = $(this).parent();
-                    var clientName = $(this).children('span').text();
-
+                    var nowSelected =  $(this).parent();
+                    //var nowSelected =  document.querySelector(this).parentNode;
                     // Find selected, remove class and transition
                     prevSelected.removeClass('selected unl-bg-lightest-gray');
 
@@ -208,37 +205,45 @@ require(['jquery', 'jqueryui'], function($) {
                 return false;
             });
 
-            // Doing this will cause the end conversation to appear multiple time , so reverting back to jquery for now
-            //if(this.elementReady('#closeConversation')){
-                //document.querySelector('#closeConversation').addEventListener('click' ,function () {
+            // Doing this will js cause the end conversation to appear multiple time , so reverting back to jquery for now
+            //if(this.existInDom('#closeConversation')){
+                //document.querySelector('#closeConversation').addEventListener('click' , function () {
                  $('#closeConversation').click(function () {
                          if (confirm("Are you sure you want to end the conversation?")) {
                              VisitorChat.changeConversationStatus("CLOSED");
                          }
                  });
            // }
+            
 
-            $('#block_ip').click(function () {
-                if (confirm("Are you sure you want to end the conversation and block this IP address?")) {
-                    var href= this.href;
-                    VisitorChat.changeConversationStatus("CLOSED", function(){
-                        window.location = href;
-                    });
+            // I haven't test this
+            if(this.existInDom('#shareConversation')){
+                document.querySelector('#block_ip').addEventListener('click' ,function () {
+                    if (confirm("Are you sure you want to end the conversation and block this IP address?")) {
+                        var href= this.href;
+                        VisitorChat.changeConversationStatus("CLOSED", function(){
+                            window.location = href;
+                        });
+                        return false;
+                    }
+
                     return false;
-                }
+                });
+            }
 
-                return false;
-            });
+            if(this.existInDom('#shareConversation')){
+                document.querySelector('#shareConversation').addEventListener('click' ,function () {
+                    VisitorChat.openShareWindow();
+                });
+            }
 
-            $('#shareConversation').click(function () {
-                VisitorChat.openShareWindow();
-            });
-
-            $('#leaveConversation').click(function () {
-                if (confirm("Are you sure you want to leave the conversation?")) {
-                    VisitorChat.leaveConversation();
-                }
-            });
+            if(this.existInDom('#leaveConversation')){
+                document.querySelector('#leaveConversation').addEventListener('click' , function() {
+                        if (confirm("Are you sure you want to leave the conversation?")) {
+                            VisitorChat.leaveConversation();
+                        }
+                    });
+            }
 
             this._super();
         },
@@ -281,7 +286,8 @@ require(['jquery', 'jqueryui'], function($) {
 
             if ("Notification" in window) {
                 if (Notification && Notification.permission != 'granted') {
-                    WDN.jQuery('#notificationOptions').show();
+                    //WDN.jQuery('#notificationOptions').show();
+                    document.querySelector('#notificationOptions').style.display = '';
                 }
 
                 WDN.jQuery('#testNotifications').click(function () {
@@ -319,7 +325,7 @@ require(['jquery', 'jqueryui'], function($) {
             document.querySelector("#share-conversation-modal-content").innerHTML = '<progress></progress>';
 
             // Trigger click on hidden button to open DCF Modal
-            $(".share-conversation-modal-toggle-btn").click();
+            document.querySelector(".share-conversation-modal-toggle-btn").click();
 
             //Update the Client List
             $.ajax({
@@ -364,7 +370,7 @@ require(['jquery', 'jqueryui'], function($) {
             //Clean to as it may contain lots of whitepsace
             toHTML.trim();
 
-            var method = $('input[name=method]:checked', '#shareForm').val();
+            var method = document.querySelector('input[name=method]:checked', '#shareForm').value;
             var methodHTML = method;
 
             if (confirm('Are sure you want to ' + methodHTML + ' ' + toHTML + '?')) {
@@ -373,6 +379,18 @@ require(['jquery', 'jqueryui'], function($) {
         },
 
         share:function (method, to) {
+            // var request = new XMLHttpRequest();
+            // request.open('POST', this.serverURL + "conversation/" + this.conversationID + "/share?format=json", true);
+            // request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            // request.onload = function() {
+            //     if(request.status != 401) window.location.reload();
+            // }
+           
+            // request.send("method=" + method + "&to=" + to);
+            // request.onerror = function(msg) {
+            //     // There was a connection error of some sort
+            //     alert('There was an error sharing, please try back later.');
+            // };
             $.ajax({
                 type:"POST",
                 url:this.serverURL + "conversation/" + this.conversationID + "/share?format=json",
@@ -414,11 +432,12 @@ require(['jquery', 'jqueryui'], function($) {
                 }
                 // Don't display if '0' unread messages
                 if (html === '0' || html === '') {
-                    // $("#visitorChat_UnreadMessages_" + conversation).hide();
-                    document.querySelector("#visitorChat_UnreadMessages_" + conversation).style.display = 'none';
+                    if(this.existInDom("#visitorChat_UnreadMessages_" + conversation)){
+                        document.querySelector("#visitorChat_UnreadMessages_" + conversation).style.display = 'none';
+                    }
                 } else {
+                    // doing js will not display nonfi for new message for client, revert back to jquery ( may 18 2022)
                     $("#visitorChat_UnreadMessages_" + conversation).html(html);
-                    //document.querySelector("#visitorChat_UnreadMessages_" + conversation).style.display = '';
                     $("#visitorChat_UnreadMessages_" + conversation).show();
                 }
             }
@@ -504,15 +523,15 @@ require(['jquery', 'jqueryui'], function($) {
                 helpText += '</ul>';
 
                 // Trigger click on hidden button to open DCF Modal
-                $(".operator-alert-modal-toggle-btn").click();
+                document.querySelector(".operator-alert-modal-toggle-btn").click();
                 document.querySelector('#operator-alert-modal-content').innerHtml = helpText;
                 document.querySelector('#operator-alert-okay').focus();
                 document.querySelector('#operator-alert-go-back-online').addEventListener('click', function() {
-                  $('#operator-alert-modal-close-btn').click();
+                    document.querySelector('#operator-alert-modal-close-btn').click();
                   this.toggleOperatorStatus('USER');
                 }.bind(this));
                 document.querySelector("#operator-alert-okay").addEventListener('click', function() {
-                  $('#operator-alert-modal-close-btn').click();
+                    document.querySelector('#operator-alert-modal-close-btn').click();
                 });
             }
 
@@ -530,7 +549,7 @@ require(['jquery', 'jqueryui'], function($) {
                 this.currentRequest = false;
                 clearTimeout(VisitorChat.requestLoopID);
                 // close chat request modal if open
-                $('#operator-chat-request-modal-close-btn').click();
+                document.querySelector('#operator-chat-request-modal-close-btn').click();
                 return true;
             }
 
@@ -542,16 +561,16 @@ require(['jquery', 'jqueryui'], function($) {
             //3. Alert the user.
             if (this.currentRequest != data['pendingAssignment']) {
                 // Trigger click on hidden button to open DCF Modal
-                $(".operator-chat-request-modal-toggle-btn").click();
+                document.querySelector(".operator-chat-request-modal-toggle-btn").click();
                 document.querySelector('#operator-assignment-accept').focus();
                 document.querySelector('#operator-assignment-reject').addEventListener('click', function() {
-                  $('#operator-chat-request-modal-close-btn').click();
+                  document.querySelector('#operator-chat-request-modal-close-btn').click();
                   this.sendChatRequestResponse(this.currentRequest, 'REJECTED');
                   this.clearAlert();
                   clearTimeout(VisitorChat.requestLoopID);
                 }.bind(this));
                 document.querySelector('#operator-assignment-accept').addEventListener('click', function() {
-                  $('#operator-chat-request-modal-close-btn').click();
+                    document.querySelector('#operator-chat-request-modal-close-btn').click();
                   this.sendChatRequestResponse(this.currentRequest, 'ACCEPTED');
                   clearTimeout(VisitorChat.requestLoopID);
                   this.clearAlert();
@@ -635,7 +654,7 @@ require(['jquery', 'jqueryui'], function($) {
         requestLoop:function (id) {
             currentDate = new Date();
             difference = Math.round((VisitorChat.requestExpireDate[id] - currentDate.getTime()) / 1000);
-            $("#chatRequestCountDown").html(difference);
+            document.querySelector("#chatRequestCountDown").innerHTML = difference;
 
             if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
                 return false;
@@ -691,7 +710,7 @@ require(['jquery', 'jqueryui'], function($) {
         updateInvitationsListWithHTML:function (html) {
             if (this.invitationsHTML != html) {
                 this.invitationsHTML = html;
-                $("#clientChat_Invitations").html(html);
+                document.querySelector("#clientChat_Invitations").innerHTML = html;
             }
         },
 
@@ -728,11 +747,9 @@ require(['jquery', 'jqueryui'], function($) {
             //Display a closed message.
             var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed.</div>";
 
-            //html = $("#clientChat").prepend(html);
             html = document.querySelector("#clientChat").insertAdjacentHTML('afterbegin', html);
 
             //set the opacity of all siblings
-            //this.allSibling(document.querySelector('#visitorChat_closed')).style.opacity = '0.1';
             $('#visitorChat_closed').siblings().css({'opacity':'0.1'})
             //set the opacity of current item to full, and add the effect class
             document.querySelector('#visitorChat_closed').style.opacity = '1.0';
@@ -757,12 +774,8 @@ require(['jquery', 'jqueryui'], function($) {
                         window.location.reload(); //reload the page
                     }
                 },
-                success:function (data) {
-                    //document.querySelector("#clientList").innerHtml = data;
+                success:function (data) { 
                     $("#clientList").html(data);
-                    // if(this.elementReady("#conversationId_" + this.conversationID)){
-                    //     document.querySelector("#conversationId_" + this.conversationID).classList.add('selected');
-                    // }
                     $("#conversationId_" + this.conversationID).addClass('selected');
                     this.updateConversationListWithUnreadMessages();
                     this.initWatchers();
@@ -822,15 +835,15 @@ require(['jquery', 'jqueryui'], function($) {
           html += '</ul>';
 
           // Trigger click on hidden button to open DCF Modal
-          $(".operator-alert-modal-toggle-btn").click();
+          document.querySelector(".operator-alert-modal-toggle-btn").click();
           document.querySelector('#operator-alert-modal-content').innerHTML = html;
           document.querySelector('#operator-go-offline').focus();
           document.querySelector('#operator-go-offline').addEventListener('click', function() {
             this.toggleOperatorStatus('USER');
-            $('#operator-alert-modal-close-btn').click();
+            document.querySelector('#operator-alert-modal-close-btn').click();
           }.bind(this));
           document.querySelector("#operator-stay-online").addEventListener('click', function() {
-            $('#operator-alert-modal-close-btn').click();
+            document.querySelector('#operator-alert-modal-close-btn').click();
           });
         },
 
@@ -855,9 +868,9 @@ require(['jquery', 'jqueryui'], function($) {
                         window.location.reload(); //reload the page
                     }
                 },
-                success:$.proxy(function (data) {
+                success:function (data) {
                     this.updateOperatorStatus(status);
-                }, this)
+                }.bind(this)
             });
         },
 
@@ -870,18 +883,20 @@ require(['jquery', 'jqueryui'], function($) {
                 formatStatus = 'You are unavailable';
             }
 
-            if (newStatus == 'BUSY') {
-                $("#toggleOperatorStatus").addClass("dcf-btn-secondary closed");
-                $("#toggleOperatorStatus").removeClass("dcf-btn-primary open");
-            } else {
-                $("#toggleOperatorStatus").addClass("dcf-btn-primary open");
-                $("#toggleOperatorStatus").removeClass("dcf-btn-secondary closed");
-                formatStatus = 'You are available';
+            if(this.existInDom("#toggleOperatorStatus")){
+                if (newStatus == 'BUSY') {
+                        document.querySelector("#toggleOperatorStatus").classList.add("dcf-btn-secondary" , "closed");
+                        document.querySelector("#toggleOperatorStatus").classList.remove("dcf-btn-primary" , "open");
+                } else {
+                    document.querySelector("#toggleOperatorStatus").classList.add("dcf-btn-primary" , "open");
+                    document.querySelector("#toggleOperatorStatus").classList.add("dcf-btn-secondary" , "closed");
+                    formatStatus = 'You are available';
+                }
             }
 
             //Don't call this if its the same status
-            if (newStatus !== this.operatorStatus) {
-                $("#currentOperatorStatus").html(formatStatus);
+            if (newStatus !== this.operatorStatus) {;
+                document.querySelector("#currentOperatorStatus").innerHTML = formatStatus;
             }
 
             this.operatorStatus = newStatus;
@@ -901,7 +916,8 @@ require(['jquery', 'jqueryui'], function($) {
             });
         },
 
-        //This might be a better elementReady , more testing needed
+        //This might be a better elementReady , although sometimes you only want to check it if it's null or not 
+        //, then we use elementReady
         existInDom : function(e){
             var element = document.querySelector(e);
             if (typeof(element) != 'undefined' && element != null)
