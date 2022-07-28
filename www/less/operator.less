@@ -675,17 +675,35 @@ p.sub-head {
   animation: pulse 4.5s infinite;
 }
 
-@keyframes pulse {
-  0% {
-    background-color: rgba(36,36,35,.94);
-  }
+@media screen and (prefers-reduced-motion: no-preference) {
+  @keyframes pulse {
+    0% {
+      background-color: rgba(36,36,35,.94);
+    }
 
-  50% {
-    background-color: rgba(150,0,0,.94);
-  }
+    50% {
+      background-color: rgba(150,0,0,.94);
+    }
 
-  100% {
-    background-color: rgba(36,36,35,.94);
+    100% {
+      background-color: rgba(36,36,35,.94);
+    }
+
   }
 
 }
+
+@media screen and (prefers-reduced-motion) {
+  @keyframes pulse {
+    0% {
+      background-color: rgba(36,36,35,.94);
+    }
+
+    100% {
+      background-color: rgba(36,36,35,.94);
+    }
+
+  }
+
+}
+
