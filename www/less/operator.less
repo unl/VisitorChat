@@ -672,20 +672,33 @@ p.sub-head {
 
 
 .chat-bg-flashing-alert {
-  background-color: rgba(150,0,0,.94);
-  animation: pulse 4.5s infinite;
+  background-color: rgba(208,0,0,.94);
+  animation: pulse 2.4s infinite;
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
   @keyframes pulse {
+    /* Hold 1 */
     0% {
       background-color: rgba(36,36,35,.94);
     }
 
-    50% {
-      background-color: rgba(150,0,0,.94);
+    /* Hold 1 */
+    41.6% {
+      background-color: rgba(36,36,35,.94);
     }
 
+    /* Transition */
+    50% {
+      background-color: rgba(208,0,0,.94);
+    }
+
+    /* Hold 2 */
+    91.6% {
+      background-color: rgba(208,0,0,.94);
+    }
+
+    /* Transition */
     100% {
       background-color: rgba(36,36,35,.94);
     }
