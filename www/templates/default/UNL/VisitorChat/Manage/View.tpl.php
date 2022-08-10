@@ -28,7 +28,7 @@
 </div>
 </div>
 <button class="dcf-btn dcf-btn-primary dcf-btn-toggle-modal operator-chat-request-modal-toggle-btn dcf-invisible" data-toggles-modal="operator-chat-request-modal" type="button" disabled>Operator Chat Request Modal Toggle</button>
-<div class="dcf-modal" id="operator-chat-request-modal" hidden>
+<div class="dcf-modal dcf-fixed dcf-top-0 dcf-left-0 dcf-h-100% dcf-w-100% dcf-d-flex dcf-ai-center dcf-jc-center chat-bg-flashing-alert" id="operator-chat-request-modal" hidden>
     <div class="dcf-modal-wrapper">
         <div class="dcf-modal-header">
             <h3>Incoming Chat Request</h3>
