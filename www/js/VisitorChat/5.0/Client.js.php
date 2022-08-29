@@ -207,7 +207,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         // setup intent display
         $('#visitorChat').addClass('visitorChat_open');
-        $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the Let\'s Chat widget').attr('aria-expanded', 'true');
+        $('#visitorChat_header, #dcf-mobile-toggle-chat').attr('aria-label', 'Close the Live Chat widget').attr('aria-expanded', 'true');
         $('.dcf-nav-toggle-label-chat').text('Close');
         $('#visitorChatbot_intent').val(intentMsg);
         $('#visitorChatbot_intent_defaults').val(JSON.stringify(intentSessionAttributes));
@@ -934,7 +934,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (available) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');
-                text = 'Let\'s Chat';
+                text = 'Live Chat';
                 VisitorChat.method = 'chat';
             } else if (this.isChatbotAvailable()) {
                 $widget.addClass('online');

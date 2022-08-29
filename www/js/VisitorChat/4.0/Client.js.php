@@ -744,7 +744,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             if (available) {
                 $widget.addClass('online');
                 $widget.removeClass('offline');
-                text = 'Let\'s Chat';
+                text = 'Live Chat';
                 VisitorChat.method = 'chat';
             } else {
                 $widget.addClass('offline');
