@@ -679,7 +679,7 @@ require(['jquery', 'jqueryui'], function($) {
             $("#closeConversation").remove();
 
             //Display a closed message.
-            var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed. <button class="dcf-btn dcf-btn-primary dcf-mt-4" onClick="window.location.reload();" >Back to dashboard</button></div>";
+            var html = "<div class='chat_notify' id='visitorChat_closed'>This conversation has been closed. <button class='dcf-btn dcf-btn-primary dcf-mt-4' onClick='window.location.reload();' >Back to dashboard</button></div>";
             html = $("#clientChat").prepend(html);
             //this.updateChatContainerWithHTML("#clientChat", html);
 
