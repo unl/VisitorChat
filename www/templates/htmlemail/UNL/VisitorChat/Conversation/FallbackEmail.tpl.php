@@ -1,6 +1,8 @@
 <div>
     <p>
         <?php
+            $client = $context->conversation->getClient();
+            
             // Include assignee info if nu support and assignments are defined
             if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->support_assignments))) {
 
