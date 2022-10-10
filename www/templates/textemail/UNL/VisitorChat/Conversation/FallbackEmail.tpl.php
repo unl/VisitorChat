@@ -4,7 +4,7 @@ $client = $context->conversation->getClient();
 // Include assignee info if nu support and assignments are defined
 if ($context->isNUSupportEmail() && !empty($supportGroupString = trim($context->support_assignments))) {
 
-  // Parse assigments by space allowing for single quote enclosure into array
+  // Parse assignments by space allowing for single quote enclosure into array
   $supportAssignments = str_getcsv($supportGroupString, ' ', "'");
 
   // Get first assignee as primary
