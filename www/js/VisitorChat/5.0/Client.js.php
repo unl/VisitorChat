@@ -280,7 +280,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
         start:function () {
             if (this.blocked) {
-                var html = "Your IP address has been blocked.  If you feel that this is an error, please contact operator@unl.edu";
+                var html = "Your IP address has been blocked.  If you feel that this is an error, please contact support@nebraska.edu";
                 this.updateChatContainerWithHTML("#visitorChat_container", html, false);
                 return;
             }
