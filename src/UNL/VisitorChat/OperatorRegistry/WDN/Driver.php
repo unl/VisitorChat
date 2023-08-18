@@ -1,6 +1,8 @@
 <?php
 namespace UNL\VisitorChat\OperatorRegistry\WDN;
 
+use UNL\VisitorChat\Controller;
+
 class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\OperatorRegistry\DriverInterface
 {
     public static $baseURI      = "https://webaudit.unl.edu/registry/";
@@ -103,7 +105,23 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         foreach ($unsets as $index) {
             $sites->offsetUnset($index);
         }
-        
+
+        $sites = iterator_to_array($sites);
+        uasort($sites, function($site_a, $site_b) {
+            $current_user_role_a = $site_a->getCurrentUserRole();
+            $current_user_role_b = $site_b->getCurrentUserRole();
+
+            if ($current_user_role_a !== $current_user_role_b) {
+                $role_rank_a = array_search($current_user_role_a, Controller::$roles);
+                $role_rank_b = array_search($current_user_role_b, Controller::$roles);
+                return $role_rank_a < $role_rank_b;
+            } else {
+                $title_a = $site_a->getTitle();
+                $title_b = $site_b->getTitle();
+                return strcmp(strtolower($title_a), strtolower($title_b));
+            }
+        });
+
         //re-cache the results
         if (!$doNotCache) {
             //Set the cache.
@@ -143,6 +161,22 @@ class Driver extends \UNL\VisitorChat\CacheableURL implements \UNL\VisitorChat\O
         foreach ($unsets as $index) {
             $sites->offsetUnset($index);
         }
+
+        $sites = iterator_to_array($sites);
+        uasort($sites, function($site_a, $site_b) {
+            $current_user_role_a = $site_a->getCurrentUserRole();
+            $current_user_role_b = $site_b->getCurrentUserRole();
+
+            if ($current_user_role_a !== $current_user_role_b) {
+                $role_rank_a = array_search($current_user_role_a, Controller::$roles);
+                $role_rank_b = array_search($current_user_role_b, Controller::$roles);
+                return $role_rank_a < $role_rank_b;
+            } else {
+                $title_a = $site_a->getTitle();
+                $title_b = $site_b->getTitle();
+                return strcmp(strtolower($title_a), strtolower($title_b));
+            }
+        });
 
         //re-cache the results
         if (!$doNotCache) {
