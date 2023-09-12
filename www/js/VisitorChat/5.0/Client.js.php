@@ -846,7 +846,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             $('#dcf-nav-toggle-group').append('' +
                 '<button class="dcf-nav-toggle-btn dcf-nav-toggle-btn-chat dcf-d-flex dcf-flex-col dcf-ai-center dcf-jc-center dcf-flex-grow-1 dcf-h-9 dcf-p-0 dcf-b-0 dcf-bg-transparent unl-scarlet" id="dcf-mobile-toggle-chat" aria-expanded="false">' +
-                    '<svg class="dcf-h-5 dcf-w-5 dcf-fill-current dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
+                    '<svg class="dcf-h-5 dcf-w-5 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
                         '<g class="" id="dcf-nav-toggle-icon-open-chat">' +
                             '<path d="M1.4 23.2c-.1 0-.3-.1-.4-.2-.1-.2-.2-.4-.1-.6l2.4-4.8C1.2 15.9 0 13.5 0 10.9 0 5.4 5.4 1 12 1s12 4.4 12 9.9-5.4 9.9-12 9.9c-1.4 0-2.7-.2-4-.6l-6.4 3h-.2zM12 2C5.9 2 1 6 1 10.9c0 2.4 1.2 4.6 3.3 6.3.2.1.2.4.1.6l-1.9 3.9 5.3-2.5c.1-.1.2-.1.4 0 1.2.4 2.5.6 3.9.6 6.1 0 11-4 11-8.9S18.1 2 12 2z"></path>' +
                         '</g>' +
