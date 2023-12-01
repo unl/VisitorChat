@@ -110,7 +110,7 @@ class UNL_Peoplefinder_Renderer_HTML
         if ($displayEmail && isset($r->unlEmailAlias)) echo "</a>\n";
         if (!empty($r->eduPersonPrimaryAffiliation)) echo '<span class="eppa">('.$r->eduPersonPrimaryAffiliation.')</span>'.PHP_EOL;
         echo '<div class="vcardInfo">'.PHP_EOL;
-        echo '<a class="planetred_profile" href="http://planetred.unl.edu/pg/profile/unl_'.$r->uid.'" title="Planet Red Profile for '.$r->cn.'"><img class="photo frame" src="http://planetred.unl.edu/mod/profile/icondirect.php?username=unl_'.$r->uid.'&amp;size=medium"  alt="Photo of '.$r->displayName.'" /></a>';
+        echo '<a class="directory_profile" href="https://directory.unl.edu/people/' . $r->uid . '" title="Directory Profile for '.$r->cn.'"><img class="photo frame" src="https://directory.unl.edu/avatar/'.$r->uid.'/" alt="Photo of '.$r->displayName.'" /></a>';
         if (isset($r->unlSISClassLevel)) {
             switch ($r->unlSISClassLevel) {
                 case 'FR':
