@@ -89,7 +89,7 @@ class Mail_mimePart
     * @var array
     * @access private
     */
-    var $_subparts;
+    var $_subparts = array();
 
     /**
     * The output of this part after being built
@@ -275,7 +275,7 @@ class Mail_mimePart
     {
         $encoded =& $this->_encoded;
 
-        if (count($this->_subparts)) {
+        if (isset($this->_subparts) && !empty($this->_subparts)) {
             $boundary = $boundary ? $boundary : '=_' . md5(rand() . microtime());
             $eol = $this->_eol;
 
@@ -378,7 +378,7 @@ class Mail_mimePart
     {
         $eol = $this->_eol;
 
-        if (count($this->_subparts)) {
+        if (isset($this->_subparts) && !count($this->_subparts)) {
             $boundary = $boundary ? $boundary : '=_' . md5(rand() . microtime());
             $this->_headers['Content-Type'] .= ";$eol boundary=\"$boundary\"";
         }
@@ -392,7 +392,7 @@ class Mail_mimePart
             $f_eol = '';
         }
 
-        if (count($this->_subparts)) {
+        if (isset($this->_subparts) && !count($this->_subparts)) {
             for ($i = 0; $i < count($this->_subparts); $i++) {
                 fwrite($fh, $f_eol . '--' . $boundary . $eol);
                 $res = $this->_subparts[$i]->_encodePartToFile($fh);
