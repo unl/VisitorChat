@@ -313,7 +313,7 @@ class VisitorChat_Client extends VisitorChat_ChatBase {
             const start = getCookie('UNL_Visitorchat_Start');
             let date = new Date();
             date = Math.round(date.getTime() / 1000);
-            difference = date - start;
+            let difference = date - start;
 
             window.UNL.analytics.callTrackEvent('WDN Chat', 'Response', 'Received', difference);
 

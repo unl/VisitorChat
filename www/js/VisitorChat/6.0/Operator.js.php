@@ -588,8 +588,8 @@ require(['jquery', 'jqueryui'], function($) {
         },
 
         requestLoop:function (id) {
-            currentDate = new Date();
-            difference = Math.round((VisitorChat.requestExpireDate[id] - currentDate.getTime()) / 1000);
+            let currentDate = new Date();
+            let difference = Math.round((VisitorChat.requestExpireDate[id] - currentDate.getTime()) / 1000);
             $("#chatRequestCountDown").html(difference);
 
             if (currentDate.getTime() >= VisitorChat.requestExpireDate[id]) {
