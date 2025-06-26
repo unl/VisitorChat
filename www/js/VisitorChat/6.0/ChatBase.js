@@ -376,7 +376,8 @@ class VisitorChat_ChatBase{
     updateLatestMessageId(latest) {
         this.latestMessageId = latest;
 
-        if (action = $('.unl_visitorchat_form').attr('action')) {
+        let action = $('.unl_visitorchat_form').attr('action');
+        if (action) {
             action = action.replace(/last=(\d)*/g, "last=" + latest);
             $('.unl_visitorchat_form').attr('action', action);
         }

@@ -884,7 +884,7 @@ class VisitorChat_Client extends VisitorChat_ChatBase {
 
         $.xhrPool.abortAll();
 
-        callbackSet = false;
+        let callbackSet = false;
         if ($('#visitorChat_container').is(':visible')) {
             callbackSet = true;
             $('#visitorChat_container').slideUp(400, $.proxy(function () {
@@ -901,7 +901,7 @@ class VisitorChat_Client extends VisitorChat_ChatBase {
         if (getCookie('UNL_Visitorchat_Start')) {
             let date = new Date();
             date = Math.round(date.getTime() / 1000);
-            difference = date - getCookie('UNL_Visitorchat_Start');
+            let difference = date - getCookie('UNL_Visitorchat_Start');
 
             window.UNL.analytics.callTrackEvent('WDN Chat', 'Ended', undefined, difference);
         }
