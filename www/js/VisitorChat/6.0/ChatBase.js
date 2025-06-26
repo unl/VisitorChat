@@ -459,7 +459,7 @@ class VisitorChat_ChatBase{
             return true;
         }
 
-        for (id in messages) {
+        for (let id in messages) {
             //skip if a message with this id already exists
             if ($('#visitorChat_message_' + id).length != 0) {
                 continue;

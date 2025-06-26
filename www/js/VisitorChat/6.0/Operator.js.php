@@ -366,7 +366,7 @@ require(['jquery', 'jqueryui'], function($) {
         updateConversationListWithUnreadMessages:function () {
             //Do we need to display a notice?
 
-            for (conversation in this.unreadMessages) {
+            for (let conversation in this.unreadMessages) {
                 var html = "";
                 if (this.unreadMessages[conversation]) {
                     html = this.unreadMessages[conversation];
@@ -385,11 +385,11 @@ require(['jquery', 'jqueryui'], function($) {
             var currentConversations = "";
             var oldConversations = "";
 
-            for (conversation in this.unreadMessages) {
+            for (let conversation in this.unreadMessages) {
                 oldConversations += conversation + ",";
             }
 
-            for (conversation in newTotals) {
+            for (let conversation in newTotals) {
                 currentConversations += conversation + ",";
             }
 
@@ -398,7 +398,7 @@ require(['jquery', 'jqueryui'], function($) {
                 this.updateConversationList();
             }
 
-            for (conversation in newTotals) {
+            for (let conversation in newTotals) {
                 //Check to see if this is a new conversation.
                 if (this.unreadMessages[conversation] == undefined) {
                     //Set it to -1 so that an alert will fire.
@@ -623,7 +623,7 @@ require(['jquery', 'jqueryui'], function($) {
             if (data['operators'] !== undefined) {
                 this.operators = new Array();
 
-                for (operator in data['operators']) {
+                for (let operator in data['operators']) {
                     this.operators.push(data['operators'][operator]);
 
                     if (data['operators'][operator].id == VisitorChat.userID) {
@@ -731,7 +731,7 @@ require(['jquery', 'jqueryui'], function($) {
                     var offline = new Array();
 
                     i = 0;
-                    for (url in data) {
+                    for (let url in data) {
                         if ((data[url]['total_available'] - 1) < 1) {
                             offline[i] = data[url]['title'];
                         }
@@ -758,7 +758,7 @@ require(['jquery', 'jqueryui'], function($) {
 
           var html = '<p>You are the last person online for the following sites.  If you go offline now, these sites will have chat functionality turned off.</p>';
           html += '<ul class="dcf-h-10 dcf-overflow-x-auto dcf-b-1 dcf-b-solid" id="visitorChat_sitesWarning">';
-          for (site in offline) {
+          for (let site in offline) {
             html += '<li>' + offline[site] + '</li>';
           }
           html += '</ul>';

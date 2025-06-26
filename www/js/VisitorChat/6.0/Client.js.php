@@ -755,7 +755,7 @@ class VisitorChat_Client extends VisitorChat_ChatBase {
 
         var is_typing = false;
         if (data['operators'] !== undefined) {
-            for (operator in data['operators']) {
+            for (let operator in data['operators']) {
                 if (data['operators'][operator].is_typing == 'YES') {
                     is_typing = true;
                 }
