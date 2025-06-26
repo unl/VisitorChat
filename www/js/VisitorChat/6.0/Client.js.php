@@ -636,7 +636,7 @@ class VisitorChat_Client extends VisitorChat_ChatBase {
         });
 
         if (this.chatStatus) {
-            $('#visitorChat_logout').css({'display':'inline-block'});
+            $('#visitorChat_logout').css({'display':'inline-block', 'color': 'var(--body)'});
             $('#visitorChat_header_text').css({'margin-right':'1.777em'});
         } else {
             $('#visitorChat_logout').css({'display':'none'});
