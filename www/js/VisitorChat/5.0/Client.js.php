@@ -110,7 +110,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             //Submit as chat
             $('#visitorChat_login_chatmethod').val("CHAT");
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >contact us</button></div>");
 
             VisitorChat.displayWelcomeMessage();
 
@@ -151,7 +151,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
           //Submit as chat
           $('#visitorChat_login_chatmethod').val("CHATBOT");
 
-          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >email us</button></div>");
+          $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email' >contact us</button></div>");
 
           VisitorChat.displayWelcomeMessage();
 
@@ -219,7 +219,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         if (displayChatMethods === true) {
           if (VisitorChat.operatorsAvailable) {
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>contact us</button></div>");
 
             $('#visitorChat_methods_chat').one('click', function () {
               VisitorChat.stop(function () {
@@ -231,7 +231,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
           } else if (this.isChatbotAvailable()) {
 
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>email us</button></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_chat'>chat</button> or <button id='visitorChat_methods_email'>contact us</button></div>");
 
             $('#visitorChat_methods_chat').one('click', function () {
               VisitorChat.stop(function () {
@@ -243,7 +243,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
             });
 
           } else {
-            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>email us</button></div>");
+            $('#visitorChat_container').append("<div id='visitorChat_methods'> or <button id='visitorChat_methods_email'>contact us</button></div>");
           }
         }
 
@@ -831,8 +831,8 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
         init:function (serverURL, refreshRate) {
             $('#dcf-footer').append('' +
                 '<div class="dcf-fixed dcf-d-none@print unl-font-sans offline" id="visitorChat">' +
-                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Email Us widget">' +
-                        '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Email Us</span>' +
+                    '<div class="dcf-d-flex dcf-flex-nowrap dcf-ai-center dcf-jc-between dcf-w-100% dcf-lh-1" id="visitorChat_header" tabindex="0" role="button" aria-label="Open the Contact Us widget">' +
+                        '<span class="dcf-txt-xs dcf-pt-3 dcf-pr-5 dcf-pb-3 dcf-pl-5 dcf-uppercase" id="visitorChat_header_text">Contact Us</span>' +
                         '<div id="visitor-chat-header-options">' +
                             '<button class="dcf-pl-4 dcf-pr-4 dcf-lh-1 dcf-b-0 dcf-bg-transparent" id="visitorChat_logout" aria-label="close and log out of chat">' +
                                 '<svg class="dcf-d-block dcf-h-4 dcf-w-4 dcf-fill-current" aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24">' +
@@ -854,7 +854,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
                             '<path d="M20.5 4.2L4.2 20.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7L19.8 3.5c.2-.2.5-.2.7 0 .2.2.2.5 0 .7z"/><path d="M3.5 4.2l16.3 16.3c.2.2.5.2.7 0s.2-.5 0-.7L4.2 3.5c-.2-.2-.5-.2-.7 0-.2.2-.2.5 0 .7z"></path>' +
                         '</g>' +
                     '</svg>' +
-                    '<span class="dcf-nav-toggle-label-chat dcf-mt-2 dcf-txt-xs">Email Us</span>' +
+                    '<span class="dcf-nav-toggle-label-chat dcf-mt-2 dcf-txt-xs">Contact Us</span>' +
                 '</button>');
 
             //Handle cookies. (IE session handling);
@@ -929,7 +929,7 @@ require(['jquery', 'idm', 'analytics'], function($, idm, analytics) {
 
             var $widget = $('#visitorChat');
 
-            var text = 'Email Us';
+            var text = 'Contact Us';
 
             if (available) {
                 $widget.addClass('online');

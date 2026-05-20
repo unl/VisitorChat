@@ -15,7 +15,7 @@ class View
     
     public $protocol = 'http';
     
-    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1', '5.2', '5.3');
+    public $allowed_versions = array('3.0', '3.1', '4.0', '4.1', '5.0', '5.1', '5.2', '5.3', '6.0', '6.1');
     
     //Set to true to start caching.
     public static $cache = false;
@@ -143,11 +143,13 @@ class View
 
         switch ($this->type) {
             case 'js':
-                ?>
-                if (VisitorChat == undefined) {
-                    var VisitorChat = false;
+                if ($this->version !== '6.0' && $this->version !== '6') {
+                    ?>
+                    if (VisitorChat == undefined) {
+                        var VisitorChat = false;
+                    }
+                    <?php
                 }
-                <?php
                 //Include the required things for all versions and types:
                 switch($this->for) {
                     case 'operator':
